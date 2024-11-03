@@ -1,0 +1,63 @@
+@import url("https://db.onlinewebfonts.com/c/f56809563b15c7c76669dac9ca9d38ac?family=Matter+Regular");
+
+/* body {
+    font-family: "Matter Regular";
+} */
+.codesweardark {
+    color: #9ca3af;
+}
+
+.productpagelight {
+    font-family: "Matter Regular";
+    background-color: #fff;
+    transition: all 0.4s;
+    padding-top: 25px;
+}
+
+.productpagedark {
+    font-family: "Matter Regular";
+    background-color: #1f2937;
+    transition: all 0.4s;
+    padding-top: 25px;
+}
+
+.service-input {
+    outline: 2px solid pink;
+    border: 2px solid pink;
+}
+
+.service-inout::placeholder {
+    font-family: "Matter Regular";
+}
+
+.imageholder {
+    transition: 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 17px;
+    padding: 10px;
+}
+
+.imageholder:hover {
+    /* box-shadow: inset 0px 0px 170px 1px rgb(209, 206, 206); */
+    cursor: pointer;
+}
+
+.selectedvariant {
+    outline: 2px solid #ec4899;
+    border-radius: 7px;
+    width: 75px;
+    height: 120px;
+    border: transparent !important;
+    transition: all 0.2s linear;
+}
+
+.unselectedvariant {
+    outline: 2px solid #fff;
+    border-radius: 7px;
+    height: 120px;
+    width: 75px;
+    border: transparent !important;
+    transition: all 0.5s linear;
+}
