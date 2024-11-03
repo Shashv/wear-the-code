@@ -1,0 +1,27 @@
+@keyframes animationshow {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0
+    }
+
+    100% {
+        transform: translateY(0%);
+        opacity: 1
+    }
+}
+
+@keyframes animationhide {
+    0% {
+        transform: translateY(0%);
+        opacity: 1
+    }
+
+    100% {
+        transform: translateY(-100%);
+        opacity: 0
+    }
+}
+
+.textviewed {
+    animation: animationshow 0.5s ease-in;
+}

@@ -1,0 +1,197 @@
+@import url("https://db.onlinewebfonts.com/c/f56809563b15c7c76669dac9ca9d38ac?family=Matter+Regular");
+
+.custom-alert {
+    opacity: 1;
+    display: block;
+    visibility: visible;
+    transition: all 0.5s linear;
+    animation: alternate;
+    /* transform:scaleX(-50%); */
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background: linear-gradient(to left, rgb(138, 232, 37), rgb(4, 169, 4));
+    border: transparent;
+    outline: transparent;
+    box-shadow: 0px 0px 2px 2px lightgray;
+    color: white;
+    font-family: "Matter Regular";
+    padding: 20px;
+    transition: all 2s;
+    border-radius: 20px;
+}
+
+.main-container::-webkit-scrollbar {
+    width: 10px;
+    background-color: lightblue;
+}
+
+.signup-container .logo .penguin {
+    box-shadow: 0pc 0pc 17px 10px #e6e6e6;
+}
+
+input {
+    font-family: "Matter Regular";
+    font-weight: 600;
+    font-size: large;
+}
+
+input:focus-visible {
+    outline: 2px solid #226cf4;
+}
+
+input::-webkit-outer-spin-button,
+::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input::placeholder {
+    font-family: "Matter Regular";
+    color: #bec1cd;
+    font-size: large;
+}
+
+.signup-container .head-text {
+    font-weight: 700
+}
+
+.signup-container .input-container .eye {
+    top: 16px;
+    right: 14px;
+    cursor: pointer;
+    font-size: 29px;
+}
+
+.signup-container .input-container .signup-required .no-account {
+    font-family: "Matter Regular";
+}
+
+.signup-container .input-container .phone .country-list {
+    overflow: "auto";
+    top: 60px;
+    left: 0px;
+    z-index: 10;
+    height: 40px;
+    background-color: rgb(255, 255, 255)
+}
+
+.signup-container .input-container .phone .country-list .search-country:focus-visible {
+    outline: transparent !important;
+    border: transparent !important;
+}
+
+.signup-container .input-container .phone .country-list .country-name {
+    font-family: "Matter Regular";
+    font-weight: 600
+}
+
+.signup-container .input-container .phone .country-list .country-name .country-text {
+    font-family: "Matter Regular";
+}
+
+.signup-container .input-container .phone .country-list .country-name:hover {
+    background-color: rgb(232, 232, 232);
+}
+
+.singup-container .input-container .phone .phone-container:focus-visible {
+    outline: 2px solid #226cf4;
+}
+
+.signup-container .input-container .phone .default-mulk {
+    top: 15px;
+    left: 10px;
+}
+
+.signup-container .button-container .label-button-facebook {
+    background-color: #f1f3f4;
+    border: transparent;
+    padding: 10px;
+    color: #9f9fa0;
+    font-family: "Matter Regular";
+    border-radius: 4px;
+    background: linear-gradient(to left, #f1f3f4 50%, lightblue 50%) right;
+    background-size: 200%;
+    transition: .5s ease-out;
+}
+
+.signup-container .button-container .label-button-facebook:hover {
+    background-position: left;
+}
+
+.signup-container .button-container .label-button-google {
+    background-color: #f1f3f4;
+    border: transparent;
+    padding: 10px;
+    color: #9f9fa0;
+    font-family: "Matter Regular";
+    border-radius: 4px;
+    background: linear-gradient(to left, #f1f3f4 50%, hsla(124, 45%, 44%, 0.3) 50%) right;
+    background-size: 200%;
+    transition: .5s ease-out;
+}
+
+.signup-container .button-container .label-button-google .fab {
+    background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    font-size: 35px;
+}
+
+.signup-container .button-container .label-button-google:hover {
+    background-position: left;
+}
+
+.signup-container .button-container .label-button-facebook:hover .positive-text {
+    color: #226cf4;
+}
+
+.signup-container .button-container .label-button-google:hover .google-text {
+    color: hsla(124, 45%, 44%);
+}
+
+.signbutton-container .sign-up-button {
+    background-color: #226cf4;
+    font-family: "Matter Regular";
+    padding-top: 11.5px;
+    padding-bottom: 11.5px;
+    border-radius: 5px;
+    border: white;
+    font-size: large;
+}
+
+.signup-container .signup-required .signup {
+    color: #227cf6;
+    font-family: "Matter Regular";
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+.signup-container .input-container .forgot-password {
+    font-family: "Matter Regular";
+    color: #227cf6;
+}
+
+.signup-container .input-container .remember-choice {
+    color: #227cf6;
+    font-family: "Matter Regular";
+}
+
+.signup-container .account-existance .login-link {
+    color: #227cf6;
+    font-weight: 700;
+    font-family: "Matter Regular";
+    text-decoration: underline;
+}
+
+.signup-container .account-existance .already-account {
+    color: #c2c6cf;
+    font-family: "Matter Regular";
+}
+
+.signup-container .privacy-policy .links {
+    color: #008cff;
+    font-family: "Matter Regular";
+}

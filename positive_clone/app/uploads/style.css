@@ -1,0 +1,11 @@
+input:focus-visible {
+    outline: transparent;
+}
+
+input:focus {
+    outline: transparent;
+}
+
+textarea:focus-visible {
+    outline: transparent;
+}

@@ -1,0 +1,11 @@
+.registerinput {
+    outline: 2px solid pink;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.checkouttext {
+    font-family: "Matter Regular";
+    color: hsl(350, 49%, 57%);
+}

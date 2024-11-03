@@ -1,0 +1,115 @@
+.imageholder {
+    display: block;
+}
+
+.colordot {
+    width: 19px;
+    height: 19px;
+    padding: 10px;
+    border-radius: 50%;
+}
+
+.imageDisplay {
+    /* display: block; */
+    transition: all 1s;
+    visibility: visible;
+    opacity: 1;
+    /* width: 75%; */
+    /* margin: auto; */
+    /* height: 100%; */
+    /* height: fit-content; */
+    position: absolute;
+    /* top: 10px; */
+}
+
+.imageholderdark {
+    height: 400px;
+    background-color: #1f2937;
+    display: flex;
+    justify-content: center;
+    transition: all 1s;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    /* border-radius:10px; */
+}
+
+.activeHolderdark {
+    height: 400px;
+    background-color: #374151;
+    display: flex;
+    justify-content: center;
+    transition: all 1s;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.imageholderlight {
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    transition: all 1s;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #fff;
+}
+
+.activeHolderlight {
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    transition: all 1s;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #fff;
+}
+
+.productCard {
+    background-color: #374151;
+    height: 600px;
+    /* width: 100%; */
+    margin: auto !important;
+    border: transparent;
+    /* box-shadow: 0px 0px 10px 2px #546f9b; */
+    border-radius: 10px;
+    margin-left: 4px !important;
+    margin-right: 4px !important;
+    /* padding:5px; */
+}
+
+.lightcard {
+    height: 600px;
+    /* width: 100%; */
+    margin: auto;
+    border: 1px solid lightgray;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-right: 4px;
+    margin-left: 4px
+}
+
+.imagehide {
+    /* display: none; */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 1s;
+    /* width: 75%; */
+    /* height: 100%; */
+    /* height: fit-content; */
+    margin: auto;
+    position: absolute;
+    /* border-radius:10px; */
+    /* top: 10px; */
+}
+
+.cardfooter {
+    display: flex;
+    flex-direction: column;
+    /* align-items: start; */
+    /* overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; */
+    padding: 17px;
+    justify-content: start;
+    gap:3.6px;
+    height: calc(600px - 400px);
+}
