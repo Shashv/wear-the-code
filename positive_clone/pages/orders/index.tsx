@@ -24,65 +24,63 @@ const Orders: React.FC = (props: unknown) => {
                 </title>
                 <link rel={"icon"} href="/logo.webp" />
             </Head>
-            <body>
-                <div className={theme.light ? style.orderscontainer : style.darkorderscontainer}>
-                    <section className="text-gray-600 body-font overflow-hidden">
-                        <div className="container py-28">
-                            {
-                                orderList.length > 0 &&
-                                orderList.map(key =>
-                                    <div className="row">
-                                        <div className="col-6">
-                                            <h2 className={theme.light ? "text-sm title-font text-gray-500 tracking-widest" : "text-sm title-font text-light tracking-widest"}>
-                                                CODESWEAR.COM
-                                            </h2>
-                                            <h1 className="text-gray-900 text-3xl title-font font-medium mb-4">
-                                                ORDER ID: #{orderId}
-                                            </h1>
-                                            <p className="leading-relaxed mb-4">
-                                                Your Order has been successfully placed!
-                                            </p>
-                                            <div className="flex mb-4">
-                                                <a className="flex-grow text-center text-pink-500 py-2 text-lg px-1">
-                                                    Item Description</a>
-                                                <a className="flex-grow text-center py-2 text-lg px-1">
-                                                    Reviews
-                                                </a>
-                                                <a className="flex-grow text-center py-2 text-lg px-1">
-                                                    Details
-                                                </a>
-                                            </div>
+            <div className={theme.light ? style.orderscontainer : style.darkorderscontainer}>
+                <section className="text-gray-600 body-font overflow-hidden">
+                    <div className="container py-28">
+                        {
+                            orderList.length > 0 &&
+                            orderList.map(key =>
+                                <div className="row">
+                                    <div className="col-6">
+                                        <h2 className={theme.light ? "text-sm title-font text-gray-500 tracking-widest" : "text-sm title-font text-light tracking-widest"}>
+                                            CODESWEAR.COM
+                                        </h2>
+                                        <h1 className="text-gray-900 text-3xl title-font font-medium mb-4">
+                                            ORDER ID: #{orderId}
+                                        </h1>
+                                        <p className="leading-relaxed mb-4">
+                                            Your Order has been successfully placed!
+                                        </p>
+                                        <div className="flex mb-4">
+                                            <a className="flex-grow text-center text-pink-500 py-2 text-lg px-1">
+                                                Item Description</a>
+                                            <a className="flex-grow text-center py-2 text-lg px-1">
+                                                Reviews
+                                            </a>
+                                            <a className="flex-grow text-center py-2 text-lg px-1">
+                                                Details
+                                            </a>
+                                        </div>
 
-                                            <div className="flex border-t border-gray-200 py-2">
-                                                <span className="text-gray-500">Color</span>
-                                                <span className="ml-auto text-gray-900">Blue</span>
-                                            </div>
-                                            <div className="flex border-t border-gray-200 py-2">
-                                                <span className="text-gray-500">Size</span>
-                                                <span className="ml-auto text-gray-900">Medium</span>
-                                            </div>
-                                            <div className="flex border-t border-b mb-6 border-gray-200 py-2">
-                                                <span className="text-gray-500">Quantity</span>
-                                                <span className="ml-auto text-gray-900">4</span>
-                                            </div>
-                                            <div className="flex">
-                                                <span className="title-font font-medium text-2xl text-gray-900">
-                                                    Subtotal: $58.00
-                                                </span>
-                                            </div>
-                                            <div className="my-6 flex justify-start">
-                                                <button className="flex text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded-2 text-light">Track Order</button>
-                                            </div>
+                                        <div className="flex border-t border-gray-200 py-2">
+                                            <span className="text-gray-500">Color</span>
+                                            <span className="ml-auto text-gray-900">Blue</span>
                                         </div>
-                                        <div className="col-6">
-                                            <img alt="ecommerce" className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src={key} />
+                                        <div className="flex border-t border-gray-200 py-2">
+                                            <span className="text-gray-500">Size</span>
+                                            <span className="ml-auto text-gray-900">Medium</span>
                                         </div>
-                                    </div>)
-                            }
-                        </div>
-                    </section>
-                </div>
-            </body>
+                                        <div className="flex border-t border-b mb-6 border-gray-200 py-2">
+                                            <span className="text-gray-500">Quantity</span>
+                                            <span className="ml-auto text-gray-900">4</span>
+                                        </div>
+                                        <div className="flex">
+                                            <span className="title-font font-medium text-2xl text-gray-900">
+                                                Subtotal: $58.00
+                                            </span>
+                                        </div>
+                                        <div className="my-6 flex justify-start">
+                                            <button className="flex text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded-2 text-light">Track Order</button>
+                                        </div>
+                                    </div>
+                                    <div className="col-6">
+                                        <img alt="ecommerce" className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src={key} />
+                                    </div>
+                                </div>)
+                        }
+                    </div>
+                </section>
+            </div>
         </>
     )
 }

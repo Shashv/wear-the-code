@@ -21,17 +21,13 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import type { AppProps } from "next/app";
 import "aos/dist/aos.css";
 const Layout: React.FC<AppProps> = ({ Component, pageProps }) => {
-    // console.log("props", pageProps);
     const routerDetail: NextRouter = useRouter();
     let ref = useRef<HTMLDivElement>(null);
-    // const headers = headers();
     let path: string = routerDetail.asPath.split("?")[0];
     let [scrollBar, setScrollBar] = React.useState<number>(0);
     let [direction, setDirection] = React.useState<string>("");
     let initial: number = ref.current?.scrollTop || 0;
-    // let { session } = props;
     const onScroll = (e: any) => {
-        // console.log("babaji",ref.current?.scrollTop);
         setScrollBar(ref.current?.scrollTop || 0);
         if (ref.current?.scrollTop !== undefined) {
             if (initial > ref.current?.scrollTop) {
@@ -42,14 +38,7 @@ const Layout: React.FC<AppProps> = ({ Component, pageProps }) => {
             }
         }
     };
-    // console.log(props);
     let routePath = usePathname();
-    // useEffect(() => {
-    //     console.log("Use Pathname", routePath);
-    //     return () => {
-    //         console.log("Always called before the execution of the next effect , in order to clean the effect of the previous execution , and secondly called when the component gets unmount");
-    //     }
-    // }, []);
     return (
         <GoogleOAuthProvider clientId="803758111092-tusltrjau3p58fdue2k96a6rkm0nasik.apps.googleusercontent.com">
             <SessionProvider>

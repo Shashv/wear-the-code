@@ -98,11 +98,8 @@ class Shirts extends React.Component<IShirt, { data: Array<IProductType>, loader
     }
     componentDidMount(): void {
         this.getData();
-        // this.props
-        // console.log("Inside the mounting phase of the component", this.props,"State for the component",this.state);
     }
     componentDidUpdate(previousprops: Readonly<IShirt>, previousstate: Readonly<IShirt | { data: any, loader: boolean }>): void {
-        // console.log("update state for the map of the shirts", this.state.data.map((shirt, index) => shirt.name.split(" ").join("/")));
     }
 }
 let combinedstate = store.getState();

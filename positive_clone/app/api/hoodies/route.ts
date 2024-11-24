@@ -8,11 +8,23 @@ router.get(async (request, { }) => {
         user: "root",
         password: "SHASHVAT",
         database: "firstpositive_db",
-        connectionLimit: 10
+        connectionLimit: 10,
+        port: 3306
     });
     let response = await database.query('select * from main_hoodies as mh inner join hoodies_colors as hc on mh.id = hc.hoodie_id', []);
     let showhoodies = await database.query(`select * from main_hoodies`, []);
     return NextResponse.json({ message: "Hoodies fetched successfully", hoodies: response[0], showhoodies: showhoodies[0] }, { status: 200 });
+});
+router.post(async (req, { }) => {
+    let database = await mysql.createConnection({
+        host: "localhost",
+        port: 3306,
+        user: "root",
+        database: "firstpositive_db",
+        password: "SHASHVAT",
+        connectionLimit: 10,
+    });
+    return NextResponse.json({ message: "Post route for the hoodies" }, { status: 201, statusText: "Added Successfully" });
 })
 export const GET = async (request: NextRequest, { }) => {
     return router.run(request, {});

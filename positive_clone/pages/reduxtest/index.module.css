@@ -1,34 +1,4 @@
-/* .reduxactions {
-    background-color: pink;
-    border-radius: 20px;
-    border: solid lightgreen;
-    padding: 20px;
-    color: #fff;
-}
 
-.reduxcontainer {
-    padding: 67px;
-}
-
-.reduxactions:hover {
-    animation: actions 10s infinite;
-}
-
-@keyframes actions {
-    0% {
-        background-color: rgb(240, 7, 228);
-        border-radius: 20px;
-        border: solid yellow;
-        color: purple;
-    }
-
-    50% {
-        background-color: rgb(13, 53, 228);
-        border-radius: 20px;
-        border: solid purple;
-        color: yellow;
-    }
-} */
 .chatbotcontainer {
     width: 100%;
     height: 100%;

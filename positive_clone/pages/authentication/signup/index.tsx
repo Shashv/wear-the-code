@@ -117,7 +117,6 @@ class SignUp extends React.Component<{}, { name: string; flag: string; dial_code
             }, passwordArray: [],
             eyeVisible: true, loader: false
         }
-        //signup process //
         this.submitUser = this.submitUser.bind(this);
         this.toggleCountryBox = this.toggleCountryBox.bind(this);
         this.passwordReset = this.passwordReset.bind(this);
@@ -127,10 +126,8 @@ class SignUp extends React.Component<{}, { name: string; flag: string; dial_code
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.updateCountryCode = this.updateCountryCode.bind(this);
         this.searchFlag = this.searchFlag.bind(this);
-        //login methods//
         this.handleLoginEmailChange = this.handleLoginEmailChange.bind(this);
         this.submitLogin = this.submitLogin.bind(this);
-        // this.closetoast = this.closetoast.bind(this);
     }
     componentDidMount(): void {
         require("bootstrap/dist/js/bootstrap.bundle.js");
@@ -156,11 +153,9 @@ class SignUp extends React.Component<{}, { name: string; flag: string; dial_code
             this.setState({
                 formData: { ...this.state.formData, forgotPassword: { ...this.state.formData.forgotPassword, error: true } }
             });
-            // fetch("https://localhost:3000/api/tshirts")
         }
         else {
             console.log("Password Reset", e.preventDefault());
-            // fetch("/api/signup", { method: "POST", body: JSON.stringify({ email:"shashvat" }) });
         }
     }
     handleConfirmPasswordChange(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -168,7 +163,6 @@ class SignUp extends React.Component<{}, { name: string; flag: string; dial_code
             formData: { ...this.state.formData, forgotPassword: { ...this.state.formData.forgotPassword, value: e.target.value } }
         });
     }
-    //for the signup process//
     submitUser(e: React.FormEvent<HTMLFormElement>): void {
         e.preventDefault();
         if (this.state.formData.signup.email.value === "" && this.state.formData.signup.password.value === "")
@@ -196,7 +190,6 @@ class SignUp extends React.Component<{}, { name: string; flag: string; dial_code
 
     }
     handleWorkEmailChange(e: React.ChangeEvent<HTMLInputElement>): void {
-        //   console.log("event",e.target.value);
         if (e.target.value === "") {
             this.setState({
                 formData: { ...this.state.formData, signup: { ...this.state.formData.signup, email: { ...this.state.formData.signup.email, error: true, value: e.currentTarget.value } } }
@@ -328,7 +321,6 @@ class SignUp extends React.Component<{}, { name: string; flag: string; dial_code
             }
             if (isNumbered) {
                 if (length < 8 || length > 20) {
-                    // console.log("Inside the wrong length");
                     alreadyUpperCase = Array.from(e.currentTarget.value).some((key: any) => upperCaseRegexp.test(key));
                     alreadyLowerCase = Array.from(e.currentTarget.value).some((key: any) => lowerCaseRegexp.test(key));
                     !alreadyLowerCase && !alreadyUpperCase && this.setState({
@@ -364,7 +356,6 @@ class SignUp extends React.Component<{}, { name: string; flag: string; dial_code
             // }
         }
         password = e.currentTarget.value
-        // console.log(password);
     }
     componentDidUpdate(previousProps: Readonly<{}>, previousState: Readonly<any>): void {
     }
@@ -378,7 +369,6 @@ class SignUp extends React.Component<{}, { name: string; flag: string; dial_code
         });
     }
     searchFlag(e: React.KeyboardEvent<HTMLInputElement>): void {
-        // console.log("event target", e);
         if (e.currentTarget.value === "") {
             this.setState({
                 countryList: countryList.map((key, index) => {
@@ -395,12 +385,8 @@ class SignUp extends React.Component<{}, { name: string; flag: string; dial_code
             let str = e.currentTarget.value;
             let filteredList: any[] = [];
             if (str.length > 1) {
-                // str = str.toLowerCase().replace(/\b[a-z]/g, function (letter) {
-                //     return letter.toUpperCase();
-                // });
                 str = str[0].toUpperCase() + str.slice(1);
                 filteredList = countryList.filter((key, index) => {
-                    // key.name.includes(e.currentTarget.value);
                     let regexCapital = /[A-Z]/;
                     return key.name.includes(str) || key.name.includes(e.currentTarget.value);
                 });
@@ -410,7 +396,6 @@ class SignUp extends React.Component<{}, { name: string; flag: string; dial_code
                     filteredList = countryList.filter(key => key.name.includes(str));
                 }
                 else filteredList = countryList;
-            // alert(str);
             this.setState({
                 countryList: filteredList.map((key, index) => {
                     return {
@@ -424,11 +409,10 @@ class SignUp extends React.Component<{}, { name: string; flag: string; dial_code
         }
     }
     handleLoginEmailChange(e: React.ChangeEvent<HTMLInputElement>): void {
-        // let regexExpression:RegExp = new RegExp("/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
+
         if (e.target.value !== "") {
             let regexExpression: RegExp = new RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$");
             let pass: boolean = regexExpression.test(e.target.value);
-            // console.log(passed);
             this.setState({
                 formData: { ...this.state.formData, login: { ...this.state.formData.login, email: { ...this.state.formData.login.email, value: e.target.value, error: !pass, validEmail: pass, emptyError: false } } }
             })
@@ -508,13 +492,13 @@ class SignUp extends React.Component<{}, { name: string; flag: string; dial_code
                                         </div>
                                         <div className="marginal-block d-flex w-75 justify-content-center align-items-center my-4 mb-3 gap-3">
                                             <div className="border border-top-0 border-start-0 w-50 border-end-0 border-bottom-1" style={{ border: "#bebebe" }}>
-                                                {/* EMPTY TEXT */}
+                                            
                                             </div>
                                             <div>
                                                 <span className="" style={{ color: "#bebebe" }}>OR</span>
                                             </div>
                                             <div className="border border-top-0 border-start-0 w-50 border-end-0 border-bottom-1" style={{ border: "#bebebe" }}>
-                                                {/* EMPTY TEXT */}
+                                               
                                             </div>
                                         </div>
                                         <div className="input-container d-flex flex-column w-75 gap-4 align-items-center">
@@ -593,7 +577,7 @@ class SignUp extends React.Component<{}, { name: string; flag: string; dial_code
                                                             with atleast one numeric alphabet
                                                         </Typography>
                                                     </Box>
-                                                    // </div>
+                                                   
                                                 }
                                             </div>
                                         </div>

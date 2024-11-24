@@ -101,7 +101,6 @@ const ProductClient: React.FC<{ productId?: string, type: string }> = ({ product
         slug = routerDetail?.query?.slug || "";
         setLoader(true);
         fetchProduct(type).then(shirt => {
-            // console.log("Shirts fetched from the fucntion", shirt.product);
             setProduct(shirt.product);
             setLoader(false);
         })
@@ -153,7 +152,6 @@ const ProductClient: React.FC<{ productId?: string, type: string }> = ({ product
         }
     }
     const babaJi: (e: React.MouseEvent, timeout: ReturnType<typeof setTimeout>) => void = (e, timeout) => {
-        // console.log(timeout);
         clearTimeout(timeout);
         setCustomToast({
             ...customtoast, open: false
@@ -186,11 +184,9 @@ const ProductClient: React.FC<{ productId?: string, type: string }> = ({ product
                     }} variant={customtoast.variant} open={customtoast.open} message={customtoast.message} onClose={babaJi} autoHide={() => setCustomToast({ ...customtoast, open: false })} />
                     <div className={theme.light ? `${style.productpagelight}` : `${style.productpagedark}`}>
                         <section className="text-gray-600 body-font overflow-hidden">
-                            {/* <Container fluid> */}
                             <div className="container-fluid">
                                 <div className="row px-5">
                                     <div className={`col-md-5 col-sm-12 ${style.imageholder}`}>
-                                        {/* for the product list */}
                                         <div className="d-flex flex-column align-items-center justify-start gap-3 w-[20%]">
                                             <img className={selectedDisplay === product.image_front ? `border border-none ${style.selectedvariant}` : `border border-none ${style.unselectedvariant}`} src={`/shirts/${product.type}/${product.image_front}`} onClick={() => setSelectedDisplay(product.image_front)} />
                                             <img className={selectedDisplay === product.image_back ? `border border-none ${style.selectedvariant}` : `border border-none ${style.unselectedvariant}`} src={`/shirts/${product.type}/${product.image_back}`} onClick={() => setSelectedDisplay(product.image_back)} />
@@ -212,16 +208,12 @@ const ProductClient: React.FC<{ productId?: string, type: string }> = ({ product
                                                 Product Description:
                                             </Typography>
                                             <p className={theme.light ? "leading-relaxed " : "text-light"}>
-                                                {/* Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo juiceramps cornhole raw denim forage brooklyn. Everyday carry +1 seitan poutine tumeric. Gastropub blue bottle austin listicle pour-over, neutra jean shorts keytar banjo tattooed umami cardigan. */}
                                                 {product.description}
                                             </p>
                                         </div>
                                         <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                                             <div className="flex-column ">
                                                 <Typography className={theme.light ? `mr-3` : `text-light mr-3`}>Color:{ }</Typography>
-                                                {/* <button className="border-2 border-gray-300 rounded-full w-6 h-6 focus:outline-none" onClick={() => setSelectedProduct({ ...selectedProduct, color: "White" })}></button>
-                                                <button className="border-2 border-gray-300 ml-1 bg-gray-700 rounded-full w-6 h-6 focus:outline-none" onClick={() => setSelectedProduct({ ...selectedProduct, color: "Blue" })}></button>
-                                                <button className="border-2 border-gray-300 ml-1 bg-pink-500 rounded-full w-6 h-6 focus:outline-none" onClick={() => setSelectedProduct({ ...selectedProduct, color: "Pink" })}></button> */}
                                                 <Grid container>
                                                     <Grid item>
 
