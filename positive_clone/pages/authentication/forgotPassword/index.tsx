@@ -45,19 +45,12 @@ const ForgotPassword: React.FC = () => {
             }
             else
                 forgotPassword.value === "" && setForgotPassword({ ...forgotPassword, error: true, syntaxError: false, loader: false });
-            // toast.error("Something went wrong , please try again later", {
-            //     position: "top-right",
-            //     theme: "colored",
-            //     autoClose: 2000,
-            //     draggable: false
-            // })
         }
     };
     const handleConfirmEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void = (e) => {
         if (e.currentTarget.value !== "") {
 
             let regexExp: RegExp = new RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$");
-            // console.log(e.currentTarget.value,regexExp.test(e.currentTarget.value));
             if (regexExp.test(e.currentTarget.value)) {
                 setForgotPassword({ ...forgotPassword, value: e.currentTarget.value, error: false, syntaxError: false })
             }
@@ -65,7 +58,6 @@ const ForgotPassword: React.FC = () => {
                 setForgotPassword({ ...forgotPassword, value: e.currentTarget.value, syntaxError: true, error: false });
         }
         else {
-            // console.log('secondpositive', e.currentTarget.value);
             setForgotPassword({ ...forgotPassword, value: e.currentTarget.value, error: true, syntaxError: false })
         }
     }
@@ -94,7 +86,6 @@ const ForgotPassword: React.FC = () => {
                                         </div>
                                         <div className="head-text text-center my-1">
                                             <Typography className="head-text" variant={"h4"}>
-                                                {/* Set up a FREE Account */}
                                                 Forgot Password?
                                                 <Typography className="head-text">
                                                     No worried we will send you the password reset confirmation
@@ -117,7 +108,7 @@ const ForgotPassword: React.FC = () => {
                                         </div>
                                         <div className="signbutton-container w-75">
                                             <button className="sign-up-button w-100 text-light" type="submit">
-                                                {/* Log In */}
+
                                                 Continue
                                             </button>
                                         </div>

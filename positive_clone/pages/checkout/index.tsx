@@ -24,7 +24,6 @@ const Checkout: React.FC = () => {
             },
             autoHideDuration: 2000
         })
-        // console.log("Details", details);
     }
     return (
         <>

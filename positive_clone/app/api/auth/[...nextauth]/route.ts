@@ -1,5 +1,6 @@
 import GoogleProvider from "next-auth/providers/google";
 import NextAuth from "next-auth/next";
+import { NextRequest, NextResponse } from "next/server";
 export default NextAuth({
     providers: [
         GoogleProvider({
@@ -8,6 +9,9 @@ export default NextAuth({
         })
     ]
 });
+export const GET = async (req:NextRequest) => {
+    return NextResponse.json({message:""})
+}
 //general notes//
 //difference between the normal functions and the arrow functions//
 //1.) in the arrow functions , we can have this keyword reference as the surrounding lexical scope , but for the regular functions they have their own this reference , depending upon how they are being called or executed , by default the this keyword reference has the window object property value//

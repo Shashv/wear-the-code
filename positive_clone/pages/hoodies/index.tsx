@@ -20,7 +20,6 @@ const Hoodies: React.FC<{ scrollTop: number }> = ({ scrollTop }) => {
     }
     useEffect(() => {
         fetchHoodies().then(hoodies => {
-            // console.log("Hoodies response from the api", hoodies?.showhoodies);
             setHoodies(hoodies.showhoodies);
         });
     }, []);

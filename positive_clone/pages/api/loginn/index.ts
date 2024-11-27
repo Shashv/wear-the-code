@@ -11,8 +11,6 @@ const Loginn = async (request: NextApiRequest, response: NextApiResponse) => {
    });
    let responseArray = await database.query("select * from signup", []);
    let list: any = responseArray[0];
-   //   console.log(list[0],JSON.parse(request.body));
-   //  let parsedBody = await request.json();
    let findedResult = list.find((key: any, index: number) => key.password === JSON.parse(request.body).password) || {};
    //   console.log("positive",findedResult)
    if (Object.keys(findedResult).length > 0) {
@@ -27,8 +25,6 @@ const Loginn = async (request: NextApiRequest, response: NextApiResponse) => {
 
    }
    else if (Object.keys(findedResult).length === 0) {
-      // const response = NextResponse.json({ message: "Please Signup !", findedResult, statusCode: 404 });
-      // return response;
       return response.status(404).json({ message: "Please Sign Up !", findedResult, statusCode: 404 });
    }
    //  return response;

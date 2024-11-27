@@ -22,7 +22,6 @@ const MousePads: React.FC<unknown> = (props) => {
 }
 export default MousePads;
 export const getServerSideProps = async (context: any) => {
-    //you can call the fetch api here since this function will be running on the server//
     return {
         props: {
             pageType: "Page for the mousepads"

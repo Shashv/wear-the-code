@@ -6,7 +6,6 @@
     visibility: visible;
     transition: all 0.5s linear;
     animation: alternate;
-    /* transform:scaleX(-50%); */
     position: absolute;
     top: 0px;
     right: 0px;
