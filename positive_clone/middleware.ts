@@ -2,16 +2,6 @@ import { NextResponse } from "next/server";
 import { NextApiRequest } from "next";
 import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
-// import multer from 'multer';
-// const multerDefination = multer.diskStorage({
-//     destination: (req, file, cb) => {
-
-//         cb(null, "/uploadedShirts");
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, file.filename);
-//     }
-// });
 const middleware = (request: NextRequest) => {
 
     let cookieValue = request.cookies.get("isLog")?.value;

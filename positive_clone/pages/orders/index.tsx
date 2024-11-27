@@ -15,6 +15,9 @@ const Orders: React.FC = (props: unknown) => {
         setOrderList(Object.keys(state));
         let id: number = Math.random();
         setOrderId(id);
+        fetch("/api/getProducts").then(response => response.json()).then(response => {
+            console.log(response);
+        }).catch(er => console.log(er));
     }, []);
     return (
         <>

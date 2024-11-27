@@ -9,6 +9,6 @@ const ProductSchema = new mongoose.Schema({
     color: { type: String },
     price: { type: Number, required: true },
     availableQuantity: { type: Number, required: true }
-},{timestamps:true});
-const productModel = mongoose.model("Products",ProductSchema);
+}, { timestamps: true });
+const productModel = mongoose.model("Products", ProductSchema);
 export default productModel;
