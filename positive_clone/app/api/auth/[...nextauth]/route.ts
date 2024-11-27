@@ -1,14 +1,14 @@
 import GoogleProvider from "next-auth/providers/google";
 import NextAuth from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
-export default NextAuth({
-    providers: [
-        GoogleProvider({
-            clientId: "your google client id",
-            clientSecret: "your google client secret"
-        })
-    ]
-});
+// export default NextAuth({
+//     providers: [
+//         GoogleProvider({
+//             clientId: "your google client id",
+//             clientSecret: "your google client secret"
+//         })
+//     ]
+// });
 export const GET = async (req:NextRequest) => {
     return NextResponse.json({message:""})
 }
