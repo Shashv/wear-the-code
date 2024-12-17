@@ -9,9 +9,10 @@ import Cart from "../../components/cart";
 import style from "./index.module.css";
 import CustomDrawer from "../../components/cart";
 import { useDispatch } from "react-redux";
-import addProduct from "../redux/actions/addProduct";
-import removeProduct from "../redux/actions/removeProduct";
+import addProduct from "@/redux/actions/addProduct";
+import removeProduct from "@/redux/actions/removeProduct";
 import { enqueueSnackbar } from "notistack";
+// import FormGenerator from "@/components/formgenerator";
 const Checkout: React.FC = () => {
     let { register, handleSubmit, formState: { errors, isSubmitSuccessful }, reset, setError, clearErrors } = useForm<IRegisterOptions>();
     let dispatch = useDispatch();
@@ -148,7 +149,9 @@ const Checkout: React.FC = () => {
                         </Col>
                     </Row>
                 </Container>
+                {/* <FormGenerator /> */}
             </Box>
+
         </>
     )
 }

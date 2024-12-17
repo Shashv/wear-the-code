@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import style from "./index.module.css";
 import { useSelector } from "react-redux";
-import { IState } from "../redux/sore";
+import { IState } from "@/redux/sore";
 import { } from "react-redux";
 import Head from "next/head";
 const Orders: React.FC = (props: unknown) => {
@@ -15,7 +15,9 @@ const Orders: React.FC = (props: unknown) => {
         setOrderList(Object.keys(state));
         let id: number = Math.random();
         setOrderId(id);
-        fetch("/api/getProducts").then(response => response.json()).then(response => {
+        fetch("/api/getProducts", {
+            method: "GET"
+        }).then(response => response.json()).then(response => {
             console.log(response);
         }).catch(er => console.log(er));
     }, []);

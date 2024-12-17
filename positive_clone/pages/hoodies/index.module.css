@@ -1,0 +1,104 @@
+.card {
+    transition: 0.25s linear;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.card:hover {
+    box-shadow: inset 0px 0px 25px 3.5px rgb(209, 206, 206);
+    transition: 0.25s linear;
+    cursor: pointer;
+    transform: scale(1.035);
+}
+
+.imageholder {
+    height: 70%;
+    width: 65%;
+    margin: auto;
+    background-image: url("/hoodies.png");
+    background-size: 100% 100%;
+    transition: linear 0.5s;
+}
+
+.imagesecond {
+    height: 70%;
+    width: 65%;
+    margin: auto;
+    background-image: url("/hoodiessecond.png");
+    background-size: 100% 100%;
+    transition: linear 0.5s;
+}
+
+.imagesecond:hover {
+    width: 65%;
+    height: 70%;
+    margin: auto;
+    background-image: url("/hoodiesthird.png");
+    transition: all 0.5s;
+    background-size: 100% 100%;
+    transition: all 0.5s;
+}
+
+.imageholder:hover {
+    height: 70%;
+    width: 65%;
+    margin: auto;
+    background-image: url("/hoodiesninth.png");
+    background-size: 100% 100%;
+    transition: all 0.5s;
+}
+
+.fourthcard {
+    width: 65%;
+    height: 70%;
+    margin: auto;
+    background-image: url("/hoodiessixth.png");
+    background-size: 100% 100%;
+    transition: linear 0.5s;
+}
+
+.fourthcard:hover {
+    width: 65%;
+    height: 70%;
+    margin: auto;
+    background-image: url("/hoodieseight.png");
+    background-size: 100% 100%;
+    transition: all 0.5s;
+}
+
+.fifthcard {
+    width: 65%;
+    height: 70%;
+    background-image: url("/hoodiesfourth.png");
+    background-size: 100% 100%;
+    transition: linear 0.5s;
+}
+
+.fifthcard:hover {
+    width: 65%;
+    height: 70%;
+    background-image: url("/hoodiesfifth.png");
+    background-size: 100% 100%;
+    transition: linear 0.5s;
+}
+
+.hoodiescontainerdark {
+    background-color: #1f2937;
+    padding: 5px;
+    position: relative;
+}
+
+.hoodiescontainerlight {
+    background-color: #fff;
+    padding: 5px;
+    position: relative;
+}
+
+@media only screen and (width < 768px) {
+    .hoodiesmobilefilter {
+        position: absolute;
+        top: 10px;
+        z-index: 10;
+        height: 100%;
+    }
+}

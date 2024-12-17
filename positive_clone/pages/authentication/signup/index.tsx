@@ -430,9 +430,7 @@ class SignUp extends React.Component<{}, { name: string; flag: string; dial_code
         })
     }
     submitLogin(e: React.FormEvent<HTMLFormElement>): void {
-        console.log("fccsdc");
         e.preventDefault();
-        console.log(this.state.formData.login.email, this.state.formData.signup.password);
     }
     render(): JSX.Element {
         return (
@@ -492,13 +490,13 @@ class SignUp extends React.Component<{}, { name: string; flag: string; dial_code
                                         </div>
                                         <div className="marginal-block d-flex w-75 justify-content-center align-items-center my-4 mb-3 gap-3">
                                             <div className="border border-top-0 border-start-0 w-50 border-end-0 border-bottom-1" style={{ border: "#bebebe" }}>
-                                            
+
                                             </div>
                                             <div>
                                                 <span className="" style={{ color: "#bebebe" }}>OR</span>
                                             </div>
                                             <div className="border border-top-0 border-start-0 w-50 border-end-0 border-bottom-1" style={{ border: "#bebebe" }}>
-                                               
+
                                             </div>
                                         </div>
                                         <div className="input-container d-flex flex-column w-75 gap-4 align-items-center">
@@ -577,7 +575,7 @@ class SignUp extends React.Component<{}, { name: string; flag: string; dial_code
                                                             with atleast one numeric alphabet
                                                         </Typography>
                                                     </Box>
-                                                   
+
                                                 }
                                             </div>
                                         </div>

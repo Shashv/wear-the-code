@@ -1,8 +1,5 @@
 @import url("https://db.onlinewebfonts.com/c/f56809563b15c7c76669dac9ca9d38ac?family=Matter+Regular");
 
-body {
-    font-family: "Matter Regular";
-}
 .codesweardark {
     color: #9ca3af;
 }
@@ -40,7 +37,6 @@ body {
 }
 
 .imageholder:hover {
-    /* box-shadow: inset 0px 0px 170px 1px rgb(209, 206, 206); */
     cursor: pointer;
 }
 

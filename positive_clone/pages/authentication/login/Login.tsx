@@ -165,15 +165,15 @@ class Login extends React.Component<{ router: NextRouter }, { name: string; flag
             this.setState({
                 formData: { ...this.state.formData, forgotPassword: { ...this.state.formData.forgotPassword, error: true } }
             });
-           
+
         }
         else {
             console.log("Password Reset", e.preventDefault());
-             
+
         }
     }
     handleConfirmPasswordChange(e: React.ChangeEvent<HTMLInputElement>): void {
-       
+
         this.setState({
             formData: { ...this.state.formData, forgotPassword: { ...this.state.formData.forgotPassword, value: e.target.value } }
         });
@@ -186,11 +186,11 @@ class Login extends React.Component<{ router: NextRouter }, { name: string; flag
                 formData: { ...this.state.formData, signup: { ...this.state.formData.signup, email: { ...this.state.formData.signup.email, error: true }, password: { ...this.state.formData.signup.password, error: true }, phone: { ...this.state.formData.signup.phone, error: true } } }
             });
         else if (!this.state.formData.signup.email.error && !this.state.formData.signup.password.error && !this.state.formData.signup.phone.error) {
-           
+
             this.setState({
                 loader: true
             });
-            
+
             fetch("/api/signup", { method: "POST", body: JSON.stringify({ email: this.state.formData.signup.email.value, phone: this.state.formData.signup.phone.value, password: password }) }).then(response => response.json()).then(response => {
                 this.setState({
                     formData: { ...this.state.formData, toast: { ...this.state.formData.toast, message: response.message, open: true }, signup: { ...this.state.formData.signup, email: { ...this.state.formData.signup.email, value: "" }, password: { ...this.state.formData.signup.password, value: "" }, phone: { ...this.state.formData.signup.phone, value: "" } } },
@@ -204,7 +204,7 @@ class Login extends React.Component<{ router: NextRouter }, { name: string; flag
                 })
             });
             toast.success("Wow this is easy");
-        } 
+        }
     }
     togglePassword(e: React.MouseEvent<HTMLSpanElement>): void {
         this.setState({
@@ -224,9 +224,9 @@ class Login extends React.Component<{ router: NextRouter }, { name: string; flag
         }
     }
     handlePhoneNumberChange(e: React.ChangeEvent<HTMLInputElement>): void {
-       
+
         let numbers = /^[0-9]+$/;
-        
+
         if (e.target.value.toString().length === 0) {
             this.setState({
                 formData: { ...this.state.formData, signup: { ...this.state.formData.signup, phone: { ...this.state.formData.signup.phone, value: "", error: true } } }
@@ -265,27 +265,27 @@ class Login extends React.Component<{ router: NextRouter }, { name: string; flag
                 this.state.passwordArray.push(e.currentTarget.value[0]);
                 passArray.push(e.currentTarget.value[0]);
             }
-         
+
             let upperCase = e.currentTarget.value.length === 1 ? e.currentTarget.value[0].toUpperCase() : e.currentTarget.value[e.currentTarget.value.length - 1].toUpperCase();
             let lowerCase = e.currentTarget.value.length === 1 ? e.currentTarget.value[0].toLowerCase() : e.currentTarget.value[e.currentTarget.value.length - 1].toLowerCase();
             let isUpperCased = e.currentTarget.value.length === 1 ? e.currentTarget.value[0] === upperCase : e.currentTarget.value[e.currentTarget.value.length - 1] === upperCase;
             let isLowerCased = e.currentTarget.value.length === 1 ? e.currentTarget.value[0] === lowerCase : e.currentTarget.value[e.currentTarget.value.length - 1] === lowerCase;
-           
+
             let isNumbered = Array.from(e.currentTarget.value).some((keySome, index) => /^[+-]?\d+(\.\d+)?$/.test(keySome));
-            
+
             if (!isLowerCased) {
-                
+
                 if (length < 8) {
                     alreadyLowerCase = Array.from(e.currentTarget.value).some((key: any) => lowerCaseRegexp.test(key));
                     alreadyUpperCase = Array.from(e.currentTarget.value).some((key: any) => upperCaseRegexp.test(key));
-                   
+
                     !alreadyLowerCase && !isNumbered && this.setState({
                         formData: { ...this.state.formData, signup: { ...this.state.formData.signup, password: { ...this.state.formData.signup.password, error: false, errorVariantion: { ...this.state.formData.signup.password.errorVariantion, lowerCase: true, length: true, numeric: true, upperCase: false } } } }
                     });
                     alreadyLowerCase && isNumbered && this.setState({
                         formData: { ...this.state.formData, signup: { ...this.state.formData.signup, password: { ...this.state.formData.signup.password, error: false, errorVariantion: { ...this.state.formData.signup.password.errorVariantion, lowerCase: false, numeric: false, upperCase: false, length: true } } } }
                     });
-                   
+
                     alreadyLowerCase && !isNumbered && this.setState({
                         formData: { ...this.state.formData, signup: { ...this.state.formData.signup, password: { ...this.state.formData.signup.password, error: false, errorVariantion: { ...this.state.formData.signup.password.errorVariantion, lowerCase: false, numeric: true, upperCase: false, length: true } } } }
                     });
@@ -297,7 +297,7 @@ class Login extends React.Component<{ router: NextRouter }, { name: string; flag
                 if (length >= 8 && length <= 20) {
                     alreadyLowerCase = Array.from(e.currentTarget.value).some((key: any) => lowerCaseRegexp.test(key));
                     alreadyUpperCase = Array.from(e.currentTarget.value).some((key: any) => upperCaseRegexp.test(key));
-                  
+
                     !alreadyLowerCase && !isNumbered && this.setState({
                         formData: { ...this.state.formData, signup: { ...this.state.formData.signup, password: { ...this.state.formData.signup.password, error: false, errorVariantion: { ...this.state.formData.signup.password.errorVariantion, lowerCase: true, numeric: true, upperCase: false, length: false } } } }
                     });
@@ -310,7 +310,7 @@ class Login extends React.Component<{ router: NextRouter }, { name: string; flag
                     alreadyLowerCase && isNumbered && this.setState({
                         formData: { ...this.state.formData, signup: { ...this.state.formData.signup, password: { ...this.state.formData.signup.password, error: false, errorVariantion: { ...this.state.formData.signup.password.errorVariantion, lowerCase: false, numeric: false, upperCase: false, length: false } } } }
                     });
-                   
+
                 }
             }
             if (!isUpperCased) {
@@ -318,7 +318,7 @@ class Login extends React.Component<{ router: NextRouter }, { name: string; flag
                 if (length < 8 || length > 20) {
                     alreadyUpperCase = Array.from(e.currentTarget.value).some((key: any) => upperCaseRegexp.test(key));
                     alreadyLowerCase = Array.from(e.currentTarget.value).some((key: any) => lowerCaseRegexp.test(key));
-                  
+
                     !alreadyUpperCase && isNumbered && this.setState({
                         formData: { ...this.state.formData, signup: { ...this.state.formData.signup, password: { ...this.state.formData.signup.password, error: false, errorVariantion: { ...this.state.formData.signup.password.errorVariantion, upperCase: true, numeric: true, lowerCase: false, length: true } } } }
                     });
@@ -332,17 +332,17 @@ class Login extends React.Component<{ router: NextRouter }, { name: string; flag
                     !alreadyUpperCase && !isNumbered && this.setState({
                         formData: { ...this.state.formData, signup: { ...this.state.formData.signup, password: { ...this.state.formData.signup.password, error: false, errorVariantion: { ...this.state.formData.signup.password.errorVariantion, upperCase: true, numeric: true, lowerCase: false, length: true } } } }
                     });
-                  
+
                 }
                 if (length >= 8 && length <= 20) {
-                   
+
                     alreadyUpperCase = Array.from(e.currentTarget.value).some((key: any) => upperCaseRegexp.test(key));
                     alreadyLowerCase = Array.from(e.currentTarget.value).some((key: any) => lowerCaseRegexp.test(key));
-                   
+
                     !alreadyUpperCase && !isNumbered && this.setState({
                         formData: { ...this.state.formData, signup: { ...this.state.formData.signup, password: { ...this.state.formData.signup.password, error: false, errorVariantion: { ...this.state.formData.signup.password.errorVariantion, upperCase: true, numeric: true, lowerCase: false, length: false } } } }
                     });
-                  
+
                     !alreadyUpperCase && isNumbered && this.setState({
                         formData: { ...this.state.formData, signup: { ...this.state.formData.signup, password: { ...this.state.formData.signup.password, error: false, errorVariantion: { ...this.state.formData.signup.password.errorVariantion, upperCase: true, numeric: false, lowerCase: false, length: false } } } }
                     });
@@ -356,7 +356,7 @@ class Login extends React.Component<{ router: NextRouter }, { name: string; flag
             }
             if (isNumbered) {
                 if (length < 8 || length > 20) {
-                   
+
                     alreadyUpperCase = Array.from(e.currentTarget.value).some((key: any) => upperCaseRegexp.test(key));
                     alreadyLowerCase = Array.from(e.currentTarget.value).some((key: any) => lowerCaseRegexp.test(key));
                     !alreadyLowerCase && !alreadyUpperCase && this.setState({
@@ -389,14 +389,14 @@ class Login extends React.Component<{ router: NextRouter }, { name: string; flag
                     })
                 }
             }
-           
+
         }
-        
+
         password = e.currentTarget.value
-        
+
     }
     componentDidUpdate(previousProps: Readonly<{}>, previousState: Readonly<any>): void {
-        
+
     }
     updateCountryCode(e: React.MouseEvent<HTMLLIElement>, contactDetails: { name: string; dial_code: string; flag: string; code: string }): void {
         this.setState({
@@ -408,7 +408,7 @@ class Login extends React.Component<{ router: NextRouter }, { name: string; flag
         });
     }
     searchFlag(e: React.KeyboardEvent<HTMLInputElement>): void {
-      
+
         if (e.currentTarget.value === "") {
             this.setState({
                 countryList: countryList.map((key, index) => {
@@ -425,10 +425,10 @@ class Login extends React.Component<{ router: NextRouter }, { name: string; flag
             let str = e.currentTarget.value;
             let filteredList: any[] = [];
             if (str.length > 1) {
-               
+
                 str = str[0].toUpperCase() + str.slice(1);
                 filteredList = countryList.filter((key, index) => {
-                    
+
                     let regexCapital = /[A-Z]/;
                     return key.name.includes(str) || key.name.includes(e.currentTarget.value);
                 });
@@ -438,7 +438,7 @@ class Login extends React.Component<{ router: NextRouter }, { name: string; flag
                     filteredList = countryList.filter(key => key.name.includes(str));
                 }
                 else filteredList = countryList;
-          
+
             this.setState({
                 countryList: filteredList.map((key, index) => {
                     return {
@@ -452,11 +452,11 @@ class Login extends React.Component<{ router: NextRouter }, { name: string; flag
         }
     }
     handleLoginEmailChange(e: React.ChangeEvent<HTMLInputElement>): void {
-        
+
         if (e.target.value !== "") {
             let regexExpression: RegExp = new RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$");
             let pass: boolean = regexExpression.test(e.target.value);
-            
+
             this.setState({
                 formData: { ...this.state.formData, login: { ...this.state.formData.login, email: { ...this.state.formData.login.email, value: e.target.value, error: !pass, validEmail: pass, emptyError: false } } }
             })
@@ -468,7 +468,7 @@ class Login extends React.Component<{ router: NextRouter }, { name: string; flag
         }
     }
     handleLoginPasswordChange(e: React.ChangeEvent<HTMLInputElement>): void {
-       
+
         if (e.currentTarget.value !== "")
             this.setState({
                 formSubmitted: false,
@@ -480,9 +480,9 @@ class Login extends React.Component<{ router: NextRouter }, { name: string; flag
                 formSubmitted: false
             })
     }
-    
+
     submitLogin(e: React.FormEvent<HTMLFormElement>): void {
-       
+
         e.preventDefault();
         if (!this.state.formData.login.email.emptyError && !this.state.formData.login.email.error && this.state.formData.login.email.validEmail && !this.state.formData.login?.password?.error && this.state.formData.login.password?.value !== "" && this.state.formData.login.email.value !== "") {
             this.setState({
@@ -538,7 +538,7 @@ class Login extends React.Component<{ router: NextRouter }, { name: string; flag
     render(): JSX.Element {
         return (
             <>
-                {this.state.loader ? <Backdrop open> <CircularProgress sx={{ color: "#e41edc" }} size={100}/></Backdrop> :
+                {this.state.loader ? <Backdrop open> <CircularProgress sx={{ color: "#e41edc" }} size={100} /></Backdrop> :
                     <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => this.submitLogin(e)}>
                         <Container className="main-container" fluid style={{ height: "100vh" }}>
                             <Row className="d-flex justify-content-center align-items-center h-100 p-2 pt-5">
@@ -552,7 +552,7 @@ class Login extends React.Component<{ router: NextRouter }, { name: string; flag
                                             Welcome Back to Botpenguin !
                                         </Typography>
                                     </div>
-                                  
+
                                     <div className="button-container d-flex w-75 gap-4">
                                         <button className="label-button-facebook w-50 d-flex gap-2 align-items-center">
                                             <span>
@@ -569,18 +569,18 @@ class Login extends React.Component<{ router: NextRouter }, { name: string; flag
                                             <span className="google-text">
                                                 Log in with Google
                                             </span>
-                                         
+
                                         </button>
                                     </div>
                                     <div className="marginal-block d-flex w-75 justify-content-center align-items-center my-4 mb-3 gap-3">
                                         <div className="border border-top-0 border-start-0 w-50 border-end-0 border-bottom-1" style={{ border: "#bebebe" }}>
-                                         
+
                                         </div>
                                         <div>
                                             <span className="" style={{ color: "#bebebe" }}>OR</span>
                                         </div>
                                         <div className="border border-top-0 border-start-0 w-50 border-end-0 border-bottom-1" style={{ border: "#bebebe" }}>
-                                           
+
                                         </div>
                                     </div>
                                     <div className="input-container d-flex flex-column w-75 gap-4 align-items-center position-relative">
@@ -597,19 +597,19 @@ class Login extends React.Component<{ router: NextRouter }, { name: string; flag
                                         {this.state.formData.login.email.validEmail && <Typography className="" fontSize={"12.6px"} position={"absolute"} top={"62px"} left={"15px"} color={"green"}>
                                             Email is valid*
                                         </Typography>}
-                            
+
                                         <div className="d-flex justify-content-center w-100 position-relative">
                                             <input className="w-100 border border-muted py-3 ps-3 rounded-1" type={this.state.formData.login.password?.visible ? "text" : "password"} value={this.state.formData.login.password?.value} placeholder="Password*" onChange={this.handleLoginPasswordChange} />
-                                            
+
                                             {
                                                 this.state.formData.login.password?.visible &&
                                                 <span className="eye material-icons position-absolute cursor-pointer" onClick={this.togglePassword}>visibility</span>
                                             }
-                                        
+
                                             {!this.state.formData.login.password?.visible &&
                                                 <span className="eye material-icons position-absolute cursor-pointer" onClick={this.togglePassword}> visibility_off</span>
                                             }
-                                         
+
 
                                             <Typography position={"absolute"} top={"62px"} left={"15px"} color={"red"} fontSize={"12.6px"} display={this.state.formData.login.password?.error ? "block" : "none"}>Password is required*</Typography>
                                         </div>

@@ -11,8 +11,8 @@ import { ICartProduct, ICartState, INavSelected } from "@/modals";
 import { Router, useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import CustomDrawer from "../cart";
-import addProduct from "@/pages/redux/actions/addProduct";
-import removeProduct from "@/pages/redux/actions/removeProduct";
+import addProduct from "@/redux/actions/addProduct";
+import removeProduct from "@/redux/actions/removeProduct";
 import { useDispatch } from "react-redux";
 import StyledModal from "../styledpopup/index";
 import { UnknownAction } from "redux";
@@ -20,8 +20,8 @@ import { toast } from "react-toastify";
 import { LuMoon, LuMoonStar, LuSun, LuSunMoon } from "react-icons/lu";
 import { useSelector } from "react-redux";
 import { FiShoppingCart } from "react-icons/fi";
-import toggletheme from "@/pages/redux/actions/theme";
-import { IState } from "@/pages/redux/sore";
+import toggletheme from "@/redux/actions/theme";
+import { IState } from "@/redux/sore";
 import Loader from "../loader";
 const StyledBar: React.FC<{ scrollTop: number }> = ({ scrollTop }) => {
     let [collapsed, setCollapsed] = React.useState<boolean>(false);
@@ -32,6 +32,7 @@ const StyledBar: React.FC<{ scrollTop: number }> = ({ scrollTop }) => {
         cart: false
     });
     let cartState = useSelector((state: IState) => state.productManage);
+    let buyProducts = useSelector((state: IState) => state.buyNow);
     let positiveTheme = useSelector((state: IState) => state.toggletheme);
     let [item, selectedItem] = React.useState<INavSelected>({
         tshirts: {
@@ -94,7 +95,7 @@ const StyledBar: React.FC<{ scrollTop: number }> = ({ scrollTop }) => {
         <>
             {loader ? <Loader /> :
                 <>
-                    <nav className={theme.light ? `px-3 bg-white ${style.custombar}` : `px-3 ${style.custombar}`} >
+                    <nav className={theme.light ? `px-2 bg-white ${style.custombar}` : `px-2 ${style.custombar}`} >
                         <div className=" d-flex justify-content-between align-items-center">
                             <div className={style.barcontainer}>
                                 <Link className="navbar-brand fw-bold text-light" href={"/"} onClick={() => selectedItem({ ...item, mugs: { ...item.mugs, selected: false, value: "" }, hoodies: { ...item.hoodies, value: "hoodies", selected: false }, stickers: { ...item.stickers, value: "stickers", selected: false }, tshirts: { ...item.tshirts, selected: false, value: "tshirts" }, mousepads: { ...item.mousepads, selected: false, value: "mousepads" }, zippers: { ...item.zippers, selected: false, value: "zippers" } })}>
@@ -107,12 +108,6 @@ const StyledBar: React.FC<{ scrollTop: number }> = ({ scrollTop }) => {
                                     </span>
                                 </div>
                             </div>
-                            {/* to be used later */}
-                            {/* <div className={style.bartext}>
-                                <Typography className="text-light" variant={"h6"}>
-                                    CodeSwear - Wear the Code
-                                </Typography>
-                            </div> */}
                             <div className="icon-list position-relative d-flex align-items-center gap-4">
                                 <div className={style.navlist}>
                                     <ul className="d-flex aling-items-center ms-5">
@@ -149,7 +144,7 @@ const StyledBar: React.FC<{ scrollTop: number }> = ({ scrollTop }) => {
                                             </Link>
                                         </li>
                                         <li className={item.zippers.selected ? ` ${theme.dark ? style.selecteditem : style.selecteditemlight}` : `${theme.dark ? style.unselecteditem : style.unselecteditemlight}`} onClick={() => selectedItem({ ...item, zippers: { ...item.zippers, value: "zippers", selected: true }, tshirts: { ...item.tshirts, selected: false, value: "" }, mugs: { ...item.mugs, value: "mugs", selected: false }, stickers: { ...item.stickers, value: "stickers", selected: false }, hoodies: { ...item.hoodies, value: "hoodies", selected: false }, mousepads: { ...item.mousepads, value: "mousepads", selected: false } })}>
-                                            <Link className="text-decoration-none" href={"/hoodies"} replace>
+                                            <Link className="text-decoration-none" href={"/zippers"} replace>
                                                 Zippers
                                             </Link>
                                         </li>
@@ -164,7 +159,7 @@ const StyledBar: React.FC<{ scrollTop: number }> = ({ scrollTop }) => {
                                     <Tooltip title={"View Cart"}>
                                         <span className={style.logout} ref={referenceElement}>
                                             <span className="badge position-absolute bg-pink-500" style={{ top: "-7.25px", right: "-7.25px", borderRadius: "50%" }}>
-                                                {Object.keys(cartState).length}
+                                                {Object.keys(buyProducts).length > 0 ? Object.keys(buyProducts).length : Object.keys(cartState).length}
                                             </span>
                                             <FiShoppingCart color="#ec4899" size={31} cursor={"pointer"} />
                                         </span>
@@ -172,12 +167,10 @@ const StyledBar: React.FC<{ scrollTop: number }> = ({ scrollTop }) => {
                                     <Tooltip title={theme.light ? "Convert to Night Mode" : "Convert to Dark Mode"}>
                                         <span className={style.themeexpanded}>
                                             {theme.light ? <LuMoonStar color="#ec4899" size={27} onClick={() => {
-                                                // console.log("Positive");
                                                 toggleTheme({ ...theme, light: false, dark: true });
                                                 dispatch(toggletheme({ light: false, dark: true }));
                                             }
                                             } /> : <LuSun color="#ec4899" size={27} onClick={() => {
-                                                // console.log("Baba ji");
                                                 toggleTheme({ ...theme, dark: false, light: true });
                                                 dispatch(toggletheme({ light: true, dark: false }));
                                             }
@@ -185,7 +178,7 @@ const StyledBar: React.FC<{ scrollTop: number }> = ({ scrollTop }) => {
                                         </span>
                                     </Tooltip>
                                     <span className={!collapsed ? style.toggler : style.hidetoggle} onClick={() => setCollapsed(!collapsed)}>
-                                        <IoMenu color={theme.dark ? "white" : "#000"} size={31} cursor={"pointer"} />
+                                        <IoMenu color={theme.dark ? "#ec4899" : "#000"} size={31} cursor={"pointer"} />
                                     </span> :
                                     <span className={collapsed ? style.close : style.hideclose} onClick={() => setCollapsed(!collapsed)}>
                                         <CgClose color={theme.dark ? "#ec4899" : "#000"} cursor={'pointer'} size={31} />
@@ -200,16 +193,16 @@ const StyledBar: React.FC<{ scrollTop: number }> = ({ scrollTop }) => {
                                     <FaSearch color="white" />
                                 </span>
                             </div>
-                            <div className="row mt-1">
-                                <div className="col-3 flex justify-center">
-                                    <ul className="w-3/4" style={{ listStyleType: "none" }}>
+                            <div className="row mt-1 justify-between">
+                                <div className="col-4 flex justify-start">
+                                    <ul className="" style={{ listStyleType: "none" }}>
                                         <li className={item.tshirts.selected ? `text-center ${theme.dark ? style.selecteditem : style.selecteditemlight}` : `text-center ${theme.dark ? style.unselecteditem : style.unselecteditemlight}`} onClick={() => {
                                             selectedItem({
                                                 ...item, mugs: { ...item.mugs, selected: false, value: "tshirts" }, stickers: {
                                                     ...item.stickers,
                                                     selected: false,
                                                     value: "stickers"
-                                                }, hoodies: { ...item.hoodies, value: "hoodies", selected: false }, tshirts: { ...item.tshirts, selected: true, value: "tshirts" }
+                                                }, hoodies: { ...item.hoodies, value: "hoodies", selected: false }, tshirts: { ...item.tshirts, selected: true, value: "tshirts" }, zippers: { ...item.zippers, value: "zippers", selected: false }
                                             })
                                             router.push({
                                                 pathname: "/tShirts",
@@ -223,7 +216,7 @@ const StyledBar: React.FC<{ scrollTop: number }> = ({ scrollTop }) => {
                                             router.push({
                                                 pathname: "/stickers"
                                             });
-                                            selectedItem({ ...item, mugs: { ...item.mugs, value: "mugs", selected: false }, hoodies: { ...item.hoodies, value: "hoodies", selected: false }, tshirts: { ...item.tshirts, value: "tshirts", selected: false }, stickers: { ...item.stickers, value: "stickers", selected: true } })
+                                            selectedItem({ ...item, mugs: { ...item.mugs, value: "mugs", selected: false }, hoodies: { ...item.hoodies, value: "hoodies", selected: false }, tshirts: { ...item.tshirts, value: "tshirts", selected: false }, stickers: { ...item.stickers, value: "stickers", selected: true }, zippers: { ...item.zippers, value: "zippers", selected: false } })
                                         }}>
                                             <Link className="text-decoration-none" href={"/stickers"} replace>
                                                 Stickers
@@ -233,7 +226,7 @@ const StyledBar: React.FC<{ scrollTop: number }> = ({ scrollTop }) => {
                                             router.push({
                                                 pathname: "/mugs"
                                             });
-                                            selectedItem({ ...item, stickers: { ...item.stickers, value: "stickers", selected: false }, tshirts: { ...item.tshirts, value: "tshirts", selected: false }, hoodies: { ...item.hoodies, value: "hoodies", selected: false }, mugs: { ...item.mugs, value: "mugs", selected: true } })
+                                            selectedItem({ ...item, stickers: { ...item.stickers, value: "stickers", selected: false }, tshirts: { ...item.tshirts, value: "tshirts", selected: false }, hoodies: { ...item.hoodies, value: "hoodies", selected: false }, mugs: { ...item.mugs, value: "mugs", selected: true }, zippers: { ...item.zippers, value: "zippers", selected: false } })
                                         }}>
                                             <Link className="text-decoration-none" href={"/mugs"} replace>
                                                 Mugs
@@ -247,16 +240,31 @@ const StyledBar: React.FC<{ scrollTop: number }> = ({ scrollTop }) => {
                                                 ...item, stickers: { ...item.stickers, value: "stickers", selected: false }, mugs: {
                                                     ...item.mugs,
                                                     value: "mugs", selected: false
-                                                }, tshirts: { ...item.tshirts, value: "tshirts", selected: false }, hoodies: { ...item.hoodies, value: "hoodies", selected: true }
+                                                }, tshirts: { ...item.tshirts, value: "tshirts", selected: false }, hoodies: { ...item.hoodies, value: "hoodies", selected: true }, zippers: { ...item.zippers, selected: false, value: "zippers" }
                                             })
                                         }}>
                                             <Link className="text-decoration-none" href={"/hoodies"} replace>
                                                 Hoodies
                                             </Link>
                                         </li>
+                                        <li className={item.hoodies.selected ? `text-center ${theme.dark ? style.selecteditem : style.selecteditemlight}` : `text-center ${theme.dark ? style.unselecteditem : style.unselecteditemlight}`} onClick={() => {
+                                            router.push({
+                                                pathname: "/hoodies"
+                                            });
+                                            selectedItem({
+                                                ...item, stickers: { ...item.stickers, value: "stickers", selected: false }, mugs: {
+                                                    ...item.mugs,
+                                                    value: "mugs", selected: false
+                                                }, tshirts: { ...item.tshirts, value: "tshirts", selected: false }, hoodies: { ...item.hoodies, value: "hoodies", selected: false }, zippers: { ...item.zippers, selected: true, value: "Zippers" }
+                                            })
+                                        }}>
+                                            <Link className="text-decoration-none" href={"/zippers"} replace>
+                                                Zippers
+                                            </Link>
+                                        </li>
                                     </ul>
                                 </div>
-                                <div className="col-9 flex justify-end align-center gap-2">
+                                <div className="col-7 flex justify-end align-center gap-2">
                                     <Tooltip title={"Logout"} sx={{ zIndex: 20 }}>
                                         <span className="cursor-pointer">
                                             <CgLogOut color={theme.light ? "#ec4899" : "#fff"} size={27} />
@@ -264,9 +272,14 @@ const StyledBar: React.FC<{ scrollTop: number }> = ({ scrollTop }) => {
                                     </Tooltip>
                                     <Tooltip title={"View Cart"} sx={{ zIndex: 10 }}>
                                         <span className="cursor-pointer position-relative">
-                                            <span className="badge badge-danger position-absolute top-0 end-0">
-                                            </span>
-                                            <FiShoppingCart color={theme.light ? "#ec4899" : "#fff"} size={27} />
+                                            {Object.keys(buyProducts).length > 0 || Object.keys(cartState).length > 0 &&
+                                                <Tooltip title={"View Cart"}>
+                                                    <span className="text-light text-center text-sm rounded-circle w-[19px] h-[19px] bg-pink-600 position-absolute top-[-8px] end-[-10px]">
+                                                        {Object.keys(buyProducts).length > 0 ? Object.keys(buyProducts).length : Object.keys(cartState).length > 0 && Object.keys(cartState).length}
+                                                    </span>
+                                                </Tooltip>
+                                            }
+                                            <FiShoppingCart onClick={(e) => setState({ ...state, cart: true })} color={theme.light ? "#ec4899" : "#fff"} size={27} />
                                         </span>
                                     </Tooltip>
                                     <Tooltip title={theme.light ? "Night Mode" : "Day Mode"} sx={{ zIndex: 10 }}>
@@ -282,18 +295,9 @@ const StyledBar: React.FC<{ scrollTop: number }> = ({ scrollTop }) => {
                     </nav>
                     <CustomDrawer reviewCart reduxAdd={addProducts} reduxSubtract={removeProducts} open={state.cart} closeDrawer={() => setState({ ...state, cart: false })} width={400} />
                     <StyledModal open={state.logout} content={positiveBabaji} purpose="Log Out" closeModal={() => setState({ ...state, logout: false })} confirmProcess={() => {
-                        // localStorage.removeItem("user");
-                        // router.push({
-                        //     pathname: "/authentication/login",
-                        //     // query: {
-                        //     //     login: true
-                        //     // }
-                        // });
-                        // setState({ ...state, logout: false })
                         setLoader(true);
                         fetch("/api/logout").then(response => response.json()).then(resp => {
                             if (resp.statusCode === 200) {
-                                // Router.
                                 setLoader(false);
                                 router.push("/authentication/login");
                                 toast.success("LogedOut Successfully", {

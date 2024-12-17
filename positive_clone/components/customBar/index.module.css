@@ -56,12 +56,12 @@
     padding: 5px;
     transition: all 0.2s;
     font-weight: bold;
-    font-size: large;
+    font-size: medium;
 }
 
 .unselecteditemlight {
     color: #000;
-    border: 2px solid #fff;
+    border: 2px solid transparent;
     cursor: pointer;
     margin-right: 5px;
     padding: 5px;
@@ -81,8 +81,7 @@
     padding: 5px;
     transition: all 0.2s;
     font-weight: bold;
-    font-size: large;
-    /* text-shadow: 0px 0px 2px 10px #db2777; */
+    font-size: medium;
 }
 
 .selected-item:hover {
@@ -106,9 +105,9 @@
 
 .search {
     transition: linear 0.19s;
-    height: 45px;
-    max-height: 45px;
-    padding: 17px;
+    height: 38px;
+    padding-top: 12px;
+    padding-bottom: 12px;
     padding-left: 21px;
     padding-right: 21px;
 }
@@ -139,24 +138,12 @@
     width: 100%;
     background-color: #111827;
     z-index: 90;
-    /* height: 80px; */
-    padding: 21px;
-    /* transition:all 0.3s; */
-    box-shadow: 0px 0px 5px 2px rgb(168, 165, 165, 0.5);
+
+    padding: 10px;
+
+    box-shadow: 0px 0px 5px 2px rgba(217, 124, 240, 0.5);
 }
 
-/* .expandedbar {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    background-color: black;
-    z-index: 90;
-    height:100px;
-    transition : all 0.3s;
-    padding: 21px;
-    box-shadow:0px 0px 5px 2px black;
-} */
 @media only screen and (min-width:901px) {
     .logout {
         display: block;
@@ -165,7 +152,7 @@
 
     .toggler {
         display: none;
-        /* transition: all 2s linear; */
+
     }
 
     .hideclose {
@@ -178,8 +165,6 @@
 
     .close {
         display: none;
-        /* cursor: pointer; */
-        /* transition: all 0.25s linear; */
     }
 
     .sidebar {
@@ -258,21 +243,15 @@
     }
 
     .sidebar {
-        /* visibility: hidden;
-        opacity: 0; */
         padding: 0px;
         height: 0px;
-        /* max-height: 0px; */
         overflow: hidden;
         transition: all 0.25s;
     }
 
     .showbar {
-        /* visibility: visible;
-        opacity: 1; */
         padding: 10px;
         height: 220px;
-        /* max-height: 180px; */
         overflow: hidden;
         transition: all 0.25s;
     }
@@ -304,9 +283,7 @@
 }
 
 .darkinput {
-    /* padding-top: 5px;
-    padding-bottom: 5px; */
-    height: 45px;
+    height: 35px;
     max-height: 45px;
 }
 
@@ -314,14 +291,11 @@
     color: lightgray;
     font-family: "Matter Regular";
     font-weight: bold;
-    /* padding-left: 4px; */
 }
 
 .lightinput {
-    outline: 2px solid lightgray;
-    /* padding-top: 5px;
-    padding-bottom: 5px; */
-    height: 45px;
+    outline: 2px solid rgb(239, 236, 236);
+    height: 35px;
     border: transparent;
 }
 
@@ -334,5 +308,4 @@
     color: black;
     font-family: "Matter Regular";
     font-weight: bold;
-    /* padding-left: 4px; */
 }

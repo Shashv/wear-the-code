@@ -4,6 +4,18 @@
     padding: 14px;
 }
 
+.lightcontainer {
+    background-color: #fff;
+    padding: 5px;
+    position: relative;
+}
+
+.darkcontainer {
+    background-color: #1f2937;
+    padding: 5px;
+    position: relative;
+}
+
 .card:hover {
     transition: linear 0.2s;
     box-shadow: inset 0px 0px 25px 3.5px rgb(209, 206, 206);
@@ -96,4 +108,13 @@
     height: 75%;
     margin: auto;
     transform: scale(1.04);
+}
+@media only screen and (width < 768px) {
+    .mobilecontainermugs {
+        position: absolute;
+        top: 19px;
+        z-index: 11;
+        height: 100%;
+        width: 100%;
+    }
 }

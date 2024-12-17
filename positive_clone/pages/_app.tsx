@@ -2,15 +2,15 @@ import React from "react";
 import Head from "next/head";
 import { Provider } from "react-redux";
 import { SnackbarProvider } from "notistack";
-import Navbar from "../components/navbar";
+// import Navbar from "../components/slider";
 import Footer from "@/components/footer";
 import { NextRouter, useRouter } from "next/router";
 import "./styles.css";
 import { IPositive } from "@/modals";
-import store, { IDispatch, IState } from "./redux/sore";
+import store, { IDispatch, IState } from "@/redux/sore";
 import { useDispatch, useSelector } from "react-redux";
-import addProduct from "./redux/actions/addProduct";
-import removeProduct from "./redux/actions/removeProduct";
+import addProduct from "@/redux/actions/addProduct";
+import removeProduct from "@/redux/actions/removeProduct";
 import { useEffect, useRef } from "react";
 import StyledBar from "@/components/customBar";
 import { ToastContainer } from "react-toastify";
@@ -20,6 +20,7 @@ import { usePathname } from "next/navigation";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import type { AppProps } from "next/app";
 import "aos/dist/aos.css";
+import ToastProvider from "@/components/toast/Toast";
 const Layout: React.FC<AppProps> = ({ Component, pageProps }) => {
     const routerDetail: NextRouter = useRouter();
     let ref = useRef<HTMLDivElement>(null);
@@ -27,23 +28,25 @@ const Layout: React.FC<AppProps> = ({ Component, pageProps }) => {
     let [scrollBar, setScrollBar] = React.useState<number>(0);
     let [direction, setDirection] = React.useState<string>("");
     let initial: number = ref.current?.scrollTop || 0;
-    const onScroll = (e: any) => {
-        setScrollBar(ref.current?.scrollTop || 0);
-        if (ref.current?.scrollTop !== undefined) {
-            if (initial > ref.current?.scrollTop) {
-                setDirection("up");
-            }
-            else {
-                setDirection("down");
-            }
-        }
-    };
+    // if you want to scrooll the effect//
+    // const onScroll = (e: any) => {
+    //     setScrollBar(ref.current?.scrollTop || 0);
+    //     if (ref.current?.scrollTop !== undefined) {
+    //         if (initial > ref.current?.scrollTop) {
+    //             setDirection("up");
+    //         }
+    //         else {
+    //             setDirection("down");
+    //         }
+    //     }
+    // };
     let routePath = usePathname();
     return (
         <GoogleOAuthProvider clientId="803758111092-tusltrjau3p58fdue2k96a6rkm0nasik.apps.googleusercontent.com">
             <SessionProvider>
                 <SnackbarProvider anchorOrigin={{ vertical: "top", horizontal: "right" }}>
-                    <div ref={ref} className="parent" style={{ height: "100vh" }} onScroll={onScroll}>
+                    {/* <div ref={ref} className="parent" style={{ height: "100vh" }} onScroll={onScroll}> */}
+                    <div ref={ref} className="parent " style={{ height: "100vh" }}>
                         <Head>
                             {/* For the bootsrap icons and material */}
                             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossOrigin={"anonymous"} />
@@ -58,14 +61,17 @@ const Layout: React.FC<AppProps> = ({ Component, pageProps }) => {
                             <title>Codeswear - Wear the Code</title>
                         </Head>
                         <Provider store={store}>
-                            {!path.includes("/authentication") &&
-                                <StyledBar scrollTop={scrollBar} />
-                            }
-                            <Component  {...pageProps} />
-                            {!path.includes("/authentication") && <Footer />}
-                            <ToastContainer />
+                            <ToastProvider>
+                                {!path.includes("/authentication") &&
+                                    <StyledBar scrollTop={scrollBar} />
+                                }
+                                <Component  {...pageProps} />
+                                {!path.includes("/authentication") && <Footer />}
+                                <ToastContainer />
+                            </ToastProvider>
                         </Provider>
                     </div>
+                    {/* </div> */}
                 </SnackbarProvider>
             </SessionProvider>
         </GoogleOAuthProvider>

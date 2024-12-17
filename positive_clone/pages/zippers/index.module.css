@@ -1,4 +1,3 @@
-
 .chatbotcontainer {
     width: 100%;
     height: 100%;
@@ -58,4 +57,21 @@
     position: relative;
     width: 40px;
     height: 40px;
+}
+
+.lightzipper {
+    background-color:#fff ;
+    padding: 5px;
+}
+
+.darkzipper {
+    background-color: #1f2937;
+    padding: 5px
+}
+
+@media only screen and (width<768px) {
+    .mobilefiltercontainer {
+        position: absolute;
+
+    }
 }

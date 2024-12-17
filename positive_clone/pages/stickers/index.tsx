@@ -1,114 +1,111 @@
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import StyledToast from "@/components/toast";
-import style from "./index.module.css";
 import { useSelector } from "react-redux";
-import { IState } from "../redux/sore";
+import { IState } from "@/redux/sore";
+import SlickSlides from "@/components/slickSlides";
+import ProductModel from "@/modalsmongoose/product";
+import ProductCard from "@/components/productcard";
+import { useCallback, useMemo } from "react";
+import { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
+import Link from "next/link";
 import { useEffect } from "react";
-const StickersPage: React.FC = (props: any) => {
+import { Backdrop, CircularProgress, Typography } from "@mui/material";
+import Head from "next/head";
+import styles from "../stickers/index.module.css";
+import FilterBar from "@/components/filtergroup";
+import useToast from "@/hooks/useToast";
+import { Grid } from "@mui/material";
+import LoaderAnimate from "@/components/loader";
+const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers: Array<any> }) => {
     let [toast, setToast] = useState<boolean>(false);
+    const [loader, setLoader] = useState<boolean>(false);
+    const router = useRouter();
     const combinedState = useSelector((state: IState) => state.toggletheme);
     const hideToast: (e: React.MouseEvent) => void = (e) => {
         setToast(false);
     }
+    const toastOptions = useToast();
     const onScroll: (e: any) => void = (e) => {
-        console.log("scroll event", e);
+
     }
     useEffect(() => {
-        console.log("Toggle theme using the redux", combinedState);
-        return () => console.log("I am the function to be run on the clean up");
+        if (props.stickers) {
+            toastOptions("Stickers:Codeswear - Wear the Code", "success");
+            setLoader(false);
+        };
     }, []);
+    const onClose: (e: React.MouseEvent<any>, timeOutID: any) => void = (e, id) => {
+        clearTimeout(id);
+        setToast(false);
+    }
     return (
         <>
-            <div className={combinedState.dark ? "p-2 bg-dark" : "p-2 bg-light"} onScroll={onScroll}>
-                <section className="text-gray-600 body-font">
-                    <div className="container-fluid overflow-hidden px-5 py-20">
-                        <div className="row gx-4">
-                            <div className={`${style.card} cursor-pointer col-12 col-md-3`}>
-                                <a className="block relative rounded overflow-hidden">
-                                    <img alt="ecommerce" className="md:h-[36vh] h-[30vh] shadow-lg mx-auto" src="./sticekrs.jpg" />
-                                </a>
-                                <div className="mt-4 text-center">
-                                    <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">CATEGORY</h3>
-                                    <h2 className="text-gray-900 title-font text-lg font-medium">The Catalyzer</h2>
-                                    <p className="mt-1">$16.00</p>
+            <Head>
+                <title>Buy best stickers : Code Swear</title>
+                <link rel={"icon"} href="logo.webp" />
+            </Head>
+            {!loader ?
+                <>
+                    <div className={combinedState.dark ? `${styles.containerpacksdark}` : `${styles.containerpacks}`}>
+                        <section className="">
+                            <div className="container-fluid p-0">
+                                <div className="row h-100">
+                                    <div className={`col-md-2 ${styles.positivefiltercontainer} p-2`}>
+                                        <FilterBar theme={combinedState} />
+                                    </div>
+                                    <div className="col-md-10 p-2">
+                                        <div className="py-2">
+                                            <Typography className={combinedState.light ? "text-dark text-center" : "text-light text-center"} fontWeight={600} sx={{ fontSize: { xs: 21, md: 30.5 } }}>
+                                                Explore Our Stickers Collection
+                                            </Typography>
+                                            <Typography color={combinedState.light ? "#000" : "#9ca3af"} className={"text-start px-24 py-2 pb-3"} sx={{ fontSize: { sm: 15, md: 14 }, textIndent: { sm: "start" } }} lineHeight={1.2}>
+                                                Welcome to Codeswear.com, your one-stop shop for stylish and unique stickers. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!
+                                            </Typography>
+                                            <Grid container rowGap={2} className="justify-center" columnGap={1.3}>
+                                                {props.stickers ? props.stickers.map((sticker, index) => <Grid item xs={8.9} sm={5.9} md={2.2} key={`sticker-${index}`}>
+                                                    <Link href={`/product/${sticker.slug}`}>
+                                                        <ProductCard title={sticker.title} desc={sticker.desc} img={sticker.img} category={sticker.category} slug={sticker.slug} />
+                                                    </Link>
+                                                </Grid>)
+                                                    : <div className="col-12">
+                                                        <Typography className="error-text" variant="h4">
+                                                            OOPS , Something went wrong !
+                                                        </Typography>
+                                                    </div>}
+                                            </Grid>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className={`${style.card} col-12 col-md-3 cursor-pointer`}>
-                                <a className="block relative rounded overflow-hidden">
-                                    <img alt="ecommerce" className="md:h-[36vh] h-[30vh] shadow-lg mx-auto" src="./stickerssecond.jpg" />
-                                </a>
-                                <div className="mt-4 text-center">
-                                    <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">CATEGORY</h3>
-                                    <h2 className="text-gray-900 title-font text-lg font-medium">Shooting Stars</h2>
-                                    <p className="mt-1">$21.15</p>
-                                </div>
-                            </div>
-                            <div className={`cursor-pointer col-12 col-md-3 ${style.card}`}>
-                                <a className="block relative rounded overflow-hidden">
-                                    <img alt="ecommerce" className="md:h-[36vh] h-[30vh] shadow-lg mx-auto" src="./stickersthird.jpg" />
-                                </a>
-                                <div className="mt-4 text-center">
-                                    <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">CATEGORY</h3>
-                                    <h2 className="text-gray-900 title-font text-lg font-medium">Neptune</h2>
-                                    <p className="mt-1">$12.00</p>
-                                </div>
-                            </div>
-                            <div className={`col-12 col-md-3 cursor-pointer ${style.card}`}>
-                                <a className="block relative rounded overflow-hidden">
-                                    <img alt="ecommerce" className="md:h-[36vh] shadow-lg rounded-2 h-[30vh] mx-auto" src="./stickersfourth.jpg" />
-                                </a>
-                                <div className="mt-4 text-center">
-                                    <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">CATEGORY</h3>
-                                    <h2 className="text-gray-900 title-font text-lg font-medium">The 400 Blows</h2>
-                                    <p className="mt-1">$18.40</p>
-                                </div>
-                            </div>
-                            <div className={`col-12 col-md-3 ${style.card} cursor-pointer`}>
-                                <a className="block relative rounded overflow-hidden mx-auto">
-                                    <img alt="ecommerce" className="md:h-[36vh] h-[30vh] shadow-lg mx-auto" src="./stickersfifith.jpg" />
-                                </a>
-                                <div className="mt-4 text-center">
-                                    <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">CATEGORY</h3>
-                                    <h2 className="text-gray-900 title-font text-lg font-medium">The Catalyzer</h2>
-                                    <p className="mt-1">$16.00</p>
-                                </div>
-                            </div>
-                            <div className={`col-12 col-md-3 cursor-pointer ${style.card}`}>
-                                <a className="block relative rounded overflow-hidden shadow-lg mx-auto">
-                                    <img alt="ecommerce" className="md:h-[36vh] h-[30vh] shadow-lg mx-auto" src="./stickerssixth.jpg" />
-                                </a>
-                                <div className="mt-4 text-center">
-                                    <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">CATEGORY</h3>
-                                    <h2 className="text-gray-900 title-font text-lg font-medium">Shooting Stars</h2>
-                                    <p className="mt-1">$21.15</p>
-                                </div>
-                            </div>
-                            <div className={`col-12 col-md-3 ${style.card} cursor-pointer`}>
-                                <a className="block relative rounded overflow-hidden">
-                                    <img alt="ecommerce" className="md:h-[36vh] h-[30vh] shadow-lg mx-auto" src="./stickersseventh.jpg" />
-                                </a>
-                                <div className="mt-4 text-center">
-                                    <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">CATEGORY</h3>
-                                    <h2 className="text-gray-900 title-font text-lg font-medium">Neptune</h2>
-                                    <p className="mt-1">$12.00</p>
-                                </div>
-                            </div>
-                            <div className={`col-12 col-md-3 cursor-pointer ${style.card}`}>
-                                <a className="block relative rounded overflow-hidden">
-                                    <img alt="ecommerce" className="md:h-[36vh] h-[30vh] shadow-lg mx-auto" src="./stickerseight.jpg" />
-                                </a>
-                                <div className="mt-4 text-center">
-                                    <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">CATEGORY</h3>
-                                    <h2 className="text-gray-900 title-font text-lg font-medium">The 400 Blows</h2>
-                                    <p className="mt-1">$18.40</p>
-                                </div>
-                            </div>
-                        </div>
+                        </section>
                     </div>
-                </section>
-            </div>
+                    <SlickSlides />
+                </> :
+                <Backdrop open className="flex flex-column align-center justify-center body-font">
+                    <LoaderAnimate />
+                </Backdrop>}
+
         </>
     )
 }
 export default StickersPage;
+export const getServerSideProps: GetServerSideProps<{ stickers?: Array<unknown | any>, error?: string }> = async context => {
+    let responseStickers = await ProductModel.find({ category: "stickers" }).lean();
+    let filteredResponse = responseStickers.map((sticker: any) => {
+        const { _id, ...rest } = sticker;
+        return { ...rest, createdAt: new Date(sticker.createdAt).toLocaleString(), updatedAt: new Date(sticker.updatedAt).toLocaleString() };
+    })
+    if (responseStickers)
+        return {
+            props: {
+                stickers: [...filteredResponse],
+            }
+        }
+    else return {
+        props: {
+            error: "Something went wrong"
+        }
+    }
+}

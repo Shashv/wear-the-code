@@ -16,7 +16,7 @@ const middleware = (request: NextRequest) => {
 export default middleware;
 
 export const config = {
-    matcher: ["/", "/authentication/login", "/authentication/signup"]
+    matcher: ["/authentication/login", "/authentication/signup"]
 }
 
 //General Note regarding the middleware //
