@@ -16,7 +16,7 @@ input:focus {
     overflow-x: hidden;
     font-family: "Matter Regular";
     position: relative;
-    overflow-y: scroll;
+
 }
 
 .parent::-webkit-scrollbar {

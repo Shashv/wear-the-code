@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import Link from "next/link";
 import { IState } from "@/pages/redux/sore";
 const Footer: React.FC = () => {
-    let theme: any = useSelector((state: IState) => state.toggletheme);
+    let theme: { light: boolean; dark: boolean } = useSelector((state: IState) => state.toggletheme);
     let [footerList, setFooterList] = useState([{
         shop: [{ value: "TShirts", route: "tShirts" }, { value: "SweatShirts", route: "sweatShirts" }, { value: "Hoodies", route: "hoodies" }, { value: "Zipper Hodies", route: "zipperHoddies" }, { value: "Mugs", route: "mugs" }],
         customerService: [{ value: "Contact Us", route: "contactUs" }, { value: "About Us", route: "aboutUs" }, { value: "Return Policy", route: "returnPolicy" }, { value: "Shipping Policy", route: "shippingPolicy" }],
@@ -16,65 +16,68 @@ const Footer: React.FC = () => {
     }]);
     return (
         <>
-            <footer className={theme.dark ? `${styles.footerdark} p-2 py-4` : `${styles.footer} p-2 py-4`}>
-                <Row className="flex justify-evenly">
-                    <Col xs={3}>
-                        <Image src={"/codeswearcircle.png"} width={80} height={80} className="rounded-circle" alt="Brand" />
-                        <Typography className={theme.light ? "text-dark" : "text-light"}>
-                            Wear the code Premuim coding tshirts,
+            <footer className={theme.dark ? `${styles.footerdark} p-2 py-5` : `${styles.footer} p-2 py-5`}>
+                <Row className="gy-5 justify-center">
+                    <Col xs={12} md={2} className="flex flex-column align-items-center gap-2 justify-center">
+                        <Image src={"https://codeswear.com/logo.png"} width={200} height={200} className="rounded-circle" alt="Brand" />
+                        <Typography color={theme.light ? "#000" : "#9ca3a4"} className={theme.light ? "text-center w-1/2" : "text-center w-1/2"}>
+                            Wear the &lt;code/&gt;
+                            <br />
+                            Premuim coding tshirts,
                             hoodies and apparals
                         </Typography>
                     </Col>
-                    <Col xs={2} className="text-lightfw-bold my-auto fs-4">
-                        <Typography className={theme.light ? "font-600 text-gray-600" : "font-600 text-light"} sx={{ fontSize: "22px" }}>
-                            Shirt
+                    <Col xs={12} md={2} className="text-light d-flex flex-column gap-2">
+                        <Typography sx={{ fontSize: { xs: 17 } }} className={theme.light ? "text-gray-600 text-center" : "text-light text-center"}>
+                            Shop
                         </Typography>
                         <div className="d-flex flex-column">
-                            {footerList[0].shop.map((key, index) => <List dense disablePadding className="" key={index}>
-                                <ListItem sx={{ fontSize: "15px" }} className="ps-0">
-                                    <Link href={`/${key.route}`} className={theme.light ? "text-decoration-none text-muted hover:text-pink-400 cursor-pointer" : "text-decoration-none text-light hover:text-pink-400"}>
-                                        {key.value.toUpperCase()}
-                                    </Link>
-                                </ListItem>
-                            </List>)}
+                            <List dense disablePadding className="" key={""}>
+                                {footerList[0].shop.map((key, index) =>
+                                    <ListItem sx={{ fontSize: "14px" }} key={index} className="px-0 justify-center hover:text-pink-400">
+                                        <Link href={`/${key.route}`} className={theme.light ? "text-decoration-none  hover:text-pink-400" : "text-decoration-none text-light hover:text-pink-400"}>
+                                            {key.value.toUpperCase()}
+                                        </Link>
+                                    </ListItem>
+                                )}
+                            </List>
                         </div>
                     </Col>
-                    <Col xs={2} className="text-light fs-4">
-                        <Typography className={theme.light ? "text-gray-600 font-600" : "text-light font-600"} sx={{ fontSize: "22px" }}>
+                    <Col xs={12} md={2} className="d-flex flex-column gap-2">
+                        <Typography sx={{ fontSize: { xs: 17 } }} className={theme.light ? "text-gray-600 text-center" : "text-light text-center"}>
                             Customer Service
                         </Typography>
                         <div className="d-flex flex-column">
-                            {footerList[0].customerService.map((key,index) => <List dense disablePadding key={index}>
-                                <ListItem sx={{ fontSize: "15px" }} className="ps-0">
-                                    <Link href={`/${key.route}`} className={theme.light ? "text-decoration-none text-muted cursor-pointer" : "text-light cursor-pointer text-decoration-none"}>
-                                        {key.value}
-                                    </Link>
-                                </ListItem>
-                            </List>)}
+                            <List dense disablePadding>
+                                {footerList[0].customerService.map((key, index) =>
+                                    <ListItem sx={{ fontSize: "15px" }} key={index} className="px-0 justify-center hover:text-pink">
+                                        <Link href={`/${key.route}`} className={theme.light ? "text-decoration-none text-muted cursor-pointer" : "text-light cursor-pointer text-decoration-none"}>
+                                            {key.value}
+                                        </Link>
+                                    </ListItem>
+                                )}
+                            </List>
                         </div>
                     </Col>
-                    <Col xs={2} className="text-light fs-4">
-                        <Typography className={theme.light ? "text-gray-600" : "text-light"} sx={{ fontSize: "22px" }}>
-                            Policy
+                    <Col xs={12} md={2} className="flex flex-col gap-2">
+                        <Typography className={theme.light ? "text-gray-600 text-center" : "text-light text-center"} sx={{ fontSize: { xs: 17 } }}>
+                            Privacy Policy
                         </Typography>
-                        <div className="d-flex flex-column">
-                            {footerList[0].policy.map((key, index) => <List dense disablePadding key={index}>
-                                <ListItem sx={{ fontSize: "15px" }} className={theme.light ? "text-gray-400 ps-0" : "text-light ps-0"}>
+                        <List dense disablePadding>
+                            {footerList[0].policy.map((key, index) =>
+                                <ListItem sx={{ fontSize: "15px" }} key={index} className={theme.light ? "text-gray-600 justify-center hover:text-pink-400" : "hover:text-pink-400 text-light justify-center"}>
                                     <Link className="" href={`/${key.route}`}>
                                         {key.value}
                                     </Link>
                                 </ListItem>
-                            </List>)}
-                        </div>
+                            )}
+                        </List>
                     </Col>
-                    <Col xs={2} className="text-light fw-bold my-auto fs-4">
+                    <Col xs={12} md={2} className="text-light fw-bold my-auto fs-4">
                         <div className="">
                             <img className="" src="	https://codeswear.com/pay.png" />
                         </div>
                     </Col>
-                    {/* <Col xs={2} className="text-light fw-bold my-auto fs-4">
-                        Fifth
-                    </Col> */}
                 </Row>
             </footer>
         </>

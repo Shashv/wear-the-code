@@ -7,7 +7,6 @@ import { useInView } from "react-intersection-observer";
 const Tags: React.FC<ITagList> = ({ logo, label, desciption, theme }) => {
     const direction: string = useContext(ContextObject);
     const { ref, inView } = useInView();
-    // console.log("Theme for the card", theme.dark, inView);
     return (
         <>
             <Card className={theme.light ? `rounded-3 ${style.tagcardlight}` : theme.dark ? `rounded-3 ${style.tagcarddark}` : ``}>

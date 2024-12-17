@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 import { useSelector } from "react-redux";
 import Loader from "@/components/loader";
 import CollectionSections from "@/sections/collections";
-import { IState } from "./redux/sore";
+import { IState } from "@/redux/sore";
 import ThemeSection from "@/sections/themes";
 import TagSection from "@/sections/tagssection";
 import BestSelling from "@/sections/bestsale";
@@ -20,13 +20,11 @@ interface IParas {
         name: string
     }
 }
-
 export default function Home(props: { name: string, scrollTop: number, direction: string } | any) {
     const rouerDetail = useRouter();
     let scrollDIrection: string = "";
     let [scrollDirection, setScrollDirection] = useState<string>("");
     let theme = useSelector((state: IState) => state.toggletheme);
-
     useEffect(() => {
         props.scrollTop > 0 ? setScrollDirection("down") : setScrollDirection("up");
     }, []);

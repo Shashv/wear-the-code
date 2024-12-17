@@ -5,7 +5,7 @@
 }
 
 .tagcardlight {
-    /* outline:2px solid lightgray; */
+
     background-color: #fff;
     height: 200px;
     border: transparent;
@@ -17,7 +17,6 @@
     height: 200px;
     border: transparent;
     animation: showtag 0.85s forwards ease;
-    /* color: #fff; */
 }
 
 .hidecardlight {

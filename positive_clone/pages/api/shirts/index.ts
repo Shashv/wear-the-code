@@ -1,25 +1,35 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import mysql from "mysql2/promise";
+import connectDatabase from "@/configuration";
+import ProductModel from "@/modalsmongoose/product";
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
-    // console.log("Request body params",request.query);
-    // let specificProduct = request.query.product;
     let type = request.query.type;
-    let database = await mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "SHASHVAT",
-        database: "firstpositive_db",
-        port: 3306
-    });
-    if (type) {
-        let responseproduct: any = await database.query('select * from shirts where  type = ?', [type]);
-        // console.log("Response product",responseproduct[0][0]);
-        return response.status(200).json({ product: responseproduct[0][0] });
+    if (request.method === "GET") {
+        console.log("Type",type);
+        let responseproduct = await ProductModel.find({ slug: type }).lean();
+        const availableshirts: any[] = await ProductModel.find({ title: responseproduct[0].title, category: responseproduct[0].category }).lean();
+        const colorslug: {
+            [key: string]: {
+                [key: string]: {
+                    slug: string;
+                    price: number;
+                }
+            }
+        } = {};
+        for (let shirtVaraints of availableshirts) {
+            if (shirtVaraints.color in colorslug) {
+                colorslug[shirtVaraints.color][shirtVaraints.size] = { slug: shirtVaraints.slug, price: shirtVaraints.price }
+            }
+            else {
+                colorslug[shirtVaraints.color] = {};
+                colorslug[shirtVaraints.color][shirtVaraints.size] = { slug: shirtVaraints.slug, price: shirtVaraints.price }
+            }
+        }
+        return response.status(200).json({ productVariant: colorslug, product: responseproduct });
     }
     else {
-        let responseData = await database.query("select * from shirts", []);
-        return response.status(200).json({ data: responseData[0] });
+        return response.status(405).json({ message: "Method not allowed" });
     }
     response.end();
 }
-export default handler;
+export default connectDatabase(handler);

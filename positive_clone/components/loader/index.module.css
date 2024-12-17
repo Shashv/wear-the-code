@@ -3,7 +3,7 @@
     height: 100%;
     display: flex;
     justify-content: center;
-    align-items:center;
+    align-items: center;
     background-color: rgba(0, 0, 0);
     animation: animate 5s linear infinite;
 }
@@ -257,4 +257,80 @@
 
 .twenty::before {
     animation-delay: 2s;
+}
+
+.codeswear {
+    width: 50%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+@keyframes code {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.8)
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+}
+
+.codeswear .loaderletter {
+    color: #e421da;
+    animation: code 1s infinite;
+    font-size: 100px;
+    display: inline-block;
+}
+
+.codeswear .L {
+    animation-delay: 0.10s;
+}
+
+.codeswear .O {
+    animation-delay: 0.65s;
+}
+
+.codeswear .A {
+    animation-delay: 1.00s;
+}
+
+.codeswear .D {
+    animation-delay: 1.55s;
+}
+
+.codeswear .I {
+    animation-delay: 2.10s;
+}
+
+.codeswear .N {
+    animation-delay: 2.65s;
+}
+
+.codeswear .G {
+    animation-delay: 3.15s;
+}
+
+.codeswear .loaderdot {
+    color: #e421da;
+    animation: code 1s infinite;
+    font-size: 100px;
+}
+
+.codeswear .first {
+    animation-delay: 2.55s;
+}
+
+.codeswear .second {
+    animation-delay: 2.90s;
+}
+
+.codeswear .third {
+    animation-delay: 3.25s;
 }

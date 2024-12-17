@@ -34,9 +34,7 @@ const ForgotPassword: React.FC = () => {
                     autoClose: 2000,
                     draggable: false
                 });
-                // console.log(resp);
                 setForgotPassword({ ...forgotPassword, value: "", error: false, syntaxError: false, loader: false });
-                // return resp;
             }).catch(er => console.log(er))
         }
         else {
@@ -61,7 +59,6 @@ const ForgotPassword: React.FC = () => {
             setForgotPassword({ ...forgotPassword, value: e.currentTarget.value, error: true, syntaxError: false })
         }
     }
-    React.useEffect(() => console.log("Inside the effect call"), [forgotPassword]);
     return (
         <>
             {

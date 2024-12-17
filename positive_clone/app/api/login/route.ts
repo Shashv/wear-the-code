@@ -14,7 +14,7 @@ export const POST = async (request: NextRequest, responses: NextResponse) => {
    let parsedBody = await request.json();
    let responseArray = await database.query(`select * from signup where email = '${parsedBody.email}'`, []);
    let list: any = responseArray[0];
-   console.log(list[0]);
+   // console.log(list[0]);
 
    let findedResult = list.find((key: any, index: number) => key.password === parsedBody.password) || {};
    //   console.log("positive",findedResult)

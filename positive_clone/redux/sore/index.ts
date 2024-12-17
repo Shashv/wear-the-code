@@ -3,6 +3,7 @@ import reducer from "../reducers";
 const store = configureStore({
     reducer: reducer
 });
+
 export default store;
 export type IState = ReturnType<typeof store.getState>;
 export type IDispatch = typeof store.dispatch;

@@ -12,7 +12,7 @@ const productManage: (state: ICartState, actions: { type: string; payload: ICart
                 localStorage.setItem("cart", JSON.stringify({
                     ...state, [itemCode]: {
                         name: actions.payload.name,
-                        quantity: state[itemCode].quantity + 1,
+                        quantity: (state[itemCode]?.quantity || 0) + 1,
                         size: actions.payload.size,
                         variant: actions.payload.variant,
                         price: actions.payload.price
@@ -21,7 +21,7 @@ const productManage: (state: ICartState, actions: { type: string; payload: ICart
                 return {
                     ...state, [itemCode]: {
                         name: actions.payload.name,
-                        quantity: state[itemCode].quantity + 1,
+                        quantity: (state[itemCode]?.quantity || 0) + 1,
                         size: actions.payload.size,
                         variant: actions.payload.variant,
                         price: actions.payload.price
@@ -30,7 +30,6 @@ const productManage: (state: ICartState, actions: { type: string; payload: ICart
             }
             else {
                 let itemCode = actions.payload.product;
-                // console.log(actions.payload);
                 localStorage.setItem("cart", JSON.stringify({
                     ...state, [itemCode]: {
                         name: actions.payload.name,
@@ -59,8 +58,7 @@ const productManage: (state: ICartState, actions: { type: string; payload: ICart
 
                 localStorage.setItem("cart", JSON.stringify(rest));
                 return rest;
-                // delete state[itemCode];
-                // return state;
+
             }
 
             else {
@@ -69,7 +67,7 @@ const productManage: (state: ICartState, actions: { type: string; payload: ICart
                         name: actions.payload.name,
                         size: actions.payload.size,
                         price: actions.payload.price,
-                        quantity: state[itemCode].quantity - 1,
+                        quantity: (state[itemCode]?.quantity || 0) - 1,
                         variant: actions.payload.variant
                     }
                 }))
@@ -78,17 +76,16 @@ const productManage: (state: ICartState, actions: { type: string; payload: ICart
                         name: actions.payload.name,
                         size: actions.payload.size,
                         price: actions.payload.price,
-                        quantity: state[itemCode].quantity - 1,
+                        quantity: (state[itemCode]?.quantity || 0) - 1,
                         variant: actions.payload.variant
                     }
                 }
             }
         }
         case CLEARCART: {
-            // console.log("Inside the cleaR CArt process");
+            console.log("Clear cart for cart")
             let stateModified = {};
             state = stateModified;
-            localStorage.setItem("cart", JSON.stringify(state));
             return state;
         }
         default: return state;

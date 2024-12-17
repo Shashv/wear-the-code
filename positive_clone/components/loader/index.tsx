@@ -1,17 +1,3 @@
-//react spinner//
-// import React from "react";
-// import { Spinner } from "reactstrap";
-// import { ISpinner } from "../../modals/index";
-// import style from "./index.module.css";
-// const Loader: React.FC<ISpinner> = ({ show, size, color }) => {
-//     return (
-//         <div className={`${style.backdrop} backdrop flex flex-row justify-center align-items-center`}>
-//             <Spinner style={{ height: size, width: size, zIndex: 1 }} color={color} type={"grow"} />
-//         </div>
-//     )
-// }
-// export default Loader;
-//custom loader with the css animation//
 import React from "react";
 import style from "./index.module.css";
 const Loader: React.FC = () => {
@@ -42,4 +28,23 @@ const Loader: React.FC = () => {
         </div>
     )
 }
-export default Loader;
+
+const LoaderAnimate = () => {
+    return (
+        <>
+            <div className={style.codeswear}>
+                <span className={`${style.loaderletter} ${style.L}`}>L</span>
+                <span className={`${style.loaderletter} ${style.O}`}>O</span>
+                <span className={`${style.loaderletter} ${style.A}`}>A</span>
+                <span className={`${style.loaderletter} ${style.D}`}>D</span>
+                <span className={`${style.loaderletter} ${style.I}`}>I</span>
+                <span className={`${style.loaderletter} ${style.N}`}>N</span>
+                <span className={`${style.loaderletter} ${style.G}`}>G</span>
+                <span className={`${style.loaderdot} ${style.first}`}>.</span>
+                <span className={`${style.loaderdot} ${style.second}`}>.</span>
+                <span className={`${style.loaderdot} ${style.third}`}>.</span>
+            </div>
+        </>
+    )
+}
+export default LoaderAnimate;

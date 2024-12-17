@@ -39,14 +39,14 @@ export type INavSelected = {
 };
 export interface IToast {
     open?: boolean;
-    variant?: "warning" | "primary" | "secondary" | "info" | "error" | "success";
-    onClose: (e: React.MouseEvent, timeOut: ReturnType<typeof setTimeout>) => void;
-    autoHide: () => void;
+    variant?: "warning" | "primary" | "secondary" | "info" | "error" | "success" | string;
+    onClose: (e: React.MouseEvent, timeOut: ReturnType<typeof setTimeout> | any) => void;
+    autoHide?: () => void;
     message?: string;
-    anchorOrigin: {
+    anchorOrigin?: {
         vertical: string;
         horiontal: string;
-    }
+    };
 }
 export interface IToastState {
     message: string;
@@ -79,11 +79,11 @@ export type ISpinner = {
     color?: "warning" | "primary" | "secondary" | "light" | "dark" | "info" | "danger"
 }
 export type ICartProduct = {
-    name: string | string[] | undefined;
-    size: string | number;
-    variant: string;
-    price: number | string;
-    quantity: number;
+    name?: string;
+    size?: string ;
+    variant?: string;
+    price?: number ;
+    quantity?: number;
     product: any;
 }
 export type ICartState = {
@@ -127,4 +127,7 @@ export interface ITheme {
 export interface ITableData<DataType> {
     tablehead: Array<DataType>;
     tablebody: Array<unknown>
+}
+export type Slides = {
+    visibleSlides?:number;
 }
