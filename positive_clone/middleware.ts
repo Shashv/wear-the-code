@@ -6,18 +6,19 @@ const middleware = (request: NextRequest) => {
 
     let cookieValue = request.cookies.get("isLog")?.value;
     let pathname = request.nextUrl.pathname || "";
-    if (pathname.includes("authentication") && cookieValue === "true") {
-        return NextResponse.redirect(new URL("/", request.url));
-    }
-    else if (!pathname.includes("authentication") && cookieValue !== "true") {
-        return NextResponse.redirect(new URL("/authentication/login", request.url))
-    }
+    // if (pathname.includes("authentication") && cookieValue === "true") {
+    //     return NextResponse.redirect(new URL("/", request.url));
+    // }
+    // else if (!pathname.includes("authentication") && cookieValue !== "true") {
+    //     return NextResponse.redirect(new URL("/authentication/login", request.url))
+    // }
+    return NextResponse.next();
 }
 export default middleware;
 
-export const config = {
-    matcher: ["/authentication/login", "/authentication/signup"]
-}
+// export const config = {
+//     matcher: ["/authentication/login", "/authentication/signup"]
+// }
 
 //General Note regarding the middleware //
 //Middleware is the centralised medium between the client and the server, since a middleware is the file or the

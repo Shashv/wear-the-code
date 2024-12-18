@@ -20,6 +20,7 @@ import { usePathname } from "next/navigation";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import type { AppProps } from "next/app";
 import "aos/dist/aos.css";
+import 'react-toastify/dist/ReactToastify.css';
 import ToastProvider from "@/components/toast/Toast";
 const Layout: React.FC<AppProps> = ({ Component, pageProps }) => {
     const routerDetail: NextRouter = useRouter();

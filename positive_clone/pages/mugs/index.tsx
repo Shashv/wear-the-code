@@ -9,6 +9,8 @@ import FilterBar from "@/components/filtergroup";
 import ProductCard from "@/components/productcard";
 import { Grid, Typography } from "@mui/material";
 import { ToastContext } from "@/hooks/useToast";
+import { toast } from "react-toastify";
+import Link from "next/link";
 interface PTheme {
     theme: {
         light: boolean;
@@ -37,7 +39,7 @@ class Mugs extends React.Component<any, { name: string; age: number; loader: fal
                     <section className="">
                         <div className="container-fluid p-0">
                             <div className="row h-100">
-                                <div className={`col-md-2 ${style.mobilecontainermugs}`}>
+                                <div className={`col-md-2 ${style.mobilecontainermugs} p-2`}>
                                     <FilterBar theme={this.props.theme} />
                                 </div>
                                 <div className="col-md-10 p-2">
@@ -49,8 +51,14 @@ class Mugs extends React.Component<any, { name: string; age: number; loader: fal
                                             Welcome to Codeswear.com, your one-stop shop for stylish and unique mugs. Buy mugs at the best price in India. We offer a wide range of tshirts for all interests, including coding mugs, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!
                                         </Typography>
                                         <Grid container columnGap={1.4} rowGap={1.4} justifyContent={"center"}>
-                                            {Object.keys(this.props.mugsSchema).length > 0 ? Object.keys(this.props.mugsSchema).map((mugs: string, index: number) => <Grid item xs={8.9} sm={5.9} md={2.2}><ProductCard title={this.props.mugsSchema[mugs].title} colors={this.props.mugsSchema[mugs].color} sizes={this.props.mugsSchema[mugs].size} desc={this.props.mugsSchema[mugs].desc} img={this.props.mugsSchema[mugs].img} /></Grid>) : <Grid xs={12} item><Typography color={this.props.theme.light ? "#000" : "#fff"}>
-                                                No Mugs Available</Typography></Grid>}
+                                            {Object.keys(this.props.mugsSchema).length > 0 ? Object.keys(this.props.mugsSchema).map((mugs: string, index: number) =>
+                                                <Grid item xs={8.9} sm={5.9} md={2.3}>
+                                                    <Link href={`/product/${this.props.mugsSchema[mugs].slug}`}>
+                                                        <ProductCard title={this.props.mugsSchema[mugs].title} colors={this.props.mugsSchema[mugs].color} sizes={this.props.mugsSchema[mugs].size} desc={this.props.mugsSchema[mugs].desc} img={this.props.mugsSchema[mugs].img} />
+                                                    </Link>
+                                                </Grid>) : <Grid xs={12} item><Typography color={this.props.theme.light ? "#000" : "#fff"}>
+                                                    No Mugs Available</Typography>
+                                            </Grid>}
                                         </Grid>
                                     </div>
                                 </div>
@@ -63,7 +71,12 @@ class Mugs extends React.Component<any, { name: string; age: number; loader: fal
     }
     componentDidMount(): void {
         this.toastExecution = this.context;
+        //for the custom toast.//
         this.toastExecution("Mugs Fetched Successfully", "success");
+        //inbuilt toast//
+        // toast.success("CodeSwear Mugs", {
+        //     position: "top-right",
+        // })
     }
     componentWillUnmount(): void {
 

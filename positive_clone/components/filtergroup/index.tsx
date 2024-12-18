@@ -4,11 +4,11 @@ import style from "./index.module.css";
 import { ITheme } from "@/modals";
 import { IoMenu } from "react-icons/io5";
 import { useDispatch } from "react-redux";
-import { fetchPositive } from "@/pages/redux/reducers/positive";
+import { fetchPositive } from "@/redux/reducers/positive";
 import { FaHamburger } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io"
 import { Checkbox } from "@mui/material";
-import {useContext} from "react";
+import { useContext } from "react";
 import { Backdrop } from "@mui/material";
 const FilterBar: React.FC<{ theme: ITheme }> = ({ theme }) => {
     let filterStrands: Array<string> = (["Anime", "Characters", "Coding", "Combo"]);
@@ -18,7 +18,7 @@ const FilterBar: React.FC<{ theme: ITheme }> = ({ theme }) => {
     }
     return (
         <>
-            <Box component={"div"} className={theme.light ? `bg-light h-[100vh]  ${style.lightfilter}` : `h-[100vh]  ${style.darkfilter}`}>
+            <Box component={"div"} className={theme.light ? `bg-light h-[100vh] ${style.lightfilter}` : `h-[100vh]  ${style.darkfilter}`}>
                 <div className={style.filterheading}>
                     <Typography className="text-3xl" color={theme.light ? "#000" : "#fff"} >
                         Filters

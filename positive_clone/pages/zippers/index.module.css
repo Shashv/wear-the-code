@@ -60,18 +60,22 @@
 }
 
 .lightzipper {
-    background-color:#fff ;
+    background-color: #fff;
     padding: 5px;
+    position: relative;
 }
 
 .darkzipper {
     background-color: #1f2937;
-    padding: 5px
+    padding: 5px;
+    position: relative;
 }
 
 @media only screen and (width<768px) {
     .mobilefiltercontainer {
         position: absolute;
-
+        height: 100%;
+        top: 0px;
+        width: 100%;
     }
 }

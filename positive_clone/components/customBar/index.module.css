@@ -245,14 +245,15 @@
     .sidebar {
         padding: 0px;
         height: 0px;
-        overflow: hidden;
+        overflow: scroll;
         transition: all 0.25s;
     }
 
     .showbar {
         padding: 10px;
         height: 220px;
-        overflow: hidden;
+        overflow-y: scroll;
+        overflow-x: hidden;
         transition: all 0.25s;
     }
 

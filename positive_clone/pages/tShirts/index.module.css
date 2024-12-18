@@ -64,8 +64,8 @@
 @media screen and (width<768px) {
     .mobilefiltercontainer {
         position: absolute;
-        top: 10px;
-        width: 100%;
+        top: 0px;
+        width: 80%;
         height: 100%;
         z-index: 11;
     }

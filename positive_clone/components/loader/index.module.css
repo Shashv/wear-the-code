@@ -262,59 +262,61 @@
 .codeswear {
     width: 50%;
     height: 50%;
+    gap: 10px;
     display: flex;
     justify-content: center;
     align-items: center
 }
 
 @keyframes code {
-    0% {
+
+    0%,
+    100% {
         transform: scale(1);
+        
     }
 
     50% {
-        transform: scale(0.8)
-    }
+        transform: scale(1.4);
+       
 
-    100% {
-        transform: scale(1);
     }
 
 }
 
 .codeswear .loaderletter {
     color: #e421da;
-    animation: code 1s infinite;
+    animation: code 1s ease-in-out infinite;
     font-size: 100px;
     display: inline-block;
 }
 
 .codeswear .L {
-    animation-delay: 0.10s;
+    animation-delay: 0.1s;
 }
 
 .codeswear .O {
-    animation-delay: 0.65s;
+    animation-delay: 0.2s;
 }
 
 .codeswear .A {
-    animation-delay: 1.00s;
+    animation-delay: 0.3s;
 }
 
 .codeswear .D {
-    animation-delay: 1.55s;
+    animation-delay: 0.4s;
 }
 
 .codeswear .I {
-    animation-delay: 2.10s;
+    animation-delay: 0.5s;
 }
 
 .codeswear .N {
-    animation-delay: 2.65s;
+    animation-delay: 0.6s;
 }
 
 .codeswear .G {
-    animation-delay: 3.15s;
+    animation-delay: 0.7s;
 }
 
 .codeswear .loaderdot {

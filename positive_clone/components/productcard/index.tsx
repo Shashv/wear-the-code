@@ -3,7 +3,7 @@ import { Card } from "react-bootstrap";
 import style from "./index.module.css";
 import Typography from "@mui/material/Typography";
 import { useSelector } from "react-redux";
-import { IState } from "@/pages/redux/sore";
+import { IState } from "@/redux/sore";
 import { FaRupeeSign } from "react-icons/fa";
 import { IProductType } from "@/pages/tShirts";
 import ColorLabel from "../colorLabels";
@@ -29,10 +29,8 @@ const ProductCard: React.FC<IProductType> = ({ desc, title, sizes, category, slu
         <>
             <Card className={theme.dark ? style.productCard : style.lightcard}>
                 <div className={theme.dark ? (!hover ? `cursor-pointer position-relative ${style.imageholderdark}` : `cursor-pointer position-relative ${style.activeHolderdark}`) : (!hover ? `cursor-pointer position-relative ${style.imageholderlight}` : `cursor-pointer position-relative ${style.activeHolderlight}`)} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-                    <img className={!hover ? `${style.imageDisplay} w-[92%] h-100` : `${style.imagehide} w-[92%] h-100`} src={img} />
-                    {/* will be later used */}
-                    {/* <img className={hover ? `${style.imageDisplay} w-[90%] h-100` : `${style.imagehide} h-100 w-[90%] mx-auto`} src={image_back} /> */}
-                    {/* hovering effects */}
+                    <img className={!hover ? `${style.imageDisplay} w-[89%] h-100` : `${style.imagehide} w-[100%] h-100`} src={img} />
+                    <img className={hover ? `${style.imageDisplay} w-[100%] h-100` : `${style.imagehide} h-100 w-[100%] mx-auto`} src={`/codeswearcircle.png`} />
                 </div>
                 <div className={style.cardfooter}>
                     <Typography className="" color={theme.light ? "#000" : "#9ca3af"} variant={"subtitle1"}>

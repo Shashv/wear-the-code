@@ -6,7 +6,7 @@ const NotFound: React.FC = () => {
         <>
             <Dialog open>
                 <DialogContent>
-                    <Typography className="" color={"red"} variant={"h1"}>
+                    <Typography className="" color={"red"} variant={"h3"}>
                         Oops Page not found 404 !
                     </Typography>
                 </DialogContent>

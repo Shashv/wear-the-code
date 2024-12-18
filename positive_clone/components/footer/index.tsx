@@ -6,7 +6,7 @@ import { List, ListItem, Typography } from "@mui/material";
 import { useState } from 'react';
 import { useSelector } from "react-redux";
 import Link from "next/link";
-import { IState } from "@/pages/redux/sore";
+import { IState } from "../../redux/sore/index";
 const Footer: React.FC = () => {
     let theme: { light: boolean; dark: boolean } = useSelector((state: IState) => state.toggletheme);
     let [footerList, setFooterList] = useState([{

@@ -1,4 +1,4 @@
-//for the new version start//
+//botpenguin..//
 // import React from "react";
 // import { Container, Row, Col, Form } from "reactstrap";
 // import Typography from "@mui/material/Typography";
@@ -12,276 +12,278 @@
 // import './index.css';
 // import Loader from "@/components/loader";
 // import Link from "next/link";
-// import {redirect} from "next/navigation";
+// import { redirect } from "next/navigation";
 // type FormInputs = {
-//     forgotPassword: {
-//         error: boolean;
-//         value: string;
-//     };
-//     login: {
-//         email: {
-//             value: string;
-//             error: null | boolean;
-//             emptyError: null | boolean;
-//             validEmail: null | boolean
-//         },
-//         password?: {
-//             value: string,
-//             error: boolean,
-//             visible: boolean;
-//             type: string;
-//         }
+//   forgotPassword: {
+//     error: boolean;
+//     value: string;
+//   };
+//   login: {
+//     email: {
+//       value: string;
+//       error: null | boolean;
+//       emptyError: null | boolean;
+//       validEmail: null | boolean
 //     },
-//     signup: {
-//         email: {
-//             error: boolean,
-//             value: string
-//         },
-//         phone: {
-//             error: boolean,
-//             value: number | string;
-//         },
-//         password: {
-//             value: string,
-//             error: boolean,
-//             errorVariantion: {
-//                 upperCase: boolean;
-//                 lowerCase: boolean;
-//                 numeric: boolean;
-//                 special: boolean;
-//                 length: boolean
-//             }
-//         }
-//     },
-//     toast: {
-//         message: string;
-//         open: boolean;
+//     password?: {
+//       value: string,
+//       error: boolean,
+//       visible: boolean;
+//       type: string;
 //     }
+//   },
+//   signup: {
+//     email: {
+//       error: boolean,
+//       value: string
+//     },
+//     phone: {
+//       error: boolean,
+//       value: number | string;
+//     },
+//     password: {
+//       value: string,
+//       error: boolean,
+//       errorVariantion: {
+//         upperCase: boolean;
+//         lowerCase: boolean;
+//         numeric: boolean;
+//         special: boolean;
+//         length: boolean
+//       }
+//     }
+//   },
+//   toast: {
+//     message: string;
+//     open: boolean;
+//   }
 // }
 // type ICountryDetails = {
-//     name: string;
-//     flag: string;
-//     code: string;
-//     dial_code: string;
+//   name: string;
+//   flag: string;
+//   code: string;
+//   dial_code: string;
 // }
 // let password: any = "";
 // class Login extends React.Component<{}, { name: string; flag: string; dial_code: string; code: string, toggleBox: boolean, signUp: boolean, countryList: { name: string, dial_code: string, code: string, flag: string }[], forgotPassword: boolean, formData: FormInputs, passwordArray: any[]; eyeVisible: boolean; loader: boolean; formSubmitted: boolean }> {
-//     constructor(props: {}) {
-//         super(props);
-//         this.state = {
-//             name: "India",
-//             dial_code: "+91",
-//             flag: "in",
-//             code: "IN",
-//             toggleBox: false,
-//             signUp: true,
-//             countryList: [],
-//             forgotPassword: false,
-//             formData: {
-//                 forgotPassword: {
-//                     error: false,
-//                     value: ""
-//                 },
-//                 login: {
-//                     email: {
-//                         value: "",
-//                         error: null,
-//                         emptyError: null,
-//                         validEmail: null
-//                     },
-//                     password: {
-//                         error: false,
-//                         value: "",
-//                         visible: false,
-//                         type: "password"
-//                     }
-//                 },
-//                 signup: {
-//                     email: {
-//                         value: "",
-//                         error: false
-//                     },
-//                     phone: {
-//                         value: "",
-//                         error: false
-//                     },
-//                     password: {
-//                         value: "",
-//                         error: false,
-//                         errorVariantion: {
-//                             upperCase: false,
-//                             lowerCase: false,
-//                             numeric: false,
-//                             special: false,
-//                             length: false
-//                         }
-//                     }
-//                 },
-//                 toast: {
-//                     message: "",
-//                     open: false
-//                 },
-//             }, passwordArray: [],
-//             eyeVisible: true, loader: false,
-//             formSubmitted: false
-//         }
-//         //signup process //
-//         this.submitUser = this.submitUser.bind(this);
-//         this.toggleCountryBox = this.toggleCountryBox.bind(this);
-//         this.passwordReset = this.passwordReset.bind(this);
-//         this.handleConfirmPasswordChange = this.handleConfirmPasswordChange.bind(this);
-//         this.handleWorkEmailChange = this.handleWorkEmailChange.bind(this);
-//         this.handlePhoneNumberChange = this.handlePhoneNumberChange.bind(this);
-//         this.handlePasswordChange = this.handlePasswordChange.bind(this);
-//         this.updateCountryCode = this.updateCountryCode.bind(this);
-//         this.searchFlag = this.searchFlag.bind(this);
-//         //login methods//
-//         this.handleLoginEmailChange = this.handleLoginEmailChange.bind(this);
-//         this.submitLogin = this.submitLogin.bind(this);
-//         this.handleLoginPasswordChange = this.handleLoginPasswordChange.bind(this);
-//         this.togglePassword = this.togglePassword.bind(this);
-//         // this.closetoast = this.closetoast.bind(this);
+//   constructor(props: {}) {
+//     super(props);
+//     this.state = {
+//       name: "India",
+//       dial_code: "+91",
+//       flag: "in",
+//       code: "IN",
+//       toggleBox: false,
+//       signUp: true,
+//       countryList: [],
+//       forgotPassword: false,
+//       formData: {
+//         forgotPassword: {
+//           error: false,
+//           value: ""
+//         },
+//         login: {
+//           email: {
+//             value: "",
+//             error: null,
+//             emptyError: null,
+//             validEmail: null
+//           },
+//           password: {
+//             error: false,
+//             value: "",
+//             visible: false,
+//             type: "password"
+//           }
+//         },
+//         signup: {
+//           email: {
+//             value: "",
+//             error: false
+//           },
+//           phone: {
+//             value: "",
+//             error: false
+//           },
+//           password: {
+//             value: "",
+//             error: false,
+//             errorVariantion: {
+//               upperCase: false,
+//               lowerCase: false,
+//               numeric: false,
+//               special: false,
+//               length: false
+//             }
+//           }
+//         },
+//         toast: {
+//           message: "",
+//           open: false
+//         },
+//       }, passwordArray: [],
+//       eyeVisible: true, loader: false,
+//       formSubmitted: false
 //     }
-//     componentDidMount(): void {
-//         require("bootstrap/dist/js/bootstrap.bundle.js");
+//     //signup process //
+//     this.submitUser = this.submitUser.bind(this);
+//     this.toggleCountryBox = this.toggleCountryBox.bind(this);
+//     this.passwordReset = this.passwordReset.bind(this);
+//     this.handleConfirmPasswordChange = this.handleConfirmPasswordChange.bind(this);
+//     this.handleWorkEmailChange = this.handleWorkEmailChange.bind(this);
+//     this.handlePhoneNumberChange = this.handlePhoneNumberChange.bind(this);
+//     this.handlePasswordChange = this.handlePasswordChange.bind(this);
+//     this.updateCountryCode = this.updateCountryCode.bind(this);
+//     this.searchFlag = this.searchFlag.bind(this);
+//     //login methods//
+//     this.handleLoginEmailChange = this.handleLoginEmailChange.bind(this);
+//     this.submitLogin = this.submitLogin.bind(this);
+//     this.handleLoginPasswordChange = this.handleLoginPasswordChange.bind(this);
+//     this.togglePassword = this.togglePassword.bind(this);
+//     // this.closetoast = this.closetoast.bind(this);
+//   }
+//   componentDidMount(): void {
+//     require("bootstrap/dist/js/bootstrap.bundle.js");
+//     this.setState({
+//       countryList: countryList.map((key, index) => {
+//         return {
+//           name: key.name,
+//           dial_code: key.dial_code,
+//           flag: key.code.toLowerCase(),
+//           code: key.code
+//         }
+//       })
+//     });
+//   }
+//   toggleCountryBox(): void {
+//     this.setState({
+//       toggleBox: !this.state.toggleBox
+//     })
+//   }
+//   passwordReset(e: React.FormEvent<HTMLFormElement>): void {
+//     if (this.state.formData.forgotPassword.value === "") {
+//       e.preventDefault();
+//       this.setState({
+//         formData: { ...this.state.formData, forgotPassword: { ...this.state.formData.forgotPassword, error: true } }
+//       });
+//       // fetch("https://localhost:3000/api/tshirts")
+//     }
+//     else {
+//       console.log("Password Reset", e.preventDefault());
+//       // fetch("/api/signup", { method: "POST", body: JSON.stringify({ email:"shashvat" }) });
+//     }
+//   }
+//   handleConfirmPasswordChange(e: React.ChangeEvent<HTMLInputElement>): void {
+//     // console.log(e.target.value);
+//     this.setState({
+//       formData: { ...this.state.formData, forgotPassword: { ...this.state.formData.forgotPassword, value: e.target.value } }
+//     });
+//   }
+//   //for the signup process//
+//   submitUser(e: React.FormEvent<HTMLFormElement>): void {
+//     e.preventDefault();
+//     // console.log("Form Submitted", e.preventDefault());
+//     // console.log(this.state.formData.signup.password.value);
+//     // else if (this.state.formData.signup.email.value === "") {
+//     //     this.setState({
+//     //         formData: { ...this.state.formData, signup: { ...this.state.formData.signup, email: { ...this.state.formData.signup.email, error: true } } }
+//     //     })
+//     // }
+//     // else if (this.state.formData.signup.password.value === "") {
+//     //     this.setState({
+//     //         formData: { ...this.state.formData, signup: { ...this.state.formData.signup, password: { ...this.state.formData.signup.password, error: true } } }
+//     //     })
+//     // }
+//     // else if (this.state.formData.signup.phone.value.length === 0) {
+//     //     this.setState({
+//     //         formData: { ...this.state.formData, signup: { ...this.state.formData.signup, phone: { ...this.state.formData.signup.phone, error: true } } }
+//     //     })
+//     // }
+//     // else {
+//     //     let toast = <div className="alert alert-danger">
+//     //         Password fields are required
+//     //     </div>
+//     // }
+//     if (this.state.formData.signup.email.value === "" && this.state.formData.signup.password.value === "")
+//       this.setState({
+//         formData: { ...this.state.formData, signup: { ...this.state.formData.signup, email: { ...this.state.formData.signup.email, error: true }, password: { ...this.state.formData.signup.password, error: true }, phone: { ...this.state.formData.signup.phone, error: true } } }
+//       });
+//     else if (!this.state.formData.signup.email.error && !this.state.formData.signup.password.error && !this.state.formData.signup.phone.error) {
+//       // console.log(this.state.formData.signup.email.error);
+//       this.setState({
+//         loader: true
+//       });
+//       // console.log(this.state.formData.signup.email.value, this.state.formData.signup.password.value, this.state.formData.signup.phone.value);
+//       fetch("/api/signup", { method: "POST", body: JSON.stringify({ email: this.state.formData.signup.email.value, phone: this.state.formData.signup.phone.value, password: password }) }).then(response => response.json()).then(response => {
 //         this.setState({
-//             countryList: countryList.map((key, index) => {
-//                 return {
-//                     name: key.name,
-//                     dial_code: key.dial_code,
-//                     flag: key.code.toLowerCase(),
-//                     code: key.code
-//                 }
-//             })
+//           formData: { ...this.state.formData, toast: { ...this.state.formData.toast, message: response.message, open: true }, signup: { ...this.state.formData.signup, email: { ...this.state.formData.signup.email, value: "" }, password: { ...this.state.formData.signup.password, value: "" }, phone: { ...this.state.formData.signup.phone, value: "" } } },
+//           loader: false
 //         });
-//     }
-//     toggleCountryBox(): void {
-//         this.setState({
-//             toggleBox: !this.state.toggleBox
+//         toast.success("Signed Up Successfully", {
+//           position: "top-right",
+//           autoClose: 4000,
+//           draggable: false,
+//           theme: "dark"
 //         })
+//       });
+//       // setTimeout(() => {
+//       //     this.setState({
+//       //         formData: { ...this.state.formData, toast: { ...this.state.formData.toast, open: false } }
+//       //     })
+//       // }, 5000)
+//       toast.success("Wow this is easy");
 //     }
-//     passwordReset(e: React.FormEvent<HTMLFormElement>): void {
-//         if (this.state.formData.forgotPassword.value === "") {
-//             e.preventDefault();
-//             this.setState({
-//                 formData: { ...this.state.formData, forgotPassword: { ...this.state.formData.forgotPassword, error: true } }
-//             });
-//             // fetch("https://localhost:3000/api/tshirts")
-//         }
-//         else {
-//             console.log("Password Reset", e.preventDefault());
-//             // fetch("/api/signup", { method: "POST", body: JSON.stringify({ email:"shashvat" }) });
-//         }
+//     // this.state.formData.signup.password.value === "" && this.setState({
+//     //     formData: { ...this.state.formData, signup: { ...this.state.formData.signup, password: { ...this.state.formData.signup.password, error: true } } }
+//     // });
+//     //for the magical colors..
+//     // this.state.formData.signup.password.value !== "" && this.setState({
+//     //     formData: { ...this.state.formData, signup: { ...this.state.formData.signup, password: { ...this.state.formData.signup.password, errorVariantion: { ...this.state.formData.signup.password.errorVariantion, } } } }
+//     // })
+//   }
+//   togglePassword(e: React.MouseEvent<HTMLSpanElement>): void {
+//     this.setState({
+//       formData: { ...this.state.formData, login: { ...this.state.formData.login, password: { ...this.state.formData.login.password, visible: !this.state.formData.login.password?.visible, value: this.state.formData.login.password?.value || "", error: this.state.formData.login.password?.error || false, type: this.state.formData.login.password?.type || "" } } }
+//     })
+//   }
+//   handleWorkEmailChange(e: React.ChangeEvent<HTMLInputElement>): void {
+//     //   console.log("event",e.target.value);
+//     if (e.target.value === "") {
+//       this.setState({
+//         formData: { ...this.state.formData, signup: { ...this.state.formData.signup, email: { ...this.state.formData.signup.email, error: true, value: e.currentTarget.value } } }
+//       })
 //     }
-//     handleConfirmPasswordChange(e: React.ChangeEvent<HTMLInputElement>): void {
-//         // console.log(e.target.value);
-//         this.setState({
-//             formData: { ...this.state.formData, forgotPassword: { ...this.state.formData.forgotPassword, value: e.target.value } }
-//         });
+//     else {
+//       this.setState({
+//         formData: { ...this.state.formData, signup: { ...this.state.formData.signup, email: { ...this.state.formData.signup.email, error: false, value: e.target.value } } }
+//       })
 //     }
-//     //for the signup process//
-//     submitUser(e: React.FormEvent<HTMLFormElement>): void {
-//         e.preventDefault();
-//         // console.log("Form Submitted", e.preventDefault());
-//         // console.log(this.state.formData.signup.password.value);
-//         // else if (this.state.formData.signup.email.value === "") {
-//         //     this.setState({
-//         //         formData: { ...this.state.formData, signup: { ...this.state.formData.signup, email: { ...this.state.formData.signup.email, error: true } } }
-//         //     })
-//         // }
-//         // else if (this.state.formData.signup.password.value === "") {
-//         //     this.setState({
-//         //         formData: { ...this.state.formData, signup: { ...this.state.formData.signup, password: { ...this.state.formData.signup.password, error: true } } }
-//         //     })
-//         // }
-//         // else if (this.state.formData.signup.phone.value.length === 0) {
-//         //     this.setState({
-//         //         formData: { ...this.state.formData, signup: { ...this.state.formData.signup, phone: { ...this.state.formData.signup.phone, error: true } } }
-//         //     })
-//         // }
-//         // else {
-//         //     let toast = <div className="alert alert-danger">
-//         //         Password fields are required
-//         //     </div>
-//         // }
-//         if (this.state.formData.signup.email.value === "" && this.state.formData.signup.password.value === "")
-//             this.setState({
-//                 formData: { ...this.state.formData, signup: { ...this.state.formData.signup, email: { ...this.state.formData.signup.email, error: true }, password: { ...this.state.formData.signup.password, error: true }, phone: { ...this.state.formData.signup.phone, error: true } } }
-//             });
-//         else if (!this.state.formData.signup.email.error && !this.state.formData.signup.password.error && !this.state.formData.signup.phone.error) {
-//             // console.log(this.state.formData.signup.email.error);
-//             this.setState({
-//                 loader: true
-//             });
-//             // console.log(this.state.formData.signup.email.value, this.state.formData.signup.password.value, this.state.formData.signup.phone.value);
-//             fetch("/api/signup", { method: "POST", body: JSON.stringify({ email: this.state.formData.signup.email.value, phone: this.state.formData.signup.phone.value, password: password }) }).then(response => response.json()).then(response => {
-//                 this.setState({
-//                     formData: { ...this.state.formData, toast: { ...this.state.formData.toast, message: response.message, open: true }, signup: { ...this.state.formData.signup, email: { ...this.state.formData.signup.email, value: "" }, password: { ...this.state.formData.signup.password, value: "" }, phone: { ...this.state.formData.signup.phone, value: "" } } },
-//                     loader: false
-//                 });
-//                 toast.success("Signed Up Successfully", {
-//                     position: "top-right",
-//                     autoClose: 4000,
-//                     draggable: false,
-//                     theme: "dark"
-//                 })
-//             });
-//             // setTimeout(() => {
-//             //     this.setState({
-//             //         formData: { ...this.state.formData, toast: { ...this.state.formData.toast, open: false } }
-//             //     })
-//             // }, 5000)
-//             toast.success("Wow this is easy");
-//         }
-//         // this.state.formData.signup.password.value === "" && this.setState({
-//         //     formData: { ...this.state.formData, signup: { ...this.state.formData.signup, password: { ...this.state.formData.signup.password, error: true } } }
-//         // });
-//         //for the magical colors..
-//         // this.state.formData.signup.password.value !== "" && this.setState({
-//         //     formData: { ...this.state.formData, signup: { ...this.state.formData.signup, password: { ...this.state.formData.signup.password, errorVariantion: { ...this.state.formData.signup.password.errorVariantion, } } } }
-//         // })
+//   }
+//   handlePhoneNumberChange(e: React.ChangeEvent<HTMLInputElement>): void {
+//     // console.log(e.target.value);
+//     let numbers = /^[0-9]+$/;
+//     // let stringified = e.target.value.toString();
+//     // let expression = new RegExp("((?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*\W)\w.{6,18}\w)");
+//     // let universalRegex = /(?:([+]\d{1,4})[-.\s]?)?(?:[(](\d{1,3})[)][-.\s]?)?(\d{1,4})[-.\s]?(\d{1,4})[-.\s]?(\d{1,9})/;
+//     if (e.target.value.toString().length === 0) {
+//       this.setState({
+//         formData: { ...this.state.formData, signup: { ...this.state.formData.signup, phone: { ...this.state.formData.signup.phone, value: "", error: true } } }
+//       })
 //     }
-//     togglePassword(e: React.MouseEvent<HTMLSpanElement>): void {
-//         this.setState({
-//             formData: { ...this.state.formData, login: { ...this.state.formData.login, password: { ...this.state.formData.login.password, visible: !this.state.formData.login.password?.visible, value: this.state.formData.login.password?.value || "", error: this.state.formData.login.password?.error || false, type: this.state.formData.login.password?.type || "" } } }
-//         })
-//     }
-//     handleWorkEmailChange(e: React.ChangeEvent<HTMLInputElement>): void {
-//         //   console.log("event",e.target.value);
-//         if (e.target.value === "") {
-//             this.setState({
-//                 formData: { ...this.state.formData, signup: { ...this.state.formData.signup, email: { ...this.state.formData.signup.email, error: true, value: e.currentTarget.value } } }
-//             })
-//         }
-//         else {
-//             this.setState({
-//                 formData: { ...this.state.formData, signup: { ...this.state.formData.signup, email: { ...this.state.formData.signup.email, error: false, value: e.target.value } } }
-//             })
-//         }
-//     }
-//     handlePhoneNumberChange(e: React.ChangeEvent<HTMLInputElement>): void {
-//         // console.log(e.target.value);
-//         let numbers = /^[0-9]+$/;
-//         // let stringified = e.target.value.toString();
-//         // let expression = new RegExp("((?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*\W)\w.{6,18}\w)");
-//         // let universalRegex = /(?:([+]\d{1,4})[-.\s]?)?(?:[(](\d{1,3})[)][-.\s]?)?(\d{1,4})[-.\s]?(\d{1,4})[-.\s]?(\d{1,9})/;
-//         if (e.target.value.toString().length === 0) {
-//             this.setState({
-//                 formData: { ...this.state.formData, signup: { ...this.state.formData.signup, phone: { ...this.state.formData.signup.phone, value: "", error: true } } }
-//             })
-//         }
-//         else
-//             numbers.test(e.target.value) && e.currentTarget.value.toString().length <= 15 && this.setState({
-//                 formData: { ...this.state.formData, signup: { ...this.state.formData.signup, phone: { ...this.state.formData.signup.phone, value: e.target.value, error: false } } }
-//             });
-//         // if (stringified.length > 10) {
-//         //     stringified = stringified.slice(0, 10);
-//         //     this.setState({
-//         //         formData: { ...this.state.formData, signup: { ...this.state.formData.signup, phone: { ...this.state.formData.signup.phone, value: e.target.value } } }
-//         //     });
-//         //     console.log(expression.test(e.target.value));
-//         // }
-//for the older version end//
+//     else
+//       numbers.test(e.target.value) && e.currentTarget.value.toString().length <= 15 && this.setState({
+//         formData: { ...this.state.formData, signup: { ...this.state.formData.signup, phone: { ...this.state.formData.signup.phone, value: e.target.value, error: false } } }
+//       });
+//     // if (stringified.length > 10) {
+//     //     stringified = stringified.slice(0, 10);
+//     //     this.setState({
+//     //         formData: { ...this.state.formData, signup: { ...this.state.formData.signup, phone: { ...this.state.formData.signup.phone, value: e.target.value } } }
+//     //     });
+//     //     console.log(expression.test(e.target.value));
+//     // }
+//   }
+// }
+import React from "react";
 import Login from "./Login"
 
 //     }
@@ -821,7 +823,7 @@ const LoginF: React.FC = () => {
           Codeswear - Login
         </title>
       </Head>
-      <Login router={router} />
+      <Login />
     </>
   )
 }

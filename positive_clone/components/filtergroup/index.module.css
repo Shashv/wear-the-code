@@ -22,7 +22,7 @@
         padding-left: 13px;
         background-color: #1f2937;
         position: sticky;
-        top: 35px;
+        top: 75px;
     }
 
     .lighthead {
@@ -47,8 +47,8 @@
     .showfiltercontent {
         position: relative;
         transform: translateX(0%);
-        transition: transform 0.38s ease;
-        transition-delay: 80ms;
+        transition: transform 0.3s ease-in-out;
+        transition-delay: 85ms;
         height: 100%;
         width: 100vw;
     }
@@ -59,7 +59,7 @@
         justify-content: space-between;
         border-bottom: 2.5px solid #fff;
         padding-bottom: 24px;
-        
+
     }
 
     .hidefiltercontent {
@@ -72,14 +72,17 @@
     }
 
     .mobilefilterlight {
-        background-color: #fff;
+        background-color: hsl(0, 0%, 100%, 0.5);
+        backdrop-filter: blur(25px);
+        backdrop-filter: blur(5px);
         position: relative;
         padding: 15px;
         height: 100%;
     }
 
     .mobilefilterdark {
-        background-color: #1f2937;
+        background-color: hsl(215, 28%, 17%, 0.5);
+        backdrop-filter: blur(25px);
         position: relative;
         padding: 15px;
         height: 100%;

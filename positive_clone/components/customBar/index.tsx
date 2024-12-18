@@ -123,7 +123,7 @@ const StyledBar: React.FC<{ scrollTop: number }> = ({ scrollTop }) => {
                                                 TShirts
                                             </Link>
                                         </li>
-                                        <li className={item.stickers.selected ? `${theme.dark ? style.selecteditem : style.selecteditemlight}` : ` ${theme.dark ? style.unselecteditem : style.unselecteditemlight}`} onClick={() => selectedItem({ ...item, stickers: { ...item.stickers, value: "", selected: true }, mugs: { ...item.mugs, value: "mugs", selected: false }, hoodies: { ...item.hoodies, value: "hoodies", selected: false }, tshirts: { ...item.tshirts, value: "tshirts", selected: false }, zippers: { ...item.zippers, value: "zippers", selected: false } })}>
+                                        <li className={item.stickers.selected ? `${theme.dark ? style.selecteditem : style.selecteditemlight}` : ` ${theme.dark ? style.unselecteditem : style.unselecteditemlight}`} onClick={() => selectedItem({ ...item, stickers: { ...item.stickers, value: "", selected: true }, mugs: { ...item.mugs, value: "mugs", selected: false }, hoodies: { ...item.hoodies, value: "hoodies", selected: false }, tshirts: { ...item.tshirts, value: "tshirts", selected: false }, zippers: { ...item.zippers, value: "zippers", selected: false }, mousepads: { ...item.mousepads, selected: false, value: "mousepads" } })}>
                                             <Link className="text-decoration-none" href={"/stickers"} replace>
                                                 Stickers
                                             </Link>
@@ -247,7 +247,7 @@ const StyledBar: React.FC<{ scrollTop: number }> = ({ scrollTop }) => {
                                                 Hoodies
                                             </Link>
                                         </li>
-                                        <li className={item.hoodies.selected ? `text-center ${theme.dark ? style.selecteditem : style.selecteditemlight}` : `text-center ${theme.dark ? style.unselecteditem : style.unselecteditemlight}`} onClick={() => {
+                                        <li className={item.zippers.selected ? `text-center ${theme.dark ? style.selecteditem : style.selecteditemlight}` : `text-center ${theme.dark ? style.unselecteditem : style.unselecteditemlight}`} onClick={() => {
                                             router.push({
                                                 pathname: "/hoodies"
                                             });

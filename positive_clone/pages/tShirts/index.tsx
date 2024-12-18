@@ -103,10 +103,10 @@ class Shirts extends React.Component<IShirt, { data: any, toast: { active: boole
                                                                     <Typography color={this.props.theme.light ? "#000" : "#9ca3af"} className={"text-start px-24 py-2 pb-3"} sx={{ fontSize: { xs: 13, md: 14 }, textIndent: { sm: "start" } }} lineHeight={1.2}>
                                                                         Welcome to Codeswear.com, your one-stop shop for stylish and unique tshirts. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!
                                                                     </Typography>
-                                                                    <Grid container rowGap={1.4} className="justify-center" columnGap={1.4}>
+                                                                    <Grid container rowGap={2} className="justify-center" columnGap={1.4}>
                                                                         {Object.keys(this.state.data).length > 0 &&
                                                                             Object.keys(this.state.data).map((key: string, index: number) =>
-                                                                                <Grid item xs={8.9} sm={5.9} md={2.2} key={index}>
+                                                                                <Grid item xs={8.9} sm={5.9} md={2.3} key={index}>
                                                                                     <Link href={{
                                                                                         pathname: `product/${this.state.data[key].slug}`
                                                                                     }} >
@@ -117,7 +117,6 @@ class Shirts extends React.Component<IShirt, { data: any, toast: { active: boole
                                                                             )
                                                                         }
                                                                     </Grid>
-
                                                                 </div>
                                                             </div>
                                                         </div>

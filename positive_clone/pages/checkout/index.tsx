@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import addProduct from "@/redux/actions/addProduct";
 import removeProduct from "@/redux/actions/removeProduct";
 import { enqueueSnackbar } from "notistack";
+//will be used later//
 // import FormGenerator from "@/components/formgenerator";
 const Checkout: React.FC = () => {
     let { register, handleSubmit, formState: { errors, isSubmitSuccessful }, reset, setError, clearErrors } = useForm<IRegisterOptions>();
@@ -149,6 +150,7 @@ const Checkout: React.FC = () => {
                         </Col>
                     </Row>
                 </Container>
+                {/* will be used later */}
                 {/* <FormGenerator /> */}
             </Box>
 

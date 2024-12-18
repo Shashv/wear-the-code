@@ -97,7 +97,7 @@
 @media only screen and (width < 768px) {
     .hoodiesmobilefilter {
         position: absolute;
-        top: 10px;
+        top: 0px;
         z-index: 10;
         height: 100%;
     }

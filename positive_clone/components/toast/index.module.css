@@ -20,7 +20,7 @@
     justify-content: center;
     padding: 10px;
     align-items: start;
-    top: 10px;
+    top: 0px;
     right: 10px;
     height: 80px;
     transform: translateX(150%);
@@ -41,7 +41,7 @@
     position: fixed;
     padding: 10px;
     height: 80px;
-    top: 10px;
+    top: 0px;
     overflow: hidden;
     right: 10px !important;
     transform: translateX(0%);
@@ -62,7 +62,7 @@
     position: fixed;
     padding: 10px;
     height: 80px;
-    top: 10px;
+    top: 0px;
     overflow: hidden;
     right: 10px !important;
     transform: translateX(0%);
@@ -82,7 +82,7 @@
     position: fixed;
     padding: 10px;
     height: 80px;
-    top: 10px;
+    top: 0px;
     overflow: hidden;
     right: 10px !important;
     transform: translateX(0%);

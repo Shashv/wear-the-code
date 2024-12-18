@@ -112,9 +112,9 @@
 @media only screen and (width < 768px) {
     .mobilecontainermugs {
         position: absolute;
-        top: 19px;
+        top: 5px;
         z-index: 11;
         height: 100%;
-        width: 100%;
+        width: 80%;
     }
 }

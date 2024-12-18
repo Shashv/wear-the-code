@@ -90,7 +90,6 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
         let parsedshirt = await shirt.json();
         return parsedshirt;
     }
-
     //client side api calls
     useEffect(() => {
         setLoader(true);
