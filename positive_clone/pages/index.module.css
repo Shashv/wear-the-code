@@ -1,0 +1,120 @@
+.imagecontainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-image: url("/home.jpg");
+    background-size: 100% 100%;
+    animation: imageslider 10s linear infinite;
+}
+
+.customcontainer {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    /* outline: 2px solid yellow; */
+}
+
+.wrapper {
+    display: flex;
+    /* gap: 10px; */
+    width: 100%;
+    height: 100%;
+    /* position: absolute;
+    top: 50px;
+    left: 50px; */
+    animation: slide 26s infinite;
+}
+
+.imgfirst {
+    /* width: 100%; */
+    height: 100%;
+    flex: 1 0 100%;
+    background-image: url("/home.jpg");
+    background-size: 100% 100%;
+}
+
+.imgsecond {
+    /* width: 100%; */
+    height: 100%;
+    flex: 1 0 100%;
+    background-image: url('/onlinefirst.jpg');
+    background-size: 100% 100%;
+}
+
+.imgthird {
+    /* width: 100%; */
+    height: 100%;
+    flex: 1 0 100%;
+    background-image: url("/onlinesecond.jpg");
+    background-size: 100% 100%;
+}
+
+.imgfourth {
+    /* width: 100%; */
+    height: 100%;
+    flex: 1 0 100%;
+    background-image: url("/onlinethird.jpg");
+    background-size: 100% 100%;
+}
+
+.imgfifth {
+    /* width: 100%; */
+    height: 100%;
+    flex: 1 0 100%;
+    background-image: url("/onlinefourth.jpg");
+    background-size: 100% 100%;
+}
+
+.imgsixth {
+    /* width: 100%; */
+    height: 100%;
+    flex: 1 0 100%;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-100%);
+    }
+
+    40% {
+        transform: translateX(-200%);
+    }
+
+    60% {
+        transform: translateX(-300%);
+    }
+
+    80% {
+        transform: translateX(-400%);
+    }
+
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes imageslider {
+    0% {
+        background-image: url("/home.jpg");
+    }
+
+    25% {
+        background-image: url("/onlinefirst.jpg");
+    }
+
+    50% {
+        background-image: url("/onlinesecond.jpg");
+    }
+
+    75% {
+        background-image: url("/onlinethird.jpg");
+    }
+
+    100% {
+        background-image: url("/onlinefourth.jpg")
+    }
+}

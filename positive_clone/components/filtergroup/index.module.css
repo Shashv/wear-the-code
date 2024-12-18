@@ -1,0 +1,120 @@
+@media screen and (width>=768px) {
+    .filterheading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 2.5px solid #fff;
+        padding-bottom: 24px;
+    }
+
+    .lightfilter {
+        padding-top: 13px;
+        padding-bottom: 13px;
+        padding-right: 13px;
+        padding-left: 13px;
+        background-color: #fff;
+    }
+
+    .darkfilter {
+        padding-top: 13x;
+        padding-bottom: 13px;
+        padding-right: 13px;
+        padding-left: 13px;
+        background-color: #1f2937;
+        position: sticky;
+        top: 75px;
+    }
+
+    .lighthead {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border: 2px solid #000;
+    }
+
+    .showfiltercontent {
+        display: none;
+    }
+
+    .hidefiltercontent {
+        display: none;
+    }
+
+}
+
+@media screen and (width<768px) {
+
+    .showfiltercontent {
+        position: relative;
+        transform: translateX(0%);
+        transition: transform 0.3s ease-in-out;
+        transition-delay: 85ms;
+        height: 100%;
+        width: 100vw;
+    }
+
+    .filterheading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 2.5px solid #fff;
+        padding-bottom: 24px;
+
+    }
+
+    .hidefiltercontent {
+        position: relative;
+        transform: translateX(-100%);
+        transition: transform 0.35s ease-out;
+        transition-delay: 55ms;
+        height: 100%;
+        width: 100vw;
+    }
+
+    .mobilefilterlight {
+        background-color: hsl(0, 0%, 100%, 0.5);
+        backdrop-filter: blur(25px);
+        backdrop-filter: blur(5px);
+        position: relative;
+        padding: 15px;
+        height: 100%;
+    }
+
+    .mobilefilterdark {
+        background-color: hsl(215, 28%, 17%, 0.5);
+        backdrop-filter: blur(25px);
+        position: relative;
+        padding: 15px;
+        height: 100%;
+    }
+
+    .menuOpen {
+        transition: linear 10s;
+        opacity: 1;
+        visibility: visible;
+        position: fixed;
+        right: -58px;
+        top: -10px;
+        width: 35px;
+        height: 35px;
+    }
+
+    .menuClose {
+        transition: linear 10s;
+        opacity: 1;
+        visibility: visible;
+        position: absolute;
+        right: 9px;
+        top: -10px;
+        height: 45px;
+        width: 45px;
+    }
+
+    .lightfilter {
+        display: none;
+    }
+
+    .darkfilter {
+        display: none;
+    }
+}

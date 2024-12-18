@@ -1,0 +1,21 @@
+.uploads-container {
+    overflow-y: scroll;
+}
+
+.uploads-container::-webkit-scrollbar-track {
+    width: 10px;
+    border-radius: 10px;
+    background-color: lightpink;
+}
+
+.uploads-container::-webkit-scrollbar-thumb {
+    width: 10px;
+    border-radius: 10px;
+    background-color: lightpink;
+}
+
+.uploads-container::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 10px;
+    background-color: lightblue;
+}

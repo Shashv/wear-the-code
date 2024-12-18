@@ -1,0 +1,51 @@
+.tagicon {
+    border-radius: 50%;
+    background-color: #fce7f3;
+    padding: 10px;
+}
+
+.tagcardlight {
+
+    background-color: #fff;
+    height: 200px;
+    border: transparent;
+    animation: showtag 0.85s forwards ease;
+}
+
+.tagcarddark {
+    background-color: #374151;
+    height: 200px;
+    border: transparent;
+    animation: showtag 0.85s forwards ease;
+}
+
+.hidecardlight {
+    background-color: #fff;
+    height: 200px;
+    border: transparent;
+    animation: hidetag 0.85s backwards ease;
+}
+
+@keyframes showtag {
+    0% {
+        transform: translateY(50%) scale(0.5);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0%) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes hidetag {
+    0% {
+        transform: translateY(0%) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(50%) scale(0.5);
+        opacity: 0.5;
+    }
+}

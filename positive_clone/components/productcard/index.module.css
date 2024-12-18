@@ -1,0 +1,107 @@
+.imageholder {
+    display: block;
+}
+
+.colordot {
+    width: 19px;
+    height: 19px;
+    padding: 10px;
+    border-radius: 50%;
+}
+
+.imageDisplay {
+    transition: all 1s;
+    visibility: visible;
+    opacity: 1;
+    position: absolute;
+}
+
+.imageholderdark {
+    height: 400px;
+    background-color: #1f2937;
+    display: flex;
+    justify-content: center;
+    transition: all 1s;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.activeHolderdark {
+    height: 400px;
+    background-color: #374151;
+    display: flex;
+    justify-content: center;
+    transition: all 1s;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.imageholderlight {
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    transition: all 1s;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #fff;
+}
+
+.activeHolderlight {
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    transition: all 1s;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #fff;
+}
+
+.productCard {
+    background-color: #374151;
+    height: 485px;
+    margin: auto !important;
+    border: transparent;
+    border-radius: 10px;
+    margin-left: 4px !important;
+    margin-right: 4px !important;
+}
+
+.lightcard {
+    height: 485px;
+    margin: auto;
+    border: 1px solid lightgray;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-right: 4px;
+    margin-left: 4px;
+}
+
+.imagehide {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 1s;
+    margin: auto;
+    position: absolute;
+}
+
+.cardfooter {
+    display: flex;
+    flex-direction: column;
+    padding: 17px;
+    justify-content: start;
+    gap: 3.6px;
+    height: calc(600px - 400px);
+}
+
+.sizelabel {
+    border: 2px solid #fff;
+    font-size: small;
+    padding: 5px 7px;
+    color: #fff;
+}
+.sizelabellight {
+    border: 2px solid lightgray;
+    font-size: small;
+    padding: 5px 7px;
+    color: #000;
+}
