@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ee3bece0-a898-4c00-9864-a15ae8e920b6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../../app/api/login/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../app/api/logout/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../app/layout.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../app/testingapprouter/not-found.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../app/testingapprouter/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../app/uploads/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../app/uploads/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../components/collectioncard/index.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../components/collectioncard/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../components/colorLabels/index.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../components/colorLabels/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../components/customBar/index.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../components/customBar/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../components/filtergroup/index.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../components/filtergroup/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../components/loader/index.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../components/navbar/index.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../components/productcard/index.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../components/productcard/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../components/styledpopup/index.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../components/tags/index.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../components/tags/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../components/toast/index.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../components/toast/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/api/auth/[...nextauth].ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/api/loginn/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/api/resetPassword/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/api/shirts/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/authentication/forgotPassword/index.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/authentication/forgotPassword/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/authentication/login/Login.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/authentication/login/index.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/authentication/login/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/authentication/signup/index.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/authentication/signup/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/checkout/index.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/checkout/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/hoodies/index.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/hoodies/style.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/index.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/mugs/index.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/orders/index.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/orders/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/redux/actions/clearCart.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/redux/actions/testingactions.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/redux/actions/theme.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/redux/reducers/positive.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/redux/reducers/testingreducer.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/redux/reducers/toggletheme.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/reduxtest/index.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/reduxtest/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pages/stickers/index.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../0.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../anime.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../blackreddot.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../caps.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../combooffers.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../coolred.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../customized.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../dark image flower.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../elegant.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../fifth.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../fifth_display.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../fitness.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../fourth.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../fourth_display.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../gaming.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hoodie_collection.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hoodies.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hoodieseight.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hoodiesfifth.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hoodiesfourth.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hoodiesninth.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hoodiessecond.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hoodiesseventh.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hoodiessixth.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../hoodiesthird.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../lifestyle.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../mugs.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../mugsfifth.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../mugssixth.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../mugsthird.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../musgsecond.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../onlinefirst.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../onlinefirst.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../onlinefourth.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../onlinesecond.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../onlinethird.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../oversized.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../polotshirts.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../programming.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../second.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../second_displaY.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../second_header_logo.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../theme.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../third.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../third_displaY.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../thshirtbluemens.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../thshirtbluemens.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../trending.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../tshirtblack.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../tshirtfirst.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../tshirtgirl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../tshirtseight.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../tshirtsfifith.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../tshirtsfourth.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../tshirtssecond.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../tshirtsseventh.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../tshirtssixth.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../tshirtsthird.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../tshirtwhite.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../sections/bestsale/index.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../sections/bestsale/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../sections/collections/index.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../sections/collections/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../sections/tagssection/index.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../sections/tagssection/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../sections/themes/index.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../sections/themes/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../utils/bestsale/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../utils/collections/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../utils/context/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../utils/hooks/useDirection/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../utils/pinList/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../utils/tags/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../utils/theme/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../components/cart/index.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../../components/cart/index.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../components/cart/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../../components/cart/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../components/footer/footer.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../../components/footer/footer.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../components/footer/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../../components/footer/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../components/loader/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../../components/loader/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../components/navbar/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../../components/navbar/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../components/navbar/styles.modules.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../components/styledpopup/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../../components/styledpopup/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../middleware.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../modals/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../modals/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../next.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../next.config.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../../pages/_app.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../pages/api/pincode/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../pages/api/pincode/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../pages/api/signup/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../pages/api/signup/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../pages/authentication/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../../pages/authentication/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../pages/hoodies/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../../pages/hoodies/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../../pages/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../pages/mugs/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../../pages/mugs/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../pages/product/[slug]/index.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../../pages/product/[slug]/index.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../pages/product/[slug]/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../../pages/product/[slug]/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../pages/redux/actions/addProduct.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../pages/redux/actions/addProduct.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../pages/redux/actions/removeProduct.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../pages/redux/actions/removeProduct.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../pages/redux/constants/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../pages/redux/constants/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../pages/redux/reducers/addProduct.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../pages/redux/reducers/addProduct.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../pages/redux/reducers/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../pages/redux/reducers/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../pages/redux/sore/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../pages/redux/sore/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../pages/stickers/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../../pages/stickers/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../pages/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../../pages/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../pages/tShirts/index.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../../pages/tShirts/index.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../pages/tShirts/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../../pages/tShirts/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../hoodies.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../hoodieseight.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../hoodiesfifth.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../hoodiesfourth.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../hoodiesninth.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/../../hoodiesninthq.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../hoodiessecond.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../hoodiesseventh.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../hoodiessixth.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../hoodiesthird.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../mugs.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../mugsfifth.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../mugssixth.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../mugsthird.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../musgsecond.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../tshirt.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../tshirt2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../tshirtseight.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../tshirtsfifith.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../tshirtsfourth.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../tshirtssecond.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../tshirtsseventh.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../tshirtssixth.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../tshirtsthird.jpg" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="ProjectId" id="2lpb1M7LKlVCglf8z6VgMA0dM9N" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ee3bece0-a898-4c00-9864-a15ae8e920b6" name="Changes" comment="" />
+      <created>1725879789349</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1725879789349</updated>
+    </task>
+    <servers />
+  </component>
+</project>

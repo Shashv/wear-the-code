@@ -1,0 +1,96 @@
+import Image from "next/image";
+import { Box, Typography } from "@mui/material";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import style from "./index.module.css";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import Button from "@mui/material/Button";
+import { useSelector } from "react-redux";
+import Loader from "@/components/loader";
+import CollectionSections from "@/sections/collections";
+import { IState } from "@/redux/sore";
+import ThemeSection from "@/sections/themes";
+import TagSection from "@/sections/tagssection";
+import BestSelling from "@/sections/bestsale";
+import { useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
+import { headers } from "next/headers";
+import { Session } from "next-auth";
+import useToast from "@/hooks/useToast";
+import authorizeOptions from "./api/auth/[...nextauth]";
+import Aos from 'aos';
+import "aos/dist/aos.css"
+import { toast } from "react-toastify";
+import SlickSlides from "@/components/slickSlides";
+interface IParas {
+    props: {
+        name: string
+    }
+}
+export default function Home(props: { name: string, scrollTop: number, direction: string, session?: Session } | any) {
+    const rouerDetail = useRouter();
+    let scrollDIrection: string = "";
+    let [scrollDirection, setScrollDirection] = useState<string>("");
+    const session = useSession();
+    let theme = useSelector((state: IState) => state.toggletheme);
+    const toastOptions = useToast();
+    useEffect(() => {
+        Aos.init({ once: false });
+        toast.success("Welcome to Codeswear", {
+            theme: theme.light ? "light" : "dark",
+            draggable: false,
+            autoClose: 2500,
+        })
+    }, []);
+    return (
+        <>
+            <SlickSlides />
+            <div className={theme.light ? "wrapper bg-white" : "wrapper bg-dark"}>
+                {/* ...slick slided with custom css */}
+                {/* <div className={style.customcontainer}>
+                    <div className={style.wrapper}>
+                        <img className={style.imgfirst} src="/home.jpg" />
+                        <img className={style.imgthird} src="/onlinefirst.jpg" />
+                        <img className={style.imgfourth} src="/onlinesecond.jpg" />
+                        <img className={style.imgfifth} src="/onlinethird.jpg" />
+                        <img className={style.imgsixth} src="/onlinefourth.jpg" />
+                    </div>
+                </div> */}
+                <div className={"collections-container"} style={{ backgroundColor: `${theme.dark ? "#1f2937" : "#fff"}` }}>
+                    <CollectionSections theme={theme} />
+                </div>
+                <div style={{ backgroundColor: `${theme.dark ? "#1f2937" : "#fff"}` }}>
+                    <ThemeSection theme={theme} />
+                </div>
+                <div style={{ backgroundColor: theme.dark ? "#1f2937" : "" }} className={theme.dark ? "best-selling px-5" : "best-selling-light bg-white px-5"}>
+                    <BestSelling /> 
+                </div>
+                <div style={{ backgroundColor: theme.dark ? "#1f2937" : "#fff" }}>
+                    <TagSection theme={theme} />
+                </div>
+            </div>
+        </>
+    );
+}
+//server...//
+// export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+//     const session = await getServerSession(context.req, context.res, authorizeOptions);
+//     console.log("session positive", session);
+//     if (session) {
+//         return {
+//             props: {
+//                 session: session
+//             }
+//         }
+//     }
+//     else {
+//         return {
+//             redirect: {
+//                 permanent: false,
+//                 destination: "/authentication/login"
+//             }
+//         }
+//     }
+// }
+//...server//

@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("https://db.onlinewebfonts.com/c/f56809563b15c7c76669dac9ca9d38ac?family=Matter+Regular");
+
+input::placeholder {
+    font-family: "Matter Regular";
+}
+
+input:focus {
+    border: transparent;
+    outline: 2px solid pink;
+}
+
+.parent {
+    overflow-x: hidden;
+    font-family: "Matter Regular";
+    position: relative;
+    height: 100vh;
+}
+
+.parent::-webkit-scrollbar {
+    width: 5px;
+    background-color: rgb(175, 179, 180);
+}
+
+.parent::-webkit-scrollbar-track {
+    width: 5px;
+    background-color: rgb(166, 170, 172);
+}
+
+.parent::-webkit-srollbar-thumb {
+    width: 5px;
+    background-color: rgb(166, 177, 180);
+}
+.route-component::-webkit-scrollbar {
+    width: 5px;
+    background-color: rgb(175, 179, 180);
+}
+.route-component::-webkit-scrollbar-track {
+    width: 5px;
+    border-radius: 10px;
+    background-color: magenta;
+}
+
+.route-component::-webkit-scrollbar-track-piece {
+    width: 5px;
+    border-radius: 10px;
+}

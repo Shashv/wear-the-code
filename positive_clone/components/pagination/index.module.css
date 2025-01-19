@@ -1,0 +1,15 @@
+.lightpagination {
+    display: flex;
+    gap: 5px;
+    color: magenta;
+    background-color: #fff;
+    justify-content: center;
+}
+
+.darkpagination {
+    display: flex;
+    gap: 5px;
+    color: magenta;
+    background-color: black;
+    justify-content: center;
+}

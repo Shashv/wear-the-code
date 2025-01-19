@@ -1,0 +1,46 @@
+.slickSlider {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.slickSlider>.slideaction {
+    font-size: smaller;
+    border-radius: 50%;
+    width: 61px;
+    height: 61px;
+    font-size: x-small;
+    position: absolute;
+    z-index: 5;
+}
+
+.slickSlider .previousslide {
+    top: 50%;
+    left: 40px;
+}
+
+.slickSlider .nextslide {
+    top: 50%;
+    right: 40px;
+}
+
+.wrapper {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.slides {
+    height: 100%;
+    display: flex;
+    left: -100vw;
+    position: absolute;
+}
+
+.slide {
+    width: 100vw;
+    height: 100vh;
+}
