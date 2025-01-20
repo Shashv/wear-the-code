@@ -24,6 +24,7 @@ import { LoadingBarContainer } from "react-top-loading-bar";
 import ToastProvider from "@/components/toast/Toast";
 import { NextPage } from "next";
 import AosInitialize from "@/utils/aos";
+
 const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
     const routerDetail: NextRouter = useRouter();
     let ref = useRef<HTMLDivElement>(null);
