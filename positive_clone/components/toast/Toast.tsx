@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { ToastContext } from "@/hooks/useToast";
+// import { ToastContext } from "@/hooks/useToast";
 import StyledToast from ".";
 const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [toast, setToast] = useState<{ message: string; visible: boolean, type: string }>({
@@ -13,13 +13,13 @@ const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     }
     return (
         <>
-            <ToastContext.Provider value={showToast}>
+            {/* <ToastContext.Provider value={showToast}>
                 {children}
                 <StyledToast message={toast.message} onClose={(e, timeOut) => {
                     setToast({ ...toast, visible: false });
                     clearTimeout(timeOut)
                 }} open={toast.visible} variant={toast.type} autoHide={() => setToast({ ...toast, visible: false })} />
-            </ToastContext.Provider>
+            </ToastContext.Provider> */}
         </>
     )
 }

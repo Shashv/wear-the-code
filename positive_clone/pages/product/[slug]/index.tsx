@@ -8,7 +8,7 @@ import { useState } from "react";
 import StyledModal from "@/components/styledpopup";
 import { useRouter } from "next/router";
 import { Typography, Backdrop, CircularProgress, Grid } from "@mui/material";
-import Loader from "@/components/loader";
+// import Loader from "@/components/loader";
 import addProduct from "@/redux/actions/addProduct";
 import { useDispatch, useSelector } from "react-redux";
 import StyledToast from "@/components/toast";
@@ -18,7 +18,7 @@ import { IShirts } from "@/pages/api/getProducts";
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import ColorLabel from "@/components/colorLabels";
 import buyProduct from "@/redux/actions/buyproduct";
-import LoaderAnimate from "@/components/loader";
+// import LoaderAnimate from "@/components/loader";
 // import useToast from "@/hooks/useToast";
 import clearCart from "@/redux/actions/clearCart";
 import ProductModel from "@/modalsmongoose/product";
@@ -234,7 +234,7 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
     return (
         <>
             {loader ? <Backdrop open className="flex flex-column justify-center align-center">
-                <LoaderAnimate />
+                {/* <LoaderAnimate /> */}
             </Backdrop> :
                 <>
                     {/* custom toast usage */}

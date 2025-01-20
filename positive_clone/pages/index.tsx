@@ -17,7 +17,7 @@ import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { headers } from "next/headers";
 import { Session } from "next-auth";
-import useToast from "@/hooks/useToast";
+// import useToast from "@/hooks/useToast";
 import authorizeOptions from "./api/auth/[...nextauth]";
 import Aos from 'aos';
 import "aos/dist/aos.css"
@@ -34,7 +34,7 @@ export default function Home(props: { name: string, scrollTop: number, direction
     let [scrollDirection, setScrollDirection] = useState<string>("");
     const session = useSession();
     let theme = useSelector((state: IState) => state.toggletheme);
-    const toastOptions = useToast();
+    // const toastOptions = useToast();
     useEffect(() => {
         Aos.init({ once: false });
         toast.success("Welcome to Codeswear", {
@@ -64,7 +64,7 @@ export default function Home(props: { name: string, scrollTop: number, direction
                     <ThemeSection theme={theme} />
                 </div>
                 <div style={{ backgroundColor: theme.dark ? "#1f2937" : "" }} className={theme.dark ? "best-selling px-5" : "best-selling-light bg-white px-5"}>
-                    <BestSelling /> 
+                    <BestSelling />
                 </div>
                 <div style={{ backgroundColor: theme.dark ? "#1f2937" : "#fff" }}>
                     <TagSection theme={theme} />

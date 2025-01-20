@@ -18,7 +18,7 @@ import FilterBar from "@/components/filtergroup";
 // import useToast from "@/hooks/useToast";
 import { useSession } from "next-auth/react";
 import { Grid } from "@mui/material";
-import LoaderAnimate from "@/components/loader";
+// import LoaderAnimate from "@/components/loader";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "../api/auth/[...nextauth]";
 import LoadingBar from "react-top-loading-bar";
@@ -100,7 +100,7 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
                 </> :
                 session.status === "loading" || loader &&
                 <Backdrop open className="flex flex-column align-center justify-center body-font">
-                    <LoaderAnimate />
+                    {/* <LoaderAnimate /> */}
                 </Backdrop>}
 
         </>

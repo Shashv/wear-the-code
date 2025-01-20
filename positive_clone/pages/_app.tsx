@@ -53,20 +53,20 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
                 <Provider store={store}>
                     <SessionProvider session={session}>
                         <AosInitialize>
-                            <ToastProvider>
-                                <LoadingBarContainer>
-                                    {!path.includes("/auth") &&
-                                        <StyledBar scrollTop={0} />
-                                    }
-                                    <ContextWrapper.Provider value={toggleFilter}>
-                                        <div className={"route-component"} style={{ height: !path.includes("/auth") ? "600px" : "100vh", overflowY: filterStatus ? "hidden" : "scroll", overflowX: "hidden" }}>
-                                            <Component  {...pageparams} />
-                                        </div>
-                                    </ContextWrapper.Provider>
-                                    {!path.includes("/auth") && <Footer />}
-                                    <ToastContainer />
-                                </LoadingBarContainer>
-                            </ToastProvider>
+                            {/* <ToastProvider> */}
+                            <LoadingBarContainer>
+                                {!path.includes("/auth") &&
+                                    <StyledBar scrollTop={0} />
+                                }
+                                <ContextWrapper.Provider value={toggleFilter}>
+                                    <div className={"route-component"} style={{ height: !path.includes("/auth") ? "600px" : "100vh", overflowY: filterStatus ? "hidden" : "scroll", overflowX: "hidden" }}>
+                                        <Component  {...pageparams} />
+                                    </div>
+                                </ContextWrapper.Provider>
+                                {!path.includes("/auth") && <Footer />}
+                                <ToastContainer />
+                            </LoadingBarContainer>
+                            {/* </ToastProvider> */}
                         </AosInitialize>
                     </SessionProvider>
                 </Provider>
