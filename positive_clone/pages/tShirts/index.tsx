@@ -31,6 +31,7 @@ import { Session, getServerSession } from "next-auth";
 import { NextRouter, withRouter } from "next/router";
 import LoadingBar from "react-top-loading-bar";
 import { toast } from "react-toastify";
+import Pagination from "@/components/pagination";
 export type IProductType = {
     readonly desc: string;
     readonly category?: string;
@@ -138,6 +139,7 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
                                                         </div>
                                                     </div>
                                                 </section>
+                                                <Pagination page={1} pageList={[1, 2, 3, 4, 5]} changePage={() => { }} />
                                             </div>
                                         </>
                                 }
