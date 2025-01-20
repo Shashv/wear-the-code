@@ -11,7 +11,7 @@ import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 import ProductModel from "@/modalsmongoose/product";
 import FilterBar from "@/components/filtergroup";
 import Link from "next/link";
-import useToast from "@/hooks/useToast";
+// import useToast from "@/hooks/useToast";
 import LoaderAnimate from "@/components/loader";
 import LoadingBar from "react-top-loading-bar";
 import { toast } from "react-toastify";
@@ -24,7 +24,7 @@ const Hoodies: NextPage<{
     }
 }> = ({ scrollTop, hoodies, loading, cart }) => {
     const [loader, setLoader] = useState(true);
-    const toastOptions = useToast();
+    // const toastOptions = useToast();
     const themeState = useSelector((state: IState) => state.toggletheme);
     const [progress, setProgress] = useState<number>(0);
     useEffect(() => {
@@ -54,12 +54,12 @@ const Hoodies: NextPage<{
                                             <Typography className={themeState.light ? "text-dark text-center" : "text-light text-center"} fontWeight={600} sx={{ fontSize: { xs: 21, md: 30.5 } }}>
                                                 Explore our hoodies collections!
                                             </Typography>
-                                            <Typography color={themeState.light ? "#000" : "#9ca3af"} className={"text-start px-24 py-2 pb-3"} sx={{ fontSize: { xs: 13, md: 14 }, textIndent: { sm: "start" } }} lineHeight={1.2}>
+                                            <Typography color={themeState.light ? "#000" : "#9ca3af"} className={"text-start px-24 py-2 pb-3"} sx={{ fontSize: { xs: 13, md: 14 }, textIndent: { sm: "start" } }} fontWeight={600} lineHeight={1.6}>
                                                 Welcome to Codeswear.com, your one-stop shop for stylish and unique tshirts. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!
                                             </Typography>
                                             <Grid container rowGap={1.4} columnGap={1.4} justifyContent={"center"}>
                                                 {Object.keys(cart).length === 0 && <Grid item xs={12}><Typography color={"#ec4899"}>Soory products out of available</Typography></Grid>}
-                                                {Object.keys(cart).map((hoodies: string, index: number) => <Grid item xs={8.9} sm={5.9} md={2.2} key={index}>
+                                                {Object.keys(cart).map((hoodies: string, index: number) => <Grid item xs={8.9} sm={5.9} md={2.7} key={index}>
                                                     <Link href={`/product/${cart[hoodies].slug}`}> <ProductCard desc={cart[hoodies].desc} slug={cart[hoodies].slug} title={cart[hoodies].title} img={cart[hoodies].img} colors={cart[hoodies].color} sizes={cart[hoodies].size} /></Link></Grid>)}
                                             </Grid>
                                         </div>

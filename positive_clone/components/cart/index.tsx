@@ -20,7 +20,7 @@ import StyledToast from "../../components/toast/index";
 import removeBuyProduct from "@/redux/actions/removeBuyproduct";
 import addBuyproduct from "@/redux/actions/addBuyproduct";
 import clearBuyproducts from "@/redux/actions/clearBuyProducts";
-import useToast from "@/hooks/useToast";
+// import useToast from "@/hooks/useToast";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawer, reduxAdd, reduxSubtract, reviewCart }) => {

@@ -9,7 +9,7 @@ const MyAccount = () => {
     const session = useSession();
     useEffect(() => {
         session.status === "unauthenticated" ? router.push("/") : null
-    });
+    },[]);
     return (
         <>
             <div className="container">

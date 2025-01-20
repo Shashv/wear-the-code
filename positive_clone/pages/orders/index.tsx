@@ -15,17 +15,17 @@ const Orders: React.FC = (props: unknown) => {
     let [orderList, setOrderList] = useState<string[]>([]);
     let [orderId, setOrderId] = useState<number>();
     let theme: { light: boolean; dark: boolean } = useSelector((state: IState) => state.toggletheme);
-    // useEffect(() => {
-    //     Object.keys(cartstate).length > 0 ?
-    //         setOrderList(Object.keys(cartstate)) : setOrderList(Object.keys(buyedProducts));
-    //     let id: number = Math.random();
-    //     setOrderId(id);
-    //     // fetch("/api/getProducts", {
-    //     //     method: "GET"
-    //     // }).then(response => response.json()).then(response => {
-    //     //     console.log(response);
-    //     // }).catch(er => console.log(er));
-    // }, []);
+    useEffect(() => {
+        Object.keys(cartstate).length > 0 ?
+            setOrderList(Object.keys(cartstate)) : setOrderList(Object.keys(buyedProducts));
+        let id: number = Math.random();
+        setOrderId(id);
+        fetch("/api/getProducts", {
+            method: "GET"
+        }).then(response => response.json()).then(response => {
+            console.log(response);
+        }).catch(er => console.log(er));
+    }, []);
     return (
         <>
             <Head>

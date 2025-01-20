@@ -15,7 +15,7 @@ import { Backdrop, CircularProgress, Typography } from "@mui/material";
 import Head from "next/head";
 import styles from "../stickers/index.module.css";
 import FilterBar from "@/components/filtergroup";
-import useToast from "@/hooks/useToast";
+// import useToast from "@/hooks/useToast";
 import { useSession } from "next-auth/react";
 import { Grid } from "@mui/material";
 import LoaderAnimate from "@/components/loader";
@@ -31,14 +31,15 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
     const hideToast: (e: React.MouseEvent) => void = (e) => {
         setToast(false);
     }
-    const toastOptions = useToast();
+    // const toastOptions = useToast();
     const onScroll: (e: any) => void = (e) => {
     }
     const session = useSession();
     const [positive, setPositive] = useState<number>(0);
     useEffect(() => {
         if (session.status === "unauthenticated") {
-            toastOptions("Oops you are not authenticated", "error");
+            // toastOptions("Oops you are not authenticated", "error");
+            toast.error("Oops you are not authenticated");
             setLoader(false);
             router.push("/authentication/login");
         }
@@ -75,11 +76,11 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
                                             <Typography className={combinedState.light ? "text-dark text-center" : "text-light text-center"} fontWeight={600} sx={{ fontSize: { xs: 21, md: 30.5 } }}>
                                                 Explore Our Stickers Collection
                                             </Typography>
-                                            <Typography color={combinedState.light ? "#000" : "#9ca3af"} className={"text-start px-24 py-2 pb-3"} sx={{ fontSize: { sm: 15, md: 14 }, textIndent: { sm: "start" } }} lineHeight={1.2}>
+                                            <Typography color={combinedState.light ? "#000" : "#9ca3af"} className={"text-start px-24 py-2 pb-3"} sx={{ fontSize: { sm: 15, md: 14 }, textIndent: { sm: "start" } }} lineHeight={1.6} fontWeight={600}>
                                                 Welcome to Codeswear.com, your one-stop shop for stylish and unique stickers. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!
                                             </Typography>
                                             <Grid container rowGap={2} className="justify-center" columnGap={1.4}>
-                                                {props.stickers ? props.stickers.map((sticker, index) => <Grid item xs={5.4} sm={5.9} md={2.2} key={`sticker-${index}`}>
+                                                {props.stickers ? props.stickers.map((sticker, index) => <Grid item xs={5.4} sm={5.9} md={2.7} key={`sticker-${index}`}>
                                                     <Link href={`/product/${sticker.slug}`}>
                                                         <ProductCard title={sticker.title} desc={sticker.desc} img={sticker.img} category={sticker.category} slug={sticker.slug} />
                                                     </Link>

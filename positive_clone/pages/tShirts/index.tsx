@@ -22,7 +22,7 @@ import ProductCard from "@/components/productcard";
 import StyledToast from "@/components/toast";
 import Head from "next/head";
 import { Grid } from "@mui/material";
-import { ToastContext } from "@/hooks/useToast";
+// import { ToastContext } from "@/hooks/useToast";
 import LoaderAnimate from "@/components/loader";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
@@ -46,7 +46,7 @@ export type IProductType = {
     showIcon?: boolean;
 }
 class Shirts extends React.Component<IShirtProps, IShirtState> {
-    static contextType?: React.Context<any> | undefined = ToastContext;
+    // static contextType?: React.Context<any> | undefined = ToastContext;
     constructor(props: IShirtProps) {
         super(props);
         this.state = {
@@ -96,58 +96,58 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
                     </title>
                 </Head>
                 <LoadingBar progress={this.state.progress} shadow className="" height={3} color="magenta" />
-                <ToastContext.Consumer>
+                {/* <ToastContext.Consumer>
                     {(context: (message?: string, type?: string) => void) => {
                         return (
-                            <>
-                                {
-                                    this.state.loader ? <Backdrop className="flex flex-column align-center justify-center" open>
-                                        <LoaderAnimate />
-                                    </Backdrop> :
-                                        <>
-                                            <div className={this.props.theme.light ? `${styles.positivelight}` : `${styles.positivedark}`}>
-                                                <section className="">
-                                                    <div className={"container-fluid p-0"}>
-                                                        <div className="row h-100">
-                                                            <div className={`col-md-2 ${styles.mobilefiltercontainer} p-2`}>
-                                                                <FilterBar theme={this.props.theme} />
-                                                            </div>
-                                                            <div className="col-md-10 p-2">
-                                                                <div className={"py-2"}>
-                                                                    <Typography className={this.props.theme.light ? "text-dark text-center" : "text-light text-center"} fontWeight={600} sx={{ fontSize: { xs: 21, md: 30.5 } }}>
-                                                                        Explore Our TShirts Collection
-                                                                    </Typography>
-                                                                    <Typography color={this.props.theme.light ? "#000" : "#9ca3af"} className={"text-start px-24 py-2 pb-3"} sx={{ fontSize: { xs: 13, md: 14 }, textIndent: { sm: "start" } }} lineHeight={1.2}>
-                                                                        Welcome to Codeswear.com, your one-stop shop for stylish and unique tshirts. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!
-                                                                    </Typography>
-                                                                    <Grid container rowGap={2} className="justify-center" columnGap={1.4}>
-                                                                        {Object.keys(this.state.data).length > 0 &&
-                                                                            Object.keys(this.state.data).map((key: string, index: number) =>
-                                                                                <Grid item xs={7} sm={5.9} md={2.3} key={index}>
-                                                                                    <Link href={{
-                                                                                        pathname: `product/${this.state.data[key].slug}`
-                                                                                    }} >
-                                                                                        <ProductCard colors={this.state.data[key].colors} sizes={this.state.data[key].sizes} title={this.state.data[key].title} img={this.state.data[key].img} desc={this.state.data[key].desc}
-                                                                                            category="Tshirt" showIcon price={this.state.data[key].price} />
-                                                                                    </Link>
-                                                                                </Grid>
-                                                                            )
-                                                                        }
-                                                                    </Grid>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </section>
-                                                <Pagination page={1} pageList={[1, 2, 3, 4, 5]} changePage={() => { }} />
+                            <> */}
+                {
+                    this.state.loader ? <Backdrop className="flex flex-column align-center justify-center" open>
+                        <LoaderAnimate />
+                    </Backdrop> :
+                        <>
+                            <div className={this.props.theme.light ? `${styles.positivelight}` : `${styles.positivedark}`}>
+                                <section className="">
+                                    <div className={"container-fluid p-0"}>
+                                        <div className="row h-100">
+                                            <div className={`col-md-2 ${styles.mobilefiltercontainer} p-2`}>
+                                                <FilterBar theme={this.props.theme} />
                                             </div>
-                                        </>
-                                }
-                            </>
+                                            <div className="col-md-10 p-2">
+                                                <div className={"py-2"}>
+                                                    <Typography className={this.props.theme.light ? "text-dark text-center" : "text-light text-center"} fontWeight={600} sx={{ fontSize: { xs: 21, md: 30.5 } }}>
+                                                        Explore Our TShirts Collection
+                                                    </Typography>
+                                                    <Typography color={this.props.theme.light ? "#000" : "#9ca3af"} className={"text-start px-24 py-2 pb-3"} sx={{ fontSize: { xs: 13, md: 14 }, textIndent: { sm: "start" } }} lineHeight={1.6} fontWeight={600}>
+                                                        Welcome to Codeswear.com, your one-stop shop for stylish and unique tshirts. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!
+                                                    </Typography>
+                                                    <Grid container rowGap={2} className="justify-center" columnGap={1.4}>
+                                                        {Object.keys(this.state.data).length > 0 &&
+                                                            Object.keys(this.state.data).map((key: string, index: number) =>
+                                                                <Grid item xs={7} sm={5.9} md={2.7} key={index}>
+                                                                    <Link href={{
+                                                                        pathname: `product/${this.state.data[key].slug}`
+                                                                    }} >
+                                                                        <ProductCard colors={this.state.data[key].colors} sizes={this.state.data[key].sizes} title={this.state.data[key].title} img={this.state.data[key].img} desc={this.state.data[key].desc}
+                                                                            category="Tshirt" showIcon price={this.state.data[key].price} />
+                                                                    </Link>
+                                                                </Grid>
+                                                            )
+                                                        }
+                                                    </Grid>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <Pagination page={1} pageList={[1, 2, 3, 4, 5]} changePage={() => { }} />
+                            </div>
+                        </>
+                }
+                {/* </>
                         )
 
                     }}
-                </ToastContext.Consumer>
+                </ToastContext.Consumer> */}
             </>
         )
     }

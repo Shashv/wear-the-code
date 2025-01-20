@@ -19,7 +19,7 @@ import useSearchParamsstate from "@/hooks/useSearchParams";
 import ColorLabel from "@/components/colorLabels";
 import buyProduct from "@/redux/actions/buyproduct";
 import LoaderAnimate from "@/components/loader";
-import useToast from "@/hooks/useToast";
+// import useToast from "@/hooks/useToast";
 import clearCart from "@/redux/actions/clearCart";
 import ProductModel from "@/modalsmongoose/product";
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
@@ -77,7 +77,7 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
         message: ""
     });
     let productsBought = useSelector((state: IState) => state.buyNow);
-    let toastOptions = useToast();
+    // let toastOptions = useToast();
     let [pin, setPin] = useState<{ pinError: boolean | any; pin: any; servicePending: boolean }>({ pinError: "", pin: null, servicePending: false });
 
     let slug: string | string[] | any = "";

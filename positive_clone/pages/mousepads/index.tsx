@@ -9,7 +9,7 @@ import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 import FilterBar from "@/components/filtergroup";
 import style from "./index.module.css";
 import ProductCard from "@/components/productcard";
-import useToast from "@/hooks/useToast";
+// import useToast from "@/hooks/useToast";
 import LoadingBar from "react-top-loading-bar";
 import { toast } from "react-toastify";
 import Link from "next/link";
@@ -33,7 +33,7 @@ const MousePads: NextPage<{
 }> = (props) => {
     let { mousePadsSchema } = props;
     const theme = useSelector((state: IState) => state.toggletheme);
-    const toastOptions = useToast();
+    // const toastOptions = useToast();
     const [progress, setProgress] = useState<number>(0);
     useEffect(() => {
         Object.keys(mousePadsSchema).length > 0 &&
@@ -63,13 +63,13 @@ const MousePads: NextPage<{
                                     <Typography color={theme.light ? "#000" : "#fff"} className="text-center" fontSize={{ xs: 21, md: 30.5 }}>
                                         Explorre our MousePads at negotiable price and best quality
                                     </Typography>
-                                    <Typography color={theme.light ? "#000" : "#9ca3af"} className="text-start px-24 py-2 pb-3" sx={{ fontSize: { xs: 13, md: 14 } }}>
+                                    <Typography color={theme.light ? "#000" : "#9ca3af"} className="text-start px-24 py-2 pb-3" sx={{ fontSize: { xs: 13, md: 14 } }} fontWeight={600} lineHeight={1.6}>
                                         Welcome to Codeswear.com, your one-stop shop for stylish and unique mousepads. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!
                                     </Typography>
                                     <Grid container rowGap={1.4} justifyContent={"center"} columnGap={1.4}>
                                         {
                                             Object.keys(mousePadsSchema || {}).length > 0 ?
-                                                Object.keys(mousePadsSchema).map((mousepad: string, index: number) => <Grid key={index} item xs={8.9} sm={5.8} md={2.2}>
+                                                Object.keys(mousePadsSchema).map((mousepad: string, index: number) => <Grid key={index} item xs={8.9} sm={5.8} md={2.7}>
                                                     <Link href={"/"}>
                                                         <ProductCard title={mousePadsSchema[mousepad].title} colors={mousePadsSchema[mousepad].colors} sizes={mousePadsSchema[mousepad].sizes} desc={mousePadsSchema[mousepad].desc} img={mousePadsSchema[mousepad].img} category={mousePadsSchema[mousepad].category} />
                                                     </Link>

@@ -8,7 +8,7 @@ import ProductModel from "@/modalsmongoose/product";
 import FilterBar from "@/components/filtergroup";
 import ProductCard from "@/components/productcard";
 import { Grid, Typography } from "@mui/material";
-import { ToastContext } from "@/hooks/useToast";
+// import { ToastContext } from "@/hooks/useToast";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import { compose } from "redux";
@@ -35,7 +35,7 @@ const mapStateToProps = (state: IState): any => {
 const partialConnector = connect(mapStateToProps);
 type IProps = ConnectedProps<typeof partialConnector>;
 class Mugs extends React.Component<any, { name: string; age: number; loader: false; progress: number }> {
-    static contextType?: React.Context<any> | undefined = ToastContext;
+    // static contextType?: React.Context<any> | undefined = ToastContext;
     constructor(props: any) {
         super(props);
         this.state = {
@@ -62,12 +62,12 @@ class Mugs extends React.Component<any, { name: string; age: number; loader: fal
                                         <Typography className={this.props.theme.light ? "text-dark text-center" : "text-light text-center"} fontWeight={600} sx={{ fontSize: { xs: 21, md: 30.5 } }}>
                                             Explore Our Mugs Collection
                                         </Typography>
-                                        <Typography color={this.props.theme.light ? "#000" : "#9ca3af"} className={"text-start px-24 py-2 pb-3"} sx={{ fontSize: { sm: 15, md: 14 }, textIndent: { sm: "start" } }} lineHeight={1.2}>
+                                        <Typography color={this.props.theme.light ? "#000" : "#9ca3af"} className={"text-start px-24 py-2 pb-3"} sx={{ fontSize: { sm: 15, md: 14 }, textIndent: { sm: "start" } }} lineHeight={1.6} fontWeight={600}>
                                             Welcome to Codeswear.com, your one-stop shop for stylish and unique mugs. Buy mugs at the best price in India. We offer a wide range of tshirts for all interests, including coding mugs, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!
                                         </Typography>
                                         <Grid container columnGap={1.4} rowGap={1.4} justifyContent={"center"}>
                                             {Object.keys(this.props.mugsSchema).length > 0 ? Object.keys(this.props.mugsSchema).map((mugs: string, index: number) =>
-                                                <Grid item xs={8.9} sm={5.9} md={2.2}>
+                                                <Grid item xs={8.9} sm={5.9} md={2.7}>
                                                     <Link href={`/product/${this.props.mugsSchema[mugs].slug}`}>
                                                         <ProductCard title={this.props.mugsSchema[mugs].title} colors={this.props.mugsSchema[mugs].color} sizes={this.props.mugsSchema[mugs].size} desc={this.props.mugsSchema[mugs].desc} img={this.props.mugsSchema[mugs].img} />
                                                     </Link>
