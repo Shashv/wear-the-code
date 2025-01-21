@@ -1,4 +1,4 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose, { models, mongo } from "mongoose";
 mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 const OrderSchema = new mongoose.Schema({
     userId: { type: String, required: true },
@@ -9,6 +9,12 @@ const OrderSchema = new mongoose.Schema({
     address: { type: String, required: true },
     totalAmount: { type: Number, required: true },
     orderStatus: { type: String, default: "pending", required: true }
-}, { timestamps: true })
-const OrdersModel = mongoose.model("Orders", OrderSchema);
+}, { timestamps: true });
+let OrdersModel: any = "";
+if (mongoose.models && mongoose, models.Orders) {
+    OrdersModel = mongoose.models.Orders;
+}
+else {
+    OrdersModel = mongoose.model("Orders", OrderSchema);
+}
 export default OrdersModel;

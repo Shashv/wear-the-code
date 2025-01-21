@@ -8,7 +8,6 @@ import ProductModel from "@/modalsmongoose/product";
 import FilterBar from "@/components/filtergroup";
 import ProductCard from "@/components/productcard";
 import { Grid, Typography } from "@mui/material";
-// import { ToastContext } from "@/hooks/useToast";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import { compose } from "redux";
@@ -35,7 +34,6 @@ const mapStateToProps = (state: IState): any => {
 const partialConnector = connect(mapStateToProps);
 type IProps = ConnectedProps<typeof partialConnector>;
 class Mugs extends React.Component<any, { name: string; age: number; loader: false; progress: number }> {
-    // static contextType?: React.Context<any> | undefined = ToastContext;
     constructor(props: any) {
         super(props);
         this.state = {
@@ -86,7 +84,7 @@ class Mugs extends React.Component<any, { name: string; age: number; loader: fal
     }
     async componentDidMount(): Promise<void> {
         this.toastExecution = this.context;
-        // this.toastExecution("Mugs Fetched Successfully", "success");
+
         toast.success("Mugs", {
             theme: "dark",
             autoClose: 2000

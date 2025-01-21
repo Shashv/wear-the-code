@@ -41,7 +41,7 @@ const StyledModal: React.FC<IModal> = ({ open, title, content, width, height, pu
                         </DialogContent>
                         <DialogActions className="d-flex justify-content-end">
                             <button className={purpose ? "rounded-2 text-pink-400 hover:shadow-sm p-2" : "rounded-2 text-light bg-pink-400 p-2"} onClick={(e) => closeModal()}>
-                                 Close
+                                Close
                             </button>
                             {purpose && <button ref={logOutRef} onClick={confirmProcess} className="confirm-process bg-pink-400 rounded-2 text-light p-2">
                                 {purpose ? purpose : "Confirm"}

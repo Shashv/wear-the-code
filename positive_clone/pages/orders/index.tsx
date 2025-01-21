@@ -6,8 +6,9 @@ import { } from "react-redux";
 import Head from "next/head";
 import { Typography } from "@mui/material";
 import LoadingBar from "react-top-loading-bar";
+import OrdersModel from "@/modalsmongoose/orders";
 const Orders: React.FC = (props: unknown) => {
-    
+
     const cartstate = useSelector((state: IState) => {
         return state.productManage;
     });
@@ -104,11 +105,12 @@ const Orders: React.FC = (props: unknown) => {
 }
 export default Orders;
 export const getServerSideProps: (context: unknown) => Promise<{ props: any }> = async (positive) => {
-    let ordersResponse = await fetch("/api/orders", {
-        method: "GET"
-    });
-    let orderValue = await ordersResponse.json();
-
+    // let ordersResponse = await fetch("/api/orders", {
+    //     method: "GET"
+    // });
+    // let orderValue = await ordersResponse.json();
+    let orders = await OrdersModel.find({});
+    console.log("Orders Model", orders);
     return {
         props: {
             pageName: "Orders Page"

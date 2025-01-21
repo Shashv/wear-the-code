@@ -14,8 +14,8 @@ const Pagination: React.FC<IBabaji> = ({ page, changePage, pageList }) => {
     const theme = useSelector((state: IState) => state.toggletheme);
     const staticPages = [1, 2, 3, 4, 5];
     return (
-        <div className={theme.light ? paginationstyle.lightpagination : paginationstyle.darkpagination}>
-            {staticPages.map(page => <button className={style.page} key={page} onClick={e => changePage(e, page)}>{page}</button>)}
+        <div className={`pagination ${theme.light ? paginationstyle.lightpagination : paginationstyle.darkpagination}`}>
+            {staticPages.map(page => <button className={`page-item ${style.page}`} key={page} onClick={e => changePage(e, page)}>{page}</button>)}
         </div>
     )
 }

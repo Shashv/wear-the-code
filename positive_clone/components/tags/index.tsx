@@ -5,6 +5,7 @@ import { ITagList } from "@/modals";
 // import { ContextObject } from "@/utils/context";
 import { useInView } from "react-intersection-observer";
 const Tags: React.FC<ITagList> = ({ logo, label, desciption, theme }) => {
+    // ..till the time commented useContext..//
     // const direction: string = useContext(ContextObject);
     const { ref, inView } = useInView();
     return (

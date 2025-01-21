@@ -21,19 +21,30 @@ import type { AppProps } from "next/app";
 import jsonwebtoken from "jsonwebtoken";
 import 'react-toastify/dist/ReactToastify.css';
 import { LoadingBarContainer } from "react-top-loading-bar";
-import ToastProvider from "@/components/toast/Toast";
 import { NextPage } from "next";
 import AosInitialize from "@/utils/aos";
-
+import 'aos/dist/aos.css';
+import Router from "next/router";
+import aos from "aos";
+import { Backdrop } from "@mui/material";
+import LoaderAnimate from "@/components/loader";
 const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
     const routerDetail: NextRouter = useRouter();
     let ref = useRef<HTMLDivElement>(null);
+    const [loader, setLoader] = React.useState<boolean>(false);
     let path: string = routerDetail.asPath.split("?")[0];
     let [filterStatus, setFilterStatus] = React.useState<boolean>(false);
     const { session, ...pageparams } = pageProps;
     const toggleFilter = (status: boolean) => {
         setFilterStatus(!status);
     }
+    useEffect(() => {
+        aos.init();
+        Router.events.on("routeChangeStart", e => {
+            setLoader(true);
+        })
+        Router.events.on("routeChangeComplete", e => setLoader(false));
+    });
     return (
         <GoogleOAuthProvider clientId="803758111092-tusltrjau3p58fdue2k96a6rkm0nasik.apps.googleusercontent.com">
             <div ref={ref} className="parent">
@@ -53,20 +64,21 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
                 <Provider store={store}>
                     <SessionProvider session={session}>
                         <AosInitialize>
-                            {/* <ToastProvider> */}
                             <LoadingBarContainer>
                                 {!path.includes("/auth") &&
                                     <StyledBar scrollTop={0} />
                                 }
                                 <ContextWrapper.Provider value={toggleFilter}>
-                                    <div className={"route-component"} style={{ height: !path.includes("/auth") ? "600px" : "100vh", overflowY: filterStatus ? "hidden" : "scroll", overflowX: "hidden" }}>
-                                        <Component  {...pageparams} />
-                                    </div>
+                                    {loader ? <Backdrop open><LoaderAnimate /></Backdrop> :
+                                        <div className={"route-component"} style={{ height: !path.includes("/auth") ? "600px" : "100vh", overflowY: filterStatus ? "hidden" : "scroll", overflowX: "hidden" }}>
+                                            <Component  {...pageparams} />
+                                        </div>
+                                    }
                                 </ContextWrapper.Provider>
                                 {!path.includes("/auth") && <Footer />}
                                 <ToastContainer />
                             </LoadingBarContainer>
-                            {/* </ToastProvider> */}
+
                         </AosInitialize>
                     </SessionProvider>
                 </Provider>

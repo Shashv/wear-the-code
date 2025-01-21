@@ -5,10 +5,10 @@ import themes from "../../utils/theme/index";
 import { useSelector } from "react-redux";
 import { IState } from "@/redux/sore";
 import { useInView } from "react-intersection-observer";
-import useDirection from "@/utils/hooks/useDirection";
+// import useDirection from "@/utils/hooks/useDirection";
 import { useContext } from "react";
 const ThemeSection: React.FC<{ theme: { light: boolean; dark: boolean } }> = ({ theme }) => {
-  
+
     return (
         <>
             <div className={"theme-box pb-2"}>

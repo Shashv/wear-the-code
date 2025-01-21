@@ -9,7 +9,6 @@ import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 import FilterBar from "@/components/filtergroup";
 import style from "./index.module.css";
 import ProductCard from "@/components/productcard";
-// import useToast from "@/hooks/useToast";
 import LoadingBar from "react-top-loading-bar";
 import { toast } from "react-toastify";
 import Link from "next/link";
@@ -33,11 +32,9 @@ const MousePads: NextPage<{
 }> = (props) => {
     let { mousePadsSchema } = props;
     const theme = useSelector((state: IState) => state.toggletheme);
-    // const toastOptions = useToast();
     const [progress, setProgress] = useState<number>(0);
     useEffect(() => {
         Object.keys(mousePadsSchema).length > 0 &&
-            // toastOptions("Mousepads fetched successfully", "success");
             toast.success("Mousepads", {
                 theme: "dark",
                 autoClose: 2000

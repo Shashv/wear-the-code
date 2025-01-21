@@ -61,9 +61,6 @@ const Zippers: NextPage<{
     }
     useEffect(() => {
         session.status === "unauthenticated" ? router.push("/authentication/login") : handleRouterChnages
-        return () => {
-            console.log("Inside the clean up function for the zippers page");
-        }
     }, []);
     return (
         <>

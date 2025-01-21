@@ -17,7 +17,6 @@ import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { headers } from "next/headers";
 import { Session } from "next-auth";
-// import useToast from "@/hooks/useToast";
 import authorizeOptions from "./api/auth/[...nextauth]";
 import Aos from 'aos';
 import "aos/dist/aos.css"
@@ -34,14 +33,14 @@ export default function Home(props: { name: string, scrollTop: number, direction
     let [scrollDirection, setScrollDirection] = useState<string>("");
     const session = useSession();
     let theme = useSelector((state: IState) => state.toggletheme);
-    // const toastOptions = useToast();
     useEffect(() => {
         Aos.init({ once: false });
         toast.success("Welcome to Codeswear", {
             theme: theme.light ? "light" : "dark",
             draggable: false,
             autoClose: 2500,
-        })
+        });
+        // console.log("Env variables",process)
     }, []);
     return (
         <>
@@ -57,6 +56,7 @@ export default function Home(props: { name: string, scrollTop: number, direction
                         <img className={style.imgsixth} src="/onlinefourth.jpg" />
                     </div>
                 </div> */}
+                {/*... slickes slides .... */}
                 <div className={"collections-container"} style={{ backgroundColor: `${theme.dark ? "#1f2937" : "#fff"}` }}>
                     <CollectionSections theme={theme} />
                 </div>

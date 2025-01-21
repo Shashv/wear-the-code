@@ -16,7 +16,7 @@ const BestSelling: React.FC = () => {
   
     const handleClick = useCallback(() => () => {
         setFlag(!flag);
-        // console.log("Inside the process of callbck");
+
         setTimeout(() => {
             setFlag(!flag);
         }, 2000);

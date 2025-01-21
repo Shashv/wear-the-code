@@ -6,7 +6,7 @@ import style from "./index.module.css";
 import { FaHamburger, FaInfo, FaInfoCircle, FaSearch, FaShoppingCart } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
 import Image from "next/image";
-import { Tooltip } from "@mui/material";
+import { Backdrop, Tooltip } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { ICartProduct, ICartState, INavSelected } from "@/modals";
 import { Router, useRouter } from "next/router";
@@ -107,7 +107,7 @@ const StyledBar: React.FC<{ scrollTop?: number }> = ({ scrollTop }) => {
     });
     return (
         <>
-            {loader ? <Loader /> :
+            {loader ? <Backdrop open> <Loader /> </Backdrop> :
                 <>
                     <nav className={theme.light ? `px-2 bg-white ${style.custombar}` : `px-2 ${style.custombar}`} >
                         <div className=" d-flex justify-content-between align-items-center">
@@ -324,21 +324,24 @@ const StyledBar: React.FC<{ scrollTop?: number }> = ({ scrollTop }) => {
                     <CustomDrawer reviewCart reduxAdd={addProducts} reduxSubtract={removeProducts} open={state.cart} closeDrawer={() => setState({ ...state, cart: false })} width={400} />
                     <StyledModal open={state.logout} content={positiveBabaji} purpose="Log Out" closeModal={() => setState({ ...state, logout: false })} confirmProcess={() => {
                         setLoader(true);
-                        fetch("/api/logout").then(response => response.json()).then(resp => {
-                            console.log("response", resp);
-                            if (resp.message === "Positive" || resp.message === "Logout successfully") {
-                                setLoader(false);
-                                router.push("/authentication/login");
-                                toast.success("LogedOut Successfully", {
-                                    position: "top-right",
-                                    autoClose: 2500,
-                                    draggable: false,
-                                    theme: "colored"
-                                });
-                            }
-                        });
+                        toast.success("Logged in successfully", {
+                            autoClose: 2000,
+                            theme: "colored",
+                        })
+                        // fetch("/api/logout").then(response => response.json()).then(resp => {
+                        //     console.log("response", resp);
+                        //     if (resp.message === "Positive" || resp.message === "Logout successfully") {
+                        //         setLoader(false);
+                        //         router.push("/authentication/login");
+                        //         toast.success("LogedOut Successfully", {
+                        //             position: "top-right",
+                        //             autoClose: 2500,
+                        //             draggable: false,
+                        //             theme: "colored"
+                        //         });
+                        //     }
+                        // });
                         signOut({ redirect: true, callbackUrl: "/authentication/login" });
-
                     }} />
                 </>
             }

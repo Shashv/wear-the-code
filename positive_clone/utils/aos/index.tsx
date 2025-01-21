@@ -7,7 +7,7 @@ const AosInitialize: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         Aos.init({
         });
         Aos.refresh();
-    }, []);
+    });
     return <>{children}</>;
 }
 export default AosInitialize;

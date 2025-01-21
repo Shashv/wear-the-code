@@ -11,14 +11,13 @@ import { Typography, Backdrop, CircularProgress, Grid } from "@mui/material";
 // import Loader from "@/components/loader";
 import addProduct from "@/redux/actions/addProduct";
 import { useDispatch, useSelector } from "react-redux";
-import StyledToast from "@/components/toast";
 import { IState } from "@/redux/sore";
 import style from "./index.module.css";
 import { IShirts } from "@/pages/api/getProducts";
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import ColorLabel from "@/components/colorLabels";
 import buyProduct from "@/redux/actions/buyproduct";
-// import LoaderAnimate from "@/components/loader";
+import LoaderAnimate from "@/components/loader";
 // import useToast from "@/hooks/useToast";
 import clearCart from "@/redux/actions/clearCart";
 import ProductModel from "@/modalsmongoose/product";
@@ -127,16 +126,13 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
     }
     function buyNow(e: React.MouseEvent<HTMLButtonElement>) {
         if (Object.keys(productsBought).includes(selectedProduct?.slug || "")) {
-            // 4
             toast.info("Product already selected", {
                 theme: theme.light ? "light" : "dark",
                 autoClose: 2000
             })
-            // toastOptions("Product already selected", "info");
         }
         else {
             dispatch(buyProduct({ name: selectedProduct?.title || "", product: selectedProduct.slug, quantity: selectedProduct?.availableQuantity || 1, price: selectedProduct?.price, variant: selectedProduct?.color || "", size: selectedProduct?.size || "" }))
-            // toastOptions("Product added to cart for delivery", "success");
             fetch("/api/orders", {
                 method: "POST",
                 body: JSON.stringify({ name: selectedProduct?.title || "", product: selectedProduct.slug, quantity: selectedProduct?.availableQuantity || 1, price: selectedProduct?.price, variant: selectedProduct?.color || "", size: selectedProduct?.size || "" })
@@ -234,28 +230,15 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
     return (
         <>
             {loader ? <Backdrop open className="flex flex-column justify-center align-center">
-                {/* <LoaderAnimate /> */}
+                <LoaderAnimate />
             </Backdrop> :
                 <>
-                    {/* custom toast usage */}
-                    {/* <StyledToast anchorOrigin={{
-                        vertical: "top",
-                        horiontal: "end"
-                    }} variant={customtoast.variant} open={customtoast.open} message={customtoast.message} onClose={babaJi} autoHide={() => setCustomToast({ ...customtoast, open: false })} /> */}
-                    {/* ...//...///..//// */}
                     <div className={theme.light ? `${style.productpagelight}` : `${style.productpagedark}`}>
                         <section className="text-gray-600 body-font overflow-hidden">
                             <div className="container-fluid">
                                 <div className="row px-5">
                                     <div className={`col-md-5 col-sm-12 ${style.imageholder}`}>
                                         <div className="d-flex flex-column align-items-center justify-start gap-3 w-[20%]">
-                                            {/* commented for the time being */}
-                                            {/* <img className={selectedDisplay === product.image_front ? `border border-none ${style.selectedvariant}` : `border border-none ${style.unselectedvariant}`} src={`/shirts/${product.type}/${product.image_front}`} onClick={() => setSelectedDisplay(product.image_front)} />
-                                            <img className={selectedDisplay === product.image_back ? `border border-none ${style.selectedvariant}` : `border border-none ${style.unselectedvariant}`} src={`/shirts/${product.type}/${product.image_back}`} onClick={() => setSelectedDisplay(product.image_back)} />
-                                            <img className={selectedDisplay === product.alone_back ? `outline-orange-400 border border-none ${style.selectedvariant}` : `outline-slate-200 border border-none ${style.unselectedvariant}`} src={`/shirts/${product.type}/${product.alone_front}`} onClick={() => setSelectedDisplay(product.alone_back)} />
-                                            <img className={selectedDisplay === product.alone_front ? `border border-none ${style.selectedvariant}` : `border border-none ${style.unselectedvariant}`} src={`/shirts/${product.type}/${product.alone_back}`} onClick={() => setSelectedDisplay(product.alone_front)} />
-                                            <img className={selectedDisplay === product.positive ? `border border-none ${style.selectedvariant}` : `border border-none ${style.unselectedvariant}`} src={`/shirts/${product.type}/${product.positive}`} onClick={() => setSelectedDisplay(product.positive)} /> */}
-                                            {/* end */}
                                         </div>
                                         <div className="main-display w-[90%] h-100">
                                             <img alt="egoocommerce" className={`transition-all duration-300 hover:scale-105`} src={selectedProduct?.img || ""} />
@@ -360,7 +343,6 @@ export const getServerSideProps: GetServerSideProps<{
     }, product: Array<any>
 }> = async context => {
     let responseproduct = await ProductModel.find({ slug: context.query.slug }).lean();
-    console.log("Response products", responseproduct);
     const availableshirts: any[] = await ProductModel.find({ title: responseproduct[0].title, category: responseproduct[0].category }).lean();
     const colorslug: {
         [key: string]: {

@@ -11,7 +11,6 @@ import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 import ProductModel from "@/modalsmongoose/product";
 import FilterBar from "@/components/filtergroup";
 import Link from "next/link";
-// import useToast from "@/hooks/useToast";
 import LoaderAnimate from "@/components/loader";
 import LoadingBar from "react-top-loading-bar";
 import { toast } from "react-toastify";
@@ -24,7 +23,6 @@ const Hoodies: NextPage<{
     }
 }> = ({ scrollTop, hoodies, loading, cart }) => {
     const [loader, setLoader] = useState(true);
-    // const toastOptions = useToast();
     const themeState = useSelector((state: IState) => state.toggletheme);
     const [progress, setProgress] = useState<number>(0);
     useEffect(() => {

@@ -46,7 +46,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
             }
         }
-        console.log("productlist")
         res.status(200).json({ productlist: tshirts });
     }
     else if (req.method !== "GET") {

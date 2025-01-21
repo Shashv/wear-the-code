@@ -1,6 +1,5 @@
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
-import StyledToast from "@/components/toast";
 import { useSelector } from "react-redux";
 import { IState } from "@/redux/sore";
 import SlickSlides from "@/components/slickSlides";
@@ -13,12 +12,11 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { Backdrop, CircularProgress, Typography } from "@mui/material";
 import Head from "next/head";
+import LoaderAnimate from "@/components/loader";
 import styles from "../stickers/index.module.css";
 import FilterBar from "@/components/filtergroup";
-// import useToast from "@/hooks/useToast";
 import { useSession } from "next-auth/react";
 import { Grid } from "@mui/material";
-// import LoaderAnimate from "@/components/loader";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "../api/auth/[...nextauth]";
 import LoadingBar from "react-top-loading-bar";
@@ -31,14 +29,12 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
     const hideToast: (e: React.MouseEvent) => void = (e) => {
         setToast(false);
     }
-    // const toastOptions = useToast();
     const onScroll: (e: any) => void = (e) => {
     }
     const session = useSession();
     const [positive, setPositive] = useState<number>(0);
     useEffect(() => {
         if (session.status === "unauthenticated") {
-            // toastOptions("Oops you are not authenticated", "error");
             toast.error("Oops you are not authenticated");
             setLoader(false);
             router.push("/authentication/login");
@@ -100,7 +96,7 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
                 </> :
                 session.status === "loading" || loader &&
                 <Backdrop open className="flex flex-column align-center justify-center body-font">
-                    {/* <LoaderAnimate /> */}
+                    <LoaderAnimate />
                 </Backdrop>}
 
         </>
@@ -125,3 +121,4 @@ export const getServerSideProps: GetServerSideProps<{ stickers?: Array<unknown |
         }
     }
 }
+

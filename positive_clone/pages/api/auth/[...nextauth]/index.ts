@@ -15,7 +15,6 @@ const authOptions: NextAuthOptions = {
                 let findedUser = await UserModel.find({ email: credentials?.email }).lean();
                 console.log("Finded User", findedUser);
                 if (findedUser.length > 0)
-                    // return { ...findedUser[0], id: "", name: "", email: "" }
                     return {
                         id: findedUser[0]["id"],
                         name: findedUser[0]["username"],
