@@ -16,7 +16,7 @@ import clearCart from "@/redux/actions/clearCart";
 import Link from "next/link";
 import style from "./index.module.css";
 import StyledModal from "../styledpopup";
-import StyledToast from "../../components/toast/index";
+// import StyledToast from "../../components/toast/index";
 import removeBuyProduct from "@/redux/actions/removeBuyproduct";
 import addBuyproduct from "@/redux/actions/addBuyproduct";
 import clearBuyproducts from "@/redux/actions/clearBuyProducts";

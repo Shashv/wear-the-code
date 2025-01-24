@@ -60,7 +60,7 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
         this.autoHide = this.autoHide.bind(this);
     }
     getData(): void {
-        this.setState({ loader: true, data: {} });
+        // this.setState({ loader: true, data: {} });
         fetch("/api/getProducts").then(response => response.json()).then(result => {
             this.setState({
                 data: result.productlist,
@@ -112,7 +112,7 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
                                             <Grid container rowGap={2} className="justify-center" columnGap={1.4}>
                                                 {Object.keys(this.state.data).length > 0 &&
                                                     Object.keys(this.state.data).map((key: string, index: number) =>
-                                                        <Grid item xs={7} sm={5.9} md={2.7} key={index}>
+                                                        <Grid item xs={5.4} sm={5.9} md={2.7} key={index}>
                                                             <Link href={{
                                                                 pathname: `product/${this.state.data[key].slug}`
                                                             }} >
@@ -138,8 +138,13 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
     async componentDidMount(): Promise<void> {
         const contextValue: any = this.context;
         const session = await getSession();
-        this.getData();
-        this.setState({ progress: 100 })
+        if (session?.user) {
+            this.getData();
+            this.setState({ progress: 100 })
+        }
+        else {
+            this.props.router.replace("/authentication/login");
+        }
     }
     componentDidUpdate(previousprops: Readonly<IShirtProps>, previousstate: Readonly<IShirtState>): void {
     }
@@ -151,4 +156,14 @@ const mapStateToProps = (combinedstate: IState) => {
         theme: toggletheme
     }
 }
-export default withRouter(connect(mapStateToProps)(Shirts)); 
+export default withRouter(connect(mapStateToProps)(Shirts));
+// function called when using the server side tokens..//
+// export const getServersideprops: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+//     const sessionServer = await getServerSession(context.req, context.res, authorizeOptions);
+//     console.log("positive", sessionServer);
+//     return {
+//         props: {
+//             sessionServer
+//         }
+//     }
+// }

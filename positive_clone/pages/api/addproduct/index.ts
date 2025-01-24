@@ -15,10 +15,12 @@ const addProduct = async (req: NextApiRequest, res: NextApiResponse) => {
             availableQuantity: req.body.availableQuantity
         })
         await addProduct.save();
-        res.status(200).json({ message: "Addedproducts" });
+        return res.status(200).json({ message: "Addedproducts" });
     }
     else {
-        res.status(405).json({ message: "Method not allowed" });
+        return res.status(405).json({ message: "Method not allowed" });
     }
 }
 export default connectDatabase(addProduct);
+// we can use the below statement if want to explicitly call the database connection for every route request..//
+// export default addProduct;

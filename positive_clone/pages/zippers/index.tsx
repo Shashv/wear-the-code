@@ -88,7 +88,7 @@ const Zippers: NextPage<{
                                     </Typography>
                                     <Grid container columnGap={1.4} justifyContent={"center"} rowGap={1.4}>
                                         {Object.keys(zipperSchema || {}).length > 0 ?
-                                            Object.keys(zipperSchema).map((zipper: string, index: number) => <Grid item xs={8.9} sm={5.9} md={2.7}>
+                                            Object.keys(zipperSchema).map((zipper: string, index: number) => <Grid item xs={5.7} sm={5.9} md={2.7}>
                                                 <Link href={`/product/${zipperSchema[zipper].slug}`}>
                                                     <ProductCard title="" category="" desc="" slug="" />
                                                 </Link>

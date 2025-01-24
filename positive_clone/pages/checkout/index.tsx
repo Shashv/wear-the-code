@@ -148,7 +148,7 @@ const Checkout: React.FC = () => {
                         </Col>
                     </Row>
                 </Container>
-               
+
             </Box>
 
         </>

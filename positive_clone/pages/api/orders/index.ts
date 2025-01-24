@@ -1,10 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import OrdersModel from "@/modalsmongoose/orders";
-const orders = (req: NextApiRequest, res: NextApiResponse) => {
+import connectDatabase from "@/configuration";
+const orders = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "GET")
         return res.status(200).json([]);
     else if (req.method === "POST") {
-        res.status(201).send("Order placed successfully");
+        return res.status(201).send("Order placed successfully");
     }
 }
-export default orders;
+// ...call the database mongoose connection explicitly , using mongooose.connect..//
+// export default orders;
+export default connectDatabase(orders);

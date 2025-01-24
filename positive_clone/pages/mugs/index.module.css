@@ -22,10 +22,6 @@
     cursor: pointer;
     transform: scale(1.04);
 }
-
-/* .productImage {
-    
-} */
 .gratitude {
     background-image: url("/mugs.png");
     background-size: 100% 100%;

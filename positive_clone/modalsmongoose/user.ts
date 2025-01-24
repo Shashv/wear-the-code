@@ -4,14 +4,14 @@ export interface ISchema extends Document {
     password: string;
     username?: string;
 }
-mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+// mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 const userSchema = new Schema<ISchema>({
     username: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true }
 });
 let UserModel: Model<ISchema>;
-if (mongoose.models.User) {
+if (mongoose.models) {
     UserModel = mongoose.models.User
 }
 else {

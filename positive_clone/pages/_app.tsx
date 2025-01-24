@@ -39,7 +39,7 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
         setFilterStatus(!status);
     }
     useEffect(() => {
-        aos.init();
+        // aos.init();
         Router.events.on("routeChangeStart", e => {
             setLoader(true);
         })
@@ -87,11 +87,11 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
     )
 }
 export default Layout;
-export const getInitialProps = async (context: any) => {
-    const session = getSession(context);
-    return {
-        pageProps: {
-            session
-        }
-    }
-}
+// export const getInitialProps = async (context: any) => {
+//     const session = getSession(context);
+//     return {
+//         pageProps: {
+//             session
+//         }
+//     }
+// }

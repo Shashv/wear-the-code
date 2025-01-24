@@ -2,24 +2,14 @@
 
 .footer {
     font-family: "Matter Regular";
-    /* position: fixed;
-    bottom: 0px; */
     background-color: #f1f5f9;
     height: fit-content;
-    /* position: fixed;
-    bottom: 0px;
-    right: 0px;
-    left: 0px; */
 }
 
 .footerdark {
     background-color: #111827;
     font-family: "Matter Regular";
     height: fit-content;
-    /* position: fixed;
-    bottom: 0px;
-    right: 0px;
-    left: 0px; */
 }
 
 .gridRow {

@@ -273,13 +273,10 @@
     0%,
     100% {
         transform: scale(1);
-
     }
 
     50% {
-        transform: scale(1.4);
-
-
+        transform: scale(1.55);
     }
 
 }
@@ -321,18 +318,18 @@
 
 .codeswear .loaderdot {
     color: #e421da;
-    animation: code 1s infinite;
+    animation: code 1s ease-in-out infinite;
     font-size: 100px;
 }
 
 .codeswear .first {
-    animation-delay: 2.55s;
+    animation-delay: 0.1s;
 }
 
 .codeswear .second {
-    animation-delay: 2.90s;
+    animation-delay: 0.2s;
 }
 
 .codeswear .third {
-    animation-delay: 3.25s;
+    animation-delay: 0.3s;
 }

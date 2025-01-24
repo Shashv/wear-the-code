@@ -32,21 +32,22 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
     const onScroll: (e: any) => void = (e) => {
     }
     const session = useSession();
-    const [positive, setPositive] = useState<number>(0);
-    useEffect(() => {
-        if (session.status === "unauthenticated") {
-            toast.error("Oops you are not authenticated");
-            setLoader(false);
-            router.push("/authentication/login");
-        }
-        else {
-            setPositive(100);
-            toast.success("Stickers", {
-                theme: combinedState.dark ? "dark" : "light",
-                autoClose: 2000
-            })
-        }
-    }, []);
+    const [positive, setPositive] = useState<number>(40);
+    // useEffect(() => {
+    //     console.log("Session stickers", session);
+    //     if (session.status === "unauthenticated") {
+    //         toast.error("Oops you are not authenticated");
+    //         setLoader(false);
+    //         router.push("/authentication/login");
+    //     }
+    //     else {
+    //         setPositive(100);
+    //         toast.success("Stickers", {
+    //             theme: combinedState.dark ? "dark" : "light",
+    //             autoClose: 2000
+    //         })
+    //     }
+    // }, []);
     const onClose: (e: React.MouseEvent<any>, timeOutID: any) => void = (e, id) => {
         clearTimeout(id);
         setToast(false);
@@ -59,7 +60,7 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
             </Head>
             {!loader && session.status === "authenticated" ?
                 <>
-                    <LoadingBar color="magenta" progress={positive} height={3} />
+                    <LoadingBar color="magenta" progress={positive} height={3} background="lightblue" />
                     <div className={combinedState.dark ? `${styles.containerpacksdark}` : `${styles.containerpacks}`}>
                         <section className="">
                             <div className="container-fluid p-0">
@@ -93,7 +94,8 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
                             </div>
                         </section>
                     </div>
-                </> :
+                </>
+                :
                 session.status === "loading" || loader &&
                 <Backdrop open className="flex flex-column align-center justify-center body-font">
                     <LoaderAnimate />
@@ -104,6 +106,8 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
 }
 export default StickersPage;
 export const getServerSideProps: GetServerSideProps<{ stickers?: Array<unknown | any>, error?: string }> = async (context: GetServerSidePropsContext) => {
+    const sessionServer = await getServerSession(context.req, context.res, authorizeOptions);
+    console.log("Sessionstickers", sessionServer);
     let responseStickers = await ProductModel.find({ category: "stickers" }).lean();
     let filteredResponse = responseStickers.map((sticker: any) => {
         const { _id, ...rest } = sticker;

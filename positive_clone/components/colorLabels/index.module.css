@@ -1,6 +1,7 @@
 .colorcontainer {
     border-radius: 50%;
     /* padding: 10px; */
+    transition: linear 0.2s;
     width: 15px;
     height: 15px;
 }

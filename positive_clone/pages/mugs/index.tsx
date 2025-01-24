@@ -14,6 +14,8 @@ import { compose } from "redux";
 import { withRouter, NextRouter } from "next/router";
 import { getSession } from "next-auth/react";
 import LoadingBar from "react-top-loading-bar";
+import { getServerSession } from "next-auth";
+import authorizeOptions from "../api/auth/[...nextauth]";
 interface PTheme {
     theme: {
         light: boolean;
@@ -43,7 +45,7 @@ class Mugs extends React.Component<any, { name: string; age: number; loader: fal
             progress: 0
         }
     }
-    toastExecution: any;
+    // toastExecution: any;
     render(): JSX.Element {
         return (
             <>
@@ -65,7 +67,7 @@ class Mugs extends React.Component<any, { name: string; age: number; loader: fal
                                         </Typography>
                                         <Grid container columnGap={1.4} rowGap={1.4} justifyContent={"center"}>
                                             {Object.keys(this.props.mugsSchema).length > 0 ? Object.keys(this.props.mugsSchema).map((mugs: string, index: number) =>
-                                                <Grid item xs={8.9} sm={5.9} md={2.7}>
+                                                <Grid key={index} item xs={5.7} sm={5.9} md={2.7}>
                                                     <Link href={`/product/${this.props.mugsSchema[mugs].slug}`}>
                                                         <ProductCard title={this.props.mugsSchema[mugs].title} colors={this.props.mugsSchema[mugs].color} sizes={this.props.mugsSchema[mugs].size} desc={this.props.mugsSchema[mugs].desc} img={this.props.mugsSchema[mugs].img} />
                                                     </Link>
@@ -83,13 +85,14 @@ class Mugs extends React.Component<any, { name: string; age: number; loader: fal
         )
     }
     async componentDidMount(): Promise<void> {
-        this.toastExecution = this.context;
+        // this.toastExecution = this.context;
 
         toast.success("Mugs", {
             theme: "dark",
             autoClose: 2000
         })
         const session = await getSession();
+        console.log("Session mugs", session);
         this.setState({ progress: 100 })
     }
     componentWillUnmount(): void {
@@ -108,6 +111,8 @@ class Mugs extends React.Component<any, { name: string; age: number; loader: fal
 export default (partialConnector(Mugs));
 // withRouter
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+    const session = await getServerSession(context.req,context.res,authorizeOptions);
+    console.log("Serverside session",session);
     let fetchedMugs: Array<any> = await ProductModel.find({ category: "mugs" }).lean();
     const modifiedResponse = fetchedMugs.map((mugs: any, index: number) => ({ ...mugs, createdAt: new Date(mugs.createdAt).toLocaleString(), updatedAt: new Date(mugs.updatedAt).toLocaleString(), _id: index + 1 }));
     let mugsSchema: {

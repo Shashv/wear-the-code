@@ -110,7 +110,7 @@ export const getServerSideProps: (context: unknown) => Promise<{ props: any }> =
     // });
     // let orderValue = await ordersResponse.json();
     let orders = await OrdersModel.find({});
-    console.log("Orders Model", orders);
+    // console.log("Orders Model", orders);
     return {
         props: {
             pageName: "Orders Page"

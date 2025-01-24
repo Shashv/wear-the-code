@@ -33,10 +33,12 @@ input:focus {
     width: 2px;
     background-color: rgb(166, 177, 180);
 }
+
 .route-component::-webkit-scrollbar {
     width: 2px;
     background-color: rgb(175, 179, 180);
 }
+
 .route-component::-webkit-scrollbar-track {
     width: 2px;
     border-radius: 10px;

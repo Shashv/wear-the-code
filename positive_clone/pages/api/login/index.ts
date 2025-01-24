@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import UserModel from "@/modalsmongoose/user";
+import connectDatabase from "@/configuration";
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     let signedToken: string = "";
     const body = JSON.parse(req.body);
@@ -7,4 +8,5 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(200).json({ message: "Loginned Successfully", signedToken });
 
 }
-export default handler;
+// export default handler;
+export default connectDatabase(handler);

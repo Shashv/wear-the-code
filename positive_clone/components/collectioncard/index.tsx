@@ -11,6 +11,7 @@ import { useContext } from "react";
 import { useEffect } from "react";
 // import "aos/dist/aos.css"
 const CollectionCard: React.FC<ICollectionCard> = ({ collectionName, thumbnail }) => {
+    // ...use component bases aos..//
     // let value = useContext(ContextObject);
     // useEffect(() => {
     //     Aos.init({

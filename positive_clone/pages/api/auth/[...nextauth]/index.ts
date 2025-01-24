@@ -13,7 +13,6 @@ const authOptions: NextAuthOptions = {
             },
             async authorize(credentials, req) {
                 let findedUser = await UserModel.find({ email: credentials?.email }).lean();
-                console.log("Finded User", findedUser);
                 if (findedUser.length > 0)
                     return {
                         id: findedUser[0]["id"],
@@ -25,18 +24,22 @@ const authOptions: NextAuthOptions = {
         }),
     ],
     session: {
-        strategy: "jwt"
+        strategy: "jwt",
     },
     callbacks: {
         jwt: async (props) => {
 
-            let { token, account } = props;
-            if (account) {
-                token.accessToken = account.access_token;
+            let { token, account, user } = props;
+            if (user) {
+                token.id = user.id;
             }
             return token
         },
-        session: params => params.session,
+        session: async params => {
+            let { session, token } = params;
+            session.user = token;
+            return params.session;
+        }
     },
 
 }

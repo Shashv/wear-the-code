@@ -49,10 +49,8 @@
         transform: translateX(0%);
         transition: transform 0.3s ease-in-out;
 
-        /* left: 0px; */
-        /* transition: left .5s cubic-bezier(0.820, 0.085, 0.395, 0.895); */
         transition-delay: 85ms;
-        height: 100vh;
+        height: 100%;
         width: 100vw;
     }
 
@@ -68,10 +66,7 @@
     .hidefiltercontent {
         position: relative;
         transform: translateX(-100%);
-        /* left: -528px; */
         transition: transform 0.35s ease-out;
-        /* transition: left .5s cubic-bezier(0.820, 0.085, 0.395, 0.895); */
-        /* transition-delay: 55ms; */
         height: 100vh;
         width: 100vw;
     }
@@ -94,9 +89,6 @@
     }
 
     .menuOpen {
-        /* transition: linear 10s; */
-        /* opacity: 1;
-        visibility: visible; */
         position: fixed;
         right: -58px;
         top: -10px;
@@ -105,9 +97,6 @@
     }
 
     .menuClose {
-        /* transition: linear 10s; */
-        /* opacity: 1;
-        visibility: visible; */
         position: absolute;
         right: 9px;
         top: -10px;

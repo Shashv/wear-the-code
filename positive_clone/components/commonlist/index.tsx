@@ -65,7 +65,7 @@ const CommonTable: React.FC<ITableData<any>> = ({ tablehead, tablebody }) => {
                             {head.type === "text" && bodycell[head.title]}
                             {head.type === "action" && <div className="table-actions">
                                 {head.actionSchema.map((action: { type: string; action: () => void }, index: number) => {
-                                    <Edit color={"warning"}/>
+                                    <Edit color={"warning"} />
                                 })}
                             </div>}
                         </TableCell>)}

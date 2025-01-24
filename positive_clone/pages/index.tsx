@@ -40,7 +40,6 @@ export default function Home(props: { name: string, scrollTop: number, direction
             draggable: false,
             autoClose: 2500,
         });
-        // console.log("Env variables",process)
     }, []);
     return (
         <>
