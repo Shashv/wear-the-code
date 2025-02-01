@@ -14,6 +14,9 @@ import removeProduct from "@/redux/actions/removeProduct";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { IState } from "@/redux/sore";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { getServerSession } from "next-auth";
+import authorizeOptions from "../api/auth/[...nextauth]";
 const Checkout: React.FC = () => {
     let { register, handleSubmit, formState: { errors, isSubmitSuccessful }, reset, setError, clearErrors } = useForm<IRegisterOptions>();
     let dispatch = useDispatch();
@@ -155,3 +158,22 @@ const Checkout: React.FC = () => {
     )
 }
 export default Checkout;
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+    const getServersidesession = await getServerSession(context.req, context.res, authorizeOptions);
+    if (getServersidesession) {
+        return {
+            props: {
+
+            }
+        }
+    }
+    else {
+        return {
+            redirect: {
+                basePath: false,
+                permanent: false,
+                destination: "/authentication/login"
+            }
+        }
+    }
+}

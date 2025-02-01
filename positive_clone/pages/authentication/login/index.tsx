@@ -529,6 +529,9 @@ import Login from "./Login"
 // export default Login;
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { getServerSession } from "next-auth";
+import authorizeOptions from "@/pages/api/auth/[...nextauth]";
 const LoginF: React.FC = () => {
   const router = useRouter();
   return (
@@ -543,6 +546,25 @@ const LoginF: React.FC = () => {
   )
 }
 export default LoginF;
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+  const isPositive = await getServerSession(context.req, context.res, authorizeOptions);
+  if (isPositive) {
+    return {
+      redirect: {
+        basePath: false,
+        destination: "/",
+        permanent: false
+      }
+    }
+  }
+  else {
+    return {
+      props: {
+
+      }
+    }
+  }
+}
 //botpenguin..//
 // import React from "react";
 // import { Container, Row, Col, Form } from "reactstrap";

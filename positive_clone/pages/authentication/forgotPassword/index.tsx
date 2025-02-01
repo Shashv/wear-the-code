@@ -71,7 +71,7 @@ const ForgotPassword: React.FC = () => {
                     <>
                         <Head>
                             <title>
-                                CodeSwear - Forgot Password!
+                                CodeSwear - Reset Password!
                             </title>
                         </Head>
                         <Form onSubmit={submitEmailForPasswordReset}>

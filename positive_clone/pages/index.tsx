@@ -35,11 +35,15 @@ export default function Home(props: { name: string, scrollTop: number, direction
     let theme = useSelector((state: IState) => state.toggletheme);
     useEffect(() => {
         Aos.init({ once: false });
-        toast.success("Welcome to Codeswear", {
-            theme: theme.light ? "light" : "dark",
-            draggable: false,
-            autoClose: 2500,
-        });
+        if (localStorage.getItem("toastShown") !== "yes") {
+            toast.success("Welcome to Codeswear", {
+                theme: theme.light ? "light" : "dark",
+                draggable: false,
+                autoClose: 2500,
+            });
+        }
+        else
+            localStorage.setItem("toastShown", JSON.stringify("yes"))
     }, []);
     return (
         <>

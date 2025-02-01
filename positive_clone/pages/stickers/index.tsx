@@ -33,12 +33,13 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
     }
     const session = useSession();
     const [positive, setPositive] = useState<number>(40);
+    // baba ji... for the client side js/
     // useEffect(() => {
-    //     console.log("Session stickers", session);
+    //     // console.log("Session stickers", session);
     //     if (session.status === "unauthenticated") {
     //         toast.error("Oops you are not authenticated");
     //         setLoader(false);
-    //         router.push("/authentication/login");
+    //         router.replace("/authentication/login");
     //     }
     //     else {
     //         setPositive(100);
@@ -107,22 +108,34 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
 export default StickersPage;
 export const getServerSideProps: GetServerSideProps<{ stickers?: Array<unknown | any>, error?: string }> = async (context: GetServerSidePropsContext) => {
     const sessionServer = await getServerSession(context.req, context.res, authorizeOptions);
-    console.log("Sessionstickers", sessionServer);
-    let responseStickers = await ProductModel.find({ category: "stickers" }).lean();
+    // console.log("Sessionstickers", sessionServer);
+    let responseStickers: any = await ProductModel.find({ category: "stickers" }).lean();
     let filteredResponse = responseStickers.map((sticker: any) => {
         const { _id, ...rest } = sticker;
         return { ...rest, createdAt: new Date(sticker.createdAt).toLocaleString(), updatedAt: new Date(sticker.updatedAt).toLocaleString() };
     })
-    if (responseStickers)
-        return {
+    if (sessionServer) {
+        if (responseStickers)
+            return {
+                props: {
+                    stickers: [...filteredResponse],
+                }
+            }
+        else return {
             props: {
-                stickers: [...filteredResponse],
+                error: "Something went wrong"
             }
         }
-    else return {
-        props: {
-            error: "Something went wrong"
+    }
+    else {
+        return {
+            redirect: {
+                permanent: false,
+                destination: "/authentication/login",
+                basePath: false
+            }
         }
     }
+
 }
 

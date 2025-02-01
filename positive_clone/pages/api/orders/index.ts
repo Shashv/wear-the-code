@@ -9,5 +9,5 @@ const orders = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 }
 // ...call the database mongoose connection explicitly , using mongooose.connect..//
-// export default orders;
-export default connectDatabase(orders);
+export default orders;
+// export default connectDatabase(orders);

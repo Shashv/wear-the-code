@@ -3,7 +3,7 @@ import CommonTable from "@/components/commonlist";
 import { useEffect } from "react";
 // import { useSession } from "next-auth/react";
 // import { useRouter } from "next/router";
-import { GetServerSidePropsContext } from "next";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "../api/auth/[...nextauth]";
 const MyAccount = () => {
@@ -25,7 +25,10 @@ const MyAccount = () => {
     )
 }
 export default MyAccount;
-export const getServersideprops = async (context: GetServerSidePropsContext) => {
+export const getServersideprops: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const sessionserver = getServerSession(context.req, context.res, authorizeOptions);
-    console.log("Session server", sessionserver);
+    // console.log("Session server", sessionserver);
+    return {
+        props: {}
+    }
 }

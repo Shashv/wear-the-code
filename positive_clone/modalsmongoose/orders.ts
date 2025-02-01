@@ -1,5 +1,5 @@
 import mongoose, { models, mongo } from "mongoose";
-// mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 const OrderSchema = new mongoose.Schema({
     userId: { type: String, required: true },
     products: [{

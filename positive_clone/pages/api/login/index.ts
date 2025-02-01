@@ -8,5 +8,5 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(200).json({ message: "Loginned Successfully", signedToken });
 
 }
-// export default handler;
-export default connectDatabase(handler);
+export default handler;
+// export default connectDatabase(handler);

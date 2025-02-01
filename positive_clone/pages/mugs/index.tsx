@@ -111,8 +111,8 @@ class Mugs extends React.Component<any, { name: string; age: number; loader: fal
 export default (partialConnector(Mugs));
 // withRouter
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
-    const session = await getServerSession(context.req,context.res,authorizeOptions);
-    console.log("Serverside session",session);
+    const session = await getServerSession(context.req, context.res, authorizeOptions);
+    // console.log("Serverside session", session);
     let fetchedMugs: Array<any> = await ProductModel.find({ category: "mugs" }).lean();
     const modifiedResponse = fetchedMugs.map((mugs: any, index: number) => ({ ...mugs, createdAt: new Date(mugs.createdAt).toLocaleString(), updatedAt: new Date(mugs.updatedAt).toLocaleString(), _id: index + 1 }));
     let mugsSchema: {
@@ -146,12 +146,22 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
             }
         }
     })
-    return {
-        props: {
-            mugs: modifiedResponse,
-            mugsSchema
+    if (session) {
+        return {
+            props: {
+                mugs: modifiedResponse,
+                mugsSchema
+            }
         }
     }
-
+    else {
+        return {
+            redirect: {
+                destination: "/authentication/login",
+                permanent: false,
+                basePath: false
+            }
+        }
+    }
 }
 

@@ -1,6 +1,7 @@
-import mongoose from "mongoose";
-mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-const ProductSchema = new mongoose.Schema({
+import { IProductModel } from "@/modals";
+import mongoose, { Document, Model, Schema } from "mongoose";
+mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
+const ProductSchema = new mongoose.Schema<IProductModel>({
     title: { type: String, required: true },
     slug: { type: String, required: true, unique: true },
     desc: { type: String, required: true },
@@ -11,7 +12,7 @@ const ProductSchema = new mongoose.Schema({
     price: { type: Number, required: true },
     availableQuantity: { type: Number, required: true }
 }, { timestamps: true });
-let ProductModel: any = "";
+let ProductModel: Model<IProductModel>;
 if (mongoose.models && mongoose.models.Products) {
     ProductModel = mongoose.models.Products;
 }

@@ -10,7 +10,7 @@ const OrdersList: NextPage<{ pageName: string }> = ({ pageName }) => {
                 <div className="row">
                     <div className="col-12">
                         <CommonTable tablebody={[]} tablehead={[]} />
-                    </div> 
+                    </div>
                 </div>
             </div>
         </>

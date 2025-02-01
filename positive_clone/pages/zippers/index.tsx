@@ -14,6 +14,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import ProductCard from "@/components/productcard";
 import LoadingBar from "react-top-loading-bar";
+import { getServerSession } from "next-auth";
+import authorizeOptions from "../api/auth/[...nextauth]";
 const Dotted: React.FC = () => {
     return (
         <>
@@ -59,9 +61,9 @@ const Zippers: NextPage<{
         router.events.on("routeChangeStart", e => setProgress(40));
         router.events.on("routeChangeComplete", e => setProgress(100));
     }
-    useEffect(() => {
-        session.status === "unauthenticated" ? router.push("/authentication/login") : handleRouterChnages
-    }, []);
+    // useEffect(() => {
+    //     session.status === "unauthenticated" ? router.push("/authentication/login") : handleRouterChnages
+    // }, []);
     return (
         <>
             <Head>
@@ -112,6 +114,8 @@ const Zippers: NextPage<{
 export default Zippers;
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     let fetchedProducts = await ProductModel.find({ category: "zippers" });
+    const getServerSideSession = await getServerSession(context.req, context.res, authorizeOptions);
+
     const zippersSchema: {
         [key: string]: {
             title: string;
@@ -149,9 +153,20 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
             }
         }
     }
-    return {
+    if (getServerSideSession)
+        return {
+            props: {
+                zippersSchema
+            }
+        }
+    else return {
         props: {
-            zippersSchema
+
+        },
+        redirect: {
+            basePath: false,
+            destination: "/authentication/login",
+            permanent: false
         }
     }
 }

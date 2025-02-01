@@ -177,7 +177,7 @@ const StyledBar: React.FC<{ scrollTop?: number }> = ({ scrollTop }) => {
                                         </Dropdown>
                                         : <>
                                             {
-                                                session.status === "unauthenticated" && <button onClick={e => router.replace("/authentication/login")} className="bg-pink-600 rounded-2 p-1 w-[50px] text-md text-light">Log In</button>
+                                                session.status === "unauthenticated" && <button onClick={e => router.replace("/authentication/login")} className="bg-pink-600 rounded-2 p-1 w-[80px] text-md text-light">Log In</button>
                                             }
                                         </>
                                     }

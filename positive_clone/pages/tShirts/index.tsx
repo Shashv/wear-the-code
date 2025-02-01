@@ -111,7 +111,7 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
                                             </Typography>
                                             <Grid container rowGap={2} className="justify-center" columnGap={1.4}>
                                                 {Object.keys(this.state.data).length > 0 &&
-                                                    Object.keys(this.state.data).map((key: string, index: number) =>
+                                                     Object.keys(this.state.data).map((key: string, index: number) =>
                                                         <Grid item xs={5.4} sm={5.9} md={2.7} key={index}>
                                                             <Link href={{
                                                                 pathname: `product/${this.state.data[key].slug}`

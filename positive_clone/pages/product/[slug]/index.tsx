@@ -23,6 +23,8 @@ import clearCart from "@/redux/actions/clearCart";
 import ProductModel from "@/modalsmongoose/product";
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 import { toast } from "react-toastify";
+import { getServerSession } from "next-auth";
+import authorizeOptions from "@/pages/api/auth/[...nextauth]";
 type IProductType = {
     alone_back: string;
     alone_front: string;
@@ -335,6 +337,7 @@ export const getServerSideProps: GetServerSideProps<{
         }
     }, product: Array<any>
 }> = async context => {
+    const sessionData = await getServerSession(context.req, context.res, authorizeOptions);
     let responseproduct = await ProductModel.find({ slug: context.query.slug }).lean();
     const availableshirts: any[] = await ProductModel.find({ title: responseproduct[0].title, category: responseproduct[0].category }).lean();
     const colorslug: {
@@ -355,11 +358,22 @@ export const getServerSideProps: GetServerSideProps<{
             colorslug[shirtVaraints.color][shirtVaraints.size] = { slug: shirtVaraints.slug, price: shirtVaraints.price }
         }
     }
-    return {
-        props: {
-            productVariant: colorslug,
-            product: modifiedResponse,
-            type: responseproduct[0].slug
+    if (sessionData)
+        return {
+            props: {
+                productVariant: colorslug,
+                product: modifiedResponse,
+                type: responseproduct[0].slug
+            }
+        }
+    else {
+        return {
+            props: {},
+            redirect: {
+                permanent: false,
+                destination: "/authentication/login",
+                basePath: false
+            }
         }
     }
 }

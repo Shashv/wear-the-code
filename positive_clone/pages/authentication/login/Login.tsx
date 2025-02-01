@@ -94,55 +94,69 @@ const Login: NextPage = () => {
     if (session.status === "authenticated") {
         router.replace("/")
     }
-
     const details = async (data: FieldValues) => {
         setLoader(true);
         //without using the next-auth//
-        // let clonedBody: any;
-        // fetch("/api/login", { method: "POST", body: JSON.stringify({ email: data.email, password: data.password, check: data.checkStatus }) }).then(response => {
-        //     clonedBody = response.clone();
-        //     return response.json();
-        // }).then(response => {
-        //     if (response.signedToken.length > 0) {
-        //         localStorage.setItem("authToken", JSON.stringify(response.signedToken));
-        //         reset();
-        //         router.push({
-        //             pathname: "/"
-        //         })
-        //         toast.success("Loginned Successfully", {
-        //             position: "top-right",
-        //             autoClose: 2000,
-        //             draggable: true,
-        //             closeOnClick: true,
-        //             theme: "dark"
-        //         });
-        //     }
-        //     else if (response.signedToken.length === 0) {
-        //         toast.error("User not found", {
-        //             position: "top-right",
-        //             autoClose: 2000,
-        //             draggable: true,
-        //             closeOnClick: true,
-        //             theme: "dark"
-        //         });
-        //     }
-
-        // }, (reason: any) => {
-        //     clonedBody.text().then((text: any) => {
-        //         console.log("Text", text);
-        //     })
-        // }).catch(er => {
-        //     toast.error("Something went wrong", {
-        //         position: "top-right",
-        //         autoClose: 3000,
-        //         theme: "dark",
-        //         draggable: true,
-        //         closeOnClick: true
-        //     })
-        // });
-        let response = await signIn("credentials", { ...data, redirect: true, callbackUrl: "/" });
-        setLoader(false);
+        let response = await signIn("credentials", { ...data, redirect: false });
+        console.log("Response finded user", response);
+        if (response) {
+            setLoader(false);
+            if (response.error) {
+                toast.error("Oops something went wrong", {
+                    autoClose: 2000,
+                    theme: "colored"
+                })
+            }
+            else {
+                toast.success("Loggined Successfully");
+                router.replace("/")
+            }
+        }
     }
+    // const details = async (data: FieldValues) => {
+    //     let clonedBody: any;
+    //     fetch("/api/login", { method: "POST", body: JSON.stringify({ email: data.email, password: data.password, check: data.checkStatus }) }).then(response => {
+    //         clonedBody = response.clone();
+    //         return response.json();
+    //     }).then(response => {
+    //         if (response.signedToken.length > 0) {
+    //             localStorage.setItem("authToken", JSON.stringify(response.signedToken));
+    //             reset();
+    //             router.push({
+    //                 pathname: "/"
+    //             })
+    //             toast.success("Loginned Successfully", {
+    //                 position: "top-right",
+    //                 autoClose: 2000,
+    //                 draggable: true,
+    //                 closeOnClick: true,
+    //                 theme: "dark"
+    //             });
+    //         }
+    //         else if (response.signedToken.length === 0) {
+    //             toast.error("User not found", {
+    //                 position: "top-right",
+    //                 autoClose: 2000,
+    //                 draggable: true,
+    //                 closeOnClick: true,
+    //                 theme: "dark"
+    //             });
+    //         }
+
+    //     }, (reason: any) => {
+    //         clonedBody.text().then((text: any) => {
+    //             console.log("Text", text);
+    //         })
+    //     }).catch(er => {
+    //         toast.error("Something went wrong", {
+    //             position: "top-right",
+    //             autoClose: 3000,
+    //             theme: "dark",
+    //             draggable: true,
+    //             closeOnClick: true
+    //         })
+    //     });
+    // }
     const [password, setPassword] = React.useState<boolean>(false);
     const registerEmail = register("email", {
         required: true, onChange(event) {

@@ -1,5 +1,6 @@
 import { UnknownAction } from "redux";
 import { IconType } from "react-icons";
+import { Document } from "mongoose";
 export type IModal = {
     open: boolean;
     content?: JSX.Element | React.FC | any;
@@ -80,9 +81,9 @@ export type ISpinner = {
 }
 export type ICartProduct = {
     name?: string;
-    size?: string ;
+    size?: string;
     variant?: string;
-    price?: number ;
+    price?: number;
     quantity?: number;
     product: any;
 }
@@ -129,5 +130,23 @@ export interface ITableData<DataType> {
     tablebody: Array<unknown>
 }
 export type Slides = {
-    visibleSlides?:number;
+    visibleSlides?: number;
+}
+export interface IProductModel extends Document {
+    title: string
+    slug: string,
+    desc: string,
+    img: string,
+    category: string,
+    size: string,
+    color: string,
+    price: number,
+    availableQuantity: number,
+    createdAt:any;
+    updatedAt:any;
+}
+export interface ISchema extends Document {
+    email: string;
+    password: string;
+    username?: string;
 }

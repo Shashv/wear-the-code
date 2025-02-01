@@ -52,6 +52,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(200).json({ meesage: "Method not allowed" })
     }
 }
-export default connectDatabase(handler);
+// export default connectDatabase(handler);
 // ..you can explicitly call the database by using the mongoose.connect in every statement..// by using the following the statement below...//
-// export default handler;
+export default handler;

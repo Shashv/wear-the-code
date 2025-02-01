@@ -12,14 +12,15 @@ const authOptions: NextAuthOptions = {
                 checkStatus: { type: "checkbox", placeholder: "Remember Choice" }
             },
             async authorize(credentials, req) {
-                let findedUser = await UserModel.find({ email: credentials?.email }).lean();
-                if (findedUser.length > 0)
+                // console.log("Environment variable", process.env.NEXTAUTH_SECRET)
+                let findedUser = await UserModel.findOne({ email: credentials?.email });
+                if (findedUser)
                     return {
-                        id: findedUser[0]["id"],
-                        name: findedUser[0]["username"],
-                        email: findedUser[0]["email"]
+                        id: findedUser["id"],
+                        name: findedUser["username"],
+                        email: findedUser["email"]
                     }
-                else return null
+                else return null;
             },
         }),
     ],
@@ -28,19 +29,22 @@ const authOptions: NextAuthOptions = {
     },
     callbacks: {
         jwt: async (props) => {
-
-            let { token, account, user } = props;
+            let { token, user } = props;
             if (user) {
                 token.id = user.id;
+                token.email = user.email;
             }
             return token
         },
         session: async params => {
             let { session, token } = params;
             session.user = token;
-            return params.session;
+            return session;
         }
     },
+    pages: {
+        signIn: "/authentication/login",
+    }
 
 }
 const authorizeOptions = NextAuth(authOptions);
