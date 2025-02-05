@@ -12,6 +12,8 @@ import ProductCard from "@/components/productcard";
 import LoadingBar from "react-top-loading-bar";
 import { toast } from "react-toastify";
 import Link from "next/link";
+import { getServerSession } from "next-auth";
+import authorizeOptions from "../api/auth/[...nextauth]";
 const MousePads: NextPage<{
     mousePadsSchema: {
         [key: string]: {
@@ -45,7 +47,7 @@ const MousePads: NextPage<{
     return (
         <>
             <Head>
-                <title>Positive MousePads</title>
+                <title>Codeswear - Positive MousePads</title>
                 <link rel="icon" href="/logo.webp" />
             </Head>
             <div className={theme.light ? style.padlight : style.paddark}>
@@ -93,6 +95,7 @@ const MousePads: NextPage<{
 export default MousePads;
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const mousepads = await ProductModel.find({ category: "mousepads" }).lean();
+    const session = await getServerSession(context.req, context.res, authorizeOptions);
     const mousePadsSchema: {
         [key: string]: {
             title: string;
@@ -135,9 +138,17 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
                 }
         }
     }
-    return {
-        props: {
-            mousePadsSchema
+    if (session)
+        return {
+            props: {
+                mousePadsSchema
+            }
+        }
+    else return {
+        redirect: {
+            basePath: false,
+            destination: "/authentication/login",
+            permanent: false
         }
     }
 }

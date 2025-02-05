@@ -13,7 +13,7 @@ const BestSelling: React.FC = () => {
     let theme: ITheme = useSelector((state: IState) => state.toggletheme);
     const { ref, inView } = useInView({ threshold: 0.2 });
     const [flag, setFlag] = useState<boolean>(false);
-  
+
     const handleClick = useCallback(() => () => {
         setFlag(!flag);
 
@@ -23,14 +23,14 @@ const BestSelling: React.FC = () => {
     }, [flag]);
     return (
         <>
-            <div  className={theme.dark ? style.bestselling : theme.light ? style.lightbestselling : ``}>
+            <div className={theme.dark ? style.bestselling : theme.light ? style.lightbestselling : ``}>
                 <div className={theme.dark ? style.bestsellingheading : style.lightbestselling}>
                     <h1 className="">
                         Best Selling Products
                     </h1>
                     <div className={`${style.slicedborder} rounded-pill`}></div>
                 </div>
-              
+
                 <div className={`${style.collectionlist}`}>
                     <Grid container className="justify-center" spacing={2}>
                         {bestsale.map((key, index) => <Grid item xs={9} sm={6} md={2} key={index}>

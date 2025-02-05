@@ -45,7 +45,6 @@
 }
 
 .imgfourth {
-
     height: 100%;
     flex: 1 0 100%;
     background-image: url("/onlinethird.jpg");
@@ -53,7 +52,6 @@
 }
 
 .imgfifth {
-
     height: 100%;
     flex: 1 0 100%;
     background-image: url("/onlinefourth.jpg");

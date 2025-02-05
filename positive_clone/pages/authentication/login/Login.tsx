@@ -91,25 +91,32 @@ const Login: NextPage = () => {
     });
     const router = useRouter();
     const session = useSession();
-    if (session.status === "authenticated") {
-        router.replace("/")
-    }
+    // if (session.status === "authenticated") {
+    //     router.replace("/")
+    // }
     const details = async (data: FieldValues) => {
         setLoader(true);
         //without using the next-auth//
         let response = await signIn("credentials", { ...data, redirect: false });
-        console.log("Response finded user", response);
+        // console.log("Response finded user", response);
         if (response) {
             setLoader(false);
             if (response.error) {
-                toast.error("Oops something went wrong", {
-                    autoClose: 2000,
-                    theme: "colored"
-                })
+                if (response.status === 401) {
+                    toast.info("Please provide correct credentials", {
+                        autoClose: 2000,
+                        theme: "colored"
+                    })
+                }
+                else
+                    toast.error("Oops something went wrong", {
+                        autoClose: 2000,
+                        theme: "colored"
+                    })
             }
             else {
                 toast.success("Loggined Successfully");
-                router.replace("/")
+                router.replace("/");
             }
         }
     }
@@ -201,7 +208,7 @@ const Login: NextPage = () => {
     });
     return (
         <>
-            {loader ? <Backdrop open><LoaderAnimate /></Backdrop> :
+            {loader ? <Backdrop open sx={{ backgroundColor: "lightgreen" }}><LoaderAnimate /></Backdrop> :
                 <section className={"bg-pink-400"}>
                     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                         <p className="flex items-center text-3xl font-semibold text-pink-700">
@@ -239,11 +246,11 @@ const Login: NextPage = () => {
                                             </div>
                                             {errors.checkStatus?.types?.required && <span className="text-pink-700 absolute top-[19px] left-3 text-[10.8px]">{"Remember ?"}</span>}
                                         </div>
-                                        <a className="text-sm font-medium text-pink-600" href="/authentication/forgetPassword">Forgot password?</a>
+                                        <a className="text-sm font-medium text-pink-600" href="/authentication/forgotPassword">Forgot password?</a>
                                     </div>
                                     <button type="submit" className="w-full text-light bg-pink-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-800 font-medium rounded-lg text-xl px-3 py-2 text-center">Sign in</button>
                                     <p className="text-sm font-light text-center text-pink-500">
-                                        Don’t have an account yet? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
+                                        Don’t have an account yet? <a href="/authentication/signup" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
                                     </p>
                                 </form>
                             </div>

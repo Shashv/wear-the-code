@@ -7,6 +7,9 @@ import Head from "next/head";
 import { Typography } from "@mui/material";
 import LoadingBar from "react-top-loading-bar";
 import OrdersModel from "@/modalsmongoose/orders";
+import { getServerSession } from "next-auth";
+import authorizeOptions from "../api/auth/[...nextauth]";
+import { GetServerSidePropsContext } from "next";
 const Orders: React.FC = (props: unknown) => {
 
     const cartstate = useSelector((state: IState) => {
@@ -104,13 +107,11 @@ const Orders: React.FC = (props: unknown) => {
     )
 }
 export default Orders;
-export const getServerSideProps: (context: unknown) => Promise<{ props: any }> = async (positive) => {
-    // let ordersResponse = await fetch("/api/orders", {
-    //     method: "GET"
-    // });
-    // let orderValue = await ordersResponse.json();
+// baba ji this function will always run on the server side..//
+export const getServerSideProps: (context: GetServerSidePropsContext) => Promise<any> = async positive => {
+    const session = await getServerSession(positive.req, positive.res, authorizeOptions);
     let orders = await OrdersModel.find({});
-    console.log("Orders Model", orders);
+    // console.log("Orders Model", orders);
     return {
         props: {
             pageName: "Orders Page"

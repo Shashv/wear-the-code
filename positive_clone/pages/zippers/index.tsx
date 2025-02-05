@@ -57,10 +57,10 @@ const Zippers: NextPage<{
     const session = useSession();
     const router = useRouter();
     const [progress, setProgress] = useState<number>(0);
-    const handleRouterChnages = () => {
-        router.events.on("routeChangeStart", e => setProgress(40));
-        router.events.on("routeChangeComplete", e => setProgress(100));
-    }
+    // const handleRouterChnages = () => {
+    //     router.events.on("routeChangeStart", e => setProgress(40));
+    //     router.events.on("routeChangeComplete", e => setProgress(100));
+    // }
     // useEffect(() => {
     //     session.status === "unauthenticated" ? router.push("/authentication/login") : handleRouterChnages
     // }, []);

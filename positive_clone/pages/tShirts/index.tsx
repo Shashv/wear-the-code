@@ -60,6 +60,7 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
         this.autoHide = this.autoHide.bind(this);
     }
     getData(): void {
+        // custom loader//
         // this.setState({ loader: true, data: {} });
         fetch("/api/getProducts").then(response => response.json()).then(result => {
             this.setState({
@@ -111,7 +112,7 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
                                             </Typography>
                                             <Grid container rowGap={2} className="justify-center" columnGap={1.4}>
                                                 {Object.keys(this.state.data).length > 0 &&
-                                                     Object.keys(this.state.data).map((key: string, index: number) =>
+                                                    Object.keys(this.state.data).map((key: string, index: number) =>
                                                         <Grid item xs={5.4} sm={5.9} md={2.7} key={index}>
                                                             <Link href={{
                                                                 pathname: `product/${this.state.data[key].slug}`
@@ -136,7 +137,7 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
         )
     }
     async componentDidMount(): Promise<void> {
-        const contextValue: any = this.context;
+        // const contextValue: any = this.context;
         const session = await getSession();
         if (session?.user) {
             this.getData();
@@ -158,12 +159,12 @@ const mapStateToProps = (combinedstate: IState) => {
 }
 export default withRouter(connect(mapStateToProps)(Shirts));
 // function called when using the server side tokens..//
-// export const getServersideprops: GetServerSideProps = async (context: GetServerSidePropsContext) => {
-//     const sessionServer = await getServerSession(context.req, context.res, authorizeOptions);
-//     console.log("positive", sessionServer);
-//     return {
-//         props: {
-//             sessionServer
-//         }
-//     }
-// }
+export const getServerSidepProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+    const sessionServer = await getServerSession(context.req, context.res, authorizeOptions);
+    // console.log("positive", sessionServer);
+    return {
+        props: {
+            sessionServer
+        }
+    }
+}

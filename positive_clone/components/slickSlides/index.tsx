@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import styles from "./index.module.css";
-import Image from "next/image";
+// import Image from "next/image";
 import { Slides } from "@/modals";
 const SlickSlides: React.FC<Slides> = ({ visibleSlides }) => {
     const images: Array<string> = ["/home.jpg", "/onlinefirst.jpg", "/onlinesecond.jpg", "/onlinethird.jpg", "/onlinefourth.jpg"];

@@ -8,7 +8,7 @@ import { Backdrop, CircularProgress } from "@mui/material";
 import { FaFacebook } from "react-icons/fa";
 import { IoMdArrowDropdown } from "react-icons/io";
 import './index.css';
-import Loader from "../../../components/loader";
+// import Loader from "../../../components/loader";
 import 'react-toastify/dist/ReactToastify.css';
 import { NextPage } from "next";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -684,9 +684,9 @@ const Signup: NextPage = () => {
             </Backdrop> :
                 <>
                     <ToastContainer />
-                    <section className="bg-pink-300">
-                        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-                            <a href="#" className="flex items-center mb-6 text-3xl font-semibold text-pink-500">
+                    <section className="bg-pink-400">
+                        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 h-50">
+                            <a href="#" className="flex items-center mb-6 text-3xl font-semibold text-pink-600">
                                 <img className="w-17 h-14 mr-2" src="/codeswearcircle.png" alt="logo" />
                                 CodeSwear - Sign up
                             </a>

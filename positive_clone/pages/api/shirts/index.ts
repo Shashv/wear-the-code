@@ -31,5 +31,5 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     }
     response.end();
 }
-// export default connectDatabase(handler);
-export default handler;
+export default connectDatabase(handler);
+// export default handler;

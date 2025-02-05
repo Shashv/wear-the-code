@@ -1,6 +1,7 @@
+import connectDatabase from "@/configuration";
 import { NextApiRequest, NextApiResponse } from "next";
 import Paytmchecksum from "paytmchecksum";
-const handlerpayment = (req: NextApiRequest, res: NextApiResponse) => {
+const handlerpayment = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "POST") {
         const body = JSON.parse(req.body);
         return res.status(200).send("Payment send")
@@ -10,4 +11,5 @@ const handlerpayment = (req: NextApiRequest, res: NextApiResponse) => {
     }
 
 }
-export default handlerpayment;
+// export default handlerpayment;
+export default connectDatabase(handlerpayment);

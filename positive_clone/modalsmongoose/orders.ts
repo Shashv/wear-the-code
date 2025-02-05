@@ -1,5 +1,6 @@
-import mongoose, { models, mongo } from "mongoose";
-mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+import mongoose, { Model, models, mongo } from "mongoose";
+
+// mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 const OrderSchema = new mongoose.Schema({
     userId: { type: String, required: true },
     products: [{
@@ -10,8 +11,8 @@ const OrderSchema = new mongoose.Schema({
     totalAmount: { type: Number, required: true },
     orderStatus: { type: String, default: "pending", required: true }
 }, { timestamps: true });
-let OrdersModel: any = "";
-if (mongoose.models && mongoose, models.Orders) {
+let OrdersModel: Model<any>;
+if (mongoose.models && mongoose.models.Orders) {
     OrdersModel = mongoose.models.Orders;
 }
 else {

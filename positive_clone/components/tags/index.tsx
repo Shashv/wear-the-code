@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import Card from "react-bootstrap/Card";
 import style from "./index.module.css";
 import { ITagList } from "@/modals";
-import { useInView } from "react-intersection-observer";
+// import { useInView } from "react-intersection-observer";
 const Tags: React.FC<ITagList> = ({ logo, label, desciption, theme }) => {
-    const { ref, inView } = useInView();
+    // const { ref, inView } = useInView();
     return (
         <>
             <Card className={theme.light ? `rounded-3 ${style.tagcardlight}` : theme.dark ? `rounded-3 ${style.tagcarddark}` : ``}>

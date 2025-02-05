@@ -17,7 +17,7 @@ import { IShirts } from "@/pages/api/getProducts";
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import ColorLabel from "@/components/colorLabels";
 import buyProduct from "@/redux/actions/buyproduct";
-import LoaderAnimate from "@/components/loader";
+// import LoaderAnimate from "@/components/loader";
 // import useToast from "@/hooks/useToast";
 import clearCart from "@/redux/actions/clearCart";
 import ProductModel from "@/modalsmongoose/product";
@@ -102,6 +102,9 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
             console.log(er);
         });
     }, []);
+    useEffect(() => {
+
+    })
     useEffect(() => {
         slug = routerDetail?.query?.slug || "";
         if (serviceRef.current) {
@@ -320,7 +323,7 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
 }
 export default ProductClient;
 let pins: string = "";
-const fetchPins = async (value: string) => {
+const fetchPins: (pinValue: string) => Promise<string> = async value => {
     let pinsJson = await fetch("/api/pincode", { method: "POST", body: JSON.stringify(value) });
     let pins = await pinsJson.json();
     return pins;
@@ -337,6 +340,7 @@ export const getServerSideProps: GetServerSideProps<{
         }
     }, product: Array<any>
 }> = async context => {
+    const pins = await fetchPins("147201");
     const sessionData = await getServerSession(context.req, context.res, authorizeOptions);
     let responseproduct = await ProductModel.find({ slug: context.query.slug }).lean();
     const availableshirts: any[] = await ProductModel.find({ title: responseproduct[0].title, category: responseproduct[0].category }).lean();
@@ -363,7 +367,8 @@ export const getServerSideProps: GetServerSideProps<{
             props: {
                 productVariant: colorslug,
                 product: modifiedResponse,
-                type: responseproduct[0].slug
+                type: responseproduct[0].slug,
+                pins: pins
             }
         }
     else {

@@ -7,4 +7,5 @@ const addBuyproduct: (payload: ICartProduct) => { type: string; payload: ICartPr
         payload
     }
 }
+
 export default addBuyproduct;

@@ -8,19 +8,19 @@ import { FaRupeeSign } from "react-icons/fa";
 import { IProductType } from "@/pages/tShirts";
 import ColorLabel from "../colorLabels";
 import { FaHeart } from "react-icons/fa";
-type IBest = {
-    thumnail: string;
-    image: string;
-    label: string;
-    category: string;
-    price: number | any;
-    priceoriginal: number;
-    variations?: {
-        color: string[];
-        size: string[];
-    },
+// type IBest = {
+//     thumnail: string;
+//     image: string;
+//     label: string;
+//     category: string;
+//     price: number | any;
+//     priceoriginal: number;
+//     variations?: {
+//         color: string[];
+//         size: string[];
+//     },
 
-}
+// }
 const ProductCard: React.FC<IProductType> = ({ desc, title, sizes, category, slug, availableQuantity, price, colors, type, img, showIcon }) => {
     let theme = useSelector((state: IState) => state.toggletheme);
     let [hover, setHover] = React.useState<boolean>(false);

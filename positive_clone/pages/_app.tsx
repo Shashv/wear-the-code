@@ -5,20 +5,20 @@ import { Provider } from "react-redux";
 import Footer from "@/components/footer";
 import { NextRouter, useRouter } from "next/router";
 import "./styles.css";
-import { IPositive } from "@/modals";
+// import { IPositive } from "@/modals";
 import store, { IDispatch, IState } from "@/redux/sore";
-import { useDispatch, useSelector } from "react-redux";
-import addProduct from "@/redux/actions/addProduct";
-import removeProduct from "@/redux/actions/removeProduct";
+// import { useDispatch, useSelector } from "react-redux";
+// import addProduct from "@/redux/actions/addProduct";
+// import removeProduct from "@/redux/actions/removeProduct";
 import { useEffect, useRef } from "react";
 import StyledBar from "@/components/customBar";
 import { ToastContainer } from "react-toastify";
-import { getSession, SessionProvider } from 'next-auth/react';
-import { headers } from "next/headers";
-import { usePathname } from "next/navigation";
+import { SessionProvider } from 'next-auth/react';
+// import { headers } from "next/headers";
+// import { usePathname } from "next/navigation";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import type { AppProps } from "next/app";
-import jsonwebtoken from "jsonwebtoken";
+// import jsonwebtoken from "jsonwebtoken";
 import 'react-toastify/dist/ReactToastify.css';
 import { LoadingBarContainer } from "react-top-loading-bar";
 import { NextPage } from "next";
@@ -39,12 +39,13 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
         setFilterStatus(!status);
     }
     useEffect(() => {
-        // aos.init();
+
+        aos.init();
         Router.events.on("routeChangeStart", e => {
             setLoader(true);
         })
         Router.events.on("routeChangeComplete", e => setLoader(false));
-    });
+    }, [routerDetail]);
     return (
         <GoogleOAuthProvider clientId="803758111092-tusltrjau3p58fdue2k96a6rkm0nasik.apps.googleusercontent.com">
             <div ref={ref} className="parent">

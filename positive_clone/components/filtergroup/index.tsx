@@ -3,13 +3,13 @@ import { Box, Typography } from "@mui/material";
 import style from "./index.module.css";
 import { ITheme } from "@/modals";
 import { IoMenu } from "react-icons/io5";
-import { useDispatch } from "react-redux";
-import { fetchPositive } from "@/redux/reducers/positive";
-import { FaHamburger } from "react-icons/fa";
+// import { useDispatch } from "react-redux";
+// import { fetchPositive } from "@/redux/reducers/positive";
+// import { FaHamburger } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io"
 import { Checkbox } from "@mui/material";
 import { useContext } from "react";
-import { Backdrop } from "@mui/material";
+// import { Backdrop } from "@mui/material";
 import ContextWrapper from "@/utils/hooks/ContextWrapper";
 const FilterBar: React.FC<{ theme: ITheme }> = ({ theme }) => {
     let filterStrands: Array<string> = (["Anime", "Characters", "Coding", "Combo"]);

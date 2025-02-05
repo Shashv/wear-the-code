@@ -2,7 +2,7 @@ import React from "react";
 import { Table, TableBody, TableHead, TableRow, TableCell } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 import { ITableData } from "@/modals";
-const CommonTable: React.FC<ITableData<any>> = ({ tablehead, tablebody }) => {
+const CommonTable: React.FC<ITableData<any>> = ({ tablehead, tablebody, theme }) => {
     const [tabledata, setTabledata] = React.useState<{
         tablehead: any[];
         tablebody: any[];
@@ -51,7 +51,7 @@ const CommonTable: React.FC<ITableData<any>> = ({ tablehead, tablebody }) => {
     });
     return (
         <>
-            <Table className="bg-light">
+            <Table className={`bg-light ${theme?.dark ? 'bg-dark':'bg-light'}`}>
                 <TableHead sx={{ backgroundColor: "lightblue" }}>
                     <TableRow>
                         {tabledata.tablehead.map((headcell, index) => <TableCell className="text-uppercase text-danger" key={`${headcell}-${index + 1}`}>

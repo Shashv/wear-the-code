@@ -538,7 +538,7 @@ const LoginF: React.FC = () => {
     <>
       <Head>
         <title>
-          Codeswear - Login
+          Codeswear - Login to continue
         </title>
       </Head>
       <Login />

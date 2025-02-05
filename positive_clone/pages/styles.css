@@ -1,8 +1,9 @@
+/* tailwind css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 @import url("https://db.onlinewebfonts.com/c/f56809563b15c7c76669dac9ca9d38ac?family=Matter+Regular");
-
+/* .. */
 input::placeholder {
     font-family: "Matter Regular";
 }

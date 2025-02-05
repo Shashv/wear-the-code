@@ -22,6 +22,7 @@ import Aos from 'aos';
 import "aos/dist/aos.css"
 import { toast } from "react-toastify";
 import SlickSlides from "@/components/slickSlides";
+import { ICustomSession } from "@/modals";
 interface IParas {
     props: {
         name: string
@@ -29,28 +30,33 @@ interface IParas {
 }
 export default function Home(props: { name: string, scrollTop: number, direction: string, session?: Session } | any) {
     const rouerDetail = useRouter();
-    let scrollDIrection: string = "";
-    let [scrollDirection, setScrollDirection] = useState<string>("");
-    const session = useSession();
+    // scroll events//
+    // let scrollDIrection: string = "";
+    // let [scrollDirection, setScrollDirection] = useState<string>("");
+    // const session = useSession();
+    // ....//
     let theme = useSelector((state: IState) => state.toggletheme);
     useEffect(() => {
         Aos.init({ once: false });
-        if (localStorage.getItem("toastShown") !== "yes") {
-            toast.success("Welcome to Codeswear", {
+        if (localStorage.getItem("toastShown")) {
+            // console.log(localStorage.getItem("toastShown"))
+        }
+        else {
+            localStorage.setItem("toastShown", "positive");
+            toast.success(`Welcome to Codeswear ${props.name}`, {
                 theme: theme.light ? "light" : "dark",
                 draggable: false,
                 autoClose: 2500,
             });
         }
-        else
-            localStorage.setItem("toastShown", JSON.stringify("yes"))
     }, []);
     return (
         <>
-            <SlickSlides />
+            {/* component based slick slides */}
+            {/* <SlickSlides /> */}
             <div className={theme.light ? "wrapper bg-white" : "wrapper bg-dark"}>
                 {/* ...slick slided with custom css */}
-                {/* <div className={style.customcontainer}>
+                <div className={style.customcontainer}>
                     <div className={style.wrapper}>
                         <img className={style.imgfirst} src="/home.jpg" />
                         <img className={style.imgthird} src="/onlinefirst.jpg" />
@@ -58,7 +64,7 @@ export default function Home(props: { name: string, scrollTop: number, direction
                         <img className={style.imgfifth} src="/onlinethird.jpg" />
                         <img className={style.imgsixth} src="/onlinefourth.jpg" />
                     </div>
-                </div> */}
+                </div>
                 {/*... slickes slides .... */}
                 <div className={"collections-container"} style={{ backgroundColor: `${theme.dark ? "#1f2937" : "#fff"}` }}>
                     <CollectionSections theme={theme} />
@@ -76,24 +82,26 @@ export default function Home(props: { name: string, scrollTop: number, direction
         </>
     );
 }
-//server...//
-// export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
-//     const session = await getServerSession(context.req, context.res, authorizeOptions);
-//     console.log("session positive", session);
-//     if (session) {
-//         return {
-//             props: {
-//                 session: session
-//             }
-//         }
-//     }
-//     else {
-//         return {
-//             redirect: {
-//                 permanent: false,
-//                 destination: "/authentication/login"
-//             }
-//         }
-//     }
-// }
-//...server//
+
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+    const session = await getServerSession(context.req, context.res, authorizeOptions) as ICustomSession | null;
+    // console.log("session positive", session);
+    if (session) {
+        return {
+            props: {
+                // session: session,
+                name: session.user.name,
+                email: session.user.email
+            }
+        }
+    }
+    else {
+        return {
+            redirect: {
+                permanent: false,
+                destination: "/authentication/login"
+            }
+        }
+    }
+}
+

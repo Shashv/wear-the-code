@@ -5,6 +5,7 @@ import "aos/dist/aos.css";
 const AosInitialize: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     useEffect(() => {
         Aos.init({
+            duration: 2000
         });
         Aos.refresh();
     });

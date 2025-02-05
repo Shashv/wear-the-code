@@ -92,7 +92,7 @@ class Mugs extends React.Component<any, { name: string; age: number; loader: fal
             autoClose: 2000
         })
         const session = await getSession();
-        console.log("Session mugs", session);
+        // console.log("Session mugs", session);
         this.setState({ progress: 100 })
     }
     componentWillUnmount(): void {
@@ -110,9 +110,9 @@ class Mugs extends React.Component<any, { name: string; age: number; loader: fal
 
 export default (partialConnector(Mugs));
 // withRouter
+//below will run on the server side for fetching data on the client side...//
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const session = await getServerSession(context.req, context.res, authorizeOptions);
-    // console.log("Serverside session", session);
     let fetchedMugs: Array<any> = await ProductModel.find({ category: "mugs" }).lean();
     const modifiedResponse = fetchedMugs.map((mugs: any, index: number) => ({ ...mugs, createdAt: new Date(mugs.createdAt).toLocaleString(), updatedAt: new Date(mugs.updatedAt).toLocaleString(), _id: index + 1 }));
     let mugsSchema: {

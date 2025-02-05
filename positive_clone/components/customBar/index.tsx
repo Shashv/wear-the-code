@@ -163,21 +163,21 @@ const StyledBar: React.FC<{ scrollTop?: number }> = ({ scrollTop }) => {
                                         </li>
                                     </ul>
                                 </div>
-                                <div className="settings relative d-flex align-items-center gap-2">
+                                <div className="w-[150px] relative d-flex align-items-center gap-2">
                                     {session.status === "authenticated" ?
                                         <Dropdown>
                                             <Dropdown.Toggle className={`d-flex gap-2 align-items-center ${theme.light ? "bg-light btn-outline-light" : "bg-dark btn-outline-dark"}`}>
                                                 <RiAccountCircleLine color="#ef3492" size={26} />
                                             </Dropdown.Toggle>
                                             <Dropdown.Menu className="managament-dropdowns dropdown-menu bg-pink-400 rounded-2 text-light">
-                                                <Dropdown.Item className="dropdown-item hover:text-pink-500 hover:bg-pink-200" onClick={() => router.push("/myaccount")}>My Account</Dropdown.Item>
-                                                <Dropdown.Item className="dropdown-item hover:text-pink-500 hover:bg-pink-200" onClick={() => router.push("/orders")}>Orders</Dropdown.Item>
-                                                <Dropdown.Item className="dropdown-item hover:text-pink-500 hover:bg-pink-200" onClick={(e: React.MouseEvent<HTMLElement>) => setState({ ...state, logout: true })}>Logout</Dropdown.Item>
+                                                <Dropdown.Item className="dropdown-item hover:text-pink-500 hover:bg-pink-200 active:bg-pink-300" onClick={() => router.push("/myaccount")}>My Account</Dropdown.Item>
+                                                <Dropdown.Item className="dropdown-item hover:text-pink-500 hover:bg-pink-200 active:bg-pink-300" onClick={() => router.push("/orders")}>Orders</Dropdown.Item>
+                                                <Dropdown.Item className="dropdown-item hover:text-pink-500 hover:bg-pink-200 active:bg-pink-300" onClick={(e: React.MouseEvent<HTMLElement>) => setState({ ...state, logout: true })}>Logout</Dropdown.Item>
                                             </Dropdown.Menu>
                                         </Dropdown>
                                         : <>
                                             {
-                                                session.status === "unauthenticated" && <button onClick={e => router.replace("/authentication/login")} className="bg-pink-600 rounded-2 p-1 w-[80px] text-md text-light">Log In</button>
+                                                session.status === "unauthenticated" && <button onClick={e => router.replace("/authentication/login")} className="bg-pink-600 rounded-2 p-1 w-[75%] text-md text-light">Log In</button>
                                             }
                                         </>
                                     }
@@ -321,12 +321,15 @@ const StyledBar: React.FC<{ scrollTop?: number }> = ({ scrollTop }) => {
                         </div>
                     </nav>
                     <CustomDrawer reviewCart reduxAdd={addProducts} reduxSubtract={removeProducts} open={state.cart} closeDrawer={() => setState({ ...state, cart: false })} width={400} />
-                    <StyledModal open={state.logout} content={positiveBabaji} purpose="Log Out" closeModal={() => setState({ ...state, logout: false })} confirmProcess={() => {
+                    <StyledModal open={state.logout} content={positiveBabaji} purpose="Log Out" closeModal={() => setState({ ...state, logout: false })} confirmProcess={async () => {
                         setLoader(true);
-                        toast.success("Logged in successfully", {
+                        await signOut({ redirect: true, callbackUrl: "/authentication/login" });
+                        localStorage.clear()
+                        toast.success("Logged out successfully", {
                             autoClose: 2000,
                             theme: "colored",
                         })
+                        // using the api route//
                         // fetch("/api/logout").then(response => response.json()).then(resp => {
                         //     console.log("response", resp);
                         //     if (resp.message === "Positive" || resp.message === "Logout successfully") {
@@ -340,7 +343,6 @@ const StyledBar: React.FC<{ scrollTop?: number }> = ({ scrollTop }) => {
                         //         });
                         //     }
                         // });
-                        signOut({ redirect: true, callbackUrl: "/authentication/login" });
                     }} />
                 </>
             }

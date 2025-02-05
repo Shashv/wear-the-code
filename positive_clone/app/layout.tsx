@@ -2,7 +2,7 @@ import React from "react";
 import { ILayout } from "@/modals";
 import { Metadata, Viewport } from "next";
 import 'bootstrap/dist/css/bootstrap.css';
-import Script from "next/script";
+// import Script from "next/script";
 const Layout: React.FC<ILayout> = ({ children }) => {
     return (
         <>

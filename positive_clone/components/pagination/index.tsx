@@ -10,7 +10,7 @@ type IBabaji = {
     pageList: Array<number>
 }
 const Pagination: React.FC<IBabaji> = ({ page, changePage, pageList }) => {
-    const searchParams = useSearchParams();
+    // const searchParams = useSearchParams();
     const theme = useSelector((state: IState) => state.toggletheme);
     const staticPages = [1, 2, 3, 4, 5];
     return (

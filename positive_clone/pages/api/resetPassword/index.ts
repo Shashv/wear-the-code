@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import EmailComponent from "@/utils/emailTemplate";
 import mynodemailer from "nodemailer";
 import { render } from "@react-email/components";
+import connectDatabase from "@/configuration";
 const resetPassword = async (request: NextApiRequest, response: NextApiResponse) => {
     let emailSender = mynodemailer.createTransport({
         host: "smtp.forwardemail.net",
@@ -15,7 +16,7 @@ const resetPassword = async (request: NextApiRequest, response: NextApiResponse)
     });
     const customMailOptions = {
         from: "shashvatgupta19@gmail.com",
-        to: "sunny.webframez@gmail.com",
+        to: "shashvatgupta19@gmail.com",
         subject: "Custom Subject for the testing of the email",
         text: "This is the testing email for the reset password",
     }
@@ -23,4 +24,5 @@ const resetPassword = async (request: NextApiRequest, response: NextApiResponse)
     response.status(200);
     response.json({ message: "Email sent successfully" });
 }
-export default resetPassword;
+// export default resetPassword;
+export default connectDatabase(resetPassword)

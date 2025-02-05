@@ -1,6 +1,6 @@
 import { IProductModel } from "@/modals";
 import mongoose, { Document, Model, Schema } from "mongoose";
-mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
+// mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
 const ProductSchema = new mongoose.Schema<IProductModel>({
     title: { type: String, required: true },
     slug: { type: String, required: true, unique: true },

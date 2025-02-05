@@ -75,6 +75,7 @@ const Hoodies: NextPage<{
     )
 }
 export default Hoodies;
+// below function always runs on the server side  for the database fetching data.....///
 export const getServerSideProps: GetServerSideProps<{
     hoodies?: IHoodie[], loading?: boolean; cart?: {
         [key: string]: {

@@ -1,20 +1,25 @@
 import UserModel from "@/modalsmongoose/user";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import positive from "bcryptjs";
+import mongoose from "mongoose";
+
 const authOptions: NextAuthOptions = {
-    secret: "shhh",
+    secret: process.env.NEXTAUTH_SECRET,
     providers: [
         CredentialsProvider({
             name: "credentials",
             credentials: {
                 username: { type: "text", placeholder: "Enter Username" },
                 email: { type: "email", placeholder: "Enter Email" },
-                checkStatus: { type: "checkbox", placeholder: "Remember Choice" }
+                checkStatus: { type: "checkbox", placeholder: "Remember Choice" },
+                password: { type: "password", placeholder: "Enter password" }
             },
             async authorize(credentials, req) {
-                // console.log("Environment variable", process.env.NEXTAUTH_SECRET)
+                await mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
                 let findedUser = await UserModel.findOne({ email: credentials?.email });
-                if (findedUser)
+                const babaji = await positive.compare(credentials?.password || "", findedUser?.password || "");
+                if (findedUser && babaji)
                     return {
                         id: findedUser["id"],
                         name: findedUser["username"],
@@ -26,6 +31,7 @@ const authOptions: NextAuthOptions = {
     ],
     session: {
         strategy: "jwt",
+        maxAge: 25
     },
     callbacks: {
         jwt: async (props) => {

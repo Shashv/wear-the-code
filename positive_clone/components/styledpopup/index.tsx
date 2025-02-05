@@ -1,24 +1,25 @@
 import React, { forwardRef } from "react";
 import { Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText } from "@mui/material";
 import { IModal } from "@/modals";
-import Slide from "@mui/material/Fade";
+// import Slide from "@mui/material/Fade";
 import Grow from "@mui/material/Grow";
 import { useRef, useEffect } from "react";
 import style from "./index.module.css";
 import { IoIosCloseCircle } from "react-icons/io";
 import Loader from "../loader";
-import { Modal } from "reactstrap";
+// import { Modal } from "reactstrap";
 const StyledModal: React.FC<IModal> = ({ open, title, content, width, height, purpose, confirmProcess, closeModal, loader }) => {
-    let logOutRef = useRef<HTMLButtonElement>(null);
+    // let logOutRef = useRef<HTMLButtonElement>(null);
     const GrowTransition = forwardRef((props: any, ref: any) => {
         return <Grow {...props} ref={ref} />
     })
-    useEffect(() => {
-        logOutRef.current?.addEventListener("click", (e) => confirmProcess(e));
-        return () => {
-            logOutRef.current?.removeEventListener("click", (e) => confirmProcess(e));
-        }
-    });
+    // useEffect(() => {
+    //     logOutRef.current?.addEventListener("click", (e) => confirmProcess(e));
+    //     return () => {
+    //         logOutRef.current?.removeEventListener("click", (e) => confirmProcess(e));
+    //     }
+    // });
+    //  ref={logOutRef}
     return (
         <>
             <Dialog PaperProps={{
@@ -43,7 +44,7 @@ const StyledModal: React.FC<IModal> = ({ open, title, content, width, height, pu
                             <button className={purpose ? "rounded-2 text-pink-400 hover:shadow-sm p-2" : "rounded-2 text-light bg-pink-400 p-2"} onClick={(e) => closeModal()}>
                                 Close
                             </button>
-                            {purpose && <button ref={logOutRef} onClick={confirmProcess} className="confirm-process bg-pink-400 rounded-2 text-light p-2">
+                            {purpose && <button onClick={confirmProcess} className="confirm-process bg-pink-400 rounded-2 text-light p-2">
                                 {purpose ? purpose : "Confirm"}
                             </button>}
                         </DialogActions>

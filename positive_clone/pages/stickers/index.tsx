@@ -33,22 +33,22 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
     }
     const session = useSession();
     const [positive, setPositive] = useState<number>(40);
-    // baba ji... for the client side js/
-    // useEffect(() => {
-    //     // console.log("Session stickers", session);
-    //     if (session.status === "unauthenticated") {
-    //         toast.error("Oops you are not authenticated");
-    //         setLoader(false);
-    //         router.replace("/authentication/login");
-    //     }
-    //     else {
-    //         setPositive(100);
-    //         toast.success("Stickers", {
-    //             theme: combinedState.dark ? "dark" : "light",
-    //             autoClose: 2000
-    //         })
-    //     }
-    // }, []);
+
+    useEffect(() => {
+
+        if (session.status === "unauthenticated") {
+            toast.error("Oops you are not authenticated");
+            setLoader(false);
+            router.replace("/authentication/login");
+        }
+        else {
+            setPositive(100);
+            toast.success("Stickers", {
+                theme: combinedState.dark ? "dark" : "light",
+                autoClose: 2000
+            })
+        }
+    }, []);
     const onClose: (e: React.MouseEvent<any>, timeOutID: any) => void = (e, id) => {
         clearTimeout(id);
         setToast(false);
@@ -61,7 +61,7 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
             </Head>
             {!loader && session.status === "authenticated" ?
                 <>
-                    <LoadingBar color="magenta" progress={positive} height={3} background="lightblue" />
+                    <LoadingBar color="magenta" shadow transitionTime={1500} progress={positive} height={3} />
                     <div className={combinedState.dark ? `${styles.containerpacksdark}` : `${styles.containerpacks}`}>
                         <section className="">
                             <div className="container-fluid p-0">

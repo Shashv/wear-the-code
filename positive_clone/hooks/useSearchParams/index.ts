@@ -1,7 +1,8 @@
 import React from "react";
 import { useRouter } from "next/router";
+import { NextRouter } from "next/router";
 const useSearchParamsstate = () => {
-    const router = useRouter();
+    const router: NextRouter = useRouter();
     return {
         setQuery: (props: { [key: string]: string }) => router.replace({ query: { ...router.query, ...props } }),
         getDetails: () => router,

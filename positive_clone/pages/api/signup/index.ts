@@ -5,9 +5,13 @@ import jwtmodule from "jsonwebtoken";
 import UserModel from "@/modalsmongoose/user";
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     let parsedPositive = JSON.parse(request.body);
+    const generateHashedPassword: (data: string) => Promise<string> = async password => {
+        const salts = await bycryptjs.genSalt();
+        return await bycryptjs.hash(password, salts);
+    }
     let newUser = new UserModel({
         username: parsedPositive.name,
-        password: parsedPositive.password,
+        password: await generateHashedPassword(parsedPositive.password),
         email: parsedPositive.email
     });
     await newUser.save();

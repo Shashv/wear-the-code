@@ -29,18 +29,18 @@ const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawe
     let buyProduct = useSelector((state: IState) => state.buyNow);
     const router = useRouter();
     let theme = useSelector((state: IState) => state.toggletheme);
-    let cartState: ICartProduct = {
-        name: "",
-        size: "",
-        variant: "",
-        price: 0,
-        quantity: 0,
-        product: ""
-    }
+    // let cartState: ICartProduct = {
+    //     name: "",
+    //     size: "",
+    //     variant: "",
+    //     price: 0,
+    //     quantity: 0,
+    //     product: ""
+    // }
     let [clearCartConfirmation, setClearCartConfirmation] = useState<boolean>(false);
-    let [toastC, setToastC] = useState<boolean>(false);
-    const ModalContent: JSX.Element = <>
-    </>
+    // let [toastC, setToastC] = useState<boolean>(false);
+    // const ModalContent: JSX.Element = <>
+    // </>
     const confirmClearCart: (e: React.MouseEvent<HTMLButtonElement>) => void = (e) => {
         dispatch(clearCart({}));
         setClearCartConfirmation(false);
@@ -66,9 +66,10 @@ const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawe
         closeDrawer(e);
         router.push("/checkout");
     }
-    let babaji: (e: React.MouseEvent, timeOut: ReturnType<typeof setTimeout>) => void = (e, tme) => {
-        // setToastC(false);
-    }
+    // let babaji: (e: React.MouseEvent, timeOut: ReturnType<typeof setTimeout>) => void = (e, tme) => {
+    //     // setToastC(false);
+    //     console.log("Baba ji calling function")
+    // }
     let productList: string[] = Object.keys(state);
     let amount: number = 0;
     productList.forEach(key => amount = amount + state[key].quantity * state[key].price);

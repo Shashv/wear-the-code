@@ -1,6 +1,7 @@
 import { UnknownAction } from "redux";
 import { IconType } from "react-icons";
 import { Document } from "mongoose";
+import { Session } from "next-auth";
 export type IModal = {
     open: boolean;
     content?: JSX.Element | React.FC | any;
@@ -127,7 +128,11 @@ export interface ITheme {
 }
 export interface ITableData<DataType> {
     tablehead: Array<DataType>;
-    tablebody: Array<unknown>
+    tablebody: Array<unknown>;
+    theme?: {
+        light: boolean;
+        dark: boolean
+    }
 }
 export type Slides = {
     visibleSlides?: number;
@@ -142,11 +147,18 @@ export interface IProductModel extends Document {
     color: string,
     price: number,
     availableQuantity: number,
-    createdAt:any;
-    updatedAt:any;
+    createdAt: any;
+    updatedAt: any;
 }
 export interface ISchema extends Document {
     email: string;
     password: string;
     username?: string;
+}
+export interface ICustomSession extends Session {
+    user: {
+        name: string;
+        email: string;
+        image: string | undefined
+    }
 }

@@ -3,9 +3,9 @@ import { Box, Button, FormGroup, Typography } from "@mui/material";
 import styles from "./index.module.css";
 import { Form, Label } from "reactstrap";
 import { IRegisterOptions } from '../../modals/index';
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues, useForm, Controller } from "react-hook-form";
 import { Container, Col, Row } from "reactstrap";
-import Cart from "../../components/cart";
+// import Cart from "../../components/cart";
 import style from "./index.module.css";
 import CustomDrawer from "../../components/cart";
 import { useDispatch } from "react-redux";
@@ -18,7 +18,7 @@ import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "../api/auth/[...nextauth]";
 const Checkout: React.FC = () => {
-    let { register, handleSubmit, formState: { errors, isSubmitSuccessful }, reset, setError, clearErrors } = useForm<IRegisterOptions>();
+    let { register, handleSubmit, formState: { errors, isSubmitSuccessful }, reset, setError, clearErrors, control } = useForm<IRegisterOptions>();
     let dispatch = useDispatch();
     const theme = useSelector((state: IState) => state.toggletheme);
     let details = (data: FieldValues | IRegisterOptions) => {
@@ -163,7 +163,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     if (getServersidesession) {
         return {
             props: {
-
+                positive: "Checkout page"
             }
         }
     }
