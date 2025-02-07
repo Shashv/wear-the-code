@@ -102,14 +102,14 @@ const Login: NextPage = () => {
         if (response) {
             setLoader(false);
             if (response.error) {
-                if (response.status === 401) {
+                if (response.status === 401 && response.error.includes("auth")) {
                     toast.info("Please provide correct credentials", {
                         autoClose: 2000,
                         theme: "colored"
                     })
                 }
-                else
-                    toast.error("Oops something went wrong", {
+                else if (response.error.includes("ECONNREFUSED"))
+                    toast.error("Oops please connection failed ,please try again", {
                         autoClose: 2000,
                         theme: "colored"
                     })

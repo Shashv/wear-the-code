@@ -1,27 +1,27 @@
 import Image from "next/image";
-import { Box, Typography } from "@mui/material";
-import { useState } from "react";
+// import { Box, Typography } from "@mui/material";
+// import { useState } from "react";
 import { useRouter } from "next/navigation";
 import style from "./index.module.css";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
 import { useSelector } from "react-redux";
-import Loader from "@/components/loader";
+// import Loader from "@/components/loader";
 import CollectionSections from "@/sections/collections";
 import { IState } from "@/redux/sore";
 import ThemeSection from "@/sections/themes";
 import TagSection from "@/sections/tagssection";
 import BestSelling from "@/sections/bestsale";
 import { useEffect } from "react";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
-import { headers } from "next/headers";
+// import { headers } from "next/headers";
 import { Session } from "next-auth";
 import authorizeOptions from "./api/auth/[...nextauth]";
 import Aos from 'aos';
 import "aos/dist/aos.css"
 import { toast } from "react-toastify";
-import SlickSlides from "@/components/slickSlides";
+// import SlickSlides from "@/components/slickSlides";
 import { ICustomSession } from "@/modals";
 interface IParas {
     props: {
@@ -84,7 +84,7 @@ export default function Home(props: { name: string, scrollTop: number, direction
 }
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
-    const session = await getServerSession(context.req, context.res, authorizeOptions) as ICustomSession | null;
+    const session = await getServerSession(context.req, context.res, authorizeOptions) as ICustomSession;
     // console.log("session positive", session);
     if (session) {
         return {
@@ -97,9 +97,13 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     }
     else {
         return {
-            redirect: {
-                permanent: false,
-                destination: "/authentication/login"
+            // redirect: {
+            //     permanent: false,
+            //     destination: "/authentication/login"
+            // }
+            props: {
+                name: "",
+                email: ""
             }
         }
     }

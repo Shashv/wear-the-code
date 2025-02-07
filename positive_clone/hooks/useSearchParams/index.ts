@@ -6,7 +6,8 @@ const useSearchParamsstate = () => {
     return {
         setQuery: (props: { [key: string]: string }) => router.replace({ query: { ...router.query, ...props } }),
         getDetails: () => router,
-        setPath: (pathname: string) => router.replace(pathname)
+        setPath: (pathname: string) => router.replace(pathname),
+        query:router.query
     }
 }
 export default useSearchParamsstate;

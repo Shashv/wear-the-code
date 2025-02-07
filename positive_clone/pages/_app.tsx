@@ -39,7 +39,6 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
         setFilterStatus(!status);
     }
     useEffect(() => {
-
         aos.init();
         Router.events.on("routeChangeStart", e => {
             setLoader(true);
@@ -70,7 +69,7 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
                                     <StyledBar scrollTop={0} />
                                 }
                                 <ContextWrapper.Provider value={toggleFilter}>
-                                    {loader ? <Backdrop open><LoaderAnimate /></Backdrop> :
+                                    {loader ? <Backdrop sx={{ backgroundColor: "black" }} open><LoaderAnimate /></Backdrop> :
                                         <div className={"route-component"} style={{ height: !path.includes("/auth") ? "600px" : "100vh", overflowY: filterStatus ? "hidden" : "scroll", overflowX: "hidden" }}>
                                             <Component  {...pageparams} />
                                         </div>

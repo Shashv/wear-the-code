@@ -31,7 +31,7 @@ const authOptions: NextAuthOptions = {
     ],
     session: {
         strategy: "jwt",
-        maxAge: 25
+        maxAge: 60
     },
     callbacks: {
         jwt: async (props) => {

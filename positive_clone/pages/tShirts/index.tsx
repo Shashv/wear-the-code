@@ -137,7 +137,7 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
         )
     }
     async componentDidMount(): Promise<void> {
-        // const contextValue: any = this.context;
+        const contextValue: any = this.context;
         const session = await getSession();
         if (session?.user) {
             this.getData();
@@ -161,7 +161,7 @@ export default withRouter(connect(mapStateToProps)(Shirts));
 // function called when using the server side tokens..//
 export const getServerSidepProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const sessionServer = await getServerSession(context.req, context.res, authorizeOptions);
-    // console.log("positive", sessionServer);
+    console.log("positive", sessionServer);
     return {
         props: {
             sessionServer

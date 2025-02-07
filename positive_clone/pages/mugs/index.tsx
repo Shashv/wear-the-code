@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col } from "reactstrap";
+// import { Container, Row, Col } from "reactstrap";
 import style from "./index.module.css";
 import { connect, ConnectedProps } from "react-redux";
 import { IState } from "@/redux/sore";
@@ -10,8 +10,8 @@ import ProductCard from "@/components/productcard";
 import { Grid, Typography } from "@mui/material";
 import { toast } from "react-toastify";
 import Link from "next/link";
-import { compose } from "redux";
-import { withRouter, NextRouter } from "next/router";
+// import { compose } from "redux";
+// import { withRouter, NextRouter } from "next/router";
 import { getSession } from "next-auth/react";
 import LoadingBar from "react-top-loading-bar";
 import { getServerSession } from "next-auth";

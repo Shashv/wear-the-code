@@ -85,7 +85,6 @@ export const getServerSideProps: GetServerSideProps<{
 }> = (async (context: GetServerSidePropsContext) => {
     let positive = await ProductModel.find({ category: "hoodies" }).lean();
     let sessionData = await getServerSession(context.req, context.res, authorizeOptions);
-
     let modifiedResponse: Array<IHoodie> = positive.map((positive: any, index: number) => ({ ...positive, createdAt: new Date(positive.createdAt).toLocaleString(), updatedAt: new Date(positive).toLocaleString(), _id: index + 1 }));
     let cart: {
         [key: string]: {

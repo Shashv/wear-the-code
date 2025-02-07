@@ -51,7 +51,7 @@ const CommonTable: React.FC<ITableData<any>> = ({ tablehead, tablebody, theme })
     });
     return (
         <>
-            <Table className={`bg-light ${theme?.dark ? 'bg-dark':'bg-light'}`}>
+            <Table className={`bg-light ${theme?.dark ? 'bg-dark' : 'bg-light'}`}>
                 <TableHead sx={{ backgroundColor: "lightblue" }}>
                     <TableRow>
                         {tabledata.tablehead.map((headcell, index) => <TableCell className="text-uppercase text-danger" key={`${headcell}-${index + 1}`}>
