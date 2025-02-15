@@ -1,7 +1,9 @@
 import React from "react";
-import { Table, TableBody, TableHead, TableRow, TableCell } from "@mui/material";
+import { Table, TableBody, TableHead, TableRow, TableCell, Typography, CircularProgress } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
+import { useSelector, UseSelector } from "react-redux";
 import { ITableData } from "@/modals";
+import { IState } from "@/redux/sore";
 const CommonTable: React.FC<ITableData<any>> = ({ tablehead, tablebody, theme }) => {
     const [tabledata, setTabledata] = React.useState<{
         tablehead: any[];
@@ -49,30 +51,40 @@ const CommonTable: React.FC<ITableData<any>> = ({ tablehead, tablebody, theme })
             }
         ]
     });
+    const themePositive = useSelector((state: IState) => state.toggletheme);
     return (
         <>
-            <Table className={`bg-light ${theme?.dark ? 'bg-dark':'bg-light'}`}>
+            <Table className={`bg-light ${themePositive?.dark ? 'bg-dark' : 'bg-light'}`}>
                 <TableHead sx={{ backgroundColor: "lightblue" }}>
                     <TableRow>
-                        {tabledata.tablehead.map((headcell, index) => <TableCell className="text-uppercase text-danger" key={`${headcell}-${index + 1}`}>
+                        {tablehead.map((headcell, index) => <TableCell className="text-uppercase text-danger" key={`${headcell}-${index + 1}`}>
                             {headcell.label}
                         </TableCell>)}
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {tabledata.tablebody.map((bodycell, index) => <TableRow key={index}>
-                        {tabledata.tablehead.map((head, cellindex) => <TableCell key={cellindex}>
-                            {head.type === "text" && bodycell[head.title]}
-                            {head.type === "action" && <div className="table-actions">
-                                {head.actionSchema.map((action: { type: string; action: () => void }, index: number) => {
-                                    <Edit color={"warning"} />
-                                })}
-                            </div>}
-                        </TableCell>)}
-                    </TableRow>)}
+                    {tablebody ? tablebody.length > 0 ?
+                        tablebody.map((bodycell, index) => <TableRow key={index}>
+                            {tablehead.map((head, cellindex) => <TableCell key={cellindex}>
+                                {head.type === "text" && bodycell[head.title]}
+                                {head.type === "action" && <div className="table-actions">
+                                    {head.actionSchema.map((action: { type: string; action: (param?: any) => void }, index: number) => {
+                                        return action.type === "edit" ?
+                                            <span className="edit" onClick={(e: React.MouseEvent<HTMLSpanElement>) => action.action(bodycell["email"])}>
+                                                <Edit color={"secondary"} fontSize={"medium"} className="cursor-pointer" /> </span> : <span onClick={e => action.action(bodycell["email"])} className="delete"><Delete color={"error"} fontSize={"medium"} className="cursor-pointer" /></span>
+                                    })}
+                                </div>}
+                            </TableCell>)}
+                        </TableRow>) : <>
+                            <TableRow className="no-record-found">
+                                <Typography className="no-record-found" color={"CaptionText"} variant="h5">
+                                    No record found
+                                </Typography>
+                            </TableRow>
+                        </> : <><CircularProgress color="primary" /></>}
                 </TableBody>
             </Table>
         </>
     )
 }
-export default CommonTable;
+export default CommonTable; 

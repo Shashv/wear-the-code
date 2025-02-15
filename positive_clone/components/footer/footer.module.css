@@ -4,12 +4,16 @@
     font-family: "Matter Regular";
     background-color: #f1f5f9;
     height: fit-content;
+    /* position: fixed;
+    bottom: 0px; */
 }
 
 .footerdark {
     background-color: #111827;
     font-family: "Matter Regular";
     height: fit-content;
+    /* position: fixed;
+    bottom: 0px; */
 }
 
 .gridRow {

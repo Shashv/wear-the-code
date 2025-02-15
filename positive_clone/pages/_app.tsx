@@ -21,13 +21,15 @@ import type { AppProps } from "next/app";
 // import jsonwebtoken from "jsonwebtoken";
 import 'react-toastify/dist/ReactToastify.css';
 import { LoadingBarContainer } from "react-top-loading-bar";
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import AosInitialize from "@/utils/aos";
 import 'aos/dist/aos.css';
 import Router from "next/router";
 import aos from "aos";
 import { Backdrop } from "@mui/material";
 import LoaderAnimate from "@/components/loader";
+import { getServerSession } from "next-auth";
+import authorizeOptions from "./api/auth/[...nextauth]";
 const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
     const routerDetail: NextRouter = useRouter();
     let ref = useRef<HTMLDivElement>(null);
@@ -70,7 +72,7 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
                                     <StyledBar scrollTop={0} />
                                 }
                                 <ContextWrapper.Provider value={toggleFilter}>
-                                    {loader ? <Backdrop open><LoaderAnimate /></Backdrop> :
+                                    {loader ? <Backdrop open sx={{backgroundColor:"#1f2937"}}><LoaderAnimate /></Backdrop> :
                                         <div className={"route-component"} style={{ height: !path.includes("/auth") ? "600px" : "100vh", overflowY: filterStatus ? "hidden" : "scroll", overflowX: "hidden" }}>
                                             <Component  {...pageparams} />
                                         </div>
@@ -88,6 +90,26 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
     )
 }
 export default Layout;
+export const getServerSideProps: GetServerSideProps = async context => {
+    const serverSession = await getServerSession(context.req, context.res, authorizeOptions);
+    console.log("ServerSession", serverSession);
+    if (serverSession) {
+        return {
+            props: {
+
+            }
+        }
+    }
+    else {
+        return {
+            redirect: {
+                basePath: false,
+                destination: "/authentication/login",
+                permanent: false
+            }
+        }
+    }
+}
 // export const getInitialProps = async (context: any) => {
 //     const session = getSession(context);
 //     return {

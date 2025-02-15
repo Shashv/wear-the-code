@@ -1,0 +1,10 @@
+.darkaccount {
+    background-color: #000;
+    transition: all 1s;
+    padding:10px;
+}
+.lightaccount {
+    background-color: #fff;
+    transition: all 1s;
+    padding:10px;
+}

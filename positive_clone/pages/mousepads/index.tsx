@@ -36,7 +36,7 @@ const MousePads: NextPage<{
     const theme = useSelector((state: IState) => state.toggletheme);
     const [progress, setProgress] = useState<number>(0);
     useEffect(() => {
-        // console.log("Object schema", mousePadsSchema);
+        console.log("Object schema", mousePadsSchema);
         Object.keys(mousePadsSchema).length > 0 &&
             toast.success("Mousepads", {
                 theme: "dark",
@@ -70,7 +70,7 @@ const MousePads: NextPage<{
                                         {
                                             Object.keys(mousePadsSchema || {}).length > 0 ?
                                                 Object.keys(mousePadsSchema).map((mousepad: string, index: number) => <Grid key={index} item xs={5.7} sm={5.8} md={2.7}>
-                                                    <Link href={"/"}>
+                                                    <Link href={`/product/${mousePadsSchema[mousepad].slug}`}>
                                                         <ProductCard title={mousePadsSchema[mousepad].title} colors={mousePadsSchema[mousepad].colors} sizes={mousePadsSchema[mousepad].sizes} desc={mousePadsSchema[mousepad].desc} img={mousePadsSchema[mousepad].img} category={mousePadsSchema[mousepad].category} />
                                                     </Link>
                                                 </Grid>)

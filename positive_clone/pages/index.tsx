@@ -21,7 +21,7 @@ import authorizeOptions from "./api/auth/[...nextauth]";
 import Aos from 'aos';
 import "aos/dist/aos.css"
 import { toast } from "react-toastify";
-import SlickSlides from "@/components/slickSlides";
+// import SlickSlides from "@/components/slickSlides";
 import { ICustomSession } from "@/modals";
 interface IParas {
     props: {
@@ -30,6 +30,7 @@ interface IParas {
 }
 export default function Home(props: { name: string, scrollTop: number, direction: string, session?: Session } | any) {
     const rouerDetail = useRouter();
+    const sessionStatus = useSession();
     // scroll events//
     // let scrollDIrection: string = "";
     // let [scrollDirection, setScrollDirection] = useState<string>("");
@@ -38,7 +39,7 @@ export default function Home(props: { name: string, scrollTop: number, direction
     let theme = useSelector((state: IState) => state.toggletheme);
     useEffect(() => {
         Aos.init({ once: false });
-        if (localStorage.getItem("toastShown")) {
+        if (localStorage.getItem("toastShown") || sessionStatus.status === "unauthenticated") {
             // console.log(localStorage.getItem("toastShown"))
         }
         else {
@@ -97,9 +98,12 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     }
     else {
         return {
-            redirect: {
-                permanent: false,
-                destination: "/authentication/login"
+            // redirect: {
+            //     permanent: false,
+            //     destination: "/authentication/login"
+            // }
+            props: {
+
             }
         }
     }

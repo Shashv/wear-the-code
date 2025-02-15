@@ -1,5 +1,5 @@
 import mongoose, { Model, models, mongo } from "mongoose";
-
+// uncomment the  below link to use connection string connection with mongodb without using the callback...//
 // mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 const OrderSchema = new mongoose.Schema({
     userId: { type: String, required: true },

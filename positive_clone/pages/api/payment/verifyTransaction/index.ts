@@ -6,7 +6,7 @@ const handlerpayment = async (req: NextApiRequest, res: NextApiResponse) => {
         const body = JSON.parse(req.body);
         return res.status(200).send("Payment send")
     }
-    else {
+    else if (req.method === "GET") {
         return res.status(200).send("Payment processes");
     }
 

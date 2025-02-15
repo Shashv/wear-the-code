@@ -100,21 +100,26 @@ const Login: NextPage = () => {
         let response = await signIn("credentials", { ...data, redirect: false });
         // console.log("Response finded user", response);
         if (response) {
-            setLoader(false);
+
             if (response.error) {
                 if (response.status === 401) {
+                    setLoader(false);
                     toast.info("Please provide correct credentials", {
                         autoClose: 2000,
                         theme: "colored"
                     })
                 }
-                else
+                else {
+                    setLoader(false);
                     toast.error("Oops something went wrong", {
                         autoClose: 2000,
                         theme: "colored"
                     })
+                }
+
             }
             else {
+                setLoader(false);
                 toast.success("Loggined Successfully");
                 router.replace("/");
             }
@@ -208,7 +213,7 @@ const Login: NextPage = () => {
     });
     return (
         <>
-            {loader ? <Backdrop open sx={{ backgroundColor: "lightgreen" }}><LoaderAnimate /></Backdrop> :
+            {loader ? <Backdrop open ><LoaderAnimate /></Backdrop> :
                 <section className={"bg-pink-400"}>
                     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                         <p className="flex items-center text-3xl font-semibold text-pink-700">

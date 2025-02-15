@@ -9,7 +9,7 @@ import LoadingBar from "react-top-loading-bar";
 import OrdersModel from "@/modalsmongoose/orders";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "../api/auth/[...nextauth]";
-import { GetServerSidePropsContext } from "next";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 const Orders: React.FC = (props: unknown) => {
 
     const cartstate = useSelector((state: IState) => {
@@ -24,7 +24,7 @@ const Orders: React.FC = (props: unknown) => {
             setOrderList(Object.keys(cartstate)) : setOrderList(Object.keys(buyedProducts));
         let id: number = Math.random();
         setOrderId(id);
-        fetch("/api/getProducts", {
+        fetch("/api/orders", {
             method: "GET"
         }).then(response => response.json()).then(response => {
             console.log(response);
@@ -108,13 +108,23 @@ const Orders: React.FC = (props: unknown) => {
 }
 export default Orders;
 // baba ji this function will always run on the server side..//
-export const getServerSideProps: (context: GetServerSidePropsContext) => Promise<any> = async positive => {
+export const getServerSideProps: GetServerSideProps | ((context: GetServerSidePropsContext) => Promise<any>) = async positive => {
     const session = await getServerSession(positive.req, positive.res, authorizeOptions);
     let orders = await OrdersModel.find({});
-    // console.log("Orders Model", orders);
-    return {
-        props: {
-            pageName: "Orders Page"
+    if (session)
+        return {
+            props: {
+                pageName: "Orders Page",
+                orders
+            }
+        }
+    else {
+        return {
+            redirect: {
+                basePath: false,
+                destination: "/authentication/login",
+                permanent: false
+            }
         }
     }
 }

@@ -38,7 +38,7 @@ const FilterBar: React.FC<{ theme: ITheme }> = ({ theme }) => {
                     </div>))}
                 </div>
                 <div className="">
-                    <button className="bg-pink-600  rounded-pill text-light text-1xl p-2 px-3">
+                    <button className="bg-pink-500 rounded-pill text-light text-1xl p-2 px-3 hover:bg-pink-600">
                         Apply Filters
                     </button>
                 </div>

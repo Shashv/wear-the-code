@@ -104,12 +104,12 @@ class Mugs extends React.Component<any, { name: string; age: number; loader: fal
     componentWillUpdate(nextProps: Readonly<{}>, nextState: Readonly<{}>): void {
 
     }
-}
+} 
 
 
 
 export default (partialConnector(Mugs));
-// withRouter
+// withRouter//
 //below will run on the server side for fetching data on the client side...//
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const session = await getServerSession(context.req, context.res, authorizeOptions);

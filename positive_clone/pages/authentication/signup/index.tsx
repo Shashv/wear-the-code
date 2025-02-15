@@ -1,12 +1,12 @@
 import React from "react";
-import { Container, Row, Col, Form } from "reactstrap";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Typography";
+// import { Container, Row, Col, Form } from "reactstrap";
+// import Typography from "@mui/material/Typography";
+// import Box from "@mui/material/Typography";
 // import countryList from "../../countries/countries.json";
 import { ToastContainer, toast } from "react-toastify";
 import { Backdrop, CircularProgress } from "@mui/material";
-import { FaFacebook } from "react-icons/fa";
-import { IoMdArrowDropdown } from "react-icons/io";
+// import { FaFacebook } from "react-icons/fa";
+// import { IoMdArrowDropdown } from "react-icons/io";
 import './index.css';
 // import Loader from "../../../components/loader";
 import 'react-toastify/dist/ReactToastify.css';
@@ -796,7 +796,7 @@ const Signup: NextPage = () => {
                                         </div>
                                         <button type="submit" className="w-full text-white bg-pink-400 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Create an account</button>
                                         <p className="text-sm font-light text-pink-500 dark:text-pink-400">
-                                            Already have an account? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
+                                            Already have an account? <a href="/authentication/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
                                         </p>
                                     </form>
                                 </div>

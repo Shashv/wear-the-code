@@ -26,7 +26,7 @@ export default OrdersList;
 export const getServversideprops: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const sessionStatus = await getServerSession(context.req, context.res, authorizeOptions) as ICustomSession | null;
     const ordersList = await OrdersModel.find({});
-    console.log("order list", ordersList);
+    // console.log("order list", ordersList);
     if (sessionStatus)
         return {
             props: {

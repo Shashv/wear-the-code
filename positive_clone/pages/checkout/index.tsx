@@ -22,6 +22,7 @@ const Checkout: React.FC = () => {
     let dispatch = useDispatch();
     const theme = useSelector((state: IState) => state.toggletheme);
     let details = (data: FieldValues | IRegisterOptions) => {
+        console.log("Issubmitsuccesfully", isSubmitSuccessful);
         toast.success("Thanks for submitting the details", {
             theme: theme.light ? "light" : "dark",
             autoClose: 2000

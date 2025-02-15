@@ -18,9 +18,14 @@ const resetPassword = async (request: NextApiRequest, response: NextApiResponse)
         from: "shashvatgupta19@gmail.com",
         to: "shashvatgupta19@gmail.com",
         subject: "Custom Subject for the testing of the email",
-        text: "This is the testing email for the reset password",
+        // text: "This is the testing email for the reset password",
+        html:`<div>
+           <p>Click on the below link to reset your password!</p>
+           <a href={'http://localhost:3000/authentication/resetPassword'}>Reset Password</a>
+        </div>`
     }
     let email = await emailSender.sendMail(customMailOptions);
+    console.log("serverside on email",email);
     response.status(200);
     response.json({ message: "Email sent successfully" });
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Drawer, List, ListItem, ListItemText, ListItemIcon, Box } from "@mui/material";
 import { IDrawer } from "@/modals";
 import { FaMinus, FaPlus } from "react-icons/fa";
@@ -9,9 +9,9 @@ import { Col } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { IDispatch, IState } from "@/redux/sore";
 import { useState } from "react";
-import addProduct from "@/redux/actions/addProduct";
+// import addProduct from "@/redux/actions/addProduct";
 import { IoBagCheckOutline } from "react-icons/io5";
-import { ICartProduct } from "../../modals/index";
+// import { ICartProduct } from "../../modals/index";
 import clearCart from "@/redux/actions/clearCart";
 import Link from "next/link";
 import style from "./index.module.css";
@@ -23,6 +23,8 @@ import clearBuyproducts from "@/redux/actions/clearBuyProducts";
 // import useToast from "@/hooks/useToast";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
+import { loadStripe } from "@stripe/stripe-js";
+let sessionId: any = ""
 const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawer, reduxAdd, reduxSubtract, reviewCart }) => {
     const dispatch: IDispatch = useDispatch();
     let state = useSelector((state: IState) => state.productManage);
@@ -72,6 +74,18 @@ const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawe
     // }
     let productList: string[] = Object.keys(state);
     let amount: number = 0;
+    useEffect(() => {
+        fetch("/api/payment/initTransaction", {
+            method: "POST",
+        }).then(response => response.json()).then(serverId => {
+            sessionId = serverId;
+        })
+    });
+    const payNow = async (e: React.MouseEvent) => {
+        // console.log("SessionId", sessionId);
+        let stripeLoadedResponse = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY || "");
+        stripeLoadedResponse?.redirectToCheckout({ sessionId: sessionId?.sessionId || "" })
+    };
     productList.forEach(key => amount = amount + state[key].quantity * state[key].price);
     let totalAmount: number = 0;
     Object.keys(buyProduct).forEach(product => {
@@ -306,13 +320,14 @@ const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawe
                                 <span className="">
                                     <IoBagCheckOutline color="#fff" size={27} />
                                 </span>
-                                <span className="fs-5">
+                                <span className="fs-5" >
                                     Pay
                                 </span>
                                 <span className="fs-5">
                                     ₹ {Object.keys(buyProduct).length > 0 ? totalAmount : amount}
                                 </span>
                             </Link>
+                            <button onClick={payNow} className="pay-real-payment text-light rouned-2 bg-pink-500 hover:bg-pink-600 active:border-2 active:border-slate-800 active:bg-pink-800 text-slate-800">Payment</button>
                         </div>
                     </>
             }

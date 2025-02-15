@@ -12,10 +12,13 @@ type IBabaji = {
 const Pagination: React.FC<IBabaji> = ({ page, changePage, pageList }) => {
     // const searchParams = useSearchParams();
     const theme = useSelector((state: IState) => state.toggletheme);
+    const searchParams = useSearchParams();
     const staticPages = [1, 2, 3, 4, 5];
     return (
         <div className={`pagination ${theme.light ? paginationstyle.lightpagination : paginationstyle.darkpagination}`}>
-            {staticPages.map(page => <button className={`page-item ${style.page}`} key={page} onClick={e => changePage(e, page)}>{page}</button>)}
+            {pageList ? pageList.map(page => <button className={`page-item ${style.page}`} key={page} onClick={e => changePage(e, page)}>{page}</button>) :
+                staticPages.map(page => <button className={`page-item ${style.page}`} key={page} onClick={e => changePage(e, page)}>{page}</button>)
+            }
         </div>
     )
 }

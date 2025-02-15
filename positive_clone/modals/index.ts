@@ -5,13 +5,14 @@ import { Session } from "next-auth";
 export type IModal = {
     open: boolean;
     content?: JSX.Element | React.FC | any;
-    width?: number | string;
-    height?: number | string;
+    width?: number | string | null;
+    height?: number | string | null;
     title?: string;
     purpose?: string;
     confirmProcess: any;
     closeModal: () => void;
     loader?: boolean;
+    showIcon?:boolean
 }
 export type INavSelected = {
     hoodies: {
@@ -128,7 +129,7 @@ export interface ITheme {
 }
 export interface ITableData<DataType> {
     tablehead: Array<DataType>;
-    tablebody: Array<unknown>;
+    tablebody: Array<DataType>;
     theme?: {
         light: boolean;
         dark: boolean

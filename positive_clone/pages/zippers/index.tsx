@@ -160,9 +160,9 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
             }
         }
     else return {
-        props: {
+        // props: {
 
-        },
+        // },
         redirect: {
             basePath: false,
             destination: "/authentication/login",

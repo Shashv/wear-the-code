@@ -162,9 +162,19 @@ export default withRouter(connect(mapStateToProps)(Shirts));
 export const getServerSidepProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const sessionServer = await getServerSession(context.req, context.res, authorizeOptions);
     // console.log("positive", sessionServer);
-    return {
-        props: {
-            sessionServer
+    if (sessionServer)
+        return {
+            props: {
+                sessionServer
+            }
+        }
+    else {
+        return {
+            redirect: {
+                basePath: false,
+                destination: "/authentication/login",
+                permanent: false
+            }
         }
     }
 }

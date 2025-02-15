@@ -181,15 +181,15 @@ const StyledBar: React.FC<{ scrollTop?: number }> = ({ scrollTop }) => {
                                             }
                                         </>
                                     }
-
-                                    <Tooltip title={"View Cart"}>
+                                    {session.status === "authenticated" && <Tooltip title={"View Cart"}>
                                         <span className={style.logout} ref={referenceElement}>
                                             <span className="badge position-absolute bg-pink-500" style={{ top: "-7.25px", right: "-7.25px", borderRadius: "50%" }}>
                                                 {Object.keys(buyProducts).length > 0 ? Object.keys(buyProducts).length : Object.keys(cartState).length}
                                             </span>
                                             <FiShoppingCart color="#ec4899" size={31} cursor={"pointer"} />
                                         </span>
-                                    </Tooltip>
+                                    </Tooltip>}
+
                                     <Tooltip title={theme.light ? "Convert to Night Mode" : "Convert to Dark Mode"}>
                                         <span className={style.themeexpanded}>
                                             {theme.light ? <LuMoonStar color="#ec4899" size={27} onClick={() => {

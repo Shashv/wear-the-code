@@ -1,5 +1,6 @@
 import mongoose, { Document, Model, Schema } from "mongoose";
 import { ISchema } from "@/modals";
+//uncomment the below link to use mongo// without call backk...//
 // mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
 const userSchema = new Schema<ISchema>({
     username: { type: String, required: true },

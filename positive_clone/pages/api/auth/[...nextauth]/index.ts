@@ -31,6 +31,7 @@ const authOptions: NextAuthOptions = {
     ],
     session: {
         strategy: "jwt",
+        //update maxage for token using the normal value or by passing the value in string..
         maxAge: 25
     },
     callbacks: {

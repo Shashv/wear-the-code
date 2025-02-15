@@ -21,6 +21,7 @@ import { getServerSession } from "next-auth";
 import authorizeOptions from "../api/auth/[...nextauth]";
 import LoadingBar from "react-top-loading-bar";
 import { toast } from "react-toastify";
+import Pagination from "@/components/pagination";
 const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers: Array<any> }) => {
     let [toastCustom, setToast] = useState<boolean>(false);
     const [loader, setLoader] = useState<boolean>(false);
@@ -49,10 +50,10 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
             })
         }
     }, []);
-    const onClose: (e: React.MouseEvent<any>, timeOutID: any) => void = (e, id) => {
-        clearTimeout(id);
-        setToast(false);
-    }
+    // const onClose: (e: React.MouseEvent<any>, timeOutID: any) => void = (e, id) => {
+    //     clearTimeout(id);
+    //     setToast(false);
+    // }
     return (
         <>
             <Head>
@@ -94,6 +95,7 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
                                 </div>
                             </div>
                         </section>
+                        <Pagination page={1} pageList={[1, 2, 3, 4, 5]} changePage={() => console.log("Page change")} />
                     </div>
                 </>
                 :

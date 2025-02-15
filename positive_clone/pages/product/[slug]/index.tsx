@@ -25,6 +25,7 @@ import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 import { toast } from "react-toastify";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "@/pages/api/auth/[...nextauth]";
+import { useSession } from "next-auth/react";
 type IProductType = {
     alone_back: string;
     alone_front: string;
@@ -91,6 +92,7 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
         let parsedshirt = await shirt.json();
         return parsedshirt;
     }
+    const session = useSession();
     //client side api calls
     useEffect(() => {
         setLoader(true);
@@ -103,8 +105,8 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
         });
     }, []);
     useEffect(() => {
-
-    })
+        session.status === "unauthenticated" ? routerDetail.replace("/authentication/login") : null
+    },[session])
     useEffect(() => {
         slug = routerDetail?.query?.slug || "";
         if (serviceRef.current) {
@@ -124,6 +126,7 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
         });
         return () => serviceRef.current?.removeEventListener("click", (e: MouseEvent) => setService(true))
     });
+
     //end//
     const closeModal = () => {
         setService(false);
@@ -211,15 +214,15 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
             ...customtoast, open: false
         });
     };
-    const setOpen8: () => void = () => {
-        setCustomToast({ ...customtoast, open: false });
-    }
+    // const setOpen8: () => void = () => {
+    //     setCustomToast({ ...customtoast, open: false });
+    // }
     const refreshVariants = (newColor: string, newSize: string) => {
         router.getDetails().replace(productVariant[newColor][newSize]["slug"]);
     }
-    const selectProduct: (e: React.MouseEvent<HTMLOptionElement>) => void = e => {
+    // const selectProduct: (e: React.MouseEvent<HTMLOptionElement>) => void = e => {
 
-    }
+    // }
     const ModalContent: JSX.Element = <div className="d-flex flex-column w-100">
         <input className={!pin.servicePending ? "bg-light rounded-4 p-4 rounded-2" : "rounded-4 p-4 rounded-2 backdrop-blur-2xl bg-light"} style={{ border: "2px solid pink", outline: "2px solid pink" }} defaultValue={pin.pin} type="text" placeholder="Enter six digit Service Locality Code" onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             magicFunction(e);
@@ -323,11 +326,11 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
 }
 export default ProductClient;
 let pins: string = "";
-const fetchPins: (pinValue: string) => Promise<string> = async value => {
-    let pinsJson = await fetch("/api/pincode", { method: "POST", body: JSON.stringify(value) });
-    let pins = await pinsJson.json();
-    return pins;
-}
+// const fetchPins: (pinValue: string) => Promise<string> = async value => {
+//     let pinsJson = await fetch("/api/pincode", { method: "POST", body: JSON.stringify(value) });
+//     let pins = await pinsJson.json();
+//     return pins;
+// }
 
 //server side logic//
 export const getServerSideProps: GetServerSideProps<{
@@ -340,7 +343,7 @@ export const getServerSideProps: GetServerSideProps<{
         }
     }, product: Array<any>
 }> = async context => {
-    const pins = await fetchPins("147201");
+    // const pins = await fetchPins("147201");
     const sessionData = await getServerSession(context.req, context.res, authorizeOptions);
     let responseproduct = await ProductModel.find({ slug: context.query.slug }).lean();
     const availableshirts: any[] = await ProductModel.find({ title: responseproduct[0].title, category: responseproduct[0].category }).lean();
@@ -368,7 +371,7 @@ export const getServerSideProps: GetServerSideProps<{
                 productVariant: colorslug,
                 product: modifiedResponse,
                 type: responseproduct[0].slug,
-                pins: pins
+                // pins: pins
             }
         }
     else {
