@@ -79,7 +79,9 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
         message: ""
     });
     let productsBought = useSelector((state: IState) => state.buyNow);
+    //custom toast//
     // let toastOptions = useToast();
+    //custom toast//
     let [pin, setPin] = useState<{ pinError: boolean | any; pin: any; servicePending: boolean }>({ pinError: "", pin: null, servicePending: false });
 
     let slug: string | string[] | any = "";
@@ -181,6 +183,7 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
     const addToCart: () => void = () => {
         let findedKey: string = Object.keys(state).find(key => key === routerDetail.query.slug) || "";
         if (findedKey) {
+            //using the custom toast function...//
             // setCustomToast({
             //     ...customtoast, open: true, variant: "info", origin: {
             //         vertical: "top",
@@ -191,21 +194,24 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
                 theme: theme.light ? "light" : "dark",
                 autoClose: 2000
             })
+            // ....//
         }
         else {
+
             // console.log("selectedproduct", selectedProduct.slug)
             dispatch(addProduct({ name: selectedProduct?.title || "", product: selectedProduct.slug, size: selectedProduct?.size || "", variant: selectedProduct?.color || "", price: selectedProduct?.price || 0, quantity: 1 }));
             toast.success("Item added to cart", {
                 theme: theme.light ? "light" : "dark",
                 autoClose: 2000
             })
+            ///using the custom toast functions///
             // setCustomToast({
             //     ...customtoast, open: true, variant: "success", origin: {
             //         vertical: "top",
             //         horizontal: "end"
             //     }, message: "Item added to the cart!"
             // });
-
+            // .... //
         }
     }
     const babaJi: (e: React.MouseEvent, timeout: ReturnType<typeof setTimeout>) => void = (e, timeout) => {
@@ -214,15 +220,19 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
             ...customtoast, open: false
         });
     };
+    //using custom toast.///
     // const setOpen8: () => void = () => {
     //     setCustomToast({ ...customtoast, open: false });
     // }
+    // ... //
     const refreshVariants = (newColor: string, newSize: string) => {
         router.getDetails().replace(productVariant[newColor][newSize]["slug"]);
     }
+    //function check//
     // const selectProduct: (e: React.MouseEvent<HTMLOptionElement>) => void = e => {
 
     // }
+    // 
     const ModalContent: JSX.Element = <div className="d-flex flex-column w-100">
         <input className={!pin.servicePending ? "bg-light rounded-4 p-4 rounded-2" : "rounded-4 p-4 rounded-2 backdrop-blur-2xl bg-light"} style={{ border: "2px solid pink", outline: "2px solid pink" }} defaultValue={pin.pin} type="text" placeholder="Enter six digit Service Locality Code" onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             magicFunction(e);
@@ -326,6 +336,7 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
 }
 export default ProductClient;
 let pins: string = "";
+//fetch pins api callling ...//
 // const fetchPins: (pinValue: string) => Promise<string> = async value => {
 //     let pinsJson = await fetch("/api/pincode", { method: "POST", body: JSON.stringify(value) });
 //     let pins = await pinsJson.json();
@@ -343,6 +354,7 @@ export const getServerSideProps: GetServerSideProps<{
         }
     }, product: Array<any>
 }> = async context => {
+    //positive//
     // const pins = await fetchPins("147201");
     const sessionData = await getServerSession(context.req, context.res, authorizeOptions);
     let responseproduct = await ProductModel.find({ slug: context.query.slug }).lean();

@@ -1,6 +1,5 @@
 import React from "react";
 import Login from "./Login"
-
 //     }
 //     handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>): void {
 //         let expresion = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -548,6 +547,7 @@ const LoginF: React.FC = () => {
 export default LoginF;
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
   const isPositive = await getServerSession(context.req, context.res, authorizeOptions);
+  // console.log("Is posiitve",isPositive)
   if (isPositive) {
     return {
       redirect: {

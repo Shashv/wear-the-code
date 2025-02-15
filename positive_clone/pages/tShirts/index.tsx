@@ -62,6 +62,7 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
     getData(): void {
         // custom loader//
         // this.setState({ loader: true, data: {} });
+        // custom loader//
         fetch("/api/getProducts").then(response => response.json()).then(result => {
             this.setState({
                 data: result.productlist,
@@ -161,10 +162,22 @@ export default withRouter(connect(mapStateToProps)(Shirts));
 // function called when using the server side tokens..//
 export const getServerSidepProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const sessionServer = await getServerSession(context.req, context.res, authorizeOptions);
+    //check server session...///
     // console.log("positive", sessionServer);
-    return {
-        props: {
-            sessionServer
+    if (sessionServer) {
+        return {
+            props: {
+                sessionServer
+            }
+        }
+    }
+    else {
+        return {
+            redirect: {
+                basePath: false,
+                destination: "/authentication/login",
+                permanent: false
+            }
         }
     }
 }

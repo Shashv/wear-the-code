@@ -30,8 +30,10 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
     const hideToast: (e: React.MouseEvent) => void = (e) => {
         setToast(false);
     }
+    //scroll positive..///
     // const onScroll: (e: any) => void = (e) => {
     // }
+    ///....//
     const session = useSession();
     const [positive, setPositive] = useState<number>(40);
 
@@ -50,10 +52,12 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
             })
         }
     }, []);
+    // onclose function///
     // const onClose: (e: React.MouseEvent<any>, timeOutID: any) => void = (e, id) => {
     //     clearTimeout(id);
     //     setToast(false);
     // }
+    // ..... ///
     return (
         <>
             <Head>
@@ -110,6 +114,7 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
 export default StickersPage;
 export const getServerSideProps: GetServerSideProps<{ stickers?: Array<unknown | any>, error?: string }> = async (context: GetServerSidePropsContext) => {
     const sessionServer = await getServerSession(context.req, context.res, authorizeOptions);
+    //server consoles session check ..//
     // console.log("Sessionstickers", sessionServer);
     let responseStickers: any = await ProductModel.find({ category: "stickers" }).lean();
     let filteredResponse = responseStickers.map((sticker: any) => {

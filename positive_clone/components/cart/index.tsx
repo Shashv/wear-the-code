@@ -23,7 +23,7 @@ import clearBuyproducts from "@/redux/actions/clearBuyProducts";
 // import useToast from "@/hooks/useToast";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import { loadStripe } from "@stripe/stripe-js";
+// import { loadStripe } from "@stripe/stripe-js";
 let sessionId: any = ""
 const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawer, reduxAdd, reduxSubtract, reviewCart }) => {
     const dispatch: IDispatch = useDispatch();
@@ -68,6 +68,7 @@ const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawe
         closeDrawer(e);
         router.push("/checkout");
     }
+    //positive blesses//
     // let babaji: (e: React.MouseEvent, timeOut: ReturnType<typeof setTimeout>) => void = (e, tme) => {
     //     // setToastC(false);
     //     console.log("Baba ji calling function")
@@ -83,8 +84,8 @@ const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawe
     });
     const payNow = async (e: React.MouseEvent) => {
         // console.log("SessionId", sessionId);
-        let stripeLoadedResponse = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY || "");
-        stripeLoadedResponse?.redirectToCheckout({ sessionId: sessionId?.sessionId || "" })
+        // let stripeLoadedResponse = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY || "");
+        // stripeLoadedResponse?.redirectToCheckout({ sessionId: sessionId?.sessionId || "" })
     };
     productList.forEach(key => amount = amount + state[key].quantity * state[key].price);
     let totalAmount: number = 0;

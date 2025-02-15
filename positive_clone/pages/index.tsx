@@ -43,12 +43,12 @@ export default function Home(props: { name: string, scrollTop: number, direction
             // console.log(localStorage.getItem("toastShown"))
         }
         else {
-            localStorage.setItem("toastShown", "positive");
-            toast.success(`Welcome to Codeswear ${props.name}`, {
-                theme: theme.light ? "light" : "dark",
-                draggable: false,
-                autoClose: 2500,
-            });
+            // localStorage.setItem("toastShown", "positive");
+            // toast.success(`Welcome to Codeswear ${props.name}`, {
+            //     theme: theme.light ? "light" : "dark",
+            //     draggable: false,
+            //     autoClose: 2500,
+            // });
         }
     }, []);
     return (
@@ -86,23 +86,23 @@ export default function Home(props: { name: string, scrollTop: number, direction
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const session = await getServerSession(context.req, context.res, authorizeOptions) as ICustomSession;
-    // console.log("session positive", session);
-    if (session) {
+    console.log("session positive", session);
+    // if (session) {
         return {
             props: {
                 // session: session,
-                name: session.user.name,
-                email: session.user.email
+                // name: session.user.name,
+                // email: session.user.email
             }
         }
-    }
-    else {
-        return {
-            redirect: {
-                permanent: false,
-                destination: "/authentication/login"
-            }
-        }
-    }
+    // }
+    // else {
+    //     return {
+    //         redirect: {
+    //             permanent: false,
+    //             destination: "/authentication/login"
+    //         }
+    //     }
+    // }
 }
 

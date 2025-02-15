@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectAPProuterdb from "@/configuration/appConnectiondb";
 import UserModel from "@/modalsmongoose/user";
+//with out auto connection..//
 // export const PUT = async (req: NextRequest) => {
 
 // }

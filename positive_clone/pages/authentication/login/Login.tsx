@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent } from "react";
+import React, { BaseSyntheticEvent, useEffect } from "react";
 import { Container, Row, Col, Form } from "reactstrap";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Typography";
@@ -91,9 +91,11 @@ const Login: NextPage = () => {
     });
     const router = useRouter();
     const session = useSession();
-    // if (session.status === "authenticated") {
-    //     router.replace("/")
-    // }
+    useEffect(() => {
+        if (session.status === "authenticated") {
+            router.replace("/")
+        }
+    })
     const details = async (data: FieldValues) => {
         setLoader(true);
         //without using the next-auth//
@@ -108,24 +110,29 @@ const Login: NextPage = () => {
                         theme: "colored"
                     })
                 }
-                // else {
-                //     setLoader(false);
-                //     toast.error("Oops something went wrong", {
-                // else if (response.error.includes("ECONNREFUSED"))
-                //     toast.error("Oops please connection failed ,please try again", {
-                //         autoClose: 2000,
-                //         theme: "colored"
-                //     })
-                // }
+                else if (!response.error.includes("ECONNREFUSED")) {
+                    setLoader(false);
+                    toast.error("Oops something went wrong", {
+                        autoClose: 2000,
+                        theme: "colored"
+                    })
+                }
+                else if (response.error.includes("ECONNREFUSED")) {
+                    toast.error("Oops please connection failed ,please try again", {
+                        autoClose: 2000,
+                        theme: "colored"
+                    })
+                }
+            }
 
-            }
-            else {
-                setLoader(false);
-                toast.success("Loggined Successfully");
-                router.replace("/");
-            }
+        }
+        else {
+            setLoader(false);
+            toast.success("Loggined Successfully");
+            router.replace("/");
         }
     }
+
     // const details = async (data: FieldValues) => {
     //     let clonedBody: any;
     //     fetch("/api/login", { method: "POST", body: JSON.stringify({ email: data.email, password: data.password, check: data.checkStatus }) }).then(response => {

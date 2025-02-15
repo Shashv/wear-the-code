@@ -57,6 +57,8 @@ const Zippers: NextPage<{
     const session = useSession();
     const router = useRouter();
     const [progress, setProgress] = useState<number>(0);
+    
+    //handle route change function//
     // const handleRouterChnages = () => {
     //     router.events.on("routeChangeStart", e => setProgress(40));
     //     router.events.on("routeChangeComplete", e => setProgress(100));

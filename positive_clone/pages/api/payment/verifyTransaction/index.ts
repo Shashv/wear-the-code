@@ -1,6 +1,6 @@
 import connectDatabase from "@/configuration";
 import { NextApiRequest, NextApiResponse } from "next";
-import Paytmchecksum from "paytmchecksum";
+// import Paytmchecksum from "paytmchecksum";
 const handlerpayment = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "POST") {
         const body = JSON.parse(req.body);
