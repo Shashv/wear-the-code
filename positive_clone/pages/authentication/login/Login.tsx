@@ -102,29 +102,21 @@ const Login: NextPage = () => {
         if (response) {
 
             if (response.error) {
-<<<<<<< HEAD
-                if (response.status === 401) {
-                    setLoader(false);
-=======
                 if (response.status === 401 && response.error.includes("auth")) {
->>>>>>> 7f0fde11282458d147b50c37f64d728b7d0248bc
                     toast.info("Please provide correct credentials", {
                         autoClose: 2000,
                         theme: "colored"
                     })
                 }
-<<<<<<< HEAD
-                else {
-                    setLoader(false);
-                    toast.error("Oops something went wrong", {
-=======
-                else if (response.error.includes("ECONNREFUSED"))
-                    toast.error("Oops please connection failed ,please try again", {
->>>>>>> 7f0fde11282458d147b50c37f64d728b7d0248bc
-                        autoClose: 2000,
-                        theme: "colored"
-                    })
-                }
+                // else {
+                //     setLoader(false);
+                //     toast.error("Oops something went wrong", {
+                // else if (response.error.includes("ECONNREFUSED"))
+                //     toast.error("Oops please connection failed ,please try again", {
+                //         autoClose: 2000,
+                //         theme: "colored"
+                //     })
+                // }
 
             }
             else {

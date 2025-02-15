@@ -7,16 +7,7 @@ import { toast } from "react-toastify";
 import LoaderAnimate from "@/components/loader";
 import { useSearchParams } from "next/navigation";
 const ResetPassword: NextPage = () => {
-<<<<<<< HEAD
-    const { control, handleSubmit, formState: { errors } } = useForm<{
-        password: string;
-        confirm_password: string;
-    }>({
-        criteriaMode: "all"
-    });
-=======
     const { control, handleSubmit } = useForm();
->>>>>>> 7f0fde11282458d147b50c37f64d728b7d0248bc
     const [loader, setLoader] = useState<boolean>(false);
     const [passwordVisibility, setPasswordVisibility] = useState({
         password: false,
@@ -24,11 +15,7 @@ const ResetPassword: NextPage = () => {
     });
     const passwordFields = [{
         name: "reset_password",
-<<<<<<< HEAD
-        positive: "Enter password",
-=======
         positive: "Enter password"
->>>>>>> 7f0fde11282458d147b50c37f64d728b7d0248bc
     }, {
         name: "confirm_reset_password",
         positive: "Enter confirm password"
@@ -37,11 +24,7 @@ const ResetPassword: NextPage = () => {
     const submitForm = async (data: FieldValues) => {
         setLoader((loaderState) => !loaderState);
         // let reset_password = data.reset_password;
-<<<<<<< HEAD
-
-=======
         
->>>>>>> 7f0fde11282458d147b50c37f64d728b7d0248bc
         let response = await fetch("/api/updatePassword", {
             method: "POST",
             body: JSON.stringify({ email: params?.get("email") || "", password: data.password, confirmPassword: data.confirmPassword })
@@ -81,13 +64,7 @@ const ResetPassword: NextPage = () => {
                                     {passwordFields.map((fieldType: any, index) => <Controller key={index} name={fieldType.name} control={control} render={(props) => {
                                         const { field } = props;
                                         const { onChange, onBlur, name, ref } = field;
-<<<<<<< HEAD
-                                        return <div className="position-relative w-100 justify-center flex"><TextField className="w-75 focus:outline-pink-500 active:bg-slate-400" value={field.value} placeholder={fieldType.positive} type={"text"} onChange={onChange} onBlur={onBlur} name={name} ref={ref} />
-
-                                        </div>
-=======
                                         return <TextField className="w-75 focus:outline-pink-500 active:bg-slate-400" value={field.value} placeholder={fieldType.positive} type={"text"} onChange={onChange} onBlur={onBlur} name={name} ref={ref} />
->>>>>>> 7f0fde11282458d147b50c37f64d728b7d0248bc
                                     }} />)}
 
                                 </div>
