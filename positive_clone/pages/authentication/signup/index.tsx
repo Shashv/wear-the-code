@@ -10,10 +10,13 @@ import { Backdrop, CircularProgress } from "@mui/material";
 import './index.css';
 // import Loader from "../../../components/loader";
 import 'react-toastify/dist/ReactToastify.css';
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FieldValues, useForm } from "react-hook-form";
 import LoaderAnimate from "../../../components/loader";
+import { useRouter } from "next/router";
+import { getServerSession } from "next-auth";
+import authorizeOptions from "@/pages/api/auth/[...nextauth]";
 interface ISignup {
     name: string;
     email: string;
@@ -645,6 +648,7 @@ const Signup: NextPage = () => {
         },
         criteriaMode: "all"
     });
+    const router = useRouter();
     const [loader, setLoader] = React.useState<boolean>(false);
     const [password, setPassword] = React.useState<{
         generalpassword: {
@@ -668,13 +672,22 @@ const Signup: NextPage = () => {
                 body: JSON.stringify(data)
             }).then(res => res.json()).then(res => {
                 setLoader(false);
-                toast.success("Yay,account created successfully", {
-                    position: "top-right",
-                    autoClose: 4000,
-                    draggable: false,
-                })
+                if (res.message === "User created successfully") {
+                    toast.success("Yay,account created successfully", {
+                        position: "top-right",
+                        autoClose: 4000,
+                        draggable: false,
+                    })
+                }
+                else if (res.message === "User already exists") {
+                    toast.info("User already exists", {
+                        autoClose: 2000,
+                        theme: "colored"
+                    })
+                }
             });
             reset();
+            router.replace("/")
         }
     }
     return (
@@ -812,3 +825,24 @@ const Signup: NextPage = () => {
 
 }
 export default Signup;
+// running on serverside session...//
+export const getServerSideProps: GetServerSideProps = async context => {
+    const serverSession = await getServerSession(context.req, context.res, authorizeOptions);
+    if (serverSession) {
+        return {
+            redirect: {
+                basePath: false,
+                destination: "/",
+                permanent: false
+            }
+        }
+    }
+    else {
+        return {
+            props: {
+
+            }
+        }
+    }
+}
+// ....///

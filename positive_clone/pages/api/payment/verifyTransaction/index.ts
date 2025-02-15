@@ -11,5 +11,5 @@ const handlerpayment = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
 }
-// export default handlerpayment;
-export default connectDatabase(handlerpayment);
+export default handlerpayment;
+// export default connectDatabase(handlerpayment);

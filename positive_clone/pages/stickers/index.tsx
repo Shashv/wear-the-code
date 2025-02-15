@@ -30,8 +30,8 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
     const hideToast: (e: React.MouseEvent) => void = (e) => {
         setToast(false);
     }
-    const onScroll: (e: any) => void = (e) => {
-    }
+    // const onScroll: (e: any) => void = (e) => {
+    // }
     const session = useSession();
     const [positive, setPositive] = useState<number>(40);
 

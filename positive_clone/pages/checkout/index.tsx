@@ -159,6 +159,7 @@ const Checkout: React.FC = () => {
     )
 }
 export default Checkout;
+// server side running function..//
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const getServersidesession = await getServerSession(context.req, context.res, authorizeOptions);
     if (getServersidesession) {
@@ -178,3 +179,4 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         }
     }
 }
+// ...//

@@ -54,7 +54,11 @@ const CommonTable: React.FC<ITableData<any>> = ({ tablehead, tablebody, theme })
     const themePositive = useSelector((state: IState) => state.toggletheme);
     return (
         <>
+<<<<<<< HEAD
             <Table className={`bg-light ${themePositive?.dark ? 'bg-dark' : 'bg-light'}`}>
+=======
+            <Table className={`bg-light ${theme?.dark ? 'bg-dark' : 'bg-light'}`}>
+>>>>>>> 7f0fde11282458d147b50c37f64d728b7d0248bc
                 <TableHead sx={{ backgroundColor: "lightblue" }}>
                     <TableRow>
                         {tablehead.map((headcell, index) => <TableCell className="text-uppercase text-danger" key={`${headcell}-${index + 1}`}>

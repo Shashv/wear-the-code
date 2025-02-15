@@ -137,7 +137,7 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
         )
     }
     async componentDidMount(): Promise<void> {
-        // const contextValue: any = this.context;
+        const contextValue: any = this.context;
         const session = await getSession();
         if (session?.user) {
             this.getData();
@@ -162,19 +162,9 @@ export default withRouter(connect(mapStateToProps)(Shirts));
 export const getServerSidepProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const sessionServer = await getServerSession(context.req, context.res, authorizeOptions);
     // console.log("positive", sessionServer);
-    if (sessionServer)
-        return {
-            props: {
-                sessionServer
-            }
-        }
-    else {
-        return {
-            redirect: {
-                basePath: false,
-                destination: "/authentication/login",
-                permanent: false
-            }
+    return {
+        props: {
+            sessionServer
         }
     }
 }

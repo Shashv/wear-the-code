@@ -17,7 +17,7 @@ import { IShirts } from "@/pages/api/getProducts";
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import ColorLabel from "@/components/colorLabels";
 import buyProduct from "@/redux/actions/buyproduct";
-// import LoaderAnimate from "@/components/loader";
+import LoaderAnimate from "@/components/loader";
 // import useToast from "@/hooks/useToast";
 import clearCart from "@/redux/actions/clearCart";
 import ProductModel from "@/modalsmongoose/product";
@@ -105,8 +105,8 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
         });
     }, []);
     useEffect(() => {
-        session.status === "unauthenticated" ? routerDetail.replace("/authentication/login") : null
-    },[session])
+
+    })
     useEffect(() => {
         slug = routerDetail?.query?.slug || "";
         if (serviceRef.current) {

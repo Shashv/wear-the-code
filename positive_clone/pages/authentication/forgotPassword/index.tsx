@@ -27,7 +27,10 @@ const ForgotPassword: React.FC = () => {
         e.preventDefault();
         if (!forgotPassword.error && !forgotPassword.syntaxError && forgotPassword.value !== "") {
             setForgotPassword({ ...forgotPassword, loader: true });
-            fetch("/api/resetPassword").then(response => response.json()).then(resp => {
+            fetch("/api/resetPasswordemail", {
+                method: "POST",
+                body: JSON.stringify(forgotPassword.value)
+            }).then(response => response.json()).then(resp => {
                 toast.info(resp.message, {
                     position: "top-right",
                     theme: "colored",
@@ -66,7 +69,7 @@ const ForgotPassword: React.FC = () => {
                     <Typography className="" color={"pink"} variant="h3">
                         Please wait for a while we are sending the email
                     </Typography>
-                    <CircularProgress color={"error"} size={100} />
+                    <CircularProgress color={"info"} size={100} />
                 </Backdrop> :
                     <>
                         <Head>
