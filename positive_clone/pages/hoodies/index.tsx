@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import style from "./index.module.css";
 import { useEffect } from "react";
 import { Backdrop, Typography } from "@mui/material";
-import { useMemo, useCallback } from "react";
+// import { useMemo, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { IState } from "@/redux/sore";
 import { Grid } from "@mui/material";

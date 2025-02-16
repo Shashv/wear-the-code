@@ -39,4 +39,4 @@ const resetPassword = async (request: NextApiRequest, response: NextApiResponse)
     }
 }
 // export default resetPassword;
-export default connectDatabase(resetPassword)
+export default connectDatabase(resetPassword);

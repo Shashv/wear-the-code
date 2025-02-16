@@ -140,6 +140,7 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
     async componentDidMount(): Promise<void> {
         const contextValue: any = this.context;
         const session = await getSession();
+        console.log("tshitst", session);
         if (session?.user) {
             this.getData();
             this.setState({ progress: 100 })
@@ -149,6 +150,7 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
         }
     }
     componentDidUpdate(previousprops: Readonly<IShirtProps>, previousstate: Readonly<IShirtState>): void {
+
     }
 }
 let combinedstate = store.getState();

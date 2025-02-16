@@ -1,11 +1,13 @@
 import { TextField, Backdrop, Typography } from "@mui/material";
-import { NextPage } from "next";
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useForm, Controller, FieldValues } from "react-hook-form";
 import { toast } from "react-toastify";
 import LoaderAnimate from "@/components/loader";
 import { useSearchParams } from "next/navigation";
+import { getServerSession } from "next-auth";
+import authorizeOptions from "@/pages/api/auth/[...nextauth]";
 const ResetPassword: NextPage = () => {
     const { control, handleSubmit } = useForm();
     const [loader, setLoader] = useState<boolean>(false);
@@ -19,7 +21,7 @@ const ResetPassword: NextPage = () => {
     }, {
         name: "confirm_reset_password",
         positive: "Enter confirm password"
-    }]
+    }];
     const params = useSearchParams();
     const submitForm = async (data: FieldValues) => {
         setLoader((loaderState) => !loaderState);
@@ -42,7 +44,6 @@ const ResetPassword: NextPage = () => {
         <>
             {loader ? <Backdrop open><LoaderAnimate /></Backdrop> :
                 <Container fluid className="bg-sky-500 h-[100vh]">
-
                     <Row className="flex justify-center align-center h-[80%]">
                         <Col xs={12} className="text-header flex justify-center align-center">
                             <Typography className="text-light my-auto" variant="h4">
@@ -65,7 +66,6 @@ const ResetPassword: NextPage = () => {
                                         const { onChange, onBlur, name, ref } = field;
                                         return <TextField className="w-75 focus:outline-pink-500 active:bg-slate-400" value={field.value} placeholder={fieldType.positive} type={"text"} onChange={onChange} onBlur={onBlur} name={name} ref={ref} />
                                     }} />)}
-
                                 </div>
                                 <div className="form-submit flex justify-center">
                                     <button className="bg-sky-500 text-light focus:outline-sky-500 hover:bg-sky-600 active:bg-pink-400 p-2 rounded-2" type="submit">
@@ -81,3 +81,8 @@ const ResetPassword: NextPage = () => {
     )
 }
 export default ResetPassword;
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+    const positive = await getServerSession(context.req, context.res, authorizeOptions);
+    if (positive) return { props: {} }
+    else return { redirect: { basePath: false, destination: "/authentication/login", permanent: false } }
+}

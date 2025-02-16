@@ -1,8 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import mysql from "mysql2/promise";
+// import mysql from "mysql2/promise";
 import bycryptjs from "bcryptjs";
-import jwtmodule from "jsonwebtoken";
+// import jwtmodule from "jsonwebtoken";
 import UserModel from "@/modalsmongoose/user";
+import connectDatabase from "@/configuration";
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     try {
         let parsedPositive = JSON.parse(request.body);
@@ -13,7 +14,8 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         let newUser = new UserModel({
             username: parsedPositive.name,
             password: await generateHashedPassword(parsedPositive.password),
-            email: parsedPositive.email
+            email: parsedPositive.email,
+            image:""
         });
         await newUser.save();
         //use myslq to use below....//
@@ -39,4 +41,5 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         return response.status(500).send("Oops something went wrong");
     }
 }
-export default handler;
+// export default handler;
+export default connectDatabase(handler);

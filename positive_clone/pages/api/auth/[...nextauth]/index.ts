@@ -16,16 +16,25 @@ const authOptions: NextAuthOptions = {
                 password: { type: "password", placeholder: "Enter password" }
             },
             async authorize(credentials, req) {
-                await mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-                let findedUser = await UserModel.findOne({ email: credentials?.email });
-                const babaji = await positive.compare(credentials?.password || "", findedUser?.password || "");
-                if (findedUser && babaji)
+                try {
+                    await mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+                    let findedUser = await UserModel.findOne({ email: credentials?.email });
+                    const babaji = await positive.compare(credentials?.password || "", findedUser?.password || "");
+                    if (findedUser && babaji)
+                        return {
+                            id: findedUser["id"],
+                            name: findedUser["username"],
+                            email: findedUser["email"],
+                        }
+                    else return null;
+                }
+                catch (er) {
                     return {
-                        id: findedUser["id"],
-                        name: findedUser["username"],
-                        email: findedUser["email"]
+                        id: "error",
+                        name: "error",
+                        email: "emailerror"
                     }
-                else return null;
+                }
             },
         }),
     ],

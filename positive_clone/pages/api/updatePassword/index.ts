@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import connectDatabase from "@/configuration";
 import UserModel from "@/modalsmongoose/user";
 import bycryptjs from "bcryptjs";
+// update password..///
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         console.log('Babaji');

@@ -5,7 +5,8 @@ import { ISchema } from "@/modals";
 const userSchema = new Schema<ISchema>({
     username: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    image: { type: String, required: true }
 });
 let UserModel: Model<ISchema>;
 if (mongoose.models && mongoose.models.User) {

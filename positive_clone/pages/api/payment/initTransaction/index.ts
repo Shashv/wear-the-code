@@ -6,5 +6,6 @@ const InitTransaction = async (req: NextApiRequest, res: NextApiResponse) => {
     // const response = await PaytmChecksum.verifySignature("");
     res.send("Response from api");
 }
+//handler function...//
 // export default InitTransaction;
 export default connectDatabase(InitTransaction);

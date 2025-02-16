@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Button, FormGroup, Typography } from "@mui/material";
-import styles from "./index.module.css";
+// import styles from "./index.module.css";
 import { Form, Label } from "reactstrap";
 import { IRegisterOptions } from '../../modals/index';
 import { FieldValues, useForm, Controller } from "react-hook-form";
@@ -16,9 +16,12 @@ import { useSelector } from "react-redux";
 import { IState } from "@/redux/sore";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { getServerSession } from "next-auth";
+import { useRouter } from "next/router";
 import authorizeOptions from "../api/auth/[...nextauth]";
+import { useSession } from "next-auth/react";
 const Checkout: React.FC = () => {
     let { register, handleSubmit, formState: { errors, isSubmitSuccessful }, reset, setError, clearErrors, control } = useForm<IRegisterOptions>();
+    var session = useSession();
     let dispatch = useDispatch();
     const theme = useSelector((state: IState) => state.toggletheme);
     let details = (data: FieldValues | IRegisterOptions) => {
@@ -28,9 +31,15 @@ const Checkout: React.FC = () => {
             autoClose: 2000
         })
     }
+    const routerDetails = useRouter();
+    useEffect(() => {
+        if(session.status === "unauthenticated") {
+            routerDetails.replace("/authentication/login")
+        }
+    },[session])
     return (
         <>
-            <Box component={"div"} className={theme.light ? `bg-light ${style.background}` : `bg-dark ${style.background}`} sx={{
+        <Box component={"div"} className={theme.light ? `bg-light ${style.background}` : `bg-dark ${style.background}`} sx={{
                 padding: {
                     md: "100px"
                 },

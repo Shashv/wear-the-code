@@ -111,6 +111,7 @@ export default Orders;
 export const getServerSideProps: GetServerSideProps | ((context: GetServerSidePropsContext) => Promise<any>) = async positive => {
     const session = await getServerSession(positive.req, positive.res, authorizeOptions);
     let orders = await OrdersModel.find({});
+    console.log("Orders list", orders);
     if (session)
         return {
             props: {

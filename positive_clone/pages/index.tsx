@@ -13,7 +13,7 @@ import ThemeSection from "@/sections/themes";
 import TagSection from "@/sections/tagssection";
 import BestSelling from "@/sections/bestsale";
 import { useEffect } from "react";
-// import { useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
 // import { headers } from "next/headers";
 import { Session } from "next-auth";
@@ -30,7 +30,7 @@ interface IParas {
 }
 export default function Home(props: { name: string, scrollTop: number, direction: string, session?: Session } | any) {
     const rouerDetail = useRouter();
-    // const sessionStatus = useSession();
+    const sessionStatus = useSession();
     // scroll events//
     // let scrollDIrection: string = "";
     // let [scrollDirection, setScrollDirection] = useState<string>("");
@@ -38,17 +38,19 @@ export default function Home(props: { name: string, scrollTop: number, direction
     // ....//
     let theme = useSelector((state: IState) => state.toggletheme);
     useEffect(() => {
+        let user = sessionStatus.data?.user;
+        localStorage.setItem("user", JSON.stringify(user))
         Aos.init({ once: false });
-        if (localStorage.getItem("toastShown") ) {
-            // console.log(localStorage.getItem("toastShown"))
+        if (localStorage.getItem("toastShown")) {
+            // console.log(localStorage.getItem("toastShown" ))
         }
         else {
-            // localStorage.setItem("toastShown", "positive");
-            // toast.success(`Welcome to Codeswear ${props.name}`, {
-            //     theme: theme.light ? "light" : "dark",
-            //     draggable: false,
-            //     autoClose: 2500,
-            // });
+            localStorage.setItem("toastShown", "positive");
+            toast.success(`Welcome to Codeswear ${props.name}`, {
+                theme: theme.light ? "light" : "dark",
+                draggable: false,
+                autoClose: 2500,
+            });
         }
     }, []);
     return (
@@ -86,23 +88,23 @@ export default function Home(props: { name: string, scrollTop: number, direction
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const session = await getServerSession(context.req, context.res, authorizeOptions) as ICustomSession;
-    console.log("session positive", session);
-    // if (session) {
+    // console.log("session positive", session);
+    if (session) {
         return {
             props: {
                 // session: session,
-                // name: session.user.name,
-                // email: session.user.email
+                name: session.user.name,
+                email: session.user.email
             }
         }
-    // }
-    // else {
-    //     return {
-    //         redirect: {
-    //             permanent: false,
-    //             destination: "/authentication/login"
-    //         }
-    //     }
-    // }
+    }
+    else {
+        return {
+            redirect: {
+                permanent: false,
+                destination: "/authentication/login",
+            }
+        }
+    }
 }
 

@@ -69,21 +69,29 @@ const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawe
         router.push("/checkout");
     }
     //positive blesses//
-    // let babaji: (e: React.MouseEvent, timeOut: ReturnType<typeof setTimeout>) => void = (e, tme) => {
-    //     // setToastC(false);
-    //     console.log("Baba ji calling function")
-    // }
+    let babaji: (buyProduct: { [key: string]: {} }, e?: React.MouseEvent, timeOut?: ReturnType<typeof setTimeout>) => Promise<void> = async (e, tme) => {
+        // setToastC(false);
+        // console.log("Baba ji calling function");
+        let ordersValue = await fetch("/api/orders", {
+            method: "POST",
+            body: JSON.stringify(buyProduct)
+        });
+        let order = await ordersValue.json();
+        sessionId = order;
+        return sessionId;
+    }
     let productList: string[] = Object.keys(state);
     let amount: number = 0;
-    useEffect(() => {
-        fetch("/api/payment/initTransaction", {
-            method: "POST",
-        }).then(response => response.json()).then(serverId => {
-            sessionId = serverId;
-        })
-    });
+    // useEffect(() => {
+    //     fetch("/api/payment/initTransaction", {
+    //         method: "POST",
+    //     }).then(response => response.json()).then(serverId => {
+    //         sessionId = serverId;
+    //     })
+    // });
     const payNow = async (e: React.MouseEvent) => {
-        // console.log("SessionId", sessionId);
+        await babaji(buyProduct);
+        // console.log("sessionId", sessionId);
         // let stripeLoadedResponse = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY || "");
         // stripeLoadedResponse?.redirectToCheckout({ sessionId: sessionId?.sessionId || "" })
     };
@@ -317,7 +325,7 @@ const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawe
                             </div>
                         </div>
                         <div className="checkout-container mb-2 w-1/6">
-                            <Link href={{ pathname: "/orders" }} className="bg-pink-400 w-100 rounded-2 text-light d-flex align-items-center justify-center gap-2 p-2 mb-1">
+                            <button className="bg-pink-400 w-100 rounded-2 text-light d-flex align-items-center justify-center gap-2 p-2 mb-1" onClick={payNow}>
                                 <span className="">
                                     <IoBagCheckOutline color="#fff" size={27} />
                                 </span>
@@ -327,8 +335,8 @@ const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawe
                                 <span className="fs-5">
                                     ₹ {Object.keys(buyProduct).length > 0 ? totalAmount : amount}
                                 </span>
-                            </Link>
-                            <button onClick={payNow} className="pay-real-payment text-light rouned-2 bg-pink-500 hover:bg-pink-600 active:border-2 active:border-slate-800 active:bg-pink-800 text-slate-800">Payment</button>
+                            </button>
+                            {/* <button onClick={payNow} className="pay-real-payment text-light rouned-2 bg-pink-500 hover:bg-pink-600 active:border-2 active:border-slate-800 active:bg-pink-800 text-slate-800">Payment</button> */}
                         </div>
                     </>
             }

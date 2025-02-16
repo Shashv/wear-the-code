@@ -155,6 +155,7 @@ export interface ISchema extends Document {
     email: string;
     password: string;
     username?: string;
+    image?:string;
 }
 export interface ICustomSession extends Session {
     user: {

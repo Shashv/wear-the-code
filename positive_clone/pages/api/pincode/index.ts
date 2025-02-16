@@ -8,5 +8,6 @@ const handler = async (req: NextApiRequest, response: NextApiResponse) => {
         return response.json({ message: "Service Available", status: 200, findedPin });
     else return response.json({ message: "Service Unavailable", status: 404, findedPin });
 }
-export default handler;
-// export default connectDatabase(handler);
+// connection with the database;
+// export default handler;
+export default connectDatabase(handler);

@@ -146,7 +146,8 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
             fetch("/api/orders", {
                 method: "POST",
                 body: JSON.stringify({ name: selectedProduct?.title || "", product: selectedProduct.slug, quantity: selectedProduct?.availableQuantity || 1, price: selectedProduct?.price, variant: selectedProduct?.color || "", size: selectedProduct?.size || "" })
-            }).then(response => response.json()).then(response => {
+            }).then(response => response.json()).then(positive => {
+                console.log("Positive", positive);
                 toast.success("Product added to cart for delivery", {
                     theme: theme.light ? "light" : "dark",
                     autoClose: 2000
@@ -214,12 +215,12 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
             // .... //
         }
     }
-    const babaJi: (e: React.MouseEvent, timeout: ReturnType<typeof setTimeout>) => void = (e, timeout) => {
-        clearTimeout(timeout);
-        setCustomToast({
-            ...customtoast, open: false
-        });
-    };
+    // const babaJi: (e: React.MouseEvent, timeout: ReturnType<typeof setTimeout>) => void = (e, timeout) => {
+    //     clearTimeout(timeout);
+    //     setCustomToast({
+    //         ...customtoast, open: false
+    //     });
+    // };
     //using custom toast.///
     // const setOpen8: () => void = () => {
     //     setCustomToast({ ...customtoast, open: false });

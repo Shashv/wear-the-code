@@ -57,7 +57,10 @@ const Zippers: NextPage<{
     const session = useSession();
     const router = useRouter();
     const [progress, setProgress] = useState<number>(0);
-    
+
+    useEffect(() => {
+        if (session.status === "unauthenticated") router.replace("/authentication/login")
+    }, [session])
     //handle route change function//
     // const handleRouterChnages = () => {
     //     router.events.on("routeChangeStart", e => setProgress(40));
