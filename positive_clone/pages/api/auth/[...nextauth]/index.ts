@@ -40,12 +40,13 @@ const authOptions: NextAuthOptions = {
     ],
     session: {
         strategy: "jwt",
-        maxAge: 25
+        maxAge: 60 * 60
     },
     callbacks: {
         jwt: async (props) => {
-            let { token, user } = props;
-            if (user) {
+            let { token, account, user } = props;
+            if (account) {
+                token.accessToken = account.access_token;
                 token.id = user.id;
                 token.email = user.email;
             }
@@ -53,7 +54,7 @@ const authOptions: NextAuthOptions = {
         },
         session: async params => {
             let { session, token } = params;
-            session.user = token;
+            session.user.id = token.sub || "";
             return session;
         }
     },

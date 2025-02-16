@@ -80,7 +80,6 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
                                 {!path.includes("/auth") && <Footer />}
                                 <ToastContainer />
                             </LoadingBarContainer>
-
                         </AosInitialize>
                     </SessionProvider>
                 </Provider>

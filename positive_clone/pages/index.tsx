@@ -38,11 +38,11 @@ export default function Home(props: { name: string, scrollTop: number, direction
     // ....//
     let theme = useSelector((state: IState) => state.toggletheme);
     useEffect(() => {
-        let user = sessionStatus.data?.user;
-        localStorage.setItem("user", JSON.stringify(user))
+        // console.log("Session status", sessionStatus.data?.user.id);
+        localStorage.setItem("user_id", sessionStatus.data?.user.id || "")
         Aos.init({ once: false });
         if (localStorage.getItem("toastShown")) {
-            // console.log(localStorage.getItem("toastShown" ))
+            console.log(localStorage.getItem("toastShown"))
         }
         else {
             localStorage.setItem("toastShown", "positive");
@@ -57,6 +57,7 @@ export default function Home(props: { name: string, scrollTop: number, direction
         <>
             {/* component based slick slides */}
             {/* <SlickSlides /> */}
+            {/* ... */}
             <div className={theme.light ? "wrapper bg-white" : "wrapper bg-dark"}>
                 {/* ...slick slided with custom css */}
                 <div className={style.customcontainer}>
@@ -100,10 +101,11 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     }
     else {
         return {
-            redirect: {
-                permanent: false,
-                destination: "/authentication/login",
-            }
+            props:{}
+            // redirect: {
+            //     permanent: false,
+            //     destination: "/authentication/login"
+            // }
         }
     }
 }

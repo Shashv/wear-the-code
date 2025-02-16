@@ -10,6 +10,7 @@ import OrdersModel from "@/modalsmongoose/orders";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "../api/auth/[...nextauth]";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import orders from "@/modalsmongoose/orders";
 const Orders: React.FC = (props: unknown) => {
 
     const cartstate = useSelector((state: IState) => {
@@ -27,7 +28,7 @@ const Orders: React.FC = (props: unknown) => {
         fetch("/api/orders", {
             method: "GET"
         }).then(response => response.json()).then(response => {
-            console.log(response);
+            console.log("Orders", response);
         }).catch(er => console.log(er));
     }, []);
     return (
@@ -110,13 +111,13 @@ export default Orders;
 // baba ji this function will always run on the server side..//
 export const getServerSideProps: GetServerSideProps | ((context: GetServerSidePropsContext) => Promise<any>) = async positive => {
     const session = await getServerSession(positive.req, positive.res, authorizeOptions);
-    let orders = await OrdersModel.find({});
+    // let orders = await OrdersModel.find({});
     console.log("Orders list", orders);
     if (session)
         return {
             props: {
                 pageName: "Orders Page",
-                orders
+                // orders
             }
         }
     else {

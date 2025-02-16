@@ -1,7 +1,14 @@
 import mongoose, { Model, models, mongo } from "mongoose";
+interface IUser extends Document {
+    userId: string;
+    products: Array<{ id: string; quantity: number }>;
+    address: string;
+    totalAmount: number;
+    orderStatus: string;
+}
 // uncomment the  below link to use connection string connection with mongodb without using the callback...//
 // mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-const OrderSchema = new mongoose.Schema({
+const OrderSchema = new mongoose.Schema<IUser>({
     userId: { type: String, required: true },
     products: [{
         id: { type: String, required: true },
@@ -11,7 +18,7 @@ const OrderSchema = new mongoose.Schema({
     totalAmount: { type: Number, required: true },
     orderStatus: { type: String, default: "pending", required: true }
 }, { timestamps: true });
-let OrdersModel: Model<any>;
+let OrdersModel: Model<IUser>;
 if (mongoose.models && mongoose.models.Orders) {
     OrdersModel = mongoose.models.Orders;
 }

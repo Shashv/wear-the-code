@@ -17,7 +17,7 @@ import { IShirts } from "@/pages/api/getProducts";
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import ColorLabel from "@/components/colorLabels";
 import buyProduct from "@/redux/actions/buyproduct";
-import LoaderAnimate from "@/components/loader";
+// import LoaderAnimate from "@/components/loader";
 // import useToast from "@/hooks/useToast";
 import clearCart from "@/redux/actions/clearCart";
 import ProductModel from "@/modalsmongoose/product";

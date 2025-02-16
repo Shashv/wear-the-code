@@ -74,7 +74,7 @@ const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawe
         // console.log("Baba ji calling function");
         let ordersValue = await fetch("/api/orders", {
             method: "POST",
-            body: JSON.stringify(buyProduct)
+            body: JSON.stringify({ buyProduct: buyProduct, userId: localStorage.getItem("user_id") })
         });
         let order = await ordersValue.json();
         sessionId = order;
@@ -92,6 +92,7 @@ const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawe
     const payNow = async (e: React.MouseEvent) => {
         await babaji(buyProduct);
         // console.log("sessionId", sessionId);
+        if (sessionId) router.replace("/orders");
         // let stripeLoadedResponse = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY || "");
         // stripeLoadedResponse?.redirectToCheckout({ sessionId: sessionId?.sessionId || "" })
     };
