@@ -162,5 +162,5 @@ export interface ICustomSession extends Session {
         name: string;
         email: string;
         image: string | undefined
-    }
+    } | any
 }

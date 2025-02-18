@@ -1,22 +1,22 @@
 import React, { BaseSyntheticEvent, useEffect } from "react";
-import { Container, Row, Col, Form } from "reactstrap";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Typography";
+// import { Container, Row, Col, Form } from "reactstrap";
+// import Typography from "@mui/material/Typography";
+// import Box from "@mui/material/Typography";
 // import countryList from "../../countries/countries.json";
 import { ToastContainer, toast } from "react-toastify";
 import { Backdrop, CircularProgress } from "@mui/material";
-import { FaFacebook } from "react-icons/fa";
-import { IoMdArrowDropdown } from "react-icons/io";
+// import { FaFacebook } from "react-icons/fa";
+// import { IoMdArrowDropdown } from "react-icons/io";
 import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
-import Loader from "@/components/loader";
-import Link from "next/link";
-import { redirect } from "next/navigation";
-import { NextRouter } from "next/router";
-import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
+// import Loader from "@/components/loader";
+// import Link from "next/link";
+// import { redirect } from "next/navigation";
+// import { NextRouter } from "next/router";
+// import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { NextPage } from "next";
-import { useSelector } from "react-redux";
-import { IState } from "@/redux/sore";
+// import { useSelector } from "react-redux";
+// import { IState } from "@/redux/sore";
 import { FieldValues, useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useRouter } from "next/router";
@@ -79,7 +79,7 @@ type ICountryDetails = {
     dial_code: string;
 }
 const Login: NextPage = () => {
-    const theme = useSelector((state: IState) => state.toggletheme);
+    // const theme = useSelector((state: IState) => state.toggletheme);
     const [loader, setLoader] = React.useState<boolean>(false);
     const { register, handleSubmit, formState: { errors }, clearErrors, reset, setError } = useForm<IForm>({
         defaultValues: {
@@ -95,7 +95,8 @@ const Login: NextPage = () => {
         if (session.status === "authenticated") {
             router.replace("/")
         }
-    })
+    },[session]);
+    // using the inbuilt next auth//
     const details = async (data: FieldValues) => {
         setLoader(true);
         //without using the next-auth//
@@ -132,7 +133,8 @@ const Login: NextPage = () => {
             router.replace("/");
         }
     }
-
+    // ....//
+    //using the fetch api for signup///
     // const details = async (data: FieldValues) => {
     //     let clonedBody: any;
     //     fetch("/api/login", { method: "POST", body: JSON.stringify({ email: data.email, password: data.password, check: data.checkStatus }) }).then(response => {
@@ -177,6 +179,7 @@ const Login: NextPage = () => {
     //         })
     //     });
     // }
+    // ....//
     const [password, setPassword] = React.useState<boolean>(false);
     const registerEmail = register("email", {
         required: true, onChange(event) {

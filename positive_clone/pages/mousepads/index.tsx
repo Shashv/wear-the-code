@@ -36,7 +36,9 @@ const MousePads: NextPage<{
     const theme = useSelector((state: IState) => state.toggletheme);
     const [progress, setProgress] = useState<number>(0);
     useEffect(() => {
+        // ....//
         // console.log("Object schema", mousePadsSchema);
+        // ....///
         Object.keys(mousePadsSchema).length > 0 &&
             toast.success("Mousepads", {
                 theme: "dark",

@@ -140,7 +140,7 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
     async componentDidMount(): Promise<void> {
         const contextValue: any = this.context;
         const session = await getSession();
-        console.log("tshitst", session);
+        // console.log("tshitst", session);
         if (session?.user) {
             this.getData();
             this.setState({ progress: 100 })

@@ -102,7 +102,7 @@ class Mugs extends React.Component<any, { name: string; age: number; loader: fal
 
     }
     componentWillUpdate(nextProps: Readonly<{}>, nextState: Readonly<{}>): void {
-
+      
     }
 }
 

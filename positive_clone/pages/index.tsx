@@ -101,7 +101,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     }
     else {
         return {
-            props:{}
+            props: {}
             // redirect: {
             //     permanent: false,
             //     destination: "/authentication/login"

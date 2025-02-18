@@ -33,13 +33,13 @@ const Checkout: React.FC = () => {
     }
     const routerDetails = useRouter();
     useEffect(() => {
-        if(session.status === "unauthenticated") {
+        if (session.status === "unauthenticated") {
             routerDetails.replace("/authentication/login")
         }
-    },[session])
+    }, [session])
     return (
         <>
-        <Box component={"div"} className={theme.light ? `bg-light ${style.background}` : `bg-dark ${style.background}`} sx={{
+            <Box component={"div"} className={theme.light ? `bg-light ${style.background}` : `bg-dark ${style.background}`} sx={{
                 padding: {
                     md: "100px"
                 },

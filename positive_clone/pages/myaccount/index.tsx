@@ -36,7 +36,7 @@ const EditForm: React.FC<{ manageAccount: (operationType: string, body: any) => 
     const details = async (data: FieldValues) => {
         // console.log("Data after submitting the form", data);
         const response = await manageAccount("PUT", data);
-        console.log("Response final after submitting the data", response);
+        // console.log("Response final after submitting the data", response);
     }
     return (
         <form onSubmit={handleSubmit(details)} className="">

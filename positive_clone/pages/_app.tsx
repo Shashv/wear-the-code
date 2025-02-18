@@ -90,7 +90,7 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
 export default Layout;
 export const getServerSideProps: GetServerSideProps = async context => {
     const serverSession = await getServerSession(context.req, context.res, authorizeOptions);
-    console.log("ServerSession", serverSession);
+    // console.log("ServerSession", serverSession);
     if (serverSession) {
         return {
             props: {

@@ -1,24 +1,34 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import OrdersModel from "@/modalsmongoose/orders";
 import connectDatabase from "@/configuration";
+// all the consoles will be required later...//
 const orders = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-        // const { name, product, quantity, price, variant, size } = JSON.parse(req.body);
-        if (req.method === "GET") 
-            return res.status(404).send("Method not allowed");
+        const { user_id } = req.query;
+        if (req.method === "GET") {
+            // console.log("User id",user_id);
+            const orders = await OrdersModel.findOne({ userId: user_id });
+            // console.log("Babaji", orders);
+            return res.status(200).json({ orders })
+        }
+        else if (req.method === "DELETE") {
+            let deleteAllOrders = await OrdersModel.deleteMany({});
+            if (deleteAllOrders) return res.status(200).json({ message: "Deleted all records" });
+        }
+        // return res.status(404).send("Method not allowed");
         else if (req.method === "POST") {
             let parsedBody = JSON.parse(req.body);
             // console.log('body positive', JSON.parse(req.body));
             const createOrder = await OrdersModel.create({
                 userId: parsedBody.userId,
-                products: Object.keys(parsedBody.buyProduct).map(key => {
+                products: Object.keys(parsedBody.buyProduct ? parsedBody.buyProduct : {}).map(key => {
                     return {
-                        id: parsedBody.buyProduct[key].name,
-                        quantity: parsedBody.buyProduct[key].quantity
+                        id: parsedBody.buyProduct[key].slug || "",
+                        quantity: parsedBody.buyProduct[key].quantity || 1
                     }
                 }),
                 address: "Nabha",
-                totalAmount: Object.keys(parsedBody.buyProduct).map(key => parsedBody.buyProduct[key].quantity).reduce((previousValue: number, currentValue: number, index: number) => {
+                totalAmount: Object.keys(parsedBody.buyProduct ? parsedBody.buyProduct : {}).map(key => parsedBody.buyProduct[key].quantity || 1).reduce((previousValue: number, currentValue: number, index: number) => {
                     return previousValue + currentValue;
                 }),
                 orderStatus: "pending"

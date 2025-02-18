@@ -171,7 +171,7 @@ const StyledBar: React.FC<{ scrollTop?: number }> = ({ scrollTop }) => {
                                             </Dropdown.Toggle>
                                             <Dropdown.Menu className="managament-dropdowns dropdown-menu bg-pink-400 rounded-2 text-light">
                                                 <Dropdown.Item className="dropdown-item hover:text-pink-500 hover:bg-pink-200 active:bg-pink-300" onClick={() => router.push("/myaccount")}>My Account</Dropdown.Item>
-                                                <Dropdown.Item className="dropdown-item hover:text-pink-500 hover:bg-pink-200 active:bg-pink-300" onClick={() => router.push("/orders")}>Orders</Dropdown.Item>
+                                                <Dropdown.Item className="dropdown-item hover:text-pink-500 hover:bg-pink-200 active:bg-pink-300" onClick={() => router.push("/orderlist")}>Orders</Dropdown.Item>
                                                 <Dropdown.Item className="dropdown-item hover:text-pink-500 hover:bg-pink-200 active:bg-pink-300" onClick={(e: React.MouseEvent<HTMLElement>) => setState({ ...state, logout: true })}>Logout</Dropdown.Item>
                                             </Dropdown.Menu>
                                         </Dropdown>

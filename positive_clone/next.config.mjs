@@ -5,9 +5,14 @@ const nextConfig = {
             {
                 protocol: "https",
                 hostname: "codeswear.com"
-            }, {
+            },
+            {
                 protocol: "https",
                 hostname: "amazon.com"
+            },
+            {
+                protocol: "https",
+                hostname: "m.media-amazon.com"
             }
         ]
     },

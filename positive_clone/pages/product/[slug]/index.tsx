@@ -107,8 +107,8 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
         });
     }, []);
     useEffect(() => {
-
-    })
+       if(session.status === "unauthenticated") routerDetail.replace("/authentication/login");
+    },[session]);
     useEffect(() => {
         slug = routerDetail?.query?.slug || "";
         if (serviceRef.current) {
@@ -178,9 +178,9 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
             setPin({ ...pin, pin: "", pinError: "", servicePending: false })
         }
     }
-    const reload = (e: React.MouseEvent<HTMLOptionElement>) => {
-        window.location.reload();
-    }
+    // const reload = (e: React.MouseEvent<HTMLOptionElement>) => {
+    //     window.location.reload();
+    // }
     const addToCart: () => void = () => {
         let findedKey: string = Object.keys(state).find(key => key === routerDetail.query.slug) || "";
         if (findedKey) {

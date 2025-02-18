@@ -69,6 +69,7 @@ const Zippers: NextPage<{
     // useEffect(() => {
     //     session.status === "unauthenticated" ? router.push("/authentication/login") : handleRouterChnages
     // }, []);
+    // .....//
     return (
         <>
             <Head>

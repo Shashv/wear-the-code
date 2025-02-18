@@ -44,7 +44,7 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
             setLoader(false);
             router.replace("/authentication/login");
         }
-        
+    
         else {
             setPositive(100);
             toast.success("Stickers", {

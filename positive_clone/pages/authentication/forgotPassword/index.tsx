@@ -9,6 +9,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import Head from "next/head";
 import { } from "react-hook-form";
 import { Backdrop, CircularProgress } from "@mui/material";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { getServerSession } from "next-auth";
+import authorizeOptions from "@/pages/api/auth/[...nextauth]";
 interface IForgotPassword {
     value: string;
     error: boolean;
@@ -139,3 +142,22 @@ const ForgotPassword: React.FC = () => {
     )
 }
 export default ForgotPassword;
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+    let serverSession = await getServerSession(context.req, context.res, authorizeOptions);
+    if (serverSession) {
+        return {
+            redirect: {
+                basePath: false,
+                destination: '/authentication/login',
+                permanent: false
+            }
+        }
+    }
+    else {
+        return {
+            props: {
+
+            }
+        }
+    }
+}
