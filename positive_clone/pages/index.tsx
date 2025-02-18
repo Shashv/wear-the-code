@@ -31,7 +31,7 @@ interface IParas {
 export default function Home(props: { name: string, scrollTop: number, direction: string, session?: Session } | any) {
     const rouerDetail = useRouter();
     const sessionStatus = useSession();
-    // scroll events//
+    // scroll events babaji//
     // let scrollDIrection: string = "";
     // let [scrollDirection, setScrollDirection] = useState<string>("");
     // const session = useSession();
