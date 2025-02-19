@@ -118,6 +118,7 @@ const Zippers: NextPage<{
     )
 }
 export default Zippers;
+// functionm will call on server side...//
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     let fetchedProducts = await ProductModel.find({ category: "zippers" });
     const getServerSideSession = await getServerSession(context.req, context.res, authorizeOptions);
@@ -176,3 +177,4 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         }
     }
 }
+// .....///

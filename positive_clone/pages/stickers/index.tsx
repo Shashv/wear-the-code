@@ -113,6 +113,7 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
     )
 }
 export default StickersPage;
+// function will call on server side...//
 export const getServerSideProps: GetServerSideProps<{ stickers?: Array<unknown | any>, error?: string }> = async (context: GetServerSidePropsContext) => {
     const sessionServer = await getServerSession(context.req, context.res, authorizeOptions);
     //server consoles session check ..//
@@ -146,4 +147,4 @@ export const getServerSideProps: GetServerSideProps<{ stickers?: Array<unknown |
     }
 
 }
-
+// ....//

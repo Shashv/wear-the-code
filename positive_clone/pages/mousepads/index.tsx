@@ -95,6 +95,7 @@ const MousePads: NextPage<{
     )
 }
 export default MousePads;
+//function will call on the server side ...//
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const mousepads = await ProductModel.find({ category: "mousepads" }).lean();
     const session = await getServerSession(context.req, context.res, authorizeOptions);

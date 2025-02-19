@@ -3,9 +3,11 @@
 .orderscontainer {
     font-family: "Matter Regular";
     background-color: #fff;
+    transition: all 0.5s;
 }
 
 .darkorderscontainer {
     font-family: "Matter Regular";
     background-color: #111827;
+    transition: all 0.5s;
 }

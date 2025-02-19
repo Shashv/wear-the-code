@@ -6,7 +6,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         let signedToken: string = "";
         const body = JSON.parse(req.body);
         const response = await UserModel.find({ email: body.email }).lean();
-        return res.status(200).json({ message: "Loginned Successfully", signedToken });
+        if (response)
+            return res.status(200).json({ message: "Loginned Successfully", signedToken });
+        else return res.status(200).json({ message: "Unable to find the user" });
     }
     catch (er) {
         console.log("Error", er);

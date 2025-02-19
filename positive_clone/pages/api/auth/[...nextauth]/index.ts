@@ -3,7 +3,7 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import positive from "bcryptjs";
 import mongoose from "mongoose";
-
+// authorize options////
 const authOptions: NextAuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     providers: [
@@ -65,3 +65,4 @@ const authOptions: NextAuthOptions = {
 }
 const authorizeOptions = NextAuth(authOptions);
 export default authorizeOptions;
+// ... authorize options...//

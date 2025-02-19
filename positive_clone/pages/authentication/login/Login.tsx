@@ -95,7 +95,7 @@ const Login: NextPage = () => {
         if (session.status === "authenticated") {
             router.replace("/")
         }
-    },[session]);
+    }, [session]);
     // using the inbuilt next auth//
     const details = async (data: FieldValues) => {
         setLoader(true);

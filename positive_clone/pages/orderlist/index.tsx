@@ -5,13 +5,14 @@ import authorizeOptions from "../api/auth/[...nextauth]";
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 import { ICustomSession } from "@/modals";
 import OrdersModel from "@/modalsmongoose/orders";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-const OrdersList: NextPage<{ pageName: string, sessionStatus: { name: string; email: string }, ordersList: any[] }> = ({ pageName, sessionStatus, ordersList }) => {
+import { Typography } from "@mui/material";
+const OrdersList: NextPage<{ pageName: string, sessionStatus: { name: string; email: string }, orders: any[] }> = ({ pageName, sessionStatus, orders }) => {
     // const { name, email } = sessionStatus;
     const session = useSession();
     const router = useRouter();
-    // console.log("Orders list", ordersList,"positive",session);
+    console.log("Orders list on the server component function calling", orders);
     React.useEffect(() => {
         if (session.status === "unauthenticated") router.replace("/authentication/login")
     }, [session]);
@@ -20,8 +21,11 @@ const OrdersList: NextPage<{ pageName: string, sessionStatus: { name: string; em
             <div className="container">
                 <div className="row">
                     <div className="col-12">
-                        {session.data?.user.name}
+                        <Typography variant="h4">
+                            {session.data?.user.name}
+                        </Typography>
                         <CommonTable tablebody={[]} tablehead={[]} />
+                        <Typography className="text-pink-600" variant="h4"></Typography>
                         {session.data?.user.email}
                     </div>
                 </div>
@@ -31,16 +35,17 @@ const OrdersList: NextPage<{ pageName: string, sessionStatus: { name: string; em
 }
 export default OrdersList;
 // babaji this function will run on the server side...///
-export const getServversideprops: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const sessionStatus = await getServerSession(context.req, context.res, authorizeOptions) as ICustomSession | null;
-    let ordersList: any[];
-    if (typeof window !== undefined) {
-        ordersList = await OrdersModel.find({ userId: localStorage.getItem("user_id") });
-    }
-    else {
-        ordersList = []
-    }
-    // console.log("order list", ordersList);
+    const userSession = await getSession({ req: context.req });
+    let ordersList = await OrdersModel.findOne({ userId: userSession?.user.id });;
+    // if (typeof window !== undefined) {
+    //    console.log("Window found");
+    // }
+    // else {
+    //     ordersList = []
+    // }
+    console.log("order list", ordersList?.products);
     if (sessionStatus)
         return {
             props: {
@@ -49,7 +54,7 @@ export const getServversideprops: GetServerSideProps = async (context: GetServer
                     name: sessionStatus.user.name,
                     email: sessionStatus.user.email
                 },
-                ordersList
+                products: ordersList?.products
             }
         }
     else return {

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Box, Button, FormGroup, Typography } from "@mui/material";
+import { Box, Button, FormGroup, TextField, Typography } from "@mui/material";
 // import styles from "./index.module.css";
 import { Form, Label } from "reactstrap";
 import { IRegisterOptions } from '../../modals/index';
@@ -25,25 +25,64 @@ const Checkout: React.FC = () => {
     let dispatch = useDispatch();
     const theme = useSelector((state: IState) => state.toggletheme);
     let details = (data: FieldValues | IRegisterOptions) => {
-        console.log("Issubmitsuccesfully", isSubmitSuccessful);
-        toast.success("Thanks for submitting the details", {
-            theme: theme.light ? "light" : "dark",
-            autoClose: 2000
-        })
+        // console.log("Data", data);
+        if (data) {
+            toast.success("Details saved successfully", {
+                theme: theme.light ? "light" : "dark",
+                autoClose: 1000,
+                position: "top-center"
+            });
+        }
+
     }
     const routerDetails = useRouter();
     useEffect(() => {
         if (session.status === "unauthenticated") {
             routerDetails.replace("/authentication/login")
         }
-    }, [session])
+    }, [session]);
+    const formGroups: Array<{ label: string; type: string; placeholder: string; name: any }> = [{
+        label: 'Name',
+        type: "text",
+        placeholder: "Name",
+        name: "user_name"
+    }, {
+        type: "email",
+        label: "Email",
+        placeholder: "Enter email",
+        name: "user_email"
+    }, {
+        type: "text",
+        label: "Address",
+        placeholder: "Enter address",
+        name: "user_address"
+    }, {
+        type: "number",
+        label: "Contact Number",
+        placeholder: "Enter 10 digit contact number",
+        name: "user_contact"
+    }, {
+        type: "text",
+        label: "City",
+        placeholder: "Enter city",
+        name: "user_city"
+    }, {
+        type: "number",
+        label: "State Pin",
+        placeholder: "Enter state pin code",
+        name: "user_state_pin"
+    }, {
+        type: "number",
+        label: "City Pin",
+        placeholder: "Enter city pin",
+        name: "user_city_pin"
+    }]
     return (
         <>
             <Box component={"div"} className={theme.light ? `bg-light ${style.background}` : `bg-dark ${style.background}`} sx={{
                 padding: {
                     md: "100px"
                 },
-
             }}>
                 <div className={`bg-pink-200 p-4 rounded-4 my-2 ${style.gradient}`}>
                     <Typography variant={"h5"} className={style.checkouttext}>
@@ -55,7 +94,8 @@ const Checkout: React.FC = () => {
                         <span className="fw-bold">1. </span>
                         Delievery Details
                     </Typography>
-                    <Row className="mb-1 g-3">
+                    {/* when using the non controller components react hook form */}
+                    {/* <Row className="mb-1 g-3">
                         <Col md={6} className="position-relative">
                             <FormGroup>
                                 <Label>
@@ -85,7 +125,9 @@ const Checkout: React.FC = () => {
                                 <Label>
                                     Address
                                 </Label>
-                                <textarea className={style.registerinput}  {...register("address", { required: true, maxLength: 40 })} />
+                                <textarea className={style.registerinput}  {...register("address", { required: true, maxLength: 40 ,onChange(event) {
+                                    console.log("Event for the change of the textarea",event.target.value)
+                                }})} />
                             </FormGroup>
                             {errors.address && <Typography className="error-text" color={"red"} fontSize={"12px"} position={"absolute"} bottom={"-19px"} left={"25px"}>
                                 Address is required*</Typography>}
@@ -132,10 +174,19 @@ const Checkout: React.FC = () => {
                             {errors.pinCode && <Typography className="error-text" color={"red"} fontSize={"12px"} position={"absolute"} bottom={"-19px"} left={"25px"}>
                                 Pin is required*</Typography>}
                         </Col>
+                    </Row> */}
+                    {/* ..... */}
+                    {/* when using the controller component */}
+                    <Row className="mb-1 g-2">
+                        {formGroups.map((formGroup, index) => {
+                            return <FormGroup key={index}> <Controller control={control} name={formGroup.name} render={(props) => {
+                                const { field } = props;
+                                return <TextField sx={{ backgroundColor: theme.light ? "#000" : "#fff" }} value={field.value} label={formGroup.label} type={formGroup.type} onChange={value => field.onChange(value)} className="custom-input rounded-2" placeholder={formGroup.placeholder} name={formGroup.name} />
+                            }} />
+                            </FormGroup>
+                        })}
                     </Row>
-                    <Row className="mb-1">
-
-                    </Row>
+                    {/* ... */}
                     <Row className="mb-1">
 
                     </Row>

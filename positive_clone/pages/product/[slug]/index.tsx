@@ -107,8 +107,8 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
         });
     }, []);
     useEffect(() => {
-       if(session.status === "unauthenticated") routerDetail.replace("/authentication/login");
-    },[session]);
+        if (session.status === "unauthenticated") routerDetail.replace("/authentication/login");
+    }, [session]);
     useEffect(() => {
         slug = routerDetail?.query?.slug || "";
         if (serviceRef.current) {
@@ -128,7 +128,6 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
         });
         return () => serviceRef.current?.removeEventListener("click", (e: MouseEvent) => setService(true))
     });
-
     //end//
     const closeModal = () => {
         setService(false);
@@ -138,7 +137,8 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
         if (Object.keys(productsBought).includes(selectedProduct?.slug || "")) {
             toast.info("Product already selected", {
                 theme: theme.light ? "light" : "dark",
-                autoClose: 2000
+                autoClose: 2000,
+                position: "top-center"
             })
         }
         else {
@@ -147,10 +147,11 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
                 method: "POST",
                 body: JSON.stringify({ name: selectedProduct?.title || "", product: selectedProduct.slug, quantity: selectedProduct?.availableQuantity || 1, price: selectedProduct?.price, variant: selectedProduct?.color || "", size: selectedProduct?.size || "" })
             }).then(response => response.json()).then(positive => {
-                console.log("Positive", positive);
+                // console.log("Positive", positive);
                 toast.success("Product added to cart for delivery", {
                     theme: theme.light ? "light" : "dark",
-                    autoClose: 2000
+                    autoClose: 2000,
+                    position: "top-center"
                 })
             })
             dispatch(clearCart({}));

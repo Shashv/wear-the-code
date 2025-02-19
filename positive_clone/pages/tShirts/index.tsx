@@ -183,3 +183,4 @@ export const getServerSidepProps: GetServerSideProps = async (context: GetServer
         }
     }
 }
+// function will call on server side...//
