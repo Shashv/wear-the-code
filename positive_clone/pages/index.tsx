@@ -41,7 +41,7 @@ export default function Home(props: { name: string, scrollTop: number, direction
         // console.log("Session status", sessionStatus.data?.user.id);
         localStorage.setItem("user_id", sessionStatus.data?.user.id || "")
         Aos.init({ once: false });
-        if (localStorage.getItem("toastShown")) {
+        if (localStorage.getItem("toastShown") || sessionStatus.status === "unauthenticated") {
             console.log(localStorage.getItem("toastShown"))
         }
         else {

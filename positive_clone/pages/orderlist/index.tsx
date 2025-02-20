@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CommonTable from "@/components/commonlist";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "../api/auth/[...nextauth]";
@@ -7,24 +7,43 @@ import { ICustomSession } from "@/modals";
 import OrdersModel from "@/modalsmongoose/orders";
 import { getSession, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 import { Typography } from "@mui/material";
-const OrdersList: NextPage<{ pageName: string, sessionStatus: { name: string; email: string }, orders: any[] }> = ({ pageName, sessionStatus, orders }) => {
+import { IState } from "@/redux/sore";
+const OrdersList: NextPage<{ pageName: string, sessionStatus: { name: string; email: string }, products: any[] }> = ({ pageName, sessionStatus, products }) => {
     // const { name, email } = sessionStatus;
     const session = useSession();
     const router = useRouter();
-    console.log("Orders list on the server component function calling", orders);
+    var themeState = useSelector((state:IState) => state.toggletheme);
+    // console.log("Orders list on the server component function calling", products);
+    let [tableData, setTabledata] = useState<{ tableHead: Array<any>, tableBody: Array<any> }>({
+        tableHead: [{
+            type: "text",
+            label: "Name",
+            title: "name"
+        }, {
+            type: "text",
+            label: "Quantity",
+            title: "quantity"
+        }],
+        tableBody: []
+    });
     React.useEffect(() => {
         if (session.status === "unauthenticated") router.replace("/authentication/login")
     }, [session]);
+
+    React.useEffect(() => {
+        setTabledata({ ...tableData, tableBody: products });
+    }, [products]);
     return (
         <>
             <div className="container">
                 <div className="row">
-                    <div className="col-12">
+                    <div className="col-12 table-container" style={{backgroundColor:themeState.dark ? "#000":"#fff"}}>
                         <Typography variant="h4">
                             {session.data?.user.name}
                         </Typography>
-                        <CommonTable tablebody={[]} tablehead={[]} />
+                        <CommonTable tablebody={tableData.tableBody ? tableData.tableBody : []} tablehead={tableData.tableHead ? tableData.tableHead : []} />
                         <Typography className="text-pink-600" variant="h4"></Typography>
                         {session.data?.user.email}
                     </div>
@@ -38,15 +57,23 @@ export default OrdersList;
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const sessionStatus = await getServerSession(context.req, context.res, authorizeOptions) as ICustomSession | null;
     const userSession = await getSession({ req: context.req });
-    let ordersList = await OrdersModel.findOne({ userId: userSession?.user.id });;
+    // console.log("user session",userSession?.user.id);
+    let ordersList = await OrdersModel.findOne({ userId: userSession?.user.id || "" });
     // if (typeof window !== undefined) {
     //    console.log("Window found");
     // }
     // else {
     //     ordersList = []
     // }
-    console.log("order list", ordersList?.products);
-    if (sessionStatus)
+    // console.log("order list", ordersList);
+    let products: Array<any> = [];
+    if (ordersList?.products) {
+        products = ordersList?.products;
+    }
+    else {
+        products = [];
+    }
+    if (sessionStatus) {
         return {
             props: {
                 pageName: "OrdersList page",
@@ -54,14 +81,23 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
                     name: sessionStatus.user.name,
                     email: sessionStatus.user.email
                 },
-                products: ordersList?.products
+                products: products.map(product => {
+                    let { _id, id, quantity } = product;
+                    return {
+                        id,
+                        quantity
+                    }
+                })
             }
         }
-    else return {
-        redirect: {
-            basePath: false,
-            destination: "/authentication/login",
-            permanent: false
+    }
+    else {
+        return {
+            redirect: {
+                basePath: false,
+                destination: "/authentication/login",
+                permanent: false
+            }
         }
     }
 }

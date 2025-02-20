@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { IState } from "@/redux/sore";
 import { } from "react-redux";
 import Head from "next/head";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import LoadingBar from "react-top-loading-bar";
 import { Backdrop, CircularProgress } from "@mui/material";
 // import OrdersModel from "@/modalsmongoose/orders";
@@ -14,8 +14,9 @@ import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import orders from "@/modalsmongoose/orders";
 import Image from "next/image";
 import CommonTable from "@/components/commonlist";
+import { toast } from "react-toastify";
 const Orders: React.FC = (props: unknown) => {
-
+    let clientSecret: string = "";
     // const cartstate = useSelector((state: IState) => {
     //     return state.productManage;
     // });
@@ -59,6 +60,33 @@ const Orders: React.FC = (props: unknown) => {
             }
         });
         return formatData;
+    }
+    const finalPayment: (e: React.MouseEvent<HTMLButtonElement>) => Promise<string> = async e => {
+        // console.log("event clicked", e);
+        setLoadOrders(true);
+        let proceedPayment = await fetch("/api/payment/checkoutsession", {
+            method: "POST",
+            body: JSON.stringify({ amount: 10000, currency: "usd" })
+        });
+        let isPaymentProcessed = await proceedPayment.json();
+        // console.log("Payment positive",isPaymentProcessed);
+        if (isPaymentProcessed.success) {
+            setLoadOrders(false);
+            clientSecret = isPaymentProcessed.client_secret;
+            toast.success("Payment successfull", {
+                position: "bottom-center",
+                autoClose: 2000,
+                theme: "colored"
+            });
+            return isPaymentProcessed.message
+        }
+        else {
+            toast.error("Oops unable to process payment", {
+                position: "bottom-center",
+                autoClose: 2000,
+            })
+            return isPaymentProcessed.message
+        }
     }
     useEffect(() => {
         // without api using the redux state cartstate...//
@@ -187,6 +215,11 @@ const Orders: React.FC = (props: unknown) => {
                     </div>
                     <div className="order-tabular-list">
                         <CommonTable tablebody={tableData.tableBody ? tableData.tableBody : []} tablehead={tableData.tableHead ? tableData.tableHead : []} theme={theme} />
+                    </div>
+                    <div className="final-payment">
+                        <Button className="" onClick={finalPayment} variant="contained" color={"primary"}>
+                            Final Payment
+                        </Button>
                     </div>
                 </section>
             </div>
