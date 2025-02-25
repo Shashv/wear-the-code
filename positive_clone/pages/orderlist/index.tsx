@@ -10,11 +10,12 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { Typography } from "@mui/material";
 import { IState } from "@/redux/sore";
+import { Button } from "reactstrap";
 const OrdersList: NextPage<{ pageName: string, sessionStatus: { name: string; email: string }, products: any[] }> = ({ pageName, sessionStatus, products }) => {
     // const { name, email } = sessionStatus;
     const session = useSession();
     const router = useRouter();
-    var themeState = useSelector((state:IState) => state.toggletheme);
+    var themeState = useSelector((state: IState) => state.toggletheme);
     // console.log("Orders list on the server component function calling", products);
     let [tableData, setTabledata] = useState<{ tableHead: Array<any>, tableBody: Array<any> }>({
         tableHead: [{
@@ -35,17 +36,27 @@ const OrdersList: NextPage<{ pageName: string, sessionStatus: { name: string; em
     React.useEffect(() => {
         setTabledata({ ...tableData, tableBody: products });
     }, [products]);
+    const checkSegmentation = (ar: string[], s: string) => {
+        const arrayCharacters = Array.from(s);
+        //    console.log("Array characters",arrayCharacters);
+        arrayCharacters.forEach(letter => {
+            ar.forEach(word => {
+                
+            })
+        })
+    }
     return (
         <>
             <div className="container">
                 <div className="row">
-                    <div className="col-12 table-container" style={{backgroundColor:themeState.dark ? "#000":"#fff"}}>
+                    <div className="col-12 table-container" style={{ backgroundColor: themeState.dark ? "#000" : "#fff" }}>
                         <Typography variant="h4">
                             {session.data?.user.name}
                         </Typography>
                         <CommonTable tablebody={tableData.tableBody ? tableData.tableBody : []} tablehead={tableData.tableHead ? tableData.tableHead : []} />
                         <Typography className="text-pink-600" variant="h4"></Typography>
                         {session.data?.user.email}
+                        <Button color="primary" onClick={e => checkSegmentation(["leet", "code"], "leetcode")}>Check</Button>
                     </div>
                 </div>
             </div>
@@ -101,3 +112,4 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         }
     }
 }
+//server function calling on the  server/...

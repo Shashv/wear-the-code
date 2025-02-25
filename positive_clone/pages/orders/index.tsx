@@ -88,6 +88,16 @@ const Orders: React.FC = (props: unknown) => {
             return isPaymentProcessed.message
         }
     }
+    const babaji = async () => {
+        setLoadOrders(true);
+        let deletedOrders = await fetch("/api/orders", {
+            method: "DELETE"
+        });
+        let areOrdersDeleted = await deletedOrders.json();
+        setLoadOrders(false);
+        if(areOrdersDeleted) toast.info("Orders deleted successfully")
+            else toast.error("Unable to delete the orders , please try again");
+    }
     useEffect(() => {
         // without api using the redux state cartstate...//
         // Object.keys(cartstate).length > 0 ?
@@ -219,6 +229,9 @@ const Orders: React.FC = (props: unknown) => {
                     <div className="final-payment">
                         <Button className="" onClick={finalPayment} variant="contained" color={"primary"}>
                             Final Payment
+                        </Button>
+                        <Button className="delete-orders" onClick={e => babaji()}>
+                            Delete Orders
                         </Button>
                     </div>
                 </section>

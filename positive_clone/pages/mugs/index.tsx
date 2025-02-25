@@ -106,8 +106,6 @@ class Mugs extends React.Component<any, { name: string; age: number; loader: fal
     }
 }
 
-
-
 export default (partialConnector(Mugs));
 // withRouter//
 //below will run on the server side for fetching data on the client side...//
@@ -164,5 +162,4 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         }
     }
 }
-
 // ....//

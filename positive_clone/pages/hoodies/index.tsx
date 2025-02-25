@@ -33,7 +33,7 @@ const Hoodies: NextPage<{
     const [progress, setProgress] = useState<number>(0);
     useEffect(() => {
         if(session.status === "unauthenticated") router.replace("/authentication/login");
-    })
+    });
     useEffect(() => {
         hoodies && setLoader(false);
         setProgress(100);

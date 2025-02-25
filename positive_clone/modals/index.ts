@@ -164,3 +164,7 @@ export interface ICustomSession extends Session {
         image: string | undefined
     } | any
 }
+export type IPagination = {
+    totalRecords:number,
+    recordsPerpage:number
+}

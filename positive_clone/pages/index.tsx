@@ -86,7 +86,7 @@ export default function Home(props: { name: string, scrollTop: number, direction
         </>
     );
 }
-
+// server side function calling...//
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const session = await getServerSession(context.req, context.res, authorizeOptions) as ICustomSession;
     // console.log("session positive", session);
@@ -109,4 +109,5 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         }
     }
 }
+// .....//
 

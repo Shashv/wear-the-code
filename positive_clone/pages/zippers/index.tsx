@@ -16,6 +16,8 @@ import ProductCard from "@/components/productcard";
 import LoadingBar from "react-top-loading-bar";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "../api/auth/[...nextauth]";
+import Pagination from "@/components/pagination";
+import usePositive from "@/hooks/usePositive";
 const Dotted: React.FC = () => {
     return (
         <>
@@ -35,7 +37,7 @@ const Dotted: React.FC = () => {
     )
 }
 const Zippers: NextPage<{
-    zipperSchema: {
+    zippersSchema: {
         [key: string]: {
             title: string;
             id?: number;
@@ -52,23 +54,28 @@ const Zippers: NextPage<{
         }
     }
 }> = (params) => {
-    const { zipperSchema } = params;
+    const { zippersSchema } = params;
     const theme = useSelector((state: IState) => state.toggletheme);
     const session = useSession();
     const router = useRouter();
     const [progress, setProgress] = useState<number>(0);
-
-    useEffect(() => {
-        if (session.status === "unauthenticated") router.replace("/authentication/login")
-    }, [session])
-    //handle route change function//
-    // const handleRouterChnages = () => {
-    //     router.events.on("routeChangeStart", e => setProgress(40));
-    //     router.events.on("routeChangeComplete", e => setProgress(100));
-    // }
+    const { totalPages } = usePositive({ totalRecords: Object.keys(zippersSchema).length, recordsPerpage: 2 });
+    let [page, setPage] = useState<number>(1);
+    const changePage = (e: React.MouseEvent<HTMLButtonElement> | any, page: number) => {
+        // console.log("Change page function", page);
+        setPage(page);
+    }
     // useEffect(() => {
-    //     session.status === "unauthenticated" ? router.push("/authentication/login") : handleRouterChnages
-    // }, []);
+    //     if (session.status === "unauthenticated") router.replace("/authentication/login")
+    // }, [session]);
+    //handle route change function//
+    const handleRouterChnages = () => {
+        router.events.on("routeChangeStart", e => setProgress(40));
+        router.events.on("routeChangeComplete", e => setProgress(100));
+    }
+    useEffect(() => {
+        session.status === "unauthenticated" ? router.push("/authentication/login") : handleRouterChnages
+    }, [session]);
     // .....//
     return (
         <>
@@ -95,10 +102,10 @@ const Zippers: NextPage<{
                                         Welcome to Codeswear.com, your one-stop shop for stylish and unique zippers. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!
                                     </Typography>
                                     <Grid container columnGap={1.4} justifyContent={"center"} rowGap={1.4}>
-                                        {Object.keys(zipperSchema || {}).length > 0 ?
-                                            Object.keys(zipperSchema).map((zipper: string, index: number) => <Grid item xs={5.7} sm={5.9} md={2.7}>
-                                                <Link href={`/product/${zipperSchema[zipper].slug}`}>
-                                                    <ProductCard title="" category="" desc="" slug="" />
+                                        {Object.keys(zippersSchema || {}).length > 0 ?
+                                            Object.keys(zippersSchema).map((zipper: string, index: number) => <Grid item xs={5.7} sm={5.9} md={2.7}>
+                                                <Link href={`/product/${zippersSchema[zipper].slug}`}>
+                                                    <ProductCard title={zippersSchema[zipper].title} category={zippersSchema[zipper].category} desc={zippersSchema[zipper].desc} slug={zippersSchema[zipper].slug} colors={zippersSchema[zipper].colors} sizes={zippersSchema[zipper].sizes} img={zippersSchema[zipper].img} />
                                                 </Link>
                                             </Grid>) :
                                             <Grid item xs={12} className="justify-center flex">
@@ -112,6 +119,7 @@ const Zippers: NextPage<{
                             </div>
                         </div>
                     </div>
+                    <Pagination page={page} pageList={totalPages} changePage={changePage} />
                 </section>
             </div>
         </>
