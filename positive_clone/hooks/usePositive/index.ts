@@ -1,22 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { IPagination } from "@/modals";
 const usePositive: (params: IPagination) => {
-    totalPages: number[]
+    totalPages: number[],
+    page: number,
+    setPage: (page: number) => void
 } = ({ totalRecords, recordsPerpage }) => {
     let pageList: number[] = [];
-
+    const [page, setPage] = useState<number>(1);
     const [totalPages, setTotalpages] = React.useState<number>(1);
     for (let a = 1; a <= totalPages; a++) {
         pageList.push(a);
     }
     React.useEffect(() => {
-        setTotalpages(Math.ceil(totalRecords / recordsPerpage))
+        setTotalpages(Math.ceil(totalRecords / recordsPerpage));
         // console.log("I am using the hook use positive", value);
         // setValue((value) => value++);
         // console.log("Value after setting state woth callback function", value);
     }, []);
     return {
-        totalPages: pageList
+        totalPages: pageList,
+        setPage: setPage,
+        page: page
     }
 }
 export default usePositive;

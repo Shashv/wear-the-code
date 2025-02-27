@@ -21,30 +21,44 @@ import { getServerSession } from "next-auth";
 import authorizeOptions from "../api/auth/[...nextauth]";
 import LoadingBar from "react-top-loading-bar";
 import { toast } from "react-toastify";
+import usePositive from "@/hooks/usePositive";
+import useSearchParamsstate from "@/hooks/useSearchParams";
 import Pagination from "@/components/pagination";
 const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers: Array<any> }) => {
-    let [toastCustom, setToast] = useState<boolean>(false);
+    // let [toastCustom, setToast] = useState<boolean>(false);
     const [loader, setLoader] = useState<boolean>(false);
-    const router = useRouter();
+    // const router = useRouter();
+    const router = useSearchParamsstate();
     const combinedState = useSelector((state: IState) => state.toggletheme);
-    const hideToast: (e: React.MouseEvent) => void = (e) => {
-        setToast(false);
-    }
+    // const hideToast: (e: React.MouseEvent) => void = (e) => {
+    //     setToast(false);
+    // }
     //scroll positive..///
     // const onScroll: (e: any) => void = (e) => {
     // }
     ///....//
     const session = useSession();
     const [positive, setPositive] = useState<number>(40);
-
+    const { totalPages, page, setPage } = usePositive({ recordsPerpage: 2, totalRecords: props.stickers.length });
+    // useEffect(() => {
+    //     console.log("Inside the useEffect");
+    //     //     if (!router.query.page) {
+    //     //     router.setQuery({ page: page.toString() });
+    //     // }
+    // });
+    const changePage = (e: React.MouseEvent<HTMLButtonElement>, page: number) => {
+        // console.log("Change page inside the stickers", page);
+        // setPage(page);
+        router.setQuery({ page: page.toString() });
+    }
     useEffect(() => {
 
         if (session.status === "unauthenticated") {
             toast.error("Oops you are not authenticated");
             setLoader(false);
-            router.replace("/authentication/login");
+            router.getDetails().replace("/authentication/login");
         }
-    
+
         else {
             setPositive(100);
             toast.success("Stickers", {
@@ -52,7 +66,7 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
                 autoClose: 2000
             })
         }
-    }, []);
+    }, [session]);
     // onclose function///
     // const onClose: (e: React.MouseEvent<any>, timeOutID: any) => void = (e, id) => {
     //     clearTimeout(id);
@@ -100,7 +114,7 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
                                 </div>
                             </div>
                         </section>
-                        <Pagination page={1} pageList={[1, 2, 3, 4, 5]} changePage={() => console.log("Page change")} />
+                        <Pagination page={page} pageList={totalPages ? totalPages : [1, 2, 3, 4, 5]} changePage={changePage} />
                     </div>
                 </>
                 :
@@ -124,15 +138,22 @@ export const getServerSideProps: GetServerSideProps<{ stickers?: Array<unknown |
         return { ...rest, createdAt: new Date(sticker.createdAt).toLocaleString(), updatedAt: new Date(sticker.updatedAt).toLocaleString() };
     })
     if (sessionServer) {
-        if (responseStickers)
+        if (context.query.page)
             return {
                 props: {
                     stickers: [...filteredResponse],
-                }
+                },
             }
-        else return {
-            props: {
-                error: "Something went wrong"
+        else {
+            return {
+                redirect: {
+                    destination: `/stickers?page=1`,
+                    permanent: false
+                },
+                props: {
+                    // error: "Something went wrong"
+                    stickers: [...filteredResponse],
+                }
             }
         }
     }

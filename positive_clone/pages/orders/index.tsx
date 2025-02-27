@@ -12,7 +12,7 @@ import { getServerSession } from "next-auth";
 import authorizeOptions from "../api/auth/[...nextauth]";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import orders from "@/modalsmongoose/orders";
-import Image from "next/image";
+// import Image from "next/image";
 import CommonTable from "@/components/commonlist";
 import { toast } from "react-toastify";
 const Orders: React.FC = (props: unknown) => {
@@ -95,8 +95,8 @@ const Orders: React.FC = (props: unknown) => {
         });
         let areOrdersDeleted = await deletedOrders.json();
         setLoadOrders(false);
-        if(areOrdersDeleted) toast.info("Orders deleted successfully")
-            else toast.error("Unable to delete the orders , please try again");
+        if (areOrdersDeleted) toast.info("Orders deleted successfully")
+        else toast.error("Unable to delete the orders , please try again");
     }
     useEffect(() => {
         // without api using the redux state cartstate...//
@@ -148,60 +148,62 @@ const Orders: React.FC = (props: unknown) => {
                                             ORDER ID: #{orderId}
                                         </h1>
                                     </div>
-                                    {
-                                        orderList && orderList.length > 0 ?
-                                            orderList.map(key =>
-                                                <div className="row">
-                                                    <div className="col-6">
-                                                        <h2 className={theme.light ? "text-sm title-font text-gray-500 tracking-widest" : "text-sm title-font text-light tracking-widest"}>
-                                                            CODESWEAR.COM
-                                                        </h2>
-                                                        <p className="leading-relaxed mb-4">
-                                                            Your Order has been successfully placed!
-                                                        </p>
-                                                        <div className="flex mb-4">
-                                                            <a className="flex-grow text-center text-pink-500 py-2 text-lg px-1">
-                                                                {key.desc}</a>
-                                                            <a className="flex-grow text-center py-2 text-lg px-1">
-                                                                Reviews
-                                                            </a>
-                                                            <a className="flex-grow text-center py-2 text-lg px-1">
-                                                                Details
-                                                            </a>
+                                    <div className="container-fluid">
+                                        {
+                                            orderList && orderList.length > 0 ?
+                                                orderList.map(key =>
+                                                    <div className="row border border-muted rounded-2">
+                                                        <div className="col-6">
+                                                            <h2 className={theme.light ? "text-sm title-font text-gray-500 tracking-widest" : "text-sm title-font text-light tracking-widest"}>
+                                                                CODESWEAR.COM
+                                                            </h2>
+                                                            <p className="leading-relaxed mb-4">
+                                                                Your Order has been successfully placed!
+                                                            </p>
+                                                            <div className="flex mb-4">
+                                                                <a className="flex-grow text-center text-pink-500 py-2 text-lg px-1">
+                                                                    {key.desc}</a>
+                                                                <a className="flex-grow text-center py-2 text-lg px-1">
+                                                                    Reviews
+                                                                </a>
+                                                                <a className="flex-grow text-center py-2 text-lg px-1">
+                                                                    Details
+                                                                </a>
+                                                            </div>
+                                                            <div className="flex border-t border-gray-200 py-2">
+                                                                <span className="text-gray-500">Color</span>
+                                                                <span className="ml-auto text-gray-900">{key.color ? key.color : "Blue"}</span>
+                                                            </div>
+                                                            <div className="flex border-t border-gray-200 py-2">
+                                                                <span className="text-gray-500">Size</span>
+                                                                <span className="ml-auto text-gray-900">{key.size ? key.size : "Medium"}</span>
+                                                            </div>
+                                                            <div className="flex border-t border-b mb-6 border-gray-200 py-2">
+                                                                <span className="text-gray-500">Quantity</span>
+                                                                <span className="ml-auto text-gray-900">{key.availableQuantity ? key.availableQuantity : 4}</span>
+                                                            </div>
+                                                            <div className="flex">
+                                                                <span className="title-font font-medium text-2xl text-gray-900">
+                                                                    Subtotal: $58.00
+                                                                </span>
+                                                            </div>
+                                                            <div className="my-6 flex justify-start">
+                                                                <button className="flex text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded-2 text-light">Track Order</button>
+                                                            </div>
                                                         </div>
-                                                        <div className="flex border-t border-gray-200 py-2">
-                                                            <span className="text-gray-500">Color</span>
-                                                            <span className="ml-auto text-gray-900">{key.color ? key.color : "Blue"}</span>
+                                                        <div className="col-6">
+                                                            <img alt="ecommerce" className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src={key.img} />
                                                         </div>
-                                                        <div className="flex border-t border-gray-200 py-2">
-                                                            <span className="text-gray-500">Size</span>
-                                                            <span className="ml-auto text-gray-900">{key.size ? key.size : "Medium"}</span>
-                                                        </div>
-                                                        <div className="flex border-t border-b mb-6 border-gray-200 py-2">
-                                                            <span className="text-gray-500">Quantity</span>
-                                                            <span className="ml-auto text-gray-900">{key.availableQuantity ? key.availableQuantity : 4}</span>
-                                                        </div>
-                                                        <div className="flex">
-                                                            <span className="title-font font-medium text-2xl text-gray-900">
-                                                                Subtotal: $58.00
-                                                            </span>
-                                                        </div>
-                                                        <div className="my-6 flex justify-start">
-                                                            <button className="flex text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded-2 text-light">Track Order</button>
-                                                        </div>
+                                                    </div>) :
+                                                <>
+                                                    <div className="no-orders-placed">
+                                                        <Typography className="" variant="h2" color={"magenta"}>
+                                                            Oops, no orders plcaed , visit out products pages please!
+                                                        </Typography>
                                                     </div>
-                                                    <div className="col-6">
-                                                        <img alt="ecommerce" className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src={key.img} />
-                                                    </div>
-                                                </div>) :
-                                            <>
-                                                <div className="no-orders-placed">
-                                                    <Typography className="" variant="h2" color={"magenta"}>
-                                                        Oops, no orders plcaed , visit out products pages please!
-                                                    </Typography>
-                                                </div>
-                                            </>
-                                    }
+                                                </>
+                                        }
+                                    </div>
                                 </>
                                 {/* using the material ui box */}
                                 {/* <Box component={"div"} display={"flex"} flexDirection={"column"} gap={2} justifyContent={"start"} alignItems={"start"} color={theme.light ? "#000" : "#fff"}>
@@ -244,7 +246,7 @@ export default Orders;
 export const getServerSideProps: GetServerSideProps | ((context: GetServerSidePropsContext) => Promise<any>) = async positive => {
     const session = await getServerSession(positive.req, positive.res, authorizeOptions);
     // let orders = await OrdersModel.find({});
-    console.log("Orders list", orders);
+    // console.log("Orders list", orders);
     if (session)
         return {
             props: {

@@ -44,7 +44,7 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
         aos.init();
         Router.events.on("routeChangeStart", e => {
             setLoader(true);
-        })
+        });
         Router.events.on("routeChangeComplete", e => setLoader(false));
     }, [routerDetail]);
     return (
@@ -108,6 +108,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
         }
     }
 }
+// function willbe used the query params...//
 // export const getInitialProps = async (context: any) => {
 //     const session = getSession(context);
 //     return {
@@ -116,3 +117,4 @@ export const getServerSideProps: GetServerSideProps = async context => {
 //         }
 //     }
 // }
+// ...

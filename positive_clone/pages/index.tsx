@@ -21,7 +21,7 @@ import authorizeOptions from "./api/auth/[...nextauth]";
 import Aos from 'aos';
 import "aos/dist/aos.css"
 import { toast } from "react-toastify";
-// import SlickSlides from "@/components/slickSlides";
+import SlickSlides from "@/components/slickSlides";
 import { ICustomSession } from "@/modals";
 interface IParas {
     props: {
@@ -29,7 +29,7 @@ interface IParas {
     }
 }
 export default function Home(props: { name: string, scrollTop: number, direction: string, session?: Session } | any) {
-    const rouerDetail = useRouter();
+    // const rouerDetail = useRouter();
     const sessionStatus = useSession();
     // scroll events babaji//
     // let scrollDIrection: string = "";

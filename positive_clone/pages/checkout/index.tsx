@@ -76,7 +76,7 @@ const Checkout: React.FC = () => {
         label: "City Pin",
         placeholder: "Enter city pin",
         name: "user_city_pin"
-    }]
+    }];
     return (
         <>
             <Box component={"div"} className={theme.light ? `bg-light ${style.background}` : `bg-dark ${style.background}`} sx={{

@@ -1,7 +1,7 @@
-type Positive = {
-    color: "Pink" | "Blue" | "White";
-    size: "L" | "SM" | "M" | "XXL" | "XL" | string;
-}
+// type Positive = {
+//     color: "Pink" | "Blue" | "White";
+//     size: "L" | "SM" | "M" | "XXL" | "XL" | string;
+// }
 import React, { useEffect, useRef } from "react";
 import "./index.module.css";
 import { useState } from "react";
@@ -360,6 +360,7 @@ export const getServerSideProps: GetServerSideProps<{
     // const pins = await fetchPins("147201");
     const sessionData = await getServerSession(context.req, context.res, authorizeOptions);
     let responseproduct = await ProductModel.find({ slug: context.query.slug }).lean();
+    console.log("context positive",context.query.slug)
     const availableshirts: any[] = await ProductModel.find({ title: responseproduct[0].title, category: responseproduct[0].category }).lean();
     const colorslug: {
         [key: string]: {

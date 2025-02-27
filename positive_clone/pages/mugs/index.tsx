@@ -16,25 +16,24 @@ import { getSession } from "next-auth/react";
 import LoadingBar from "react-top-loading-bar";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "../api/auth/[...nextauth]";
-interface PTheme {
-    theme: {
-        light: boolean;
-        dark: boolean
-    }
-}
-interface iMugs {
-    mugs?: Array<any>;
-    mugsSchema?: Array<any>
-}
+// interface PTheme {
+//     theme: {
+//         light: boolean;
+//         dark: boolean
+//     }
+// }
+// interface iMugs {
+//     mugs?: Array<any>;
+//     mugsSchema?: Array<any>
+// }
 const mapStateToProps = (state: IState): any => {
     let { toggletheme } = state;
     return {
         theme: toggletheme
     }
 }
-
 const partialConnector = connect(mapStateToProps);
-type IProps = ConnectedProps<typeof partialConnector>;
+// type IProps = ConnectedProps<typeof partialConnector>;
 class Mugs extends React.Component<any, { name: string; age: number; loader: false; progress: number }> {
     constructor(props: any) {
         super(props);
@@ -44,6 +43,7 @@ class Mugs extends React.Component<any, { name: string; age: number; loader: fal
             loader: false,
             progress: 0
         }
+        this.changePage = this.changePage.bind(this);
     }
     // toastExecution: any;
     render(): JSX.Element {
@@ -102,7 +102,10 @@ class Mugs extends React.Component<any, { name: string; age: number; loader: fal
 
     }
     componentWillUpdate(nextProps: Readonly<{}>, nextState: Readonly<{}>): void {
-      
+        console.log("Next props", nextProps, "nextstate", nextState);
+    }
+    changePage():void {
+
     }
 }
 

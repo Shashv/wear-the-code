@@ -35,6 +35,7 @@ const MousePads: NextPage<{
     let { mousePadsSchema } = props;
     const theme = useSelector((state: IState) => state.toggletheme);
     const [progress, setProgress] = useState<number>(0);
+
     useEffect(() => {
         // ....//
         // console.log("Object schema", mousePadsSchema);
@@ -90,7 +91,6 @@ const MousePads: NextPage<{
                     </div>
                 </section>
             </div>
-
         </>
     )
 }

@@ -15,7 +15,7 @@ import addProduct from "@/redux/actions/addProduct";
 import removeProduct from "@/redux/actions/removeProduct";
 import { useDispatch } from "react-redux";
 import StyledModal from "../styledpopup/index";
-import { UnknownAction } from "redux";
+// import { UnknownAction } from "redux";
 import { toast } from "react-toastify";
 import { LuMoon, LuMoonStar, LuSun, LuSunMoon } from "react-icons/lu";
 import { useSelector } from "react-redux";
@@ -68,13 +68,13 @@ const StyledBar: React.FC<{ scrollTop?: number }> = ({ scrollTop }) => {
     const session = useSession();
     let dispatch = useDispatch();
     let router = useRouter();
-    let navigatePage: (page: string, item: string) => void = (page, selectItem) => {
-        let findKey = Object.keys(item).find(key => key == selectItem);
-    };
+    // let navigatePage: (page: string, item: string) => void = (page, selectItem) => {
+    //     let findKey = Object.keys(item).find(key => key == selectItem);
+    // };
     let referenceElement = useRef<HTMLSpanElement>(null);
     let referenceSecond = useRef<HTMLLIElement | any>(null);
-    let hidedReference = useRef<HTMLSpanElement>(null);
-    let hidedReferenceSecond = useRef<HTMLSpanElement>(null);
+    // let hidedReference = useRef<HTMLSpanElement>(null);
+    // let hidedReferenceSecond = useRef<HTMLSpanElement>(null);
     let addProducts: (product: ICartProduct) => any = (product) => dispatch(addProduct({ name: product.name, variant: product.variant, size: product.size, quantity: product.quantity, product: product.product, price: product.price }));
     let removeProducts: (product: ICartProduct) => any = (product) => dispatch(removeProduct({ name: product.name, size: product.size, quantity: product.quantity, variant: product.variant, price: product.price, product: product.product }));
     let positiveBabaji: JSX.Element = <div className="d-flex flex-column justify-content-evenly align-items-center gap-2">

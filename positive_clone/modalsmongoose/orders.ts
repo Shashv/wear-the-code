@@ -7,7 +7,7 @@ interface IUser extends Document {
     orderStatus: string;
 }
 // uncomment the  below link to use connection string connection with mongodb without using the callback...//
-// mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 const OrderSchema = new mongoose.Schema<IUser>({
     userId: { type: String, required: true },
     products: [{

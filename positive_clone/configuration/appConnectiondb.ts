@@ -7,7 +7,7 @@ const connectAPProuterdb = (handler: (req: NextRequest, params: any) => Promise<
     else {
         await mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
         console.log("Connected to mongoose!");
-    }
+    } 
     return await handler(req, params);
 }
 export default connectAPProuterdb;

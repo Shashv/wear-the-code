@@ -36,15 +36,15 @@ const OrdersList: NextPage<{ pageName: string, sessionStatus: { name: string; em
     React.useEffect(() => {
         setTabledata({ ...tableData, tableBody: products });
     }, [products]);
-    const checkSegmentation = (ar: string[], s: string) => {
-        const arrayCharacters = Array.from(s);
-        //    console.log("Array characters",arrayCharacters);
-        arrayCharacters.forEach(letter => {
-            ar.forEach(word => {
-                
-            })
-        })
-    }
+    // const checkSegmentation = (ar: string[], s: string) => {
+    //     const arrayCharacters = Array.from(s);
+    //     //    console.log("Array characters",arrayCharacters);
+    //     arrayCharacters.forEach(letter => {
+    //         ar.forEach(word => {
+
+    //         })
+    //     })
+    // }
     return (
         <>
             <div className="container">
@@ -55,8 +55,8 @@ const OrdersList: NextPage<{ pageName: string, sessionStatus: { name: string; em
                         </Typography>
                         <CommonTable tablebody={tableData.tableBody ? tableData.tableBody : []} tablehead={tableData.tableHead ? tableData.tableHead : []} />
                         <Typography className="text-pink-600" variant="h4"></Typography>
-                        {session.data?.user.email}
-                        <Button color="primary" onClick={e => checkSegmentation(["leet", "code"], "leetcode")}>Check</Button>
+                        {/* {session.data?.user.email} */}
+                        {/* <Button color="primary" onClick={e => checkSegmentation(["leet", "code"], "leetcode")}>Check</Button> */}
                     </div>
                 </div>
             </div>

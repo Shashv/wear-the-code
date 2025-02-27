@@ -11,13 +11,15 @@ import { Typography } from '@mui/material';
 import Head from "next/head";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import ProductCard from "@/components/productcard";
 import LoadingBar from "react-top-loading-bar";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "../api/auth/[...nextauth]";
 import Pagination from "@/components/pagination";
 import usePositive from "@/hooks/usePositive";
+import useSearchParamsstate from "@/hooks/useSearchParams";
+import { toast } from "react-toastify";
 const Dotted: React.FC = () => {
     return (
         <>
@@ -57,24 +59,36 @@ const Zippers: NextPage<{
     const { zippersSchema } = params;
     const theme = useSelector((state: IState) => state.toggletheme);
     const session = useSession();
-    const router = useRouter();
+    const router = useSearchParamsstate();
     const [progress, setProgress] = useState<number>(0);
-    const { totalPages } = usePositive({ totalRecords: Object.keys(zippersSchema).length, recordsPerpage: 2 });
-    let [page, setPage] = useState<number>(1);
+    const { totalPages, page, setPage } = usePositive({ totalRecords: Object.keys(zippersSchema).length, recordsPerpage: 2 });
     const changePage = (e: React.MouseEvent<HTMLButtonElement> | any, page: number) => {
+        // consoles will be checked further...//
         // console.log("Change page function", page);
-        setPage(page);
+        // setPage(page);
+        // ....//
+        router.getDetails().push(`/zippers?page=${page}`);
     }
     // useEffect(() => {
-    //     if (session.status === "unauthenticated") router.replace("/authentication/login")
-    // }, [session]);
+    //     if (!router.query.page) router.setQuery({ page: page.toString() });
+    // });
     //handle route change function//
-    const handleRouterChnages = () => {
-        router.events.on("routeChangeStart", e => setProgress(40));
-        router.events.on("routeChangeComplete", e => setProgress(100));
-    }
+    // const handleRouterChnages = () => {
+    //     router.getDetails().events.on("routeChangeStart", e => setProgress(40));
+    //     router.getDetails().events.on("routeChangeComplete", e => setProgress(100));
+    // }
     useEffect(() => {
-        session.status === "unauthenticated" ? router.push("/authentication/login") : handleRouterChnages
+        if (session.status === "unauthenticated") {
+            router.getDetails().push("/authentication/login")
+        }
+        else {
+            setProgress(100);
+            toast.success("Zippers", {
+                autoClose: 1000,
+                position: "top-right",
+                theme: theme.dark ? "dark" : "light"
+            })
+        }
     }, [session]);
     // .....//
     return (
@@ -103,11 +117,14 @@ const Zippers: NextPage<{
                                     </Typography>
                                     <Grid container columnGap={1.4} justifyContent={"center"} rowGap={1.4}>
                                         {Object.keys(zippersSchema || {}).length > 0 ?
-                                            Object.keys(zippersSchema).map((zipper: string, index: number) => <Grid item xs={5.7} sm={5.9} md={2.7}>
-                                                <Link href={`/product/${zippersSchema[zipper].slug}`}>
-                                                    <ProductCard title={zippersSchema[zipper].title} category={zippersSchema[zipper].category} desc={zippersSchema[zipper].desc} slug={zippersSchema[zipper].slug} colors={zippersSchema[zipper].colors} sizes={zippersSchema[zipper].sizes} img={zippersSchema[zipper].img} />
-                                                </Link>
-                                            </Grid>) :
+                                            Object.keys(zippersSchema).map((zipper: string, index: number) => {
+                                                console.log("Zipper slugs",zippersSchema[zipper].slug);
+                                                return <Grid item xs={5.7} sm={5.9} md={2.7} key={`${zipper}`}>
+                                                    <Link key={index} href={`/product/${zippersSchema[zipper].slug}`}>
+                                                        <ProductCard title={zippersSchema[zipper].title} category={zippersSchema[zipper].category} desc={zippersSchema[zipper].desc} slug={zippersSchema[zipper].slug} colors={zippersSchema[zipper].colors} sizes={zippersSchema[zipper].sizes} img={zippersSchema[zipper].img} />
+                                                    </Link>
+                                                </Grid>
+                                            }) :
                                             <Grid item xs={12} className="justify-center flex">
                                                 <Typography variant="h4" color={"magenta"}>
                                                     Sorry , product out of stock
@@ -129,8 +146,8 @@ export default Zippers;
 // functionm will call on server side...//
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     let fetchedProducts = await ProductModel.find({ category: "zippers" });
+    // console.log("Query params", context.query.page);
     const getServerSideSession = await getServerSession(context.req, context.res, authorizeOptions);
-
     const zippersSchema: {
         [key: string]: {
             title: string;
@@ -168,12 +185,25 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
             }
         }
     }
-    if (getServerSideSession)
-        return {
-            props: {
-                zippersSchema
+    // console.log("Zipper schema", zippersSchema);
+    if (getServerSideSession) {
+        let page: string | number | unknown = context.query.page;
+        if (page) {
+            return {
+                props: {
+                    zippersSchema
+                }
             }
         }
+        else {
+            return {
+                redirect: {
+                    permanent: false,
+                    destination: `/zippers?page=1`
+                }
+            }
+        }
+    }
     else return {
         // props: {
 

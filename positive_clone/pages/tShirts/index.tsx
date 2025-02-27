@@ -11,17 +11,17 @@ type IShirtState = {
 }
 import React from "react";
 import Link from "next/link";
-import { Container, Row, Col } from "reactstrap";
+// import { Container, Row, Col } from "reactstrap";
 import styles from "./index.module.css";
-import { Backdrop, CircularProgress, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { connect } from "react-redux";
-import { compose } from "redux";
+// import { compose } from "redux";
 import store, { IState } from "@/redux/sore";
 import FilterBar from "@/components/filtergroup";
 import ProductCard from "@/components/productcard";
 import Head from "next/head";
 import { Grid } from "@mui/material";
-import LoaderAnimate from "@/components/loader";
+// import LoaderAnimate from "@/components/loader";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
 import authorizeOptions from "../api/auth/[...nextauth]";
@@ -138,7 +138,7 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
         )
     }
     async componentDidMount(): Promise<void> {
-        const contextValue: any = this.context;
+        // const contextValue: any = this.context;
         const session = await getSession();
         // console.log("tshitst", session);
         if (session?.user) {
@@ -153,7 +153,7 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
 
     }
 }
-let combinedstate = store.getState();
+// let combinedstate = store.getState();
 const mapStateToProps = (combinedstate: IState) => {
     let { toggletheme } = combinedstate;
     return {
