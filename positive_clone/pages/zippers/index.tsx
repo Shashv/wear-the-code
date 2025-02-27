@@ -118,7 +118,7 @@ const Zippers: NextPage<{
                                     <Grid container columnGap={1.4} justifyContent={"center"} rowGap={1.4}>
                                         {Object.keys(zippersSchema || {}).length > 0 ?
                                             Object.keys(zippersSchema).map((zipper: string, index: number) => {
-                                                console.log("Zipper slugs",zippersSchema[zipper].slug);
+                                                // console.log("Zipper slugs",zippersSchema[zipper].slug);
                                                 return <Grid item xs={5.7} sm={5.9} md={2.7} key={`${zipper}`}>
                                                     <Link key={index} href={`/product/${zippersSchema[zipper].slug}`}>
                                                         <ProductCard title={zippersSchema[zipper].title} category={zippersSchema[zipper].category} desc={zippersSchema[zipper].desc} slug={zippersSchema[zipper].slug} colors={zippersSchema[zipper].colors} sizes={zippersSchema[zipper].sizes} img={zippersSchema[zipper].img} />

@@ -114,7 +114,7 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
                                 </div>
                             </div>
                         </section>
-                        <Pagination page={page} pageList={totalPages ? totalPages : [1, 2, 3, 4, 5]} changePage={changePage} />
+                        <Pagination page={page} pageList={totalPages} changePage={changePage} />
                     </div>
                 </>
                 :
