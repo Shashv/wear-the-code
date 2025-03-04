@@ -142,6 +142,7 @@ const ForgotPassword: React.FC = () => {
     )
 }
 export default ForgotPassword;
+// function will call on server side ///
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     let serverSession = await getServerSession(context.req, context.res, authorizeOptions);
     if (serverSession) {
@@ -161,3 +162,4 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         }
     }
 }
+// ...//

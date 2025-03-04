@@ -1,7 +1,7 @@
-import Image from "next/image";
+// import Image from "next/image";
 // import { Box, Typography } from "@mui/material";
 // import { useState } from "react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import style from "./index.module.css";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 // import Button from "@mui/material/Button";
@@ -21,7 +21,7 @@ import authorizeOptions from "./api/auth/[...nextauth]";
 import Aos from 'aos';
 import "aos/dist/aos.css"
 import { toast } from "react-toastify";
-import SlickSlides from "@/components/slickSlides";
+// import SlickSlides from "@/components/slickSlides";
 import { ICustomSession } from "@/modals";
 interface IParas {
     props: {

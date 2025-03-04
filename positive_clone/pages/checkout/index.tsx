@@ -214,7 +214,6 @@ const Checkout: React.FC = () => {
                 </Container>
 
             </Box>
-
         </>
     )
 }

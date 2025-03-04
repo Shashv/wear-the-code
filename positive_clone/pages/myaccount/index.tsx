@@ -23,11 +23,11 @@ const EditForm: React.FC<{ manageAccount: (operationType: string, body: any) => 
         placeholder: "Enter email",
         name: "email"
     },
-        // {
-        //     type: "password",
-        //     name: "password",
-        //     placeholder: "Enter password"
-        // },
+    // {
+    //     type: "password",
+    //     name: "password",
+    //     placeholder: "Enter password"
+    // },
     {
         type: "text",
         name: "username",

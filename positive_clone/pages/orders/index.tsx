@@ -109,9 +109,9 @@ const Orders: React.FC = (props: unknown) => {
         fetch(`/api/orders?user_id=${localStorage.getItem("user_id")}`, {
             method: "GET",
         }).then(response => response.json()).then(response => {
-            const promises = Promise.all(response.orders.products.map(async (product: { id: string; quantity: number }) => {
+            const promises = Promise.all(response.orders ? response.orders.products.map(async (product: { id: string; quantity: number }) => {
                 return await convertOrderList(product);
-            }));
+            }) : []);
             //check promises final//
             // console.log("Promises final", promises);
             // ....//
@@ -143,11 +143,14 @@ const Orders: React.FC = (props: unknown) => {
                             <>
                                 {/* babaji */}
                                 <>
-                                    <div className="order-container">
-                                        <h1 className="text-gray-900 text-3xl title-font font-medium mb-4">
-                                            ORDER ID: #{orderId}
-                                        </h1>
-                                    </div>
+                                    {
+                                        orderList.length > 0 &&
+                                        <div className="order-container">
+                                            <h1 className="text-gray-900 text-3xl title-font font-medium mb-4">
+                                                ORDER ID: #{orderId}
+                                            </h1>
+                                        </div>
+                                    }
                                     <div className="container-fluid">
                                         {
                                             orderList && orderList.length > 0 ?
@@ -197,7 +200,7 @@ const Orders: React.FC = (props: unknown) => {
                                                     </div>) :
                                                 <>
                                                     <div className="no-orders-placed">
-                                                        <Typography className="" variant="h2" color={"magenta"}>
+                                                        <Typography className="" fontStyle={"italic"} variant="h2" color={"magenta"}>
                                                             Oops, no orders plcaed , visit out products pages please!
                                                         </Typography>
                                                     </div>
@@ -228,14 +231,14 @@ const Orders: React.FC = (props: unknown) => {
                     <div className="order-tabular-list">
                         <CommonTable tablebody={tableData.tableBody ? tableData.tableBody : []} tablehead={tableData.tableHead ? tableData.tableHead : []} theme={theme} />
                     </div>
-                    <div className="final-payment">
+                    {/* <div className="final-payment">
                         <Button className="" onClick={finalPayment} variant="contained" color={"primary"}>
                             Final Payment
                         </Button>
                         <Button className="delete-orders" onClick={e => babaji()}>
                             Delete Orders
                         </Button>
-                    </div>
+                    </div> */}
                 </section>
             </div>
         </>

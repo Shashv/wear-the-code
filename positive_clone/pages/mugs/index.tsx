@@ -9,13 +9,17 @@ import FilterBar from "@/components/filtergroup";
 import ProductCard from "@/components/productcard";
 import { Grid, Typography } from "@mui/material";
 import { toast } from "react-toastify";
+import Pagination from "@/components/pagination";
 import Link from "next/link";
+import Router from "next/router";
 // import { compose } from "redux";
 // import { withRouter, NextRouter } from "next/router";
-import { getSession } from "next-auth/react";
+// import { getSession } from "next-auth/react";
 import LoadingBar from "react-top-loading-bar";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "../api/auth/[...nextauth]";
+import paginate from "@/utils/paginate";
+import { IMugs } from "@/modals";
 // interface PTheme {
 //     theme: {
 //         light: boolean;
@@ -26,7 +30,7 @@ import authorizeOptions from "../api/auth/[...nextauth]";
 //     mugs?: Array<any>;
 //     mugsSchema?: Array<any>
 // }
-const mapStateToProps = (state: IState): any => {
+const mapStateToProps = (state: IState): unknown => {
     let { toggletheme } = state;
     return {
         theme: toggletheme
@@ -34,14 +38,16 @@ const mapStateToProps = (state: IState): any => {
 }
 const partialConnector = connect(mapStateToProps);
 // type IProps = ConnectedProps<typeof partialConnector>;
-class Mugs extends React.Component<any, { name: string; age: number; loader: false; progress: number }> {
+class Mugs extends React.Component<any, IMugs> {
     constructor(props: any) {
         super(props);
         this.state = {
             name: "Initial Empty state",
             age: 21,
             loader: false,
-            progress: 0
+            progress: 40,
+            pages: [],
+            page: Router.query.page ? Number(Router.query.page) : 1
         }
         this.changePage = this.changePage.bind(this);
     }
@@ -79,33 +85,38 @@ class Mugs extends React.Component<any, { name: string; age: number; loader: fal
                                 </div>
                             </div>
                         </div>
+                        <Pagination changePage={this.changePage} page={this.state.page} pageList={this.state.pages ? this.state.pages : [1, 2, 3, 4]} />
                     </section>
                 </div>
             </>
         )
     }
     async componentDidMount(): Promise<void> {
+        this.setState({ pages: paginate(this.props.mugsCount, 5) });
         // this.toastExecution = this.context;
-
         toast.success("Mugs", {
-            theme: "dark",
+            theme: this.props.theme.dark ? "dark" : "light",
             autoClose: 2000
         })
-        const session = await getSession();
+        // const session = await getSession();
         // console.log("Session mugs", session);
-        this.setState({ progress: 100 })
+        this.setState({ progress: 100 });
     }
     componentWillUnmount(): void {
-
+        console.log("Component will unmount from the dom tree")
     }
-    componentDidUpdate(previousProps: Readonly<{}>, previousState: Readonly<{}>): void {
-
+    componentDidUpdate(previousProps: Readonly<{}>, previousState: Readonly<IMugs>): void {
+        // console.log("Previous state page", previousState.page, "Current Page", this.state.page);
     }
     componentWillUpdate(nextProps: Readonly<{}>, nextState: Readonly<{}>): void {
-        console.log("Next props", nextProps, "nextstate", nextState);
+        // console.log("Next props", nextProps, "nextstate", nextState);
     }
-    changePage():void {
-
+    changePage(e: React.MouseEvent<HTMLButtonElement>, page: number): void {
+        this.setState({ page });
+        Router.push({
+            pathname: `/mugs`,
+            query: { page: page.toString() }
+        })
     }
 }
 
@@ -114,7 +125,9 @@ export default (partialConnector(Mugs));
 //below will run on the server side for fetching data on the client side...//
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const session = await getServerSession(context.req, context.res, authorizeOptions);
-    let fetchedMugs: Array<any> = await ProductModel.find({ category: "mugs" }).lean();
+    let fetchedMugs: Array<any> = await ProductModel.find({ category: "mugs" }).skip(context.query.page ? (Number(context.query.page) - 1) * 10 : (1 - 1) * 10).limit(10).lean();
+    const mugsCount: number = await ProductModel.countDocuments({ category: "mugs" });
+    // console.log("Mugs count", mugsCount);
     const modifiedResponse = fetchedMugs.map((mugs: any, index: number) => ({ ...mugs, createdAt: new Date(mugs.createdAt).toLocaleString(), updatedAt: new Date(mugs.updatedAt).toLocaleString(), _id: index + 1 }));
     let mugsSchema: {
         [key: string]: {
@@ -148,11 +161,23 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         }
     })
     if (session) {
-        return {
+        const page = context.query.page;
+        if (page) return {
             props: {
                 mugs: modifiedResponse,
-                mugsSchema
+                mugsSchema,
+                mugsCount
             }
+        }
+        else return {
+            redirect: {
+                destination: "/mugs?page=1",
+                permanent: false
+            }
+            // props: {
+            //     mugs: modifiedResponse,
+            //     mugsSchema
+            // }
         }
     }
     else {

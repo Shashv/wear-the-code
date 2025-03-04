@@ -14,27 +14,35 @@ const Pagination: React.FC<IBabaji> = ({ page, changePage, pageList }) => {
     const theme = useSelector((state: IState) => state.toggletheme);
     // let [visibleSlots, setVisibleslots] = useState<number[]>([]);
     const getPagination = (totalPages: number) => {
-        let pages: any[] = []
-        let maxVisiblepages: number = 3;
-        pages.push(1);
-        if (totalPages <= maxVisiblepages) {
+        let pages: unknown[] = []
+        let delta: number = 1;
+        // pages.push(1);
+        if (totalPages <= delta) {
             for (let i = 1; i <= totalPages; i++) {
                 pages.push(i);
             }
         }
         else {
-            const start = Math.max(2, page - 1);
-            const end = Math.min(totalPages - 1, page + 1);
-            if (start > 2) {
-                pages.push("...");
+            for (let s = 1; s <= totalPages; s++) {
+                if (s === 1 || s === totalPages || (s >= page - delta && s <= page + delta)) {
+                    pages.push(s);
+                }
+                else if (s === page - delta - 1 || s === page + delta + 1) {
+                    pages.push("...");
+                }
             }
-            for (let d = start; d <= end; d++) {
-                pages.push(d);
-            }
-            if (end < (totalPages - 1)) {
-                pages.push("...");
-            }
-            pages.push(totalPages);
+            // const start = Math.max(2, page - 1);
+            // const end = Math.min(totalPages - 1, page + 1);
+            // if (start > 2) {
+            //     pages.push("...");
+            // }
+            // for (let d = start; d <= end; d++) {
+            //     pages.push(d);
+            // }
+            // if (end < (totalPages - 1)) {
+            //     pages.push("...");
+            // }
+            // pages.push(totalPages);
         }
         return pages;
     };

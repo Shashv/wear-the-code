@@ -1,7 +1,8 @@
 import React from "react";
 import { Dialog, DialogContent, DialogActions, Typography, Button } from "@mui/material";
 import Link from "next/link";
-const NotFound: React.FC = () => {
+import { NextPage } from "next";
+const NotFound: React.FC | NextPage = () => {
     return (
         <>
             <Dialog open>

@@ -81,8 +81,10 @@ const ResetPassword: NextPage = () => {
     )
 }
 export default ResetPassword;
+// server side function running...//
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const positive = await getServerSession(context.req, context.res, authorizeOptions);
     if (positive) return { redirect: {basePath:false,destination:"/authentication/login",permanent:false} }
     else return { props: {  } }
 }
+// ...//
