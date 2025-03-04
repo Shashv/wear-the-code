@@ -36,7 +36,7 @@ const OrdersList: NextPage<{ pageName: string, sessionStatus: { name: string; em
     React.useEffect(() => {
         setTabledata({ ...tableData, tableBody: products });
     }, [products]);
-    // const checkSegmentation = (ar: string[], s: string) => {
+    // const checkSegmentation = (ar: string[], s:co string) => {
     //     const arrayCharacters = Array.from(s);
     //     //    console.log("Array characters",arrayCharacters);
     //     arrayCharacters.forEach(letter => {

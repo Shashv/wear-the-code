@@ -17,7 +17,10 @@ import { toast } from "react-toastify";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "../api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import usePositive from "@/hooks/usePositive";
+// import { useRouter } from "next/router";
+import useSearchParamsstate from "@/hooks/useSearchParams";
+import Pagination from "@/components/pagination";
 type IHoodie = { _id: number; title: string; desc: string; img: string; category: string; size: string; color: string; price: number; availableQuantity: number; createdAt: string; updatedAt: string; slug: string };
 const Hoodies: NextPage<{
     scrollTop: number, hoodies: Array<IHoodie>, loading?: boolean; cart: {
@@ -28,18 +31,24 @@ const Hoodies: NextPage<{
 }> = ({ scrollTop, hoodies, loading, cart }) => {
     const [loader, setLoader] = useState(true);
     const session = useSession();
-    const router = useRouter();
+    const { page, setPage, totalPages } = usePositive({ totalRecords: Object.keys(cart).length, recordsPerpage: 2 });
+    // const router = useRouter();
+    const router = useSearchParamsstate();
     const themeState = useSelector((state: IState) => state.toggletheme);
-    const [progress, setProgress] = useState<number>(0);
+    const [progress, setProgress] = useState<number>(40);
+    const changePage = (e: React.MouseEvent<HTMLButtonElement>, page: number) => {
+        router.setQuery({ page: page.toString() });
+    }
     useEffect(() => {
-        if (session.status === "unauthenticated") router.replace("/authentication/login");
-    });
+        if (session.status === "unauthenticated") router.getDetails().replace("/authentication/login");
+        
+    },[session]);
     useEffect(() => {
         hoodies && setLoader(false);
         setProgress(100);
         toast.success("Hoodies", {
-            theme: "dark",
-            autoClose: 2000
+            theme: themeState.dark ? "dark" : "light",
+            autoClose: 2000,
         })
     }, []);
     return (
@@ -73,7 +82,7 @@ const Hoodies: NextPage<{
                                     </div>
                                 </div>
                             </div>
-
+                            <Pagination page={page} changePage={changePage} pageList={totalPages} />
                         </section>
                     </div>
                 </>

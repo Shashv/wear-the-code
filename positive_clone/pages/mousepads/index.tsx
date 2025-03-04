@@ -11,8 +11,11 @@ import style from "./index.module.css";
 import ProductCard from "@/components/productcard";
 import LoadingBar from "react-top-loading-bar";
 import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
+import usePositive from "@/hooks/usePositive";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
+import useSearchParamsstate from "@/hooks/useSearchParams";
 import authorizeOptions from "../api/auth/[...nextauth]";
 const MousePads: NextPage<{
     mousePadsSchema: {
@@ -35,18 +38,31 @@ const MousePads: NextPage<{
     let { mousePadsSchema } = props;
     const theme = useSelector((state: IState) => state.toggletheme);
     const [progress, setProgress] = useState<number>(0);
-
+    const session = useSession();
+    const {} = usePositive({totalRecords:Object.keys(mousePadsSchema).length,recordsPerpage:2});
+    const router = useSearchParamsstate();
     useEffect(() => {
-        // ....//
-        // console.log("Object schema", mousePadsSchema);
-        // ....///
-        Object.keys(mousePadsSchema).length > 0 &&
-            toast.success("Mousepads", {
-                theme: "dark",
-                autoClose: 2000
-            })
-        setProgress(100);
-    }, []);
+        if (session.status === "unauthenticated") {
+            router.getDetails().push("/authentication/login");
+        }
+        else {
+            if (router.query.page) {
+                setProgress(100);
+                return;
+            }
+            else {
+                // ....//
+                // console.log("Object schema", mousePadsSchema);
+                // ....///
+                // Object.keys(mousePadsSchema).length > 0 &&
+                toast.success("Mousepads", {
+                    theme: "dark",
+                    autoClose: 2000
+                })
+                setProgress(100);
+            }
+        }
+    }, [session]);
     return (
         <>
             <Head>
@@ -141,12 +157,24 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
                 }
         }
     }
-    if (session)
-        return {
-            props: {
-                mousePadsSchema
+    if (session) {
+        const page = context.query.page;
+        if (page) {
+            return {
+                props: {
+                    mousePadsSchema
+                }
             }
         }
+        else {
+            return {
+                redirect: {
+                    destination: "/mousepads?page=1",
+                    permanent: false
+                }
+            }
+        }
+    }
     else return {
         redirect: {
             basePath: false,

@@ -12,7 +12,7 @@ export type IModal = {
     confirmProcess: any;
     closeModal: () => void;
     loader?: boolean;
-    showIcon?:boolean
+    showIcon?: boolean
 }
 export type INavSelected = {
     hoodies: {
@@ -155,7 +155,7 @@ export interface ISchema extends Document {
     email: string;
     password: string;
     username?: string;
-    image?:string;
+    image?: string;
 }
 export interface ICustomSession extends Session {
     user: {
@@ -165,6 +165,7 @@ export interface ICustomSession extends Session {
     } | any
 }
 export type IPagination = {
-    totalRecords:number,
-    recordsPerpage:number
+    totalRecords: number,
+    recordsPerpage: number
 }
+export type IMugs = { name: string; age: number; loader: false; progress: number, page: number; pages: number[] }

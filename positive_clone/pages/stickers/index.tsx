@@ -24,7 +24,7 @@ import { toast } from "react-toastify";
 import usePositive from "@/hooks/usePositive";
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import Pagination from "@/components/pagination";
-const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers: Array<any> }) => {
+const StickersPage: React.FC<{ stickers: Array<unknown>, stickersLength: number }> = (props: { stickers: Array<any>, stickersLength: number }) => {
     // let [toastCustom, setToast] = useState<boolean>(false);
     const [loader, setLoader] = useState<boolean>(false);
     // const router = useRouter();
@@ -39,7 +39,7 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
     ///....//
     const session = useSession();
     const [positive, setPositive] = useState<number>(40);
-    const { totalPages, page, setPage } = usePositive({ recordsPerpage: 2, totalRecords: props.stickers.length });
+    const { totalPages, page, setPage } = usePositive({ recordsPerpage: 2, totalRecords: props.stickersLength });
     // useEffect(() => {
     //     console.log("Inside the useEffect");
     //     //     if (!router.query.page) {
@@ -52,19 +52,23 @@ const StickersPage: React.FC<{ stickers: Array<unknown> }> = (props: { stickers:
         router.setQuery({ page: page.toString() });
     }
     useEffect(() => {
-
         if (session.status === "unauthenticated") {
             toast.error("Oops you are not authenticated");
             setLoader(false);
             router.getDetails().replace("/authentication/login");
         }
-
         else {
-            setPositive(100);
-            toast.success("Stickers", {
-                theme: combinedState.dark ? "dark" : "light",
-                autoClose: 2000
-            })
+            if (router.query.page) {
+                setPositive(100);
+                return;
+            }
+            else {
+                setPositive(100);
+                toast.success("Stickers", {
+                    theme: combinedState.dark ? "dark" : "light",
+                    autoClose: 2000
+                })
+            }
         }
     }, [session]);
     // onclose function///
@@ -132,16 +136,29 @@ export const getServerSideProps: GetServerSideProps<{ stickers?: Array<unknown |
     const sessionServer = await getServerSession(context.req, context.res, authorizeOptions);
     //server consoles session check ..//
     // console.log("Sessionstickers", sessionServer);
-    let responseStickers: any = await ProductModel.find({ category: "stickers" }).lean();
+    let responseStickers: any = await ProductModel.find({ category: "stickers" }).skip(context.query.page ? (Number(context.query.page) - 1) * 10 : (1 - 1) * 10).limit(10).lean();
+    const stickersLength: unknown[] = await ProductModel.aggregate([{
+        $match: {
+            category: "stickers"
+        },
+        $group: {
+            _id: "$title",
+            totalcount:{
+                $sum:1
+            }
+        },
+        // $count: "totalcount"
+    }]);
     let filteredResponse = responseStickers.map((sticker: any) => {
         const { _id, ...rest } = sticker;
         return { ...rest, createdAt: new Date(sticker.createdAt).toLocaleString(), updatedAt: new Date(sticker.updatedAt).toLocaleString() };
-    })
+    });
     if (sessionServer) {
         if (context.query.page)
             return {
                 props: {
                     stickers: [...filteredResponse],
+                    stickersLength
                 },
             }
         else {
@@ -150,10 +167,10 @@ export const getServerSideProps: GetServerSideProps<{ stickers?: Array<unknown |
                     destination: `/stickers?page=1`,
                     permanent: false
                 },
-                props: {
-                    // error: "Something went wrong"
-                    stickers: [...filteredResponse],
-                }
+                // props: {
+                //     error: "Something went wrong"
+                //     stickers: [...filteredResponse],
+                // }
             }
         }
     }

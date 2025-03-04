@@ -20,24 +20,24 @@ import Pagination from "@/components/pagination";
 import usePositive from "@/hooks/usePositive";
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import { toast } from "react-toastify";
-const Dotted: React.FC = () => {
-    return (
-        <>
-            <div className={style.section}>
-                <span className={style.dot}></span>
-                <span className={style.dot}></span>
-                <span className={style.dot}></span>
-                <span className={style.dot}></span>
-                <span className={style.dot}></span>
-                <span className={style.dot}></span>
-                <span className={style.dot}></span>
-                <span className={style.dot}></span>
-                <span className={style.dot}></span>
-                <span className={style.dot}></span>
-            </div>
-        </>
-    )
-}
+// const Dotted: React.FC = () => {
+//     return (
+//         <>
+//             <div className={style.section}>
+//                 <span className={style.dot}></span>
+//                 <span className={style.dot}></span>
+//                 <span className={style.dot}></span>
+//                 <span className={style.dot}></span>
+//                 <span className={style.dot}></span>
+//                 <span className={style.dot}></span>
+//                 <span className={style.dot}></span>
+//                 <span className={style.dot}></span>
+//                 <span className={style.dot}></span>
+//                 <span className={style.dot}></span>
+//             </div>
+//         </>
+//     )
+// }
 const Zippers: NextPage<{
     zippersSchema: {
         [key: string]: {
@@ -69,9 +69,9 @@ const Zippers: NextPage<{
         // ....//
         router.getDetails().push(`/zippers?page=${page}`);
     }
-    // useEffect(() => {
-    //     if (!router.query.page) router.setQuery({ page: page.toString() });
-    // });
+    useEffect(() => {
+        if (!router.query.page) router.setQuery({ page: page.toString() });
+    });
     //handle route change function//
     // const handleRouterChnages = () => {
     //     router.getDetails().events.on("routeChangeStart", e => setProgress(40));

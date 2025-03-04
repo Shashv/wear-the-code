@@ -7,7 +7,7 @@ interface IShirtProps {
 
 }
 type IShirtState = {
-    data: any, toast: { active: boolean; variant: string; }; loader: boolean; progress: number
+    data: any, toast: { active: boolean; variant: string; }; loader: boolean; progress: number, page: number; pageList: number[]
 }
 import React from "react";
 import Link from "next/link";
@@ -27,6 +27,7 @@ import { getSession } from "next-auth/react";
 import authorizeOptions from "../api/auth/[...nextauth]";
 import { Session, getServerSession } from "next-auth";
 import { NextRouter, withRouter } from "next/router";
+// import Router from "next/router";
 import LoadingBar from "react-top-loading-bar";
 import { toast } from "react-toastify";
 import Pagination from "@/components/pagination";
@@ -54,10 +55,13 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
                 variant: "success"
             },
             progress: 40,
+            page: 1,
+            pageList: []
         }
         this.getData = this.getData.bind(this);
-        this.onClose = this.onClose.bind(this);
-        this.autoHide = this.autoHide.bind(this);
+        // this.onClose = this.onClose.bind(this);
+        // this.autoHide = this.autoHide.bind(this);
+        this.changePage = this.changePage.bind(this);
     }
     getData(): void {
         // custom loader//
@@ -78,12 +82,16 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
             })
         });
     }
-    onClose(e: any, timeOutId: any): void {
-        clearTimeout(timeOutId);
-        this.setState(state => ({ ...state, toast: { ...state.toast, active: false, variant: "success" } }))
-    }
-    autoHide(): void {
-        this.setState((state) => ({ ...state, toast: { ...state.toast, active: false, variant: "success" } }));
+    // onClose(e: any, timeOutId: any): void {
+    //     clearTimeout(timeOutId);
+    //     this.setState(state => ({ ...state, toast: { ...state.toast, active: false, variant: "success" } }))
+    // }
+    // autoHide(): void {
+    //     this.setState((state) => ({ ...state, toast: { ...state.toast, active: false, variant: "success" } }));
+    // }
+    changePage(e: React.MouseEvent<HTMLButtonElement>, page: number): void {
+        // Router.push(`/tShirts?page=${page}`);
+        this.props.router.replace(`/tShirts?page=${page.toString()}`);
     }
     render(): JSX.Element {
         return (
@@ -139,6 +147,7 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
     }
     async componentDidMount(): Promise<void> {
         // const contextValue: any = this.context;
+        console.log("Rouetr query");
         const session = await getSession();
         // console.log("tshitst", session);
         if (session?.user) {
