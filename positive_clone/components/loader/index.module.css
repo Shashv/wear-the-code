@@ -282,7 +282,8 @@
 }
 
 .codeswear .loaderletter {
-    color: #e421da;
+    /* color: #e421da; */
+    color: white;
     animation: code 1s ease-in-out infinite;
     font-size: 100px;
     display: inline-block;

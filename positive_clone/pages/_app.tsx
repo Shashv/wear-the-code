@@ -71,9 +71,9 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
                                     <StyledBar scrollTop={0} />
                                 }
                                 <ContextWrapper.Provider value={toggleFilter}>
-                                    {loader ? <Backdrop open>
+                                    {loader ? <Backdrop open sx={{ backgroundColor: "#eb4798" }}>
                                         <LoaderAnimate />
-                                        </Backdrop> :
+                                    </Backdrop> :
                                         <div className={"route-component"} style={{ height: !path.includes("/auth") ? "600px" : "100vh", overflowY: filterStatus ? "hidden" : "scroll", overflowX: "hidden" }}>
                                             <Component  {...pageparams} />
                                         </div>

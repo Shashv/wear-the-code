@@ -147,7 +147,7 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
     }
     async componentDidMount(): Promise<void> {
         // const contextValue: any = this.context;
-        console.log("Rouetr query");
+        // console.log("Rouetr query");
         const session = await getSession();
         // console.log("tshitst", session);
         if (session?.user) {

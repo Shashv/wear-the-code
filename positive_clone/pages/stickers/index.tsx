@@ -118,7 +118,7 @@ const StickersPage: React.FC<{ stickers: Array<unknown>, stickersLength: number 
                                 </div>
                             </div>
                         </section>
-                        <Pagination page={page} pageList={totalPages} changePage={changePage} />
+                        <Pagination page={page} pageList={totalPages ? totalPages : [1, 2, 3, 4, 5]} changePage={changePage} />
                     </div>
                 </>
                 :
@@ -141,14 +141,15 @@ export const getServerSideProps: GetServerSideProps<{ stickers?: Array<unknown |
         $match: {
             category: "stickers"
         },
-        $group: {
-            _id: "$title",
-            totalcount:{
-                $sum:1
-            }
-        },
+        // $group: {
+        //     _id: "$title",
+        //     totalcount: {
+        //         $sum: 1
+        //     }
+        // },
         // $count: "totalcount"
     }]);
+    // console.log("Stickers babaji", stickersLength)
     let filteredResponse = responseStickers.map((sticker: any) => {
         const { _id, ...rest } = sticker;
         return { ...rest, createdAt: new Date(sticker.createdAt).toLocaleString(), updatedAt: new Date(sticker.updatedAt).toLocaleString() };
@@ -158,7 +159,7 @@ export const getServerSideProps: GetServerSideProps<{ stickers?: Array<unknown |
             return {
                 props: {
                     stickers: [...filteredResponse],
-                    stickersLength
+                    stickersLength: 0
                 },
             }
         else {

@@ -14,7 +14,7 @@ import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import orders from "@/modalsmongoose/orders";
 // import Image from "next/image";
 import CommonTable from "@/components/commonlist";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 const Orders: React.FC = (props: unknown) => {
     let clientSecret: string = "";
     // const cartstate = useSelector((state: IState) => {
@@ -61,43 +61,43 @@ const Orders: React.FC = (props: unknown) => {
         });
         return formatData;
     }
-    const finalPayment: (e: React.MouseEvent<HTMLButtonElement>) => Promise<string> = async e => {
-        // console.log("event clicked", e);
-        setLoadOrders(true);
-        let proceedPayment = await fetch("/api/payment/checkoutsession", {
-            method: "POST",
-            body: JSON.stringify({ amount: 10000, currency: "usd" })
-        });
-        let isPaymentProcessed = await proceedPayment.json();
-        // console.log("Payment positive",isPaymentProcessed);
-        if (isPaymentProcessed.success) {
-            setLoadOrders(false);
-            clientSecret = isPaymentProcessed.client_secret;
-            toast.success("Payment successfull", {
-                position: "bottom-center",
-                autoClose: 2000,
-                theme: "colored"
-            });
-            return isPaymentProcessed.message
-        }
-        else {
-            toast.error("Oops unable to process payment", {
-                position: "bottom-center",
-                autoClose: 2000,
-            })
-            return isPaymentProcessed.message
-        }
-    }
-    const babaji = async () => {
-        setLoadOrders(true);
-        let deletedOrders = await fetch("/api/orders", {
-            method: "DELETE"
-        });
-        let areOrdersDeleted = await deletedOrders.json();
-        setLoadOrders(false);
-        if (areOrdersDeleted) toast.info("Orders deleted successfully")
-        else toast.error("Unable to delete the orders , please try again");
-    }
+    // const finalPayment: (e: React.MouseEvent<HTMLButtonElement>) => Promise<string> = async e => {
+    //     // console.log("event clicked", e);
+    //     setLoadOrders(true);
+    //     let proceedPayment = await fetch("/api/payment/checkoutsession", {
+    //         method: "POST",
+    //         body: JSON.stringify({ amount: 10000, currency: "usd" })
+    //     });
+    //     let isPaymentProcessed = await proceedPayment.json();
+    //     // console.log("Payment positive",isPaymentProcessed);
+    //     if (isPaymentProcessed.success) {
+    //         setLoadOrders(false);
+    //         clientSecret = isPaymentProcessed.client_secret;
+    //         toast.success("Payment successfull", {
+    //             position: "bottom-center",
+    //             autoClose: 2000,
+    //             theme: "colored"
+    //         });
+    //         return isPaymentProcessed.message
+    //     }
+    //     else {
+    //         toast.error("Oops unable to process payment", {
+    //             position: "bottom-center",
+    //             autoClose: 2000,
+    //         })
+    //         return isPaymentProcessed.message
+    //     }
+    // }
+    // const babaji = async () => {
+    //     setLoadOrders(true);
+    //     let deletedOrders = await fetch("/api/orders", {
+    //         method: "DELETE"
+    //     });
+    //     let areOrdersDeleted = await deletedOrders.json();
+    //     setLoadOrders(false);
+    //     if (areOrdersDeleted) toast.info("Orders deleted successfully")
+    //     else toast.error("Unable to delete the orders , please try again");
+    // }
     useEffect(() => {
         // without api using the redux state cartstate...//
         // Object.keys(cartstate).length > 0 ?
