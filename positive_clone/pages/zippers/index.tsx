@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import style from "./index.module.css";
 import ProductModel from "@/modalsmongoose/product";
 import { Grid } from "@mui/material";
@@ -58,6 +58,7 @@ const Zippers: NextPage<{
 }> = (params) => {
     const { zippersSchema } = params;
     const theme = useSelector((state: IState) => state.toggletheme);
+    const initialMount = useRef<boolean | null>(true);
     const session = useSession();
     const router = useSearchParamsstate();
     const [progress, setProgress] = useState<number>(0);
@@ -71,6 +72,18 @@ const Zippers: NextPage<{
     }
     useEffect(() => {
         if (!router.query.page) router.setQuery({ page: page.toString() });
+        switch (initialMount.current) {
+            case true: {
+                toast.success("Zippers", {
+                    theme: theme.light ? "light" : "dark",
+                    autoClose: 2000,
+                })
+                initialMount.current ? initialMount.current = false : initialMount.current = null;
+            }
+            default: {
+                return
+            }
+        }
     });
     //handle route change function//
     // const handleRouterChnages = () => {
@@ -80,14 +93,6 @@ const Zippers: NextPage<{
     useEffect(() => {
         if (session.status === "unauthenticated") {
             router.getDetails().push("/authentication/login")
-        }
-        else {
-            setProgress(100);
-            toast.success("Zippers", {
-                autoClose: 1000,
-                position: "top-right",
-                theme: theme.dark ? "dark" : "light"
-            })
         }
     }, [session]);
     // .....//

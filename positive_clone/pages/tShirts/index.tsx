@@ -138,7 +138,7 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
                                 </div>
                             </div>
                         </section>
-                        <Pagination page={1} pageList={[1, 2, 3, 4, 5]} changePage={() => { }} />
+                        <Pagination page={1} pageList={[1, 2, 3, 4, 5]} changePage={this.changePage} />
                     </div>
                 </>
 

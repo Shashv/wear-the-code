@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import style from "./index.module.css";
 import { useEffect } from "react";
 import { Backdrop, Typography } from "@mui/material";
@@ -30,17 +30,31 @@ const Hoodies: NextPage<{
     const session = useSession();
     const router = useRouter();
     const themeState = useSelector((state: IState) => state.toggletheme);
+    const isInitialMount = useRef<boolean | null>(true);
     const [progress, setProgress] = useState<number>(0);
     useEffect(() => {
         if(session.status === "unauthenticated") router.replace("/authentication/login");
-    });
+        switch(isInitialMount.current) {
+            case true : {
+                toast.success("Hoodies",{
+                    theme:themeState.light ? "light":"dark",
+                    autoClose:2000,
+                    
+                });
+                isInitialMount.current = false;
+            }
+            default : {
+                return
+            }
+        }
+    },[session]);
     useEffect(() => {
         hoodies && setLoader(false);
         setProgress(100);
-        toast.success("Hoodies", {
-            theme: "dark",
-            autoClose: 2000
-        })
+        // toast.success("Hoodies", {
+        //     theme: "dark",
+        //     autoClose: 2000
+        // })
     }, []);
     return (
         <>

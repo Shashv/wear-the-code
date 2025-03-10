@@ -17,6 +17,7 @@ import Link from "next/link";
 import { getServerSession } from "next-auth";
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import authorizeOptions from "../api/auth/[...nextauth]";
+import Pagination from "@/components/pagination";
 const MousePads: NextPage<{
     mousePadsSchema: {
         [key: string]: {
@@ -39,8 +40,11 @@ const MousePads: NextPage<{
     const theme = useSelector((state: IState) => state.toggletheme);
     const [progress, setProgress] = useState<number>(0);
     const session = useSession();
-    const {} = usePositive({totalRecords:Object.keys(mousePadsSchema).length,recordsPerpage:2});
+    const { totalPages, page } = usePositive({ totalRecords: Object.keys(mousePadsSchema).length, recordsPerpage: 2 });
     const router = useSearchParamsstate();
+    const changePage = (e: React.MouseEvent<HTMLButtonElement>, page: number) => {
+        router.setQuery({ page: page.toString() })
+    }
     useEffect(() => {
         if (session.status === "unauthenticated") {
             router.getDetails().push("/authentication/login");
@@ -105,6 +109,7 @@ const MousePads: NextPage<{
                             </div>
                         </div>
                     </div>
+                    <Pagination page={page ? page : 1} pageList={totalPages ? totalPages : [1, 2, 3, 4]} changePage={changePage} />
                 </section>
             </div>
         </>

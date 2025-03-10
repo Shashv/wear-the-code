@@ -1,5 +1,5 @@
 // import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { IState } from "@/redux/sore";
 // import SlickSlides from "@/components/slickSlides";
@@ -25,7 +25,7 @@ import usePositive from "@/hooks/usePositive";
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import Pagination from "@/components/pagination";
 const StickersPage: React.FC<{ stickers: Array<unknown>, stickersLength: number }> = (props: { stickers: Array<any>, stickersLength: number }) => {
-    // let [toastCustom, setToast] = useState<boolean>(false);
+    let isInitialMount = useRef<boolean | null>(true);
     const [loader, setLoader] = useState<boolean>(false);
     // const router = useRouter();
     const router = useSearchParamsstate();
@@ -39,13 +39,29 @@ const StickersPage: React.FC<{ stickers: Array<unknown>, stickersLength: number 
     ///....//
     const session = useSession();
     const [positive, setPositive] = useState<number>(40);
-    const { totalPages, page, setPage } = usePositive({ recordsPerpage: 2, totalRecords: props.stickersLength });
-    // useEffect(() => {
-    //     console.log("Inside the useEffect");
-    //     //     if (!router.query.page) {
-    //     //     router.setQuery({ page: page.toString() });
-    //     // }
-    // });
+    const { totalPages, page, setPage } = usePositive({ recordsPerpage: 2, totalRecords: props.stickers.length });
+    useEffect(() => {
+
+        // if (!router.query.page) {
+        //     router.setQuery({ page: page.toString() });
+        // }
+        switch (isInitialMount.current) {
+            case true: {
+                // else {
+                setPositive(100);
+                toast.success("Stickers", {
+                    theme: combinedState.dark ? "dark" : "light",
+                    autoClose: 2000
+                })
+                // }
+                isInitialMount.current = false
+            }
+            default: {
+                console.log("Inside the useEffect , babab ji is always looking over us");
+                return;
+            }
+        }
+    });
     const changePage = (e: React.MouseEvent<HTMLButtonElement>, page: number) => {
         // console.log("Change page inside the stickers", page);
         // setPage(page);
@@ -61,13 +77,6 @@ const StickersPage: React.FC<{ stickers: Array<unknown>, stickersLength: number 
             if (router.query.page) {
                 setPositive(100);
                 return;
-            }
-            else {
-                setPositive(100);
-                toast.success("Stickers", {
-                    theme: combinedState.dark ? "dark" : "light",
-                    autoClose: 2000
-                })
             }
         }
     }, [session]);
@@ -137,18 +146,18 @@ export const getServerSideProps: GetServerSideProps<{ stickers?: Array<unknown |
     //server consoles session check ..//
     // console.log("Sessionstickers", sessionServer);
     let responseStickers: any = await ProductModel.find({ category: "stickers" }).skip(context.query.page ? (Number(context.query.page) - 1) * 10 : (1 - 1) * 10).limit(10).lean();
-    const stickersLength: unknown[] = await ProductModel.aggregate([{
-        $match: {
-            category: "stickers"
-        },
-        // $group: {
-        //     _id: "$title",
-        //     totalcount: {
-        //         $sum: 1
-        //     }
-        // },
-        // $count: "totalcount"
-    }]);
+    // const stickersLength: unknown[] = await ProductModel.aggregate([{
+    //     $match: {
+    //         category: "stickers"
+    //     },
+    //     // $group: {
+    //     //     _id: "$title",
+    //     //     totalcount: {
+    //     //         $sum: 1
+    //     //     }
+    //     // },
+    //     // $count: "totalcount"
+    // }]);
     // console.log("Stickers babaji", stickersLength)
     let filteredResponse = responseStickers.map((sticker: any) => {
         const { _id, ...rest } = sticker;
