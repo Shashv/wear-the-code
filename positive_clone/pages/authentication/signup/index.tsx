@@ -5,6 +5,7 @@ import React from "react";
 // import countryList from "../../countries/countries.json";
 import { ToastContainer, toast } from "react-toastify";
 import { Backdrop, CircularProgress } from "@mui/material";
+import uploader from "../../../components/assets/upload.png";
 // import { FaFacebook } from "react-icons/fa";
 // import { IoMdArrowDropdown } from "react-icons/io";
 import './index.css';
@@ -17,12 +18,14 @@ import LoaderAnimate from "../../../components/loader";
 import { useRouter } from "next/router";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "@/pages/api/auth/[...nextauth]";
+import Image from "next/image";
 interface ISignup {
     name: string;
     email: string;
     password: string;
     confirmPassword: string;
     checkStatus?: boolean;
+    image?: any;
 }
 let passwordValue: string = "";
 let confirmPassword: string = "";
@@ -697,8 +700,8 @@ const Signup: NextPage = () => {
             </Backdrop> :
                 <>
                     <ToastContainer />
-                    <section className="bg-pink-400">
-                        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 h-50">
+                    <section className="bg-pink-400 h-100">
+                        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                             <a href="#" className="flex items-center mb-6 text-3xl font-semibold text-pink-600">
                                 <img className="w-17 h-14 mr-2" src="/codeswearcircle.png" alt="logo" />
                                 CodeSwear - Sign up
@@ -737,7 +740,25 @@ const Signup: NextPage = () => {
                                                 },
                                             })} className="bg-pink-50 border border-pink-300 text-pink-600 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="name@company.com" />
                                             {errors.email?.types?.required && <span className="text-pink-600 absolute left-4 top-21 text-xs">Email is required*</span>}
-                                            {errors.email?.type === "validatemanual" && <span className="absolute text-xs text-pink-600 absolute top-21 left-4">{"Email should be valid*"}</span>}
+                                            {errors.email?.type === "validatemanual" && <span className="absolute text-xs text-pink-600 top-21 left-4">{"Email should be valid*"}</span>}
+                                        </div>
+                                        <div className="position-relative">
+                                            <label className="block mb-2 text-sm font-medium text-pink-500">
+                                                Set your profile pic
+                                            </label>
+                                            <div className="uploader-wrapper">
+                                                <label htmlFor="file-upload" className="p-2">
+                                                    <Image className="" alt="Upload the image" src={uploader} width={60} height={60} />
+                                                </label>
+                                                <input id="file-upload" className="profile-uploader d-none" type={"file"} {...register("image", {
+                                                    required: true, onChange(event) {
+                                                        console.log("Inside the change event")
+                                                        console.log("Event target files", event);
+                                                    }
+                                                })} />
+                                            </div>
+                                            {errors.image && <span className="absolute text-xs text-pink-600 top-[65px] left-4">
+                                                {"Image is required*"}</span>}
                                         </div>
                                         <div className="position-relative">
                                             <label htmlFor="password" className="block mb-2 text-sm font-medium text-pink-500">Password</label>

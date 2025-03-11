@@ -58,8 +58,10 @@ const orders = async (req: NextApiRequest, res: NextApiResponse) => {
                     orderStatus: "compelted"
                 });
 
-                if (createOrder)
+                if (createOrder) {
+                    console.log("Created order", createOrder);
                     return res.status(201).json({ message: "Orders placed successfully" });
+                }
                 else res.status(500).json({ message: "Something went wrong in order placement" })
             }
         }

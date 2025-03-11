@@ -41,7 +41,6 @@ const StickersPage: React.FC<{ stickers: Array<unknown>, stickersLength: number 
     const [positive, setPositive] = useState<number>(40);
     const { totalPages, page, setPage } = usePositive({ recordsPerpage: 2, totalRecords: props.stickers.length });
     useEffect(() => {
-
         // if (!router.query.page) {
         //     router.setQuery({ page: page.toString() });
         // }

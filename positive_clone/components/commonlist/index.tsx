@@ -77,9 +77,11 @@ const CommonTable: React.FC<ITableData<any>> = ({ tablehead, tablebody, theme })
                             </TableCell>)}
                         </TableRow>) : <>
                             <TableRow className="no-record-found">
-                                <Typography className="no-record-found" color={"CaptionText"} variant="h5">
-                                    No record found
-                                </Typography>
+                                <span>
+                                    <Typography className="no-record-found" color={"CaptionText"} variant="subtitle1">
+                                        No record found
+                                    </Typography>
+                                </span>
                             </TableRow>
                         </> : <><CircularProgress color="primary" /></>}
                 </TableBody>

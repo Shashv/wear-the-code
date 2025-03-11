@@ -13,9 +13,12 @@ const nextConfig = {
             {
                 protocol: "https",
                 hostname: "m.media-amazon.com"
-            },{
-                protocol:"https",
-                hostname:"images.bewakoof.com"
+            }, {
+                protocol: "https",
+                hostname: "images.bewakoof.com"
+            }, {
+                protocol: "https",
+                hostname: "iconsdb.com"
             }
         ]
     },

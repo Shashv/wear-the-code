@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 // import PaytmChecksum from "paytmchecksum"; 
-// import Stripe from "stripe";
+import Stripe from "stripe";
 import connectDatabase from "@/configuration";
 import PaytmChecksum from "paytmchecksum";
 const InitTransaction = async (req: NextApiRequest, res: NextApiResponse) => {

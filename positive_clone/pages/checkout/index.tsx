@@ -33,7 +33,6 @@ const Checkout: React.FC = () => {
                 position: "top-center"
             });
         }
-
     }
     const routerDetails = useRouter();
     useEffect(() => {

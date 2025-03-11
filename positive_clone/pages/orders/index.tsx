@@ -15,7 +15,7 @@ import orders from "@/modalsmongoose/orders";
 // import Image from "next/image";
 import CommonTable from "@/components/commonlist";
 import { toast } from "react-toastify";
-
+import { loadStripe } from "@stripe/stripe-js";
 const Orders: React.FC = (props: unknown) => {
     // const cartstate = useSelector((state: IState) => {
     //     return state.productManage;
@@ -65,7 +65,7 @@ const Orders: React.FC = (props: unknown) => {
     const finalPayment: (e: React.MouseEvent<HTMLButtonElement>) => Promise<string> = async e => {
         // console.log("event clicked", e);
         setLoadOrders(true);
-        let proceedPayment = await fetch("/api/payment/checkoutsession", {
+        let proceedPayment = await fetch("/api/payment/checkoutSession", {
             method: "POST",
             body: JSON.stringify({ amount: 10000, currency: "usd" })
         });
@@ -73,7 +73,7 @@ const Orders: React.FC = (props: unknown) => {
         // console.log("Payment positive",isPaymentProcessed);
         if (isPaymentProcessed.success) {
             setLoadOrders(false);
-            clientSecret = isPaymentProcessed.client_secret;
+            clientSecret.current = isPaymentProcessed.client_secret;
             toast.success(`Payment successfull ${clientSecret}`, {
                 position: "bottom-center",
                 autoClose: 2000,
@@ -156,8 +156,8 @@ const Orders: React.FC = (props: unknown) => {
                                     <div className="container-fluid">
                                         {
                                             orderList && orderList.length > 0 ?
-                                                orderList.map(key =>
-                                                    <div className="row border border-muted rounded-2">
+                                                orderList.map((key, index) =>
+                                                    <div key={index} className="row border border-muted rounded-2">
                                                         <div className="col-6">
                                                             <h2 className={theme.light ? "text-sm title-font text-gray-500 tracking-widest" : "text-sm title-font text-light tracking-widest"}>
                                                                 CODESWEAR.COM
@@ -211,21 +211,23 @@ const Orders: React.FC = (props: unknown) => {
                                     </div>
                                 </>
                                 {/* using the material ui box */}
-                                {/* <Box component={"div"} display={"flex"} flexDirection={"column"} gap={2} justifyContent={"start"} alignItems={"start"} color={theme.light ? "#000" : "#fff"}>
-                                    {orderList && orderList.map((order, index) => {
-                                        return <div className="order-item flex align-center gap-2 justify-center">
-                                            <Typography key={index} variant="h4">
-                                                {order.title}
-                                            </Typography>
-                                            <Image alt="your_order" className="rounded-2" src={order.img} width={50} height={50} />
-                                        </div>
-                                    })}
-                                </Box>
-                                {
-                                    Object.keys(cartstate).length > 0 && Object.keys(buyedProducts).length > 0 || orderList.length === 0 && <Typography className="" variant="h2" color={"magenta"}>
-                                        Oops, no orders plcaed , visit out products pages please!
-                                    </Typography>
-                                } */}
+                                {/* <>
+                                    <Box component={"div"} display={"flex"} flexDirection={"column"} gap={2} justifyContent={"start"} alignItems={"start"} color={theme.light ? "#000" : "#fff"}>
+                                        {orderList && orderList.map((order, index) => {
+                                            return <div className="order-item flex align-center gap-2 justify-center">
+                                                <Typography key={index} variant="h4">
+                                                    {order.title}
+                                                </Typography>
+                                                <Image alt="your_order" className="rounded-2" src={order.img} width={50} height={50} />
+                                            </div>
+                                        })}
+                                    </Box>
+                                    {
+                                        Object.keys(cartstate).length > 0 && Object.keys(buyedProducts).length > 0 || orderList.length === 0 && <Typography className="" variant="h2" color={"magenta"}>
+                                            Oops, no orders plcaed , visit out products pages please!
+                                        </Typography>
+                                    }
+                                </> */}
                                 {/*.... material-ui.... */}
                             </>
                         }

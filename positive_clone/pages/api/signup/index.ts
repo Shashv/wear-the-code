@@ -15,7 +15,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             username: parsedPositive.name,
             password: await generateHashedPassword(parsedPositive.password),
             email: parsedPositive.email,
-            image:""
+            image: ""
         });
         await newUser.save();
         //use myslq to use below....//
@@ -38,6 +38,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         return response.json({ message: "User created successfully" });
     }
     catch (er) {
+        console.log("Error", er);
         return response.status(500).send("Oops something went wrong");
     }
 }

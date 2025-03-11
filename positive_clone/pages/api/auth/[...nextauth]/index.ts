@@ -14,7 +14,7 @@ const authOptions: NextAuthOptions = {
                 email: { type: "email", placeholder: "Enter Email" },
                 checkStatus: { type: "checkbox", placeholder: "Remember Choice" },
                 password: { type: "password", placeholder: "Enter password" }
-            },
+            },  
             async authorize(credentials, req) {
                 try {
                     await mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
