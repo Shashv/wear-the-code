@@ -113,10 +113,11 @@ const Login: NextPage = () => {
                 }
                 else if (!response.error.includes("ECONNREFUSED")) {
                     setLoader(false);
-                    toast.error("Oops something went wrong", {
-                        autoClose: 2000,
-                        theme: "colored"
-                    })
+                    response.error === "CredentialsSignin" ?
+                        toast.error("Invalid credentials , please try again,", {
+                            autoClose: 2000,
+                            theme: "colored"
+                        }) : null
                 }
                 else if (response.error.includes("ECONNREFUSED")) {
                     toast.error("Oops please connection failed ,please try again", {

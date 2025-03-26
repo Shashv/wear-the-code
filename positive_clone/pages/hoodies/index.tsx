@@ -44,6 +44,10 @@ const Hoodies: NextPage<{
     }
     useEffect(() => {
         if (session.status === "unauthenticated") router.getDetails().replace("/authentication/login");
+        if (hoodies) {
+            setLoader(false);
+            setProgress(100);
+        }
         switch (isInitialMount.current) {
             case true: {
                 toast.success("Hoodies", {
@@ -58,14 +62,14 @@ const Hoodies: NextPage<{
             }
         }
     }, [session]);
-    useEffect(() => {
-        hoodies && setLoader(false);
-        setProgress(100);
-        // toast.success("Hoodies", {
-        //     theme: "dark",
-        //     autoClose: 2000
-        // })
-    }, []);
+    // useEffect(() => {
+    //     hoodies && setLoader(false);
+    //     setProgress(100);
+    //     toast.success("Hoodies", {
+    //         theme: "dark",
+    //         autoClose: 2000
+    //     })
+    // }, []);
     return (
         <>
             {loader ? <Backdrop open>

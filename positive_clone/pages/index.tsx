@@ -46,11 +46,12 @@ export default function Home(props: { name: string, scrollTop: number, direction
         }
         else {
             localStorage.setItem("toastShown", "positive");
-            toast.success(`Welcome to Codeswear ${props.name}`, {
-                theme: theme.light ? "light" : "dark",
-                draggable: false,
-                autoClose: 2500,
-            });
+            props.name ?
+                toast.success(`Welcome to Codeswear ${props.name}`, {
+                    theme: theme.light ? "light" : "dark",
+                    draggable: false,
+                    autoClose: 2500,
+                }) : null;
         }
     }, []);
     return (

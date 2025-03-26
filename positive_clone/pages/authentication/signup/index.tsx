@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 // import { Container, Row, Col, Form } from "reactstrap";
 // import Typography from "@mui/material/Typography";
 // import Box from "@mui/material/Typography";
@@ -25,10 +25,11 @@ interface ISignup {
     password: string;
     confirmPassword: string;
     checkStatus?: boolean;
-    image?: any;
+    image?: File;
 }
 let passwordValue: string = "";
 let confirmPassword: string = "";
+let imageBuffer: any = "";
 //botpenguin...
 // type FormInputs = {
 //     forgotPassword: {
@@ -653,6 +654,8 @@ const Signup: NextPage = () => {
     });
     const router = useRouter();
     const [loader, setLoader] = React.useState<boolean>(false);
+    const [image, setImage] = useState<File | null | Blob>(null);
+    const imageref = useRef<HTMLImageElement>(null);
     const [password, setPassword] = React.useState<{
         generalpassword: {
             show: boolean
@@ -667,12 +670,54 @@ const Signup: NextPage = () => {
             show: false,
         }
     });
+    const { onChange, ...rest } = register("image", {
+        required: true
+    })
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const fileReader = new FileReader();
+            fileReader.addEventListener("load", e => {
+                if (imageref.current) {
+                    let result = fileReader.result?.toString().replace(/^data:image\/\w+;base64,/, "") || "";
+                    let buffer = Buffer.from(result, "base64")
+                    imageref.current.src = fileReader.result?.toString() || "";
+                    imageBuffer = buffer;
+                }
+            }, false)
+            fileReader.readAsDataURL(e.target.files[0]);
+            setImage(e.target.files[0]);
+
+        }
+        else {
+            //  onChange(event) 
+            console.log("Event target files babaji", e.target.files);
+            // console.log("Inside the change event")
+        }
+        const printBaba = () => {
+            let list = [1, 2, 3, 4, 5];
+            list.forEach(item => {
+                for (let a = 1; a <= item; a++) {
+                    console.log(item)
+                }
+            })
+        }
+    }
     const details = (data: FieldValues) => {
         setLoader(true);
         if (data) {
+            data["image"] = image;
+            const formData = new FormData();
+            Object.keys(data).forEach(key => {
+                formData.append(`${key}`, data[`${key}`]);
+                // console.log("Key value", formData.get(`${key}`));
+            });
+            // formData.append("imageName", image ? image : "");
+            // formData.append("imageBuffer", imageBuffer);
+            // using the json body configuration...///
             fetch("/api/signup", {
                 method: "POST",
-                body: JSON.stringify(data)
+                // body: JSON.stringify(data)
+                body: formData
             }).then(res => res.json()).then(res => {
                 setLoader(false);
                 if (res.message === "User created successfully") {
@@ -680,17 +725,44 @@ const Signup: NextPage = () => {
                         position: "top-right",
                         autoClose: 4000,
                         draggable: false,
-                    })
+                    });
+                    reset();
+                    setImage(null);
+                    router.replace("/", undefined, { shallow: true });
                 }
                 else if (res.message === "User already exists") {
-                    toast.info("User already exists", {
+                    toast.info("User with the matched credentials already exists , please enter different credentials or login with the same", {
                         autoClose: 2000,
                         theme: "colored"
-                    })
+                    });
+                }
+                else if (res.message === "Babaji Gangotri , please provide unique profile pic") {
+                    toast.info("Babaji Gangotri , please provide unique profile pic", {
+                        autoClose: 2000,
+                        theme: "colored"
+                    });
                 }
             });
-            reset();
-            router.replace("/")
+            // fetch("/api/checkoutsession", {
+            //     method: "POST",
+            //     body: formData
+            // }).then(response => response.json()).then(final => {
+            //     setLoader(false);
+            //     if (final.message === "User created successfully") {
+            //         toast.success("Yay,account created successfully", {
+            //             position: "top-right",
+            //             autoClose: 4000,
+            //             draggable: false,
+            //         })
+            //     }
+            //     else if (final.message === "User already exists") {
+            //         toast.info("User already exists", {
+            //             autoClose: 2000,
+            //             theme: "colored"
+            //         })
+            //     }
+            // })
+
         }
     }
     return (
@@ -706,12 +778,13 @@ const Signup: NextPage = () => {
                                 <img className="w-17 h-14 mr-2" src="/codeswearcircle.png" alt="logo" />
                                 CodeSwear - Sign up
                             </a>
-                            <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-pink-800 dark:border-pink-700">
+                            <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-pink-800 dark:border-pink-700 ">
                                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                                     <h1 className="text-xl font-bold text-pink-500 md:text-2xl">
                                         Create an account
                                     </h1>
-                                    <form className="space-y-4 md:space-y-7" onSubmit={handleSubmit(details)}>
+                                    <form className="space-y-4 md:space-y-7" autoComplete="off" onSubmit={handleSubmit(details)}>
+                                        <input type="hidden" value={"prayer"} />
                                         <div className="position-relative">
                                             <label htmlFor="email" className="block mb-2 text-sm font-medium text-pink-500">Your Name</label>
                                             <input maxLength={40} type="text" id="name" {...register("name", {
@@ -748,16 +821,14 @@ const Signup: NextPage = () => {
                                             </label>
                                             <div className="uploader-wrapper">
                                                 <label htmlFor="file-upload" className="p-2">
-                                                    <Image className="" alt="Upload the image" src={uploader} width={60} height={60} />
-                                                </label>
-                                                <input id="file-upload" className="profile-uploader d-none" type={"file"} {...register("image", {
-                                                    required: true, onChange(event) {
-                                                        console.log("Inside the change event")
-                                                        console.log("Event target files", event);
+                                                    {
+                                                        !image ?
+                                                            <Image className="w-[100px] h-[100px]" alt="Upload the image" src={uploader} width={60} height={60} /> : <img ref={imageref} className="rounded-circle w-[140px] h-[140px]" width={60} height={60} />
                                                     }
-                                                })} />
+                                                </label>
+                                                <input id="file-upload" accept=".jpeg,.jpg,.png" multiple={false} className="profile-uploader d-none" type={"file"} onChange={handleFileChange} {...rest} />
                                             </div>
-                                            {errors.image && <span className="absolute text-xs text-pink-600 top-[65px] left-4">
+                                            {errors.image && <span className="absolute text-xs text-pink-600 top-[100px] left-4">
                                                 {"Image is required*"}</span>}
                                         </div>
                                         <div className="position-relative">

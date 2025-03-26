@@ -14,10 +14,10 @@ const authOptions: NextAuthOptions = {
                 email: { type: "email", placeholder: "Enter Email" },
                 checkStatus: { type: "checkbox", placeholder: "Remember Choice" },
                 password: { type: "password", placeholder: "Enter password" }
-            },  
+            },
             async authorize(credentials, req) {
                 try {
-                    await mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+                    await mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
                     let findedUser = await UserModel.findOne({ email: credentials?.email });
                     const babaji = await positive.compare(credentials?.password || "", findedUser?.password || "");
                     if (findedUser && babaji)
@@ -26,14 +26,27 @@ const authOptions: NextAuthOptions = {
                             name: findedUser["username"],
                             email: findedUser["email"],
                         }
+                        else if(findedUser && !babaji) {
+                            throw new Error("Invalid Password");
+                        }
+                    else if (!findedUser) {
+                        throw new Error("unable to find the user");
+                        // return {
+                        //     id: "not_available",
+                        //     name: "babaji",
+                        //     email: "email"
+                        // }
+                    }
                     else return null;
                 }
                 catch (er) {
-                    return {
-                        id: "error",
-                        name: "error",
-                        email: "emailerror"
-                    }
+                    console.log("error occured in the authentication process", er);
+                    // return {
+                    //     id: "error",
+                    //     name: "error",
+                    //     email: "emailerror"
+                    // }
+                    return null;
                 }
             },
         }),
@@ -60,6 +73,7 @@ const authOptions: NextAuthOptions = {
     },
     pages: {
         signIn: "/authentication/login",
+        error: "/authentication/login"
     }
 
 }

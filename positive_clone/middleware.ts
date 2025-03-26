@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 // import jsonwebtoken from "jsonwebtoken";
 // import { cookies } from "next/headers";
+import Multer from "multer";
 const middleware = (request: NextRequest) => {
     let cookieValue = request.cookies.get("isLog")?.value;
     let pathname = request.nextUrl.pathname || "";

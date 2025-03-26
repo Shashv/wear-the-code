@@ -17,8 +17,8 @@ const checkoutSession = async (req: NextApiRequest, res: NextApiResponse) => {
             quantity: 1
         }],
         mode: "payment",
-        success_url: "",
-        cancel_url: ""
+        // success_url: "",
+        // cancel_url: ""
     })
     // const paymentIntent = await stripe.paymentIntents.create({
     //     amount: 1000,

@@ -43,7 +43,7 @@ const MousePads: NextPage<{
     const { totalPages, page } = usePositive({ totalRecords: Object.keys(mousePadsSchema).length, recordsPerpage: 2 });
     const router = useSearchParamsstate();
     const changePage = (e: React.MouseEvent<HTMLButtonElement>, page: number) => {
-        router.setQuery({ page: page.toString() })
+        router.setQuery({ page: page.toString() });
     }
     useEffect(() => {
         if (session.status === "unauthenticated") {
@@ -75,7 +75,7 @@ const MousePads: NextPage<{
             </Head>
             <div className={theme.light ? style.padlight : style.paddark}>
                 <LoadingBar color="magenta" height={3} progress={progress} />
-                <section className="">
+                 <section className="">
                     <div className="container-fluid">
                         <div className="row h-100">
                             <div className={`col-md-2 ${style.mobilepadcontainer} p-2`}>
