@@ -15,7 +15,7 @@ import orders from "@/modalsmongoose/orders";
 // import Image from "next/image";
 import CommonTable from "@/components/commonlist";
 import { toast } from "react-toastify";
-import { loadStripe } from "@stripe/stripe-js";
+// import { loadStripe } from "@stripe/stripe-js";
 const Orders: React.FC = (props: unknown) => {
     // const cartstate = useSelector((state: IState) => {
     //     return state.productManage;
@@ -25,7 +25,7 @@ const Orders: React.FC = (props: unknown) => {
     let [orderList, setOrderList] = useState<string[] | any[]>([]);
     let [loadOrders, setLoadOrders] = React.useState<boolean>(false);
     let [orderId, setOrderId] = useState<number>();
-    let clientSecret = useRef<string>("");
+    let clientSecret = useRef<string>("");1
     const [tableData, setTabledata] = useState<{ tableHead: Array<any>, tableBody: Array<any> }>({
         tableHead: [{
             type: 'text',
@@ -270,4 +270,4 @@ export const getServerSideProps: GetServerSideProps | ((context: GetServerSidePr
             }
         }
     }
-}
+} 

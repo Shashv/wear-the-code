@@ -19,6 +19,8 @@ import { getServerSession } from "next-auth";
 import { useRouter } from "next/router";
 import authorizeOptions from "../api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
+// import { Elements } from "@stripe/react-stripe-js";
+// import { loadStripe } from "@stripe/stripe-js";
 const Checkout: React.FC = () => {
     let { register, handleSubmit, formState: { errors, isSubmitSuccessful }, reset, setError, clearErrors, control } = useForm<IRegisterOptions>();
     var session = useSession();
@@ -76,6 +78,7 @@ const Checkout: React.FC = () => {
         placeholder: "Enter city pin",
         name: "user_city_pin"
     }];
+    // const loadStripeintent = await loadStripe(process.env.STRIPE_PUBLIC_POSITIVE || "");
     return (
         <>
             <Box component={"div"} className={theme.light ? `bg-light ${style.background}` : `bg-dark ${style.background}`} sx={{
@@ -94,86 +97,93 @@ const Checkout: React.FC = () => {
                         Delievery Details
                     </Typography>
                     {/* when using the non controller components react hook form */}
-                    {/* <Row className="mb-1 g-3">
-                        <Col md={6} className="position-relative">
-                            <FormGroup>
-                                <Label>
-                                    Name
-                                </Label>
-                                <input className={style.registerinput} {...register("name", {
-                                    maxLength: 40, required: true, onChange(event) {
+                    {/* <>
 
-                                    }
-                                })} type="text" />
-                            </FormGroup>
-                            {errors.name && <Typography className="error-text" color={"red"} fontSize={"12px"} position={"absolute"} bottom={"-19px"} left={"25px"}>
-                                Name is required*</Typography>}
-                        </Col>
-                        <Col md={6} className="position-relative">
-                            <FormGroup>
-                                <Label>
-                                    Email
-                                </Label>
-                                <input className={style.registerinput} type="email" {...register("email", { required: true, maxLength: 40 })} />
-                            </FormGroup>
-                            {errors.email && <Typography className="error-text" color={"red"} fontSize={"12px"} position={"absolute"} bottom={"-19px"} left={"25px"}>
-                                Email is required*</Typography>}
-                        </Col>
-                        <Col md={12} className="position-relative">
-                            <FormGroup>
-                                <Label>
-                                    Address
-                                </Label>
-                                <textarea className={style.registerinput}  {...register("address", { required: true, maxLength: 40 ,onChange(event) {
-                                    console.log("Event for the change of the textarea",event.target.value)
-                                }})} />
-                            </FormGroup>
-                            {errors.address && <Typography className="error-text" color={"red"} fontSize={"12px"} position={"absolute"} bottom={"-19px"} left={"25px"}>
-                                Address is required*</Typography>}
-                        </Col>
-                        <Col md={6} className="position-relative">
-                            <FormGroup>
-                                <Label>
-                                    Phone
-                                </Label>
-                                <input className={style.registerinput} type={"number"} {...register("phone", { required: true, minLength: 10, maxLength: 15 })} />
-                            </FormGroup>
-                            {errors.phone && <Typography className="error-text" color={"red"} fontSize={"12px"} position={"absolute"} bottom={"-19px"} left={"25px"}>
-                                Phone is required*</Typography>}
-                        </Col>
-                        <Col md={6} className="position-relative">
-                            <FormGroup>
-                                <Label>
-                                    City
-                                </Label>
-                                <input className={style.registerinput} type="text" {...register("city", { required: true, minLength: 10, maxLength: 20 })} />
-                            </FormGroup>
-                            {errors.city && <Typography className="error-text" color={"red"} fontSize={"12px"} position={"absolute"} bottom={"-19px"} left={"25px"}>
-                                City is required*</Typography>}
-                        </Col>
-                        <Col md={6} className="position-relative">
-                            <FormGroup>
-                                <Label>
-                                    State
-                                </Label>
-                                <input className={style.registerinput} type="phone" {...register("pinCode", { required: true })} />
-                            </FormGroup>
-                            {errors.pinCode && <Typography className="" color={"red"} fontSize={"12px"} position={"absolute"} bottom={"-19px"} left={"25px"}>
-                                State pin is required*
-                            </Typography>}
+                        <Row className="mb-1 g-3">
+                            <Col md={6} className="position-relative">
+                                <FormGroup>
+                                    <Label>
+                                        Name
+                                    </Label>
+                                    <input className={style.registerinput} {...register("name", {
+                                        maxLength: 40, required: true, onChange() {
 
-                        </Col>
-                        <Col className="position-relative" md={6}>
-                            <FormGroup>
-                                <Label>
-                                    Pin Code
-                                </Label>
-                                <input className={style.registerinput} type="number" {...register("pinCode", { required: true, minLength: 5, maxLength: 10 })} />
-                            </FormGroup>
-                            {errors.pinCode && <Typography className="error-text" color={"red"} fontSize={"12px"} position={"absolute"} bottom={"-19px"} left={"25px"}>
-                                Pin is required*</Typography>}
-                        </Col>
-                    </Row> */}
+                                        }
+                                    })} type="text" />
+                                </FormGroup>
+                                {errors.name && <Typography className="error-text" color={"red"} fontSize={"12px"} position={"absolute"} bottom={"-19px"} left={"25px"}>
+                                    Name is required*</Typography>}
+                            </Col>
+                            <Col md={6} className="position-relative">
+                                <FormGroup>
+                                    <Label>
+                                        Email
+                                    </Label>
+                                    <input className={style.registerinput} type="email" {...register("email", { required: true, maxLength: 40 })} />
+                                </FormGroup>
+                                {errors.email && <Typography className="error-text" color={"red"} fontSize={"12px"} position={"absolute"} bottom={"-19px"} left={"25px"}>
+                                    Email is required*</Typography>}
+                            </Col>
+                            <Col md={12} className="position-relative">
+                                <FormGroup>
+                                    <Label>
+                                        Address
+                                    </Label>
+                                    <textarea className={style.registerinput}  {...register("address", {
+                                        required: true, maxLength: 40, onChange(event) {
+                                            console.log("Event for the change of the textarea", event.target.value)
+                                        }
+                                    })} />
+                                </FormGroup>
+                                {errors.address && <Typography className="error-text" color={"red"} fontSize={"12px"} position={"absolute"} bottom={"-19px"} left={"25px"}>
+                                    Address is required*</Typography>}
+                            </Col>
+                            <Col md={6} className="position-relative">
+                                <FormGroup>
+                                    <Label>
+                                        Phone
+                                    </Label>
+                                    <input className={style.registerinput} type={"number"} {...register("phone", { required: true, minLength: 10, maxLength: 15 })} />
+                                </FormGroup>
+                                {errors.phone && <Typography className="error-text" color={"red"} fontSize={"12px"} position={"absolute"} bottom={"-19px"} left={"25px"}>
+                                    Phone is required*</Typography>}
+                            </Col>
+                            <Col md={6} className="position-relative">
+                                <FormGroup>
+                                    <Label>
+                                        City
+                                    </Label>
+                                    <input className={style.registerinput} type="text" {...register("city", { required: true, minLength: 10, maxLength: 20 })} />
+                                </FormGroup>
+                                {errors.city && <Typography className="error-text" color={"red"} fontSize={"12px"} position={"absolute"} bottom={"-19px"} left={"25px"}>
+                                    City is required*</Typography>}
+                            </Col>
+                            <Col md={6} className="position-relative">
+                                <FormGroup>
+                                    <Label>
+                                        State
+                                    </Label>
+                                    <input className={style.registerinput} type="phone" {...register("pinCode", { required: true })} />
+                                </FormGroup>
+                                {errors.pinCode && <Typography className="" color={"red"} fontSize={"12px"} position={"absolute"} bottom={"-19px"} left={"25px"}>
+                                    State pin is required*
+                                </Typography>}
+
+                            </Col>
+                            <Col className="position-relative" md={6}>
+                                <FormGroup>
+                                    <Label>
+                                        Pin Code
+                                    </Label>
+                                    <input className={style.registerinput} type="number" {...register("pinCode", { required: true, minLength: 5, maxLength: 10 })} />
+                                </FormGroup>
+                                {errors.pinCode && <Typography className="error-text" color={"red"} fontSize={"12px"} position={"absolute"} bottom={"-19px"} left={"25px"}>
+                                    Pin is required*</Typography>}
+                            </Col>
+                        </Row>
+                      
+
+                    </> */}
                     {/* ..... */}
                     {/* when using the controller component */}
                     <Row className="mb-1 g-2">
@@ -186,12 +196,12 @@ const Checkout: React.FC = () => {
                         })}
                     </Row>
                     {/* ... */}
-                    <Row className="mb-1">
+                    {/* <Row className="mb-1">
 
                     </Row>
                     <Row className="mb-1">
 
-                    </Row>
+                    </Row> */}
                     <div className="row mb-1">
                         <Col xs={6}>
                             <Button className="bg-pink-400 hover:bg-pink-500" type="submit" variant={"contained"} color="secondary">
@@ -211,6 +221,11 @@ const Checkout: React.FC = () => {
                         </Col>
                     </Row>
                 </Container>
+                {/* <>
+                <Elements stripe={loadStripeintent} options={{ mode: "payment", currency: "usd", amount: 10 }} >
+                    <div className="">Stripe Elements process</div>
+                </Elements>
+                </> */}
             </Box>
         </>
     )

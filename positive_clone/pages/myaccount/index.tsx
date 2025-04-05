@@ -15,6 +15,7 @@ import styles from "./index.module.css";
 import StyledModal from "@/components/styledpopup";
 import { Controller, FieldValues, useForm } from "react-hook-form";
 import { Button } from "reactstrap";
+import Image from "next/image";
 let accountEmail: string = "";
 const EditForm: React.FC<{ manageAccount: (operationType: string, body: any) => Promise<any> }> = ({ manageAccount }) => {
     const { handleSubmit, control } = useForm();
@@ -23,11 +24,11 @@ const EditForm: React.FC<{ manageAccount: (operationType: string, body: any) => 
         placeholder: "Enter email",
         name: "email"
     },
-    // {
-    //     type: "password",
-    //     name: "password",
-    //     placeholder: "Enter password"
-    // },
+    {
+        type: "password",
+        name: "password",
+        placeholder: "Enter password"
+    },
     {
         type: "text",
         name: "username",
@@ -60,7 +61,7 @@ const EditForm: React.FC<{ manageAccount: (operationType: string, body: any) => 
         </form>
     )
 }
-const MyAccount: NextPage<{ accountDetails: { name: string; email: string }, users: Array<{ username: string; email: string; password: string }> }> = ({ accountDetails: { name, email }, users }) => {
+const MyAccount: NextPage<{ accountDetails: { name: string; email: string; image: string }, users: Array<{ username: string; email: string; password: string, image: string }> }> = ({ accountDetails: { name, email, image }, users }) => {
     const { status } = useSession();
     const routerActions = useRouter();
     const [crudConfirmation, setCrudconfirmation] = useState<boolean>(false);
@@ -77,7 +78,13 @@ const MyAccount: NextPage<{ accountDetails: { name: string; email: string }, use
         type: "text",
         title: "password",
         label: "Password"
-    }, {
+    },
+    {
+        type: "thumbnail",
+        title: "image",
+        label: "Profile Thumbnail"
+    },
+    {
         type: "action",
         actionSchema: [{
             type: "edit",
@@ -128,17 +135,19 @@ const MyAccount: NextPage<{ accountDetails: { name: string; email: string }, use
             <EditForm manageAccount={(type: string, body: any) => manageAccounts(type, body)} />
         </p> : <p>User will be deleted , once deleted this process can't be undone</p>}
     </div>
+    // console.log("Image name", image, "url host", process.env.NEXT_PUBLIC_URL);
     useEffect(() => {
         if (status === "unauthenticated") routerActions.replace("/authentication/login");
-    }, [status, routerActions])
+    }, [status, routerActions]);
     return (
         <>
             <div className={`container-fluid h-[100vh] ${themeState.dark ? styles.darkaccount : styles.lightaccount}`}>
                 <div className="row">
                     <div className="col-12">
-                        <div className="accoubnt-details-fields position-sticky top-0">
+                        <div style={{backgroundColor:"pink"}} className={`accoubnt-details-fields position-sticky top-0`}>
                             <Typography variant="h5" color={"salmon"}>Account Holder - {name}</Typography>
                             <Typography variant="h5" color={"skyblue"}>Account Holder Email - {email}</Typography>
+                            <Image width={100} height={100} alt="User Email" className="" src={`/uploads/${image}`} />
                         </div>
                         <div className="">
                             <div className="users-list">
@@ -168,12 +177,14 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
             props: {
                 accountDetails: {
                     name: sessionserver.user.name,
-                    email: sessionserver.user.email
+                    email: sessionserver.user.email,
+                    image: sessionserver.user.image
                 },
                 users: users.map(user => ({
                     username: user.username,
                     email: user.email,
-                    password: user.password
+                    password: user.password,
+                    image: user?.image || ""
                 }))
             }
         }

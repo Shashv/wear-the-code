@@ -4,54 +4,56 @@ import { Edit, Delete } from "@mui/icons-material";
 import { useSelector, UseSelector } from "react-redux";
 import { ITableData } from "@/modals";
 import { IState } from "@/redux/sore";
+import Image from "next/image";
 const CommonTable: React.FC<ITableData<any>> = ({ tablehead, tablebody, theme }) => {
-    const [tabledata, setTabledata] = React.useState<{
-        tablehead: any[];
-        tablebody: any[];
-    }>({
-        tablehead: [
-            { type: "text", title: "name", label: "Name" }
-            ,
-            { type: "text", title: "age", label: "Age" },
-            ,
-            { type: "text", title: "gender", label: "Gender" }
-            ,
-            { type: "text", title: "college", label: "college" }
-            ,
-            {
-                type: "action", title: "Action", actionSchema: [{
-                    type: "edit",
-                    action: () => { }
-                }]
-            }
-        ],
-        tablebody: [
-            {
-                name: "SHASHVAT GUPTA",
-                age: 24,
-                gender: "MALE",
-                college: "Thapar University",
-            },
-            {
-                name: "HARDEEP SINGH",
-                age: 24,
-                gender: "MALE",
-                college: "Thapar University"
-            },
-            {
-                name: "SAHIL GARG",
-                age: 24,
-                gender: "MALE",
-                college: "Thapar University"
-            }, {
-                name: "CHETAN SINGLA",
-                age: 24,
-                gender: "MALE",
-                college: "Thapar University"
-            }
-        ]
-    });
+    // const [tabledata, setTabledata] = React.useState<{
+    //     tablehead: any[];
+    //     tablebody: any[];
+    // }>({
+    //     tablehead: [
+    //         { type: "text", title: "name", label: "Name" }
+    //         ,
+    //         { type: "text", title: "age", label: "Age" },
+    //         ,
+    //         { type: "text", title: "gender", label: "Gender" }
+    //         ,
+    //         { type: "text", title: "college", label: "college" }
+    //         ,
+    //         {
+    //             type: "action", title: "Action", actionSchema: [{
+    //                 type: "edit",
+    //                 action: () => { }
+    //             }]
+    //         }
+    //     ],
+    //     tablebody: [
+    //         {
+    //             name: "SHASHVAT GUPTA",
+    //             age: 24,
+    //             gender: "MALE",
+    //             college: "Thapar University",
+    //         },
+    //         {
+    //             name: "HARDEEP SINGH",
+    //             age: 24,
+    //             gender: "MALE",
+    //             college: "Thapar University"
+    //         },
+    //         {
+    //             name: "SAHIL GARG",
+    //             age: 24,
+    //             gender: "MALE",
+    //             college: "Thapar University"
+    //         }, {
+    //             name: "CHETAN SINGLA",
+    //             age: 24,
+    //             gender: "MALE",
+    //             college: "Thapar University"
+    //         }
+    //     ]
+    // });
     const themePositive = useSelector((state: IState) => state.toggletheme);
+    console.log("Table body", tablebody);
     return (
         <>
             <Table className={`bg-light ${themePositive?.dark ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
@@ -67,6 +69,7 @@ const CommonTable: React.FC<ITableData<any>> = ({ tablehead, tablebody, theme })
                         tablebody.map((bodycell, index) => <TableRow key={index}>
                             {tablehead.map((head, cellindex) => <TableCell color={theme?.light ? "#000" : "#fff"} key={cellindex}>
                                 {head.type === "text" && bodycell[head.title]}
+                                {head.type === "thumbnail" && <Image width={100} height={100} className="rounded-circle w-[120px] h-[120px] p-2" alt="user_profile" src={`/uploads/${bodycell[head.title]}`} />}
                                 {head.type === "action" && <div className="table-actions">
                                     {head.actionSchema.map((action: { type: string; action: (param?: any) => void }, indexn: number) => {
                                         return action.type === "edit" ?

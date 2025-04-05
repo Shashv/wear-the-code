@@ -762,7 +762,6 @@ const Signup: NextPage = () => {
             //         })
             //     }
             // })
-
         }
     }
     return (

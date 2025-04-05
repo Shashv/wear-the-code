@@ -23,7 +23,7 @@ import clearBuyproducts from "@/redux/actions/clearBuyProducts";
 // import useToast from "@/hooks/useToast";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-// import { loadStripe } from "@stripe/stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 let sessionId: any = ""
 const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawer, reduxAdd, reduxSubtract, reviewCart }) => {
     const dispatch: IDispatch = useDispatch();
@@ -39,6 +39,7 @@ const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawe
     //     quantity: 0,
     //     product: ""
     // }
+    const loadStripeintent = loadStripe(process.env.STRIPE_PUBLIC_POSITIVE || "");
     let [clearCartConfirmation, setClearCartConfirmation] = useState<boolean>(false);
     // let [toastC, setToastC] = useState<boolean>(false);
     // const ModalContent: JSX.Element = <>
@@ -71,7 +72,17 @@ const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawe
     //positive blesses//
     let babaji: (buyProduct: { [key: string]: {} }, e?: React.MouseEvent, timeOut?: ReturnType<typeof setTimeout>) => Promise<void> = async (e, tme) => {
         // setToastC(false);
-        // console.log("Baba ji calling function");
+        // console.log("Baba ji calling function",buyProduct);
+        // // console.log("Client secret", clientSecret);
+        const stripeRedirectAfterCheckout = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_POSITIVEKEY || "")
+        const sessionSecret = await fetch("/api/payment/checkoutSession", {
+            method: "POST",
+            body: JSON.stringify({ amount: 1 })
+        });
+        const clientSecret = await sessionSecret.json();
+        await stripeRedirectAfterCheckout?.redirectToCheckout({
+            sessionId: clientSecret.client_secret
+        });
         let ordersValue = await fetch("/api/orders", {
             method: "POST",
             body: JSON.stringify({ buyProduct: buyProduct, userId: localStorage.getItem("user_id") })
@@ -80,6 +91,7 @@ const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawe
         sessionId = order;
         return sessionId;
     }
+
     let productList: string[] = Object.keys(state);
     let amount: number = 0;
     // useEffect(() => {

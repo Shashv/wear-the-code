@@ -96,15 +96,15 @@ const Login: NextPage = () => {
             router.replace("/")
         }
     }, [session]);
-    // using the inbuilt next auth//
+    // using theinbuilt next auth//
     const details = async (data: FieldValues) => {
         setLoader(true);
         //without using the next-auth//
         let response = await signIn("credentials", { ...data, redirect: false });
         // console.log("Response finded user", response);
         if (response) {
-
             if (response.error) {
+
                 if (response.status === 401 && response.error.includes("auth")) {
                     toast.info("Please provide correct credentials", {
                         autoClose: 2000,
@@ -117,7 +117,10 @@ const Login: NextPage = () => {
                         toast.error("Invalid credentials , please try again,", {
                             autoClose: 2000,
                             theme: "colored"
-                        }) : null
+                        }) : toast.error(`${response.error}`, {
+                            autoClose: 2000,
+                            theme: "colored"
+                        })
                 }
                 else if (response.error.includes("ECONNREFUSED")) {
                     toast.error("Oops please connection failed ,please try again", {
@@ -126,7 +129,6 @@ const Login: NextPage = () => {
                     })
                 }
             }
-
         }
         else {
             setLoader(false);
@@ -217,7 +219,7 @@ const Login: NextPage = () => {
             }
         },
     });
-
+    
     const rememberCheck = register("checkStatus", {
         required: true, onChange(event) {
 
@@ -265,7 +267,7 @@ const Login: NextPage = () => {
                                         </div>
                                         <a className="text-sm font-medium text-pink-600" href="/authentication/forgotPassword">Forgot password?</a>
                                     </div>
-                                    <button type="submit" className="w-full text-light bg-pink-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-800 font-medium rounded-lg text-xl px-3 py-2 text-center">Sign in</button>
+                                    <button type="submit" disabled={loader} className="w-full text-light bg-pink-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-800 font-medium rounded-lg text-xl px-3 py-2 text-center">Sign in</button>
                                     <p className="text-sm font-light text-center text-pink-500">
                                         Don’t have an account yet? <a href="/authentication/signup" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
                                     </p>

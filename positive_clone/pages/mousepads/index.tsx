@@ -45,6 +45,7 @@ const MousePads: NextPage<{
     const changePage = (e: React.MouseEvent<HTMLButtonElement>, page: number) => {
         router.setQuery({ page: page.toString() });
     }
+    const initialMount = React.useRef(true);
     useEffect(() => {
         if (session.status === "unauthenticated") {
             router.getDetails().push("/authentication/login");

@@ -159,7 +159,7 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
         }
     }
     componentDidUpdate(previousprops: Readonly<IShirtProps>, previousstate: Readonly<IShirtState>): void {
-
+        console.log('Inside the component did update');
     }
 }
 // let combinedstate = store.getState();

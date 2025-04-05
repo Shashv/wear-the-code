@@ -28,7 +28,7 @@ interface IParas {
         name: string
     }
 }
-export default function Home(props: { name: string, scrollTop: number, direction: string, session?: Session } | any) {
+export default function Home(props: { name: string, scrollTop: number, direction: string, session?: Session, image?: string } | any) {
     // const rouerDetail = useRouter();
     const sessionStatus = useSession();
     // scroll events babaji//
@@ -96,7 +96,8 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
             props: {
                 // session: session,
                 name: session.user.name,
-                email: session.user.email
+                email: session.user.email,
+                image: session.user.image
             }
         }
     }

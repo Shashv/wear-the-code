@@ -10,8 +10,10 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { Typography } from "@mui/material";
 import { IState } from "@/redux/sore";
-import { Button } from "reactstrap";
-const OrdersList: NextPage<{ pageName: string, sessionStatus: { name: string; email: string }, products: any[] }> = ({ pageName, sessionStatus, products }) => {
+// import { Button } from "reactstrap";
+import styles from "./index.module.css";
+import Image from "next/image";
+const OrdersList: NextPage<{ pageName: string, sessionStatus?: { name: string; email: string }, products: any[] }> = ({ pageName, sessionStatus, products }) => {
     // const { name, email } = sessionStatus;
     const session = useSession();
     const router = useRouter();
@@ -21,7 +23,7 @@ const OrdersList: NextPage<{ pageName: string, sessionStatus: { name: string; em
         tableHead: [{
             type: "text",
             label: "Name",
-            title: "name"
+            title: "id"
         }, {
             type: "text",
             label: "Quantity",
@@ -30,12 +32,17 @@ const OrdersList: NextPage<{ pageName: string, sessionStatus: { name: string; em
         tableBody: []
     });
     React.useEffect(() => {
-        if (session.status === "unauthenticated") router.replace("/authentication/login")
-    }, [session]);
-
-    React.useEffect(() => {
+        if (session.status === "unauthenticated") router.replace("/authentication/login");
         setTabledata({ ...tableData, tableBody: products });
-    }, [products]);
+    }, [session,products]);
+    // React.useEffect(() => {
+    //     setTabledata({ ...tableData, tableBody: products });
+    // }, [products]);
+    const userDetails = {
+        name: session?.data?.user.name,
+        email: session?.data?.user.email,
+        profile: session?.data?.user.image
+    }
     // const checkSegmentation = (ar: string[], s:co string) => {
     //     const arrayCharacters = Array.from(s);
     //     //    console.log("Array characters",arrayCharacters);
@@ -47,12 +54,13 @@ const OrdersList: NextPage<{ pageName: string, sessionStatus: { name: string; em
     // }
     return (
         <>
-            <div className="container">
+            <div className={themeState.dark ? `container-fluid ${styles.orderlistcontainerdark}`:`container-fluid ${styles.orderlistcontainer}`}>
                 <div className="row">
                     <div className="col-12 table-container" style={{ backgroundColor: themeState.dark ? "#000" : "#fff" }}>
-                        <Typography variant="h4">
-                            {session.data?.user.name}
-                        </Typography>
+                        {Object.keys(userDetails).map(user => user === "profile" ? <Image width={100} height={100} className="rounded-circle w-[100px] h-[100px]" src={`/uploads/${userDetails["profile"]}`} alt="profile_pic" /> : <Typography key={user} variant="h4">
+                            {user === "email" ? session.data?.user.email : user === "name" ? session.data?.user.name : null}
+                            {}
+                        </Typography>)}
                         <CommonTable tablebody={tableData.tableBody ? tableData.tableBody : []} tablehead={tableData.tableHead ? tableData.tableHead : []} />
                         <Typography className="text-pink-600" variant="h4"></Typography>
                         {/* {session.data?.user.email} */}

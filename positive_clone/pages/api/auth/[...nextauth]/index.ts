@@ -25,10 +25,11 @@ const authOptions: NextAuthOptions = {
                             id: findedUser["id"],
                             name: findedUser["username"],
                             email: findedUser["email"],
+                            image: findedUser.image
                         }
-                        else if(findedUser && !babaji) {
-                            throw new Error("Invalid Password");
-                        }
+                    else if (findedUser && !babaji) {
+                        throw new Error("Invalid or Incorrect Password");
+                    }
                     else if (!findedUser) {
                         throw new Error("unable to find the user");
                         // return {
@@ -39,14 +40,15 @@ const authOptions: NextAuthOptions = {
                     }
                     else return null;
                 }
-                catch (er) {
+                catch (er: any) {
                     console.log("error occured in the authentication process", er);
                     // return {
                     //     id: "error",
                     //     name: "error",
                     //     email: "emailerror"
                     // }
-                    return null;
+                    // return null;
+                    throw new Error(er.message ? er.message : "Oops something went wrong")
                 }
             },
         }),

@@ -11,10 +11,10 @@ import authorizeOptions from "@/pages/api/auth/[...nextauth]";
 const ResetPassword: NextPage = () => {
     const { control, handleSubmit } = useForm();
     const [loader, setLoader] = useState<boolean>(false);
-    const [passwordVisibility, setPasswordVisibility] = useState({
-        password: false,
-        confirmPassword: false
-    });
+    // const [passwordVisibility, setPasswordVisibility] = useState({
+    //     password: false,
+    //     confirmPassword: false
+    // });
     const passwordFields = [{
         name: "reset_password",
         positive: "Enter password"
