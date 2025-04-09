@@ -16,6 +16,7 @@ import orders from "@/modalsmongoose/orders";
 import CommonTable from "@/components/commonlist";
 import { toast } from "react-toastify";
 // import { loadStripe } from "@stripe/stripe-js";
+import dynamic from "next/dynamic";
 const Orders: React.FC = (props: unknown) => {
     // const cartstate = useSelector((state: IState) => {
     //     return state.productManage;
@@ -25,7 +26,7 @@ const Orders: React.FC = (props: unknown) => {
     let [orderList, setOrderList] = useState<string[] | any[]>([]);
     let [loadOrders, setLoadOrders] = React.useState<boolean>(false);
     let [orderId, setOrderId] = useState<number>();
-    let clientSecret = useRef<string>("");1
+    let clientSecret = useRef<string>(""); 1
     const [tableData, setTabledata] = useState<{ tableHead: Array<any>, tableBody: Array<any> }>({
         tableHead: [{
             type: 'text',
@@ -248,26 +249,28 @@ const Orders: React.FC = (props: unknown) => {
         </>
     )
 }
-export default Orders;
+export default dynamic(() => Promise.resolve(Orders), {
+    ssr: false
+});
 // baba ji this function will always run on the server side..//
-export const getServerSideProps: GetServerSideProps | ((context: GetServerSidePropsContext) => Promise<any>) = async positive => {
-    const session = await getServerSession(positive.req, positive.res, authorizeOptions);
-    // let orders = await OrdersModel.find({});
-    // console.log("Orders list", orders);
-    if (session)
-        return {
-            props: {
-                pageName: "Orders Page",
-                // orders
-            }
-        }
-    else {
-        return {
-            redirect: {
-                basePath: false,
-                destination: "/authentication/login",
-                permanent: false
-            }
-        }
-    }
-} 
+// export const getServerSideProps: GetServerSideProps | ((context: GetServerSidePropsContext) => Promise<any>) = async positive => {
+//     const session = await getServerSession(positive.req, positive.res, authorizeOptions);
+//     // let orders = await OrdersModel.find({});
+//     // console.log("Orders list", orders);
+//     if (session)
+//         return {
+//             props: {
+//                 pageName: "Orders Page",
+//                 // orders
+//             }
+//         }
+//     else {
+//         return {
+//             redirect: {
+//                 basePath: false,
+//                 destination: "/authentication/login",
+//                 permanent: false
+//             }
+//         }
+//     }
+// } 

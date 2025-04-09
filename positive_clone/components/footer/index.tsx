@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
                 <Row className="gy-5 justify-center">
                     <Col xs={12} md={2} className="flex flex-column align-items-center gap-2 justify-center">
                         <Image src={"https://codeswear.com/logo.png"} width={200} height={200} className="rounded-circle" alt="Brand" />
-                        <Typography color={theme.light ? "#000" : "#9ca3a4"} className={theme.light ? "text-center w-1/2" : "text-center w-1/2"}>
+                        <Typography color={theme.light ? "#000" : "#9ca3a4"} className={theme.light ? "text-center w-1/2 text-gray-400" : "text-center text-gray-400 w-1/2"}>
                             Wear the &lt;code/&gt;
                             <br />
                             Premuim coding tshirts,
@@ -31,11 +31,11 @@ const Footer: React.FC = () => {
                         <Typography sx={{ fontSize: { xs: 17 } }} className={theme.light ? "text-gray-600 text-center" : "text-light text-center"}>
                             Shop
                         </Typography>
-                        <div className="d-flex flex-column">
+                        <div className="d-flex flex-column align-items-center">
                             <List dense disablePadding className="" key={""}>
                                 {footerList[0].shop.map((key, index) =>
-                                    <ListItem sx={{ fontSize: "14px" }} key={index} className="px-0 justify-center hover:text-pink-400">
-                                        <Link href={`/${key.route}`} className={theme.light ? "text-decoration-none  hover:text-pink-400" : "text-decoration-none text-light hover:text-pink-400"}>
+                                    <ListItem sx={{ fontSize: "14px", justifyContent: "center" }} key={index} className={theme.light ? "px-0 justify-center hover:text-pink-400 text-gray-400" : "text-slate-400 hover:text-pink-400"}>
+                                        <Link href={`/${key.route}`} >
                                             {key.value.toUpperCase()}
                                         </Link>
                                     </ListItem>
@@ -43,15 +43,15 @@ const Footer: React.FC = () => {
                             </List>
                         </div>
                     </Col>
-                    <Col xs={12} md={2} className="d-flex flex-column gap-2">
+                    <Col xs={12} md={2} className="d-flex flex-column align-items-center gap-2">
                         <Typography sx={{ fontSize: { xs: 17 } }} className={theme.light ? "text-gray-600 text-center" : "text-light text-center"}>
                             Customer Service
                         </Typography>
                         <div className="d-flex flex-column">
                             <List dense disablePadding>
                                 {footerList[0].customerService.map((key, index) =>
-                                    <ListItem sx={{ fontSize: "15px" }} key={index} className="px-0 justify-center hover:text-pink">
-                                        <Link href={`/${key.route}`} className={theme.light ? "text-decoration-none text-muted cursor-pointer" : "text-light cursor-pointer text-decoration-none"}>
+                                    <ListItem sx={{ fontSize: "15px" }} key={index} className={theme.light ? "px-0 text-gray-400 justify-center hover:text-pink-400" : "text-slate-400 hover:text-pink-400 justify-center"}>
+                                        <Link href={`/${key.route}`} >
                                             {key.value}
                                         </Link>
                                     </ListItem>
@@ -59,13 +59,13 @@ const Footer: React.FC = () => {
                             </List>
                         </div>
                     </Col>
-                    <Col xs={12} md={2} className="flex flex-col gap-2">
+                    <Col xs={12} md={2} className="flex flex-col align-items-center gap-2">
                         <Typography className={theme.light ? "text-gray-600 text-center" : "text-light text-center"} sx={{ fontSize: { xs: 17 } }}>
                             Privacy Policy
                         </Typography>
                         <List dense disablePadding>
                             {footerList[0].policy.map((key, index) =>
-                                <ListItem sx={{ fontSize: "15px" }} key={index} className={theme.light ? "text-gray-600 justify-center hover:text-pink-400" : "hover:text-pink-400 text-light justify-center"}>
+                                <ListItem sx={{ fontSize: "15px", justifyContent: "center" }} key={index} className={theme.light ? "text-gray-400 justify-center hover:text-pink-400" : "hover:text-pink-400 text-slate-400 justify-center"}>
                                     <Link className="" href={`/${key.route}`}>
                                         {key.value}
                                     </Link>
@@ -75,7 +75,7 @@ const Footer: React.FC = () => {
                     </Col>
                     <Col xs={12} md={2} className="text-light fw-bold my-auto fs-4">
                         <div className="">
-                            <img className="" src="	https://codeswear.com/pay.png" />
+                            <Image className="rounded-circle" width={200} height={200} alt="Codeswear" src="/codeswearcircle.png" />
                         </div>
                     </Col>
                 </Row>
@@ -84,3 +84,5 @@ const Footer: React.FC = () => {
     )
 }
 export default Footer;
+// className={theme.light ? "text-decoration-none  hover:text-pink-400" : "text-decoration-none text-light hover:text-pink-400"}
+// className={theme.light ? "text-decoration-none text-muted cursor-pointer" : "text-light cursor-pointer text-decoration-none"}

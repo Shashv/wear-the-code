@@ -1,7 +1,7 @@
-@import url("https://db.onlinewebfonts.com/c/f56809563b15c7c76669dac9ca9d38ac?family=Matter+Regular");
+/* @import url("https://db.onlinewebfonts.com/c/f56809563b15c7c76669dac9ca9d38ac?family=Matter+Regular"); */
 
 .footer {
-    font-family: "Matter Regular";
+    /* font-family: "Matter Regular"; */
     background-color: #f1f5f9;
     height: fit-content;
     /* position: fixed;
@@ -10,7 +10,7 @@
 
 .footerdark {
     background-color: #111827;
-    font-family: "Matter Regular";
+    /* font-family: "Matter Regular";  */
     height: fit-content;
     /* position: fixed;
     bottom: 0px; */

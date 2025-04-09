@@ -73,15 +73,17 @@ const Pagination: React.FC<IBabaji> = ({ page, changePage, pageList }) => {
             <button disabled={page === 1} onClick={e => changePage(e, page - 1)} className="previous-page border-pink-200 p-1 hover:bg-pink-500 rounded-2 text-1xl text-pink-600 hover:text-slate-400">
                 Previous
             </button>
-            <>
-                {/* using the dot and page value different approach */}
-                {/* {page > 2 && pageList.length > 5 && ["babaji", "babaji"].map((dot, index) => <button className={`page-item text-slate-200 fs-4`} key={`${dot}-${index}`}>.</button>)}
+            {/* using the dot and page value different approach */}
+            {/* <>
+              
+                {page > 2 && pageList.length > 5 && ["babaji", "babaji"].map((dot, index) => <button className={`page-item text-slate-200 fs-4`} key={`${dot}-${index}`}>.</button>)}
             {visibleSlots.length > 0 ? visibleSlots.map(page => <button className={`page-item ${style.page}`} key={page} onClick={e => changePage(e, page)}>{page}</button>) :
                 staticPages.map(page => <button className={`page-item ${style.page}`} key={page} onClick={e => changePage(e, page)}>{page}</button>)
             }
-            {pageList.length > 5 && !(page >= pageList.length - 2) && ["babaji", "babaji"].map((dot, index) => <button className={`page-item text-slate-500 fs-4`} key={`${dot}-${index}`}>.</button>)} */}
-                {/* .... */}
-            </>
+            {pageList.length > 5 && !(page >= pageList.length - 2) && ["babaji", "babaji"].map((dot, index) => <button className={`page-item text-slate-500 fs-4`} key={`${dot}-${index}`}>.</button>)}
+             
+            </> */}
+            {/* .... */}
             {getPagination(pageList.length).map((pageItem: any, index: number) => <button onClick={e => typeof pageItem === "number" ? changePage(e, pageItem) : () => console.log("Pressing the dot")} key={index} className={typeof pageItem === "number" ? `page-item ${pageItem === page ? style.page : null}` : `text-1xl text-slate-400`}>{pageItem}</button>)}
             <button disabled={page === pageList.length} onClick={e => changePage(e, page + 1)} className="next-page border-pink-200 p-1 hover:bg-pink-500 rounded-2 transition transition-linear hover:text-slate-400 text-1xl text-pink-600">
                 Next

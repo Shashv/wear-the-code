@@ -72,9 +72,13 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
                                 }
                                 <ContextWrapper.Provider value={toggleFilter}>
                                     {/* sx={{ backgroundColor: "#eb4798" }} */}
-                                    {loader ? <Backdrop open >
-                                        <LoaderAnimate />
-                                    </Backdrop> :
+                                    {loader ?
+                                        // <Backdrop open >
+                                        <div className="flex bg-pink-300 backdrop-blur-lg justify-center align-center h-[100vh]">
+                                            <LoaderAnimate />
+                                        </div>
+                                        // </Backdrop> 
+                                        :
                                         <div className={"route-component"} style={{ height: !path.includes("/auth") ? "600px" : "100vh", overflowY: filterStatus ? "hidden" : "scroll", overflowX: "hidden" }}>
                                             <Component  {...pageparams} />
                                         </div>

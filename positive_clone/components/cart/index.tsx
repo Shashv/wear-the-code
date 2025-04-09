@@ -39,7 +39,7 @@ const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawe
     //     quantity: 0,
     //     product: ""
     // }
-    const loadStripeintent = loadStripe(process.env.STRIPE_PUBLIC_POSITIVE || "");
+    // const loadStripeintent = loadStripe(process.env.STRIPE_PUBLIC_POSITIVE || "");
     let [clearCartConfirmation, setClearCartConfirmation] = useState<boolean>(false);
     // let [toastC, setToastC] = useState<boolean>(false);
     // const ModalContent: JSX.Element = <>
@@ -91,7 +91,6 @@ const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawe
         sessionId = order;
         return sessionId;
     }
-
     let productList: string[] = Object.keys(state);
     let amount: number = 0;
     // useEffect(() => {
@@ -250,7 +249,7 @@ const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawe
                                                 <List>{
                                                     Object.keys(buyProduct).map((product, index) => <li key={product}>
                                                         <div className="flex align-items-center gap-3">
-                                                            <div className="flex align-center justify-start gap-2">
+                                                            <div className="fle x align-center justify-start gap-2">
                                                                 <span className="text-muted fs-4">
                                                                     {index + 1}
                                                                 </span>

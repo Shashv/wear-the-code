@@ -4,7 +4,6 @@ interface IShirtProps {
     theme: { light: boolean; dark: boolean; };
     session?: Session;
     router: NextRouter;
-
 }
 type IShirtState = {
     data: any, toast: { active: boolean; variant: string; }; loader: boolean; progress: number, page: number; pageList: number[]
@@ -28,6 +27,7 @@ import authorizeOptions from "../api/auth/[...nextauth]";
 import { Session, getServerSession } from "next-auth";
 import { NextRouter, withRouter } from "next/router";
 // import Router from "next/router";
+import paginate from "@/utils/paginate";
 import LoadingBar from "react-top-loading-bar";
 import { toast } from "react-toastify";
 import Pagination from "@/components/pagination";
@@ -138,7 +138,7 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
                                 </div>
                             </div>
                         </section>
-                        <Pagination page={1} pageList={[1, 2, 3, 4, 5]} changePage={this.changePage} />
+                        <Pagination page={1} pageList={Object.keys(this.state.data).length ? paginate(Object.keys(this.state.data).length, 2) : [1, 2, 3, 4, 5]} changePage={this.changePage} />
                     </div>
                 </>
 
@@ -159,7 +159,7 @@ class Shirts extends React.Component<IShirtProps, IShirtState> {
         }
     }
     componentDidUpdate(previousprops: Readonly<IShirtProps>, previousstate: Readonly<IShirtState>): void {
-        console.log('Inside the component did update');
+        console.log('Inside the component did update', previousprops, "Component readonly state", previousstate);
     }
 }
 // let combinedstate = store.getState();

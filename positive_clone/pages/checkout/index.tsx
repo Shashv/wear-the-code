@@ -92,7 +92,7 @@ const Checkout: React.FC = () => {
                     </Typography>
                 </div>
                 <Form className="container-fluid p-5" onSubmit={handleSubmit(details)}>
-                    <Typography className="fw-bold text-pink-400" variant={"h6"}>
+                    <Typography className="fw-bold text-pink-400 py-1" variant={"h6"}>
                         <span className="fw-bold">1. </span>
                         Delievery Details
                     </Typography>
@@ -181,16 +181,14 @@ const Checkout: React.FC = () => {
                                     Pin is required*</Typography>}
                             </Col>
                         </Row>
-                      
-
                     </> */}
                     {/* ..... */}
                     {/* when using the controller component */}
                     <Row className="mb-1 g-2">
                         {formGroups.map((formGroup, index) => {
-                            return <FormGroup key={index}> <Controller control={control} name={formGroup.name} render={(props) => {
+                            return <FormGroup key={index} className="py-1"> <Controller control={control} name={formGroup.name} render={(props) => {
                                 const { field } = props;
-                                return <TextField sx={{ backgroundColor: theme.light ? "#000" : "#fff" }} value={field.value} label={formGroup.label} type={formGroup.type} onChange={value => field.onChange(value)} className="custom-input rounded-2" placeholder={formGroup.placeholder} name={formGroup.name} />
+                                return <TextField sx={{ backgroundColor: theme.light ? "pink" : "#fff" }} value={field.value} label={formGroup.label} type={formGroup.type} onChange={value => field.onChange(value)} className="custom-input rounded-2" placeholder={formGroup.placeholder} name={formGroup.name} />
                             }} />
                             </FormGroup>
                         })}

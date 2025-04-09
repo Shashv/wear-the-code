@@ -21,7 +21,7 @@ import authorizeOptions from "./api/auth/[...nextauth]";
 import Aos from 'aos';
 import "aos/dist/aos.css"
 import { toast } from "react-toastify";
-// import SlickSlides from "@/components/slickSlides";
+import SlickSlides from "@/components/slickSlides";
 import { ICustomSession } from "@/modals";
 interface IParas {
     props: {
@@ -57,11 +57,11 @@ export default function Home(props: { name: string, scrollTop: number, direction
     return (
         <>
             {/* component based slick slides */}
-            {/* <SlickSlides /> */}
+            <SlickSlides />
             {/* ... */}
             <div className={theme.light ? "wrapper bg-white" : "wrapper bg-dark"}>
                 {/* ...slick slided with custom css */}
-                <div className={style.customcontainer}>
+                {/* <div className={style.customcontainer}>
                     <div className={style.wrapper}>
                         <img className={style.imgfirst} src="/home.jpg" />
                         <img className={style.imgthird} src="/onlinefirst.jpg" />
@@ -69,7 +69,7 @@ export default function Home(props: { name: string, scrollTop: number, direction
                         <img className={style.imgfifth} src="/onlinethird.jpg" />
                         <img className={style.imgsixth} src="/onlinefourth.jpg" />
                     </div>
-                </div>
+                </div> */}
                 {/*... slickes slides .... */}
                 <div className={"collections-container"} style={{ backgroundColor: `${theme.dark ? "#1f2937" : "#fff"}` }}>
                     <CollectionSections theme={theme} />
