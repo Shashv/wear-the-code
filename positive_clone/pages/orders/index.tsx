@@ -249,6 +249,7 @@ const Orders: React.FC = (props: unknown) => {
         </>
     )
 }
+Orders.displayName = "Orders"
 export default dynamic(() => Promise.resolve(Orders), {
     ssr: false
 });

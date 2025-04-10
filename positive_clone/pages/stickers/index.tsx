@@ -1,11 +1,8 @@
-// import { useSearchParams } from "next/navigation";
 import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { IState } from "@/redux/sore";
-// import SlickSlides from "@/components/slickSlides";
 import ProductModel from "@/modalsmongoose/product";
 import ProductCard from "@/components/productcard";
-// import { useCallback, useMemo } from "react";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -24,48 +21,38 @@ import { toast } from "react-toastify";
 import usePositive from "@/hooks/usePositive";
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import Pagination from "@/components/pagination";
+
 const StickersPage: React.FC<{ stickers: Array<unknown>, stickersLength: number }> = (props: { stickers: Array<any>, stickersLength: number }) => {
     let isInitialMount = useRef<boolean | null>(true);
     const [loader, setLoader] = useState<boolean>(false);
-    // const router = useRouter();
     const router = useSearchParamsstate();
     const combinedState = useSelector((state: IState) => state.toggletheme);
-    // const hideToast: (e: React.MouseEvent) => void = (e) => {
-    //     setToast(false);
-    // }
-    //scroll positive..///
-    // const onScroll: (e: any) => void = (e) => {
-    // }
-    ///....//
     const session = useSession();
     const [positive, setPositive] = useState<number>(40);
     const { totalPages, page, setPage } = usePositive({ recordsPerpage: 2, totalRecords: props.stickers.length });
+
+    // Initialize loading bar and show success toast on first mount
     useEffect(() => {
-        // if (!router.query.page) {
-        //     router.setQuery({ page: page.toString() });
-        // }
         switch (isInitialMount.current) {
             case true: {
-                // else {
                 setPositive(100);
                 toast.success("Stickers", {
                     theme: combinedState.dark ? "dark" : "light",
                     autoClose: 2000
                 })
-                // }
                 isInitialMount.current = false
             }
             default: {
-                console.log("Inside the useEffect , babab ji is always looking over us");
                 return;
             }
         }
     });
+
     const changePage = (e: React.MouseEvent<HTMLButtonElement>, page: number) => {
-        // console.log("Change page inside the stickers", page);
-        // setPage(page);
         router.setQuery({ page: page.toString() });
     }
+
+    // Handle authentication and page loading
     useEffect(() => {
         if (session.status === "unauthenticated") {
             toast.error("Oops you are not authenticated");
@@ -79,12 +66,7 @@ const StickersPage: React.FC<{ stickers: Array<unknown>, stickersLength: number 
             }
         }
     }, [session]);
-    // onclose function///
-    // const onClose: (e: React.MouseEvent<any>, timeOutID: any) => void = (e, id) => {
-    //     clearTimeout(id);
-    //     setToast(false);
-    // }
-    // ..... ///
+
     return (
         <>
             <Head>
@@ -138,60 +120,51 @@ const StickersPage: React.FC<{ stickers: Array<unknown>, stickersLength: number 
         </>
     )
 }
+
 export default StickersPage;
-// function will call on server side...//
+
+// Server-side data fetching and authentication check
 export const getServerSideProps: GetServerSideProps<{ stickers?: Array<unknown | any>, error?: string }> = async (context: GetServerSidePropsContext) => {
     const sessionServer = await getServerSession(context.req, context.res, authorizeOptions);
-    //server consoles session check ..//
-    // console.log("Sessionstickers", sessionServer);
-    let responseStickers: any = await ProductModel.find({ category: "stickers" }).skip(context.query.page ? (Number(context.query.page) - 1) * 10 : (1 - 1) * 10).limit(10).lean();
-    // const stickersLength: unknown[] = await ProductModel.aggregate([{
-    //     $match: {
-    //         category: "stickers"
-    //     },
-    //     // $group: {
-    //     //     _id: "$title",
-    //     //     totalcount: {
-    //     //         $sum: 1
-    //     //     }
-    //     // },
-    //     // $count: "totalcount"
-    // }]);
-    // console.log("Stickers babaji", stickersLength)
+
+    // Fetch stickers with pagination
+    let responseStickers: any = await ProductModel.find({ category: "stickers" })
+        .skip(context.query.page ? (Number(context.query.page) - 1) * 10 : (1 - 1) * 10)
+        .limit(10)
+        .lean();
+
     let filteredResponse = responseStickers.map((sticker: any) => {
         const { _id, ...rest } = sticker;
-        return { ...rest, createdAt: new Date(sticker.createdAt).toLocaleString(), updatedAt: new Date(sticker.updatedAt).toLocaleString() };
+        return { 
+            ...rest, 
+            createdAt: new Date(sticker.createdAt).toLocaleString(), 
+            updatedAt: new Date(sticker.updatedAt).toLocaleString() 
+        };
     });
+
     if (sessionServer) {
-        if (context.query.page)
+        if (context.query.page) {
             return {
                 props: {
                     stickers: [...filteredResponse],
                     stickersLength: 0
                 },
             }
-        else {
+        } else {
             return {
                 redirect: {
                     destination: `/stickers?page=1`,
                     permanent: false
                 },
-                // props: {
-                //     error: "Something went wrong"
-                //     stickers: [...filteredResponse],
-                // }
-            }
-        }
-    }
-    else {
-        return {
-            redirect: {
-                permanent: false,
-                destination: "/authentication/login",
-                basePath: false
             }
         }
     }
 
+    return {
+        redirect: {
+            permanent: false,
+            destination: "/authentication/login",
+            basePath: false
+        }
+    }
 }
-// ....//

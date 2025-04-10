@@ -1,59 +1,69 @@
+/* Import font only once at root level */
 @import url("https://db.onlinewebfonts.com/c/f56809563b15c7c76669dac9ca9d38ac?family=Matter+Regular");
+
+/* Define reusable variables */
+:root {
+    --font-family: "Matter Regular";
+    --transition-normal: 0.4s;
+    --border-radius: 7px;
+    --variant-width: 75px;
+    --variant-height: 120px;
+}
 
 .codesweardark {
     color: #9ca3af;
 }
 
-.productpagelight {
-    font-family: "Matter Regular";
-    background-color: #fff;
-    transition: all 0.4s;
+/* Share common styles between light/dark pages */
+.productpagelight,
+.productpagedark {
+    font-family: var(--font-family);
+    transition: all var(--transition-normal);
     padding-top: 25px;
+}
+
+.productpagelight {
+    background-color: #fff;
 }
 
 .productpagedark {
-    font-family: "Matter Regular";
     background-color: #1f2937;
-    transition: all 0.4s;
-    padding-top: 25px;
 }
 
 .service-input {
-    outline: 2px solid pink;
     border: 2px solid pink;
+    outline: none; /* Remove duplicate outline */
 }
 
-.service-inout::placeholder {
-    font-family: "Matter Regular";
+.service-input::placeholder {
+    font-family: var(--font-family);
 }
 
 .imageholder {
-    transition: 0.5s ease;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 17px;
     padding: 10px;
+    transition: 0.5s ease;
+    cursor: pointer; /* Move cursor to base class */
 }
 
-.imageholder:hover {
-    cursor: pointer;
+/* Common styles for variants */
+.selectedvariant,
+.unselectedvariant {
+    width: var(--variant-width);
+    height: var(--variant-height);
+    border-radius: var(--border-radius);
+    border: none !important;
 }
 
 .selectedvariant {
     outline: 2px solid #ec4899;
-    border-radius: 7px;
-    width: 75px;
-    height: 120px;
-    border: transparent !important;
     transition: all 0.2s linear;
 }
 
 .unselectedvariant {
     outline: 2px solid #fff;
-    border-radius: 7px;
-    height: 120px;
-    width: 75px;
-    border: transparent !important;
     transition: all 0.5s linear;
 }

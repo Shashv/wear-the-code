@@ -19,10 +19,11 @@ const handlePutrequest = async (req: NextRequest, urlParams: any) => {
     return NextResponse.json({ message: `Executed the put request with ${urlParams.params.id} and username ${body.username}` });
 }
 export const PUT = connectAPProuterdb(handlePutrequest);
-const handleDeleteRequest = async (req: NextRequest) => {
+const handleDeleteRequest = async (req: NextRequest, positive: any) => {
+    const { params: { id } } = positive;
     try {
         const body = await req.json();
-        const deleteRecord = await UserModel.findOneAndDelete({ email: body.email });
+        const deleteRecord = await UserModel.findOneAndDelete({ email: id ? id : body.email });
         deleteRecord && NextResponse.json({ message: "Positive" }, { status: 200 });
     }
     catch (er) {

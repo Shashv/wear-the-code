@@ -1,58 +1,47 @@
-@media screen and (width > 768px) {
-    .card {
-        transition: 0.25s linear;
-        padding: 10px;
-    }
-
-    .card:hover {
-        box-shadow: inset 0px 0px 20px 2.5px rgb(209, 206, 206);
-        transition: 0.25s linear;
-        transform: scale(1.04);
-    }
-
-    .containerpacksdark {
-        background-color: #1f2937;
-        padding: 5px;
-    }
-
-    .containerpacks {
-        background-color: #fff;
-        padding: 5px;
-    }
-
+/* Common styles for both desktop and mobile */
+.card {
+    padding: 0.625rem;
+    transition: all 0.25s ease;
+    will-change: transform;
 }
 
-@media screen and (width<768px) {
+.card:hover {
+    transform: scale(1.04);
+    box-shadow: inset 0 0 1.25rem 0.156rem rgba(209, 206, 206, 0.8);
+}
+
+.containerpacks,
+.containerpacksdark {
+    padding: 0.313rem;
+}
+
+.containerpacks {
+    background-color: #ffffff;
+}
+
+.containerpacksdark {
+    background-color: #1f2937;
+}
+
+/* Desktop styles */
+@media screen and (min-width: 769px) {
+    /* Desktop-specific styles can go here if needed */
+}
+
+/* Mobile styles */
+@media screen and (max-width: 768px) {
     .positivefiltercontainer {
-        position: absolute;
-        top: 0px;
+        position: fixed;
+        top: 0;
+        left: 0;
         width: 80%;
-        height: 100%;
-        z-index: 11;
+        height: 100vh;
+        z-index: 1000;
+        transition: transform 0.3s ease;
     }
 
+    .containerpacks,
     .containerpacksdark {
-        background-color: #1f2937;
-        padding: 5px;
         position: relative;
     }
-
-    .containerpacks {
-        background-color: #fff;
-        padding: 5px;
-        position: relative;
-    }
-
-    .card {
-        transition: 0.25s linear;
-        padding: 10px;
-    }
-
-    .card:hover {
-        box-shadow: inset 0px 0px 20px 2.5px rgb(209, 206, 206);
-        transition: 0.25s linear;
-        transform: scale(1.04);
-    }
-
-
 }

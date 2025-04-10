@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import CommonTable from "@/components/commonlist";
 import { ICustomSession } from "@/modals";
 import { useEffect } from "react";
@@ -16,10 +16,28 @@ import StyledModal from "@/components/styledpopup";
 import { Controller, FieldValues, useForm } from "react-hook-form";
 import { Button } from "reactstrap";
 import Image from "next/image";
-let accountEmail: string = "";
-const EditForm: React.FC<{ manageAccount: (operationType: string, body: any) => Promise<any> }> = ({ manageAccount }) => {
-    const { handleSubmit, control } = useForm();
-    const formGroups = [{
+
+interface User {
+    username: string;
+    email: string;
+    password: string;
+    image: string;
+}
+
+interface AccountDetails {
+    name: string;
+    email: string;
+    image: string;
+}
+
+interface FormField {
+    type: string;
+    name: string;
+    placeholder: string;
+}
+
+const formFields: FormField[] = [
+    {
         type: "email",
         placeholder: "Enter email",
         name: "email"
@@ -33,25 +51,41 @@ const EditForm: React.FC<{ manageAccount: (operationType: string, body: any) => 
         type: "text",
         name: "username",
         placeholder: "Enter username"
-    }];
-    const details = async (data: FieldValues) => {
-        // console.log("Data after submitting the form", data);
-        await manageAccount("PUT", data);
-        // console.log("Response final after submitting the data", response);
     }
+];
+
+const EditForm: React.FC<{ manageAccount: (operationType: string, body: any) => Promise<any> }> = React.memo(({ manageAccount }) => {
+    const { handleSubmit, control } = useForm();
+    
+    const onSubmit = useCallback(async (data: FieldValues) => {
+        try {
+            await manageAccount("PUT", data);
+        } catch (error) {
+            console.error("Error updating account:", error);
+        }
+    }, [manageAccount]);
+
     return (
-        <form onSubmit={handleSubmit(details)} className="">
+        <form onSubmit={handleSubmit(onSubmit)} className="">
             <div className="flex flex-col gap-2">
-                {
-                    formGroups.map((group, index) => {
-                        return <div className="form-group " key={index}>
-                            <Controller name={group.name} control={control} render={(props) => {
-                                const { field } = props;
-                                return <TextField ref={field.ref} onChange={value => field.onChange(value)} value={field.value} className="w-100" type={group.type} placeholder={group.placeholder} />
-                            }} />
-                        </div>
-                    })
-                }
+                {formFields.map((field, index) => (
+                    <div className="form-group" key={index}>
+                        <Controller 
+                            name={field.name} 
+                            control={control} 
+                            render={({ field: { ref, onChange, value } }) => (
+                                <TextField 
+                                    ref={ref}
+                                    onChange={onChange}
+                                    value={value}
+                                    className="w-100"
+                                    type={field.type}
+                                    placeholder={field.placeholder}
+                                />
+                            )} 
+                        />
+                    </div>
+                ))}
                 <div className="button-container">
                     <Button color="danger" type="submit">
                         Submit Details
@@ -59,14 +93,20 @@ const EditForm: React.FC<{ manageAccount: (operationType: string, body: any) => 
                 </div>
             </div>
         </form>
-    )
-}
-const MyAccount: NextPage<{ accountDetails: { name: string; email: string; image: string }, users: Array<{ username: string; email: string; password: string, image: string }> }> = ({ accountDetails: { name, email, image }, users }) => {
+    );
+});
+
+EditForm.displayName = 'EditForm';
+
+const MyAccount: NextPage<{ accountDetails: AccountDetails, users: User[] }> = ({ accountDetails: { name, email, image }, users }) => {
     const { status } = useSession();
-    const routerActions = useRouter();
-    const [crudConfirmation, setCrudconfirmation] = useState<boolean>(false);
-    let [purpose, setPurpose] = useState<string>("");
-    const babaJi = [{
+    const router = useRouter();
+    const [crudConfirmation, setCrudConfirmation] = useState<boolean>(false);
+    const [purpose, setPurpose] = useState<string>("");
+    const [accountEmail, setAccountEmail] = useState<string>("");
+    const themeState = useSelector((state: IState) => state.toggletheme);
+
+    const tableColumns = useMemo(() => [{
         type: "text",
         title: "username",
         label: "Username"
@@ -89,113 +129,134 @@ const MyAccount: NextPage<{ accountDetails: { name: string; email: string; image
         actionSchema: [{
             type: "edit",
             action: async (email: string) => {
-                accountEmail = email;
-                setCrudconfirmation(confirmation => !confirmation);
-                setPurpose("Edit")
+                setAccountEmail(email);
+                setCrudConfirmation(true);
+                setPurpose("Edit");
             }
         }, {
             type: "delete",
-            action: async (email: string) => {
-                accountEmail = email;
-                setCrudconfirmation(confirmation => !confirmation);
-                setPurpose("Delete")
+            action: async (email: string) => { 
+                setAccountEmail(email);
+                setCrudConfirmation(true);
+                setPurpose("Delete");
             }
         }],
         label: "Action"
-    }]
-    const performCrud = async () => {
-        let response = await manageAccounts("PUT");
-        // console.log("Response", response);
-        setCrudconfirmation(!crudConfirmation);
-        setPurpose("PUT")
-    }
-    const themeState = useSelector((state: IState) => state.toggletheme);
-    const manageAccounts = async (operationType: string, body?: any) => {
-        switch (operationType) {
-            case "DELETE": {
-                let response = await fetch(`/api/manageAccounts/${accountEmail}`, {
-                    method: operationType
-                });
-                let parsedResponse = await response.json();
-                return parsedResponse
-            }
-            case "PUT": {
-                let response = await fetch(`/api/manageAccounts/${accountEmail}`, {
-                    method: operationType,
-                    body: JSON.stringify(body)
-                });
-                let parsedResponse = await response.json();
-                return parsedResponse;
-            }
-            default: return operationType
+    }], []);
+
+    const manageAccounts = useCallback(async (operationType: string, body?: any) => {
+        try {
+            const response = await fetch(`/api/manageAccounts/${accountEmail}`, {
+                method: operationType,
+                ...(body && { body: JSON.stringify(body) })
+            });
+            return await response.json();
+        } catch (error) {
+            console.error("Error managing account:", error);
+            throw error;
         }
-    }
-    const ModalContent = <div className="modal-content">
-        {purpose === "Edit" ? <p className="my-2">User will be edited and saved!
-            <EditForm manageAccount={(type: string, body: any) => manageAccounts(type, body)} />
-        </p> : <p>User will be deleted , once deleted this process can't be undone</p>}
-    </div>
-    // console.log("Image name", image, "url host", process.env.NEXT_PUBLIC_URL);
+    }, [accountEmail]);
+
+    const performCrud = useCallback(async () => {
+        try {
+            await manageAccounts(purpose);
+            setCrudConfirmation(false);
+            setPurpose("");
+        } catch (error) {
+            console.error("Error performing CRUD operation:", error);
+        }
+    }, [manageAccounts, purpose]);
+
+    const ModalContent = useMemo(() => (
+        <div className="modal-content">
+            {purpose === "Edit" ? (
+                <p className="my-2">
+                    User will be edited and saved!
+                    <EditForm manageAccount={manageAccounts} />
+                </p>
+            ) : (
+                <p>User will be deleted, once deleted this process can't be undone</p>
+            )}
+        </div>
+    ), [purpose, manageAccounts]);
+
     useEffect(() => {
-        if (status === "unauthenticated") routerActions.replace("/authentication/login");
-    }, [status, routerActions]);
+        if (status === "unauthenticated") {
+            router.replace("/authentication/login");
+        }
+    }, [status, router]);
+
     return (
-        <>
-            <div className={`container-fluid h-[100vh] ${themeState.dark ? styles.darkaccount : styles.lightaccount}`}>
-                <div className="row">
-                    <div className="col-12">
-                        <div style={{backgroundColor:"pink"}} className={`accoubnt-details-fields position-sticky top-0`}>
-                            <Typography variant="h5" color={"salmon"}>Account Holder - {name}</Typography>
-                            <Typography variant="h5" color={"skyblue"}>Account Holder Email - {email}</Typography>
-                            <Image width={100} height={100} alt="User Email" className="" src={`/uploads/${image}`} />
-                        </div>
-                        <div className="">
-                            <div className="users-list">
-                                <Typography className="user-label" variant="h5" color={"lightblue"}>
-                                    Users List
-                                </Typography>
-                            </div>
-                            <CommonTable tablebody={users} tablehead={babaJi} />
-                        </div>
+        <div className={`container-fluid h-[100vh] ${themeState.dark ? styles.darkaccount : styles.lightaccount}`}>
+            <div className="row">
+                <div className="col-12">
+                    <div style={{backgroundColor:"pink"}} className="accoubnt-details-fields position-sticky top-0">
+                        <Typography variant="h5" color="salmon">Account Holder - {name}</Typography>
+                        <Typography variant="h5" color="skyblue">Account Holder Email - {email}</Typography>
+                        <Image 
+                            width={100} 
+                            height={100} 
+                            alt="User Profile" 
+                            src={`/uploads/${image}`}
+                            priority
+                        />
                     </div>
-                    <div className="col-12">
-                        <StyledModal width={purpose === "Edit" ? 500 : null} height={purpose === "Edit" ? 500 : null} showIcon purpose={purpose} title={`${purpose} Users ?`} open={crudConfirmation} content={ModalContent} confirmProcess={performCrud} closeModal={() => setCrudconfirmation(!crudConfirmation)} />
+                    <div>
+                        <div className="users-list">
+                            <Typography className="user-label" variant="h5" color="lightblue">
+                                Users List
+                            </Typography>
+                        </div>
+                        <CommonTable tablebody={users} tablehead={tableColumns} />
                     </div>
                 </div>
+                <div className="col-12">
+                    <StyledModal 
+                        width={purpose === "Edit" ? 500 : undefined} 
+                        height={purpose === "Edit" ? 500 : undefined} 
+                        showIcon 
+                        purpose={purpose} 
+                        title={`${purpose} Users ?`} 
+                        open={crudConfirmation} 
+                        content={ModalContent} 
+                        confirmProcess={performCrud} 
+                        closeModal={() => setCrudConfirmation(false)} 
+                    />
+                </div>
             </div>
-        </>
-    )
-}
+        </div>
+    );
+};
+
 export default MyAccount;
-//below will run on the server side...//
+
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
-    const sessionserver = await getServerSession(context.req, context.res, authorizeOptions) as ICustomSession | null;
-    const users = await UserModel.find({});
-    // console.log("Users", users);
-    if (sessionserver) {
-        return {
-            props: {
-                accountDetails: {
-                    name: sessionserver.user.name,
-                    email: sessionserver.user.email,
-                    image: sessionserver.user.image
-                },
-                users: users.map(user => ({
-                    username: user.username,
-                    email: user.email,
-                    password: user.password,
-                    image: user?.image || ""
-                }))
-            }
-        }
-    }
-    else {
+    const session = await getServerSession(context.req, context.res, authorizeOptions) as ICustomSession | null;
+    
+    if (!session) {
         return {
             redirect: {
-                basePath: false,
                 destination: "/authentication/login",
                 permanent: false
             }
-        }
+        };
     }
-}
+
+    const users = await UserModel.find({});
+    
+    return {
+        props: {
+            accountDetails: {
+                name: session.user.name,
+                email: session.user.email,
+                image: session.user.image
+            },
+            users: users.map(user => ({
+                username: user.username,
+                email: user.email,
+                password: user.password,
+                image: user?.image || ""
+            }))
+        }
+    };
+};

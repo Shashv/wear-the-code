@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import style from "./index.module.css";
 import ProductModel from "@/modalsmongoose/product";
 import { Grid } from "@mui/material";
@@ -11,7 +11,6 @@ import { Typography } from '@mui/material';
 import Head from "next/head";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-// import { useRouter } from "next/router";
 import ProductCard from "@/components/productcard";
 import LoadingBar from "react-top-loading-bar";
 import { getServerSession } from "next-auth";
@@ -20,91 +19,93 @@ import Pagination from "@/components/pagination";
 import usePositive from "@/hooks/usePositive";
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import { toast } from "react-toastify";
-// const Dotted: React.FC = () => {
-//     return (
-//         <>
-//             <div className={style.section}>
-//                 <span className={style.dot}></span>
-//                 <span className={style.dot}></span>
-//                 <span className={style.dot}></span>
-//                 <span className={style.dot}></span>
-//                 <span className={style.dot}></span>
-//                 <span className={style.dot}></span>
-//                 <span className={style.dot}></span>
-//                 <span className={style.dot}></span>
-//                 <span className={style.dot}></span>
-//                 <span className={style.dot}></span>
-//             </div>
-//         </>
-//     )
-// }
-const Zippers: NextPage<{
-    zippersSchema: {
-        [key: string]: {
-            title: string;
-            id?: number;
-            desc: string;
-            createdAt?: string;
-            updatedAt?: string;
-            img: string;
-            category: string;
-            colors: string[];
-            sizes: string[];
-            price: number;
-            availableQuantity: number;
-            slug: string
-        }
-    }
-}> = (params) => {
-    const { zippersSchema } = params;
+
+interface ZipperSchema {
+    title: string;
+    id?: number;
+    desc: string;
+    createdAt?: string;
+    updatedAt?: string;
+    img: string;
+    category: string;
+    colors: string[];
+    sizes: string[];
+    price: number;
+    availableQuantity: number;
+    slug: string
+}
+
+interface ZippersProps {
+    zippersSchema: Record<string, ZipperSchema>
+}
+
+const Zippers: NextPage<ZippersProps> = ({ zippersSchema }) => {
     const theme = useSelector((state: IState) => state.toggletheme);
     const initialMount = useRef<boolean | null>(true);
     const session = useSession();
     const router = useSearchParamsstate();
     const [progress, setProgress] = useState<number>(0);
-    const { totalPages, page, setPage } = usePositive({ totalRecords: Object.keys(zippersSchema).length, recordsPerpage: 2 });
-    const changePage = (e: React.MouseEvent<HTMLButtonElement> | any, page: number) => {
-        // consoles will be checked further...//
-        // console.log("Change page function", page);
-        // setPage(page);
-        // ....//
-        router.getDetails().push(`/zippers?page=${page}`);
-    }
-    useEffect(() => {
-        if (!router.query.page) router.setQuery({ page: page.toString() });
-        switch (initialMount.current) {
-            case true: {
-                toast.success("Zippers", {
-                    theme: theme.light ? "light" : "dark",
-                    autoClose: 2000,
-                })
-                initialMount.current ? initialMount.current = false : initialMount.current = null;
-            }
-            default: {
-                return
-            }
-        }
+    
+    const { totalPages, page } = usePositive({ 
+        totalRecords: Object.keys(zippersSchema).length, 
+        recordsPerpage: 2 
     });
-    //handle route change function//
-    // const handleRouterChnages = () => {
-    //     router.getDetails().events.on("routeChangeStart", e => setProgress(40));
-    //     router.getDetails().events.on("routeChangeComplete", e => setProgress(100));
-    // }
+
+    const changePage = useMemo(() => (
+        (_: React.MouseEvent<HTMLButtonElement> | any, page: number) => {
+            router.getDetails().push(`/zippers?page=${page}`);
+        }
+    ), [router]);
+
+    useEffect(() => {
+        if (!router.query.page) {
+            router.setQuery({ page: page.toString() });
+        }
+
+        if (initialMount.current) {
+            toast.success("Zippers", {
+                theme: theme.light ? "light" : "dark",
+                autoClose: 2000,
+            });
+            initialMount.current = false;
+        }
+    }, [router, page, theme.light]);
+
     useEffect(() => {
         if (session.status === "unauthenticated") {
-            router.getDetails().push("/authentication/login")
+            router.getDetails().push("/authentication/login");
         }
-    }, [session]);
-    // .....//
+    }, [session.status, router]);
+
+    const renderProductGrid = useMemo(() => (
+        <Grid container columnGap={1.4} justifyContent="center" rowGap={1.4}>
+            {Object.keys(zippersSchema || {}).length > 0 ? (
+                Object.entries(zippersSchema).map(([zipper, product]) => (
+                    <Grid item xs={5.7} sm={5.9} md={2.7} key={zipper}>
+                        <Link href={`/product/${product.slug}`}>
+                            <ProductCard {...product} />
+                        </Link>
+                    </Grid>
+                ))
+            ) : (
+                <Grid item xs={12} className="justify-center flex">
+                    <Typography variant="h4" color="magenta">
+                        Sorry, product out of stock
+                    </Typography>
+                </Grid>
+            )}
+        </Grid>
+    ), [zippersSchema]);
+
     return (
         <>
             <Head>
-                <title>
-                    CodeSwear - Zippers
-                </title>
-                <meta content="CodeSwear zippers is the best"></meta>
+                <title>CodeSwear - Zippers</title>
+                <meta content="CodeSwear zippers is the best" name="description" />
             </Head>
+            
             <LoadingBar color="magenta" height={3} progress={progress} />
+            
             <div className={theme.light ? style.lightzipper : style.darkzipper}>
                 <section>
                     <div className="container-fluid p-0">
@@ -114,29 +115,25 @@ const Zippers: NextPage<{
                             </div>
                             <div className="col-md-10 p-2">
                                 <div className="py-3">
-                                    <Typography className={theme.light ? "text-dark text-center" : "text-light text-center"} fontWeight={600} sx={{ fontSize: { xs: 21, md: 30.5 } }}>
+                                    <Typography 
+                                        className={theme.light ? "text-dark text-center" : "text-light text-center"} 
+                                        fontWeight={600} 
+                                        sx={{ fontSize: { xs: 21, md: 30.5 } }}
+                                    >
                                         Explore Our Zippers Collection
                                     </Typography>
-                                    <Typography color={theme.light ? "#000" : "#9ca3af"} className={"text-start px-24 py-2 pb-3"} sx={{ fontSize: { xs: 13, md: 14 }, textIndent: { sm: "start" } }} lineHeight={1.6} fontWeight={600}>
+                                    
+                                    <Typography 
+                                        color={theme.light ? "#000" : "#9ca3af"} 
+                                        className="text-start px-24 py-2 pb-3"
+                                        sx={{ fontSize: { xs: 13, md: 14 }, textIndent: { sm: "start" } }}
+                                        lineHeight={1.6} 
+                                        fontWeight={600}
+                                    >
                                         Welcome to Codeswear.com, your one-stop shop for stylish and unique zippers. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!
                                     </Typography>
-                                    <Grid container columnGap={1.4} justifyContent={"center"} rowGap={1.4}>
-                                        {Object.keys(zippersSchema || {}).length > 0 ?
-                                            Object.keys(zippersSchema).map((zipper: string, index: number) => {
-                                                // console.log("Zipper slugs",zippersSchema[zipper].slug);
-                                                return <Grid item xs={5.7} sm={5.9} md={2.7} key={`${zipper}`}>
-                                                    <Link key={index} href={`/product/${zippersSchema[zipper].slug}`}>
-                                                        <ProductCard title={zippersSchema[zipper].title} category={zippersSchema[zipper].category} desc={zippersSchema[zipper].desc} slug={zippersSchema[zipper].slug} colors={zippersSchema[zipper].colors} sizes={zippersSchema[zipper].sizes} img={zippersSchema[zipper].img} />
-                                                    </Link>
-                                                </Grid>
-                                            }) :
-                                            <Grid item xs={12} className="justify-center flex">
-                                                <Typography variant="h4" color={"magenta"}>
-                                                    Sorry , product out of stock
-                                                </Typography>
-                                            </Grid>
-                                        }
-                                    </Grid>
+
+                                    {renderProductGrid}
                                 </div>
                             </div>
                         </div>
@@ -145,38 +142,48 @@ const Zippers: NextPage<{
                 </section>
             </div>
         </>
-    )
-}
+    );
+};
+
 export default Zippers;
-// functionm will call on server side...//
+
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
-    let fetchedProducts = await ProductModel.find({ category: "zippers" });
-    // console.log("Query params", context.query.page);
     const getServerSideSession = await getServerSession(context.req, context.res, authorizeOptions);
-    const zippersSchema: {
-        [key: string]: {
-            title: string;
-            id?: number;
-            desc: string;
-            createdAt?: string;
-            updatedAt?: string;
-            img: string;
-            category: string;
-            colors: string[];
-            sizes: string[];
-            price: number;
-            availableQuantity: number;
-            slug: string
-        }
-    } = {};
-    for (let zipper of fetchedProducts) {
-        if (zipper.title in zippersSchema && zipper.availableQuantity > 0) {
-            if (!zippersSchema[zipper.title].colors.includes(zipper.color))
+    
+    if (!getServerSideSession) {
+        return {
+            redirect: {
+                basePath: false,
+                destination: "/authentication/login",
+                permanent: false
+            }
+        };
+    }
+
+    const page = context.query.page;
+    if (!page) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: `/zippers?page=1`
+            }
+        };
+    }
+
+    const fetchedProducts = await ProductModel.find({ category: "zippers" });
+    const zippersSchema: Record<string, ZipperSchema> = {};
+
+    fetchedProducts.forEach(zipper => {
+        if (zipper.availableQuantity <= 0) return;
+
+        if (zipper.title in zippersSchema) {
+            if (!zippersSchema[zipper.title].colors.includes(zipper.color)) {
                 zippersSchema[zipper.title].colors.push(zipper.color);
-            else if (!zippersSchema[zipper.title].sizes.includes(zipper.size))
+            }
+            if (!zippersSchema[zipper.title].sizes.includes(zipper.size)) {
                 zippersSchema[zipper.title].sizes.push(zipper.size);
-        }
-        else {
+            }
+        } else {
             zippersSchema[zipper.title] = {
                 title: zipper.title,
                 img: zipper.img,
@@ -187,37 +194,11 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
                 availableQuantity: zipper.availableQuantity,
                 category: zipper.category,
                 price: zipper.price
-            }
+            };
         }
-    }
-    // console.log("Zipper schema", zippersSchema);
-    if (getServerSideSession) {
-        let page: string | number | unknown = context.query.page;
-        if (page) {
-            return {
-                props: {
-                    zippersSchema
-                }
-            }
-        }
-        else {
-            return {
-                redirect: {
-                    permanent: false,
-                    destination: `/zippers?page=1`
-                }
-            }
-        }
-    }
-    else return {
-        // props: {
+    });
 
-        // },
-        redirect: {
-            basePath: false,
-            destination: "/authentication/login",
-            permanent: false
-        }
-    }
-}
-// .....///
+    return {
+        props: { zippersSchema }
+    };
+};

@@ -23,11 +23,11 @@ import "aos/dist/aos.css"
 import { toast } from "react-toastify";
 import SlickSlides from "@/components/slickSlides";
 import { ICustomSession } from "@/modals";
-interface IParas {
-    props: {
-        name: string
-    }
-}
+// interface IParas {
+//     props: {
+//         name: string
+//     }
+// }
 export default function Home(props: { name: string, scrollTop: number, direction: string, session?: Session, image?: string } | any) {
     // const rouerDetail = useRouter();
     const sessionStatus = useSession();
