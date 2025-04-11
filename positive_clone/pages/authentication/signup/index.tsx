@@ -772,7 +772,7 @@ const Signup: NextPage = () => {
                 <>
                     <ToastContainer />
                     <section className="bg-pink-400 h-100">
-                        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+                        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 h-100">
                             <a href="#" className="flex items-center mb-6 text-3xl font-semibold text-pink-600">
                                 <img className="w-17 h-14 mr-2" src="/codeswearcircle.png" alt="logo" />
                                 CodeSwear - Sign up
