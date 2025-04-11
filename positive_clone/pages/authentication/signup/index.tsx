@@ -688,19 +688,19 @@ const Signup: NextPage = () => {
             setImage(e.target.files[0]);
 
         }
-        else {
-            //  onChange(event) 
-            console.log("Event target files babaji", e.target.files);
-            // console.log("Inside the change event")
-        }
-        const printBaba = () => {
-            let list = [1, 2, 3, 4, 5];
-            list.forEach(item => {
-                for (let a = 1; a <= item; a++) {
-                    console.log(item)
-                }
-            })
-        }
+        // else {
+        //     //  onChange(event) 
+        //     console.log("Event target files babaji", e.target.files);
+        //     // console.log("Inside the change event")
+        // }
+        // const printBaba = () => {
+        //     let list = [1, 2, 3, 4, 5];
+        //     list.forEach(item => {
+        //         for (let a = 1; a <= item; a++) {
+        //             console.log(item)
+        //         }
+        //     })
+        // }
     }
     const details = (data: FieldValues) => {
         setLoader(true);
@@ -822,7 +822,7 @@ const Signup: NextPage = () => {
                                                 <label htmlFor="file-upload" className="p-2">
                                                     {
                                                         !image ?
-                                                            <Image className="w-[100px] h-[100px]" alt="Upload the image" src={uploader} width={60} height={60} /> : <img ref={imageref} className="rounded-circle w-[140px] h-[140px]" width={60} height={60} />
+                                                            <Image className="w-[75px] h-[75px]" alt="Upload the image" src={uploader} width={60} height={60} /> : <img ref={imageref} className="rounded-circle w-[140px] h-[140px]" width={60} height={60} />
                                                     }
                                                 </label>
                                                 <input id="file-upload" accept=".jpeg,.jpg,.png" multiple={false} className="profile-uploader d-none" type={"file"} onChange={handleFileChange} {...rest} />

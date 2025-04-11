@@ -56,7 +56,7 @@ const formFields: FormField[] = [
 
 const EditForm: React.FC<{ manageAccount: (operationType: string, body: any) => Promise<any> }> = React.memo(({ manageAccount }) => {
     const { handleSubmit, control } = useForm();
-    
+
     const onSubmit = useCallback(async (data: FieldValues) => {
         try {
             await manageAccount("PUT", data);
@@ -70,11 +70,11 @@ const EditForm: React.FC<{ manageAccount: (operationType: string, body: any) => 
             <div className="flex flex-col gap-2">
                 {formFields.map((field, index) => (
                     <div className="form-group" key={index}>
-                        <Controller 
-                            name={field.name} 
-                            control={control} 
+                        <Controller
+                            name={field.name}
+                            control={control}
                             render={({ field: { ref, onChange, value } }) => (
-                                <TextField 
+                                <TextField
                                     ref={ref}
                                     onChange={onChange}
                                     value={value}
@@ -82,7 +82,7 @@ const EditForm: React.FC<{ manageAccount: (operationType: string, body: any) => 
                                     type={field.type}
                                     placeholder={field.placeholder}
                                 />
-                            )} 
+                            )}
                         />
                     </div>
                 ))}
@@ -135,7 +135,7 @@ const MyAccount: NextPage<{ accountDetails: AccountDetails, users: User[] }> = (
             }
         }, {
             type: "delete",
-            action: async (email: string) => { 
+            action: async (email: string) => {
                 setAccountEmail(email);
                 setCrudConfirmation(true);
                 setPurpose("Delete");
@@ -159,7 +159,8 @@ const MyAccount: NextPage<{ accountDetails: AccountDetails, users: User[] }> = (
 
     const performCrud = useCallback(async () => {
         try {
-            await manageAccounts(purpose);
+            const response = await manageAccounts(purpose);
+            console.log("response from the deleted user", response);
             setCrudConfirmation(false);
             setPurpose("");
         } catch (error) {
@@ -190,13 +191,14 @@ const MyAccount: NextPage<{ accountDetails: AccountDetails, users: User[] }> = (
         <div className={`container-fluid h-[100vh] ${themeState.dark ? styles.darkaccount : styles.lightaccount}`}>
             <div className="row">
                 <div className="col-12">
-                    <div style={{backgroundColor:"pink"}} className="accoubnt-details-fields position-sticky top-0">
+                    <div style={{ backgroundColor: "pink" }} className="accoubnt-details-fields position-sticky top-0">
                         <Typography variant="h5" color="salmon">Account Holder - {name}</Typography>
                         <Typography variant="h5" color="skyblue">Account Holder Email - {email}</Typography>
-                        <Image 
-                            width={100} 
-                            height={100} 
-                            alt="User Profile" 
+                        <Image
+                            className="rounded-full"
+                            width={100}
+                            height={100}
+                            alt="User Profile"
                             src={`/uploads/${image}`}
                             priority
                         />
@@ -211,28 +213,28 @@ const MyAccount: NextPage<{ accountDetails: AccountDetails, users: User[] }> = (
                     </div>
                 </div>
                 <div className="col-12">
-                    <StyledModal 
-                        width={purpose === "Edit" ? 500 : undefined} 
-                        height={purpose === "Edit" ? 500 : undefined} 
-                        showIcon 
-                        purpose={purpose} 
-                        title={`${purpose} Users ?`} 
-                        open={crudConfirmation} 
-                        content={ModalContent} 
-                        confirmProcess={performCrud} 
-                        closeModal={() => setCrudConfirmation(false)} 
+                    <StyledModal
+                        width={purpose === "Edit" ? 500 : undefined}
+                        height={purpose === "Edit" ? 500 : undefined}
+                        showIcon
+                        purpose={purpose}
+                        title={`${purpose} Users ?`}
+                        open={crudConfirmation}
+                        content={ModalContent}
+                        confirmProcess={performCrud}
+                        closeModal={() => setCrudConfirmation(false)}
                     />
                 </div>
             </div>
         </div>
     );
 };
-
+StyledModal.displayName = "StyledModal"
 export default MyAccount;
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const session = await getServerSession(context.req, context.res, authorizeOptions) as ICustomSession | null;
-    
+
     if (!session) {
         return {
             redirect: {
@@ -243,7 +245,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     }
 
     const users = await UserModel.find({});
-    
+
     return {
         props: {
             accountDetails: {

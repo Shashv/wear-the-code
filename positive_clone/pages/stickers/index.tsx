@@ -30,7 +30,6 @@ const StickersPage: React.FC<{ stickers: Array<unknown>, stickersLength: number 
     const session = useSession();
     const [positive, setPositive] = useState<number>(40);
     const { totalPages, page, setPage } = usePositive({ recordsPerpage: 2, totalRecords: props.stickers.length });
-
     // Initialize loading bar and show success toast on first mount
     useEffect(() => {
         switch (isInitialMount.current) {
@@ -47,11 +46,9 @@ const StickersPage: React.FC<{ stickers: Array<unknown>, stickersLength: number 
             }
         }
     });
-
     const changePage = (e: React.MouseEvent<HTMLButtonElement>, page: number) => {
         router.setQuery({ page: page.toString() });
     }
-
     // Handle authentication and page loading
     useEffect(() => {
         if (session.status === "unauthenticated") {

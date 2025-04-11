@@ -322,7 +322,7 @@ const StyledBar: React.FC<{ scrollTop?: number }> = ({ scrollTop }) => {
                     </nav>
                     <CustomDrawer reviewCart reduxAdd={addProducts} reduxSubtract={removeProducts} open={state.cart} closeDrawer={() => setState({ ...state, cart: false })} width={400} />
                     <StyledModal open={state.logout} content={positiveBabaji} purpose="Log Out" closeModal={() => setState({ ...state, logout: false })} confirmProcess={async () => {
-                        setLoader(true);
+                        // setLoader(true);
                         await signOut({ redirect: true, callbackUrl: "/authentication/login" });
                         localStorage.clear()
                         toast.success("Logged out successfully", {

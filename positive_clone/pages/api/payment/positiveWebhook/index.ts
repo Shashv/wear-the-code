@@ -20,7 +20,7 @@ const webhookListener: (req: NextApiRequest, res: NextApiResponse) => Promise<an
             customEmail = eventData.customer_details?.email;
             // console.log("Event data", eventData);
         }
-        return res.status(200).send(customEmail);
+        return res.status(200).send(eventData?.id);
     }
     catch (er) {
         return res.status(500).json({ message: "Opps something went wrong" })

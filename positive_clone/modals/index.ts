@@ -169,3 +169,7 @@ export type IPagination = {
     recordsPerpage: number
 }
 export type IMugs = { name: string; age: number; loader: false; progress: number, page: number; pages: number[] }
+//for dynamic params///
+export interface IType {
+    id: string
+}

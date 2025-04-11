@@ -1,9 +1,7 @@
 import connectAPProuterdb from "@/configuration/appConnectiondb";
 import { NextRequest, NextResponse } from "next/server";
 import ProductModel from "@/modalsmongoose/product";
-interface IType {
-    id: string
-}
+import { IType } from "@/modals";
 const processGetRequest = async (req: NextRequest, params: { params: IType }) => {
     try {
         // console.log("params.id",params);

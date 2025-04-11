@@ -63,43 +63,43 @@ const Orders: React.FC = (props: unknown) => {
         });
         return formatData;
     }
-    const finalPayment: (e: React.MouseEvent<HTMLButtonElement>) => Promise<string> = async e => {
-        // console.log("event clicked", e);
-        setLoadOrders(true);
-        let proceedPayment = await fetch("/api/payment/checkoutSession", {
-            method: "POST",
-            body: JSON.stringify({ amount: 10000, currency: "usd" })
-        });
-        let isPaymentProcessed = await proceedPayment.json();
-        // console.log("Payment positive",isPaymentProcessed);
-        if (isPaymentProcessed.success) {
-            setLoadOrders(false);
-            clientSecret.current = isPaymentProcessed.client_secret;
-            toast.success(`Payment successfull ${clientSecret}`, {
-                position: "bottom-center",
-                autoClose: 2000,
-                theme: "colored"
-            });
-            return isPaymentProcessed.message
-        }
-        else {
-            toast.error("Oops unable to process payment", {
-                position: "bottom-center",
-                autoClose: 2000,
-            })
-            return isPaymentProcessed.message
-        }
-    }
-    const babaji = async () => {
-        setLoadOrders(true);
-        let deletedOrders = await fetch("/api/orders", {
-            method: "DELETE"
-        });
-        let areOrdersDeleted = await deletedOrders.json();
-        setLoadOrders(false);
-        if (areOrdersDeleted) toast.info("Orders deleted successfully")
-        else toast.error("Unable to delete the orders , please try again");
-    }
+    // const finalPayment: (e: React.MouseEvent<HTMLButtonElement>) => Promise<string> = async e => {
+    //     // console.log("event clicked", e);
+    //     setLoadOrders(true);
+    //     let proceedPayment = await fetch("/api/payment/checkoutSession", {
+    //         method: "POST",
+    //         body: JSON.stringify({ amount: 10000, currency: "usd" })
+    //     });
+    //     let isPaymentProcessed = await proceedPayment.json();
+    //     // console.log("Payment positive",isPaymentProcessed);
+    //     if (isPaymentProcessed.success) {
+    //         setLoadOrders(false);
+    //         clientSecret.current = isPaymentProcessed.client_secret;
+    //         toast.success(`Payment successfull ${clientSecret}`, {
+    //             position: "bottom-center",
+    //             autoClose: 2000,
+    //             theme: "colored"
+    //         });
+    //         return isPaymentProcessed.message
+    //     }
+    //     else {
+    //         toast.error("Oops unable to process payment", {
+    //             position: "bottom-center",
+    //             autoClose: 2000,
+    //         })
+    //         return isPaymentProcessed.message
+    //     }
+    // }
+    // const babaji = async () => {
+    //     setLoadOrders(true);
+    //     let deletedOrders = await fetch("/api/orders", {
+    //         method: "DELETE"
+    //     });
+    //     let areOrdersDeleted = await deletedOrders.json();
+    //     setLoadOrders(false);
+    //     if (areOrdersDeleted) toast.info("Orders deleted successfully")
+    //     else toast.error("Unable to delete the orders , please try again");
+    // }
     // console.log("Client secret", clientSecret)
     useEffect(() => {
         // without api using the redux state cartstate...//
@@ -233,7 +233,7 @@ const Orders: React.FC = (props: unknown) => {
                             </>
                         }
                     </div>
-                    <div className="order-tabular-list">
+                    {/* <div className="order-tabular-list">
                         <CommonTable tablebody={tableData.tableBody ? tableData.tableBody : []} tablehead={tableData.tableHead ? tableData.tableHead : []} theme={theme} />
                     </div>
                     <div className="final-payment">
@@ -243,7 +243,7 @@ const Orders: React.FC = (props: unknown) => {
                         <Button className="delete-orders" onClick={e => babaji()}>
                             Delete Orders
                         </Button>
-                    </div>
+                    </div> */}
                 </section>
             </div>
         </>

@@ -53,7 +53,7 @@ const CommonTable: React.FC<ITableData<any>> = ({ tablehead, tablebody, theme })
     //     ]
     // });
     const themePositive = useSelector((state: IState) => state.toggletheme);
-    console.log("Table body", tablebody);
+    // console.log("Table body", tablebody);
     return (
         <>
             <Table className={`bg-light ${themePositive?.dark ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
