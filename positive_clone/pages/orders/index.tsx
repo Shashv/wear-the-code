@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useLayoutEffect } from "react";
 import style from "./index.module.css";
 import { useSelector } from "react-redux";
 import { IState } from "@/redux/sore";
@@ -8,12 +8,12 @@ import { Box, Button, Typography } from "@mui/material";
 import LoadingBar from "react-top-loading-bar";
 import { Backdrop, CircularProgress } from "@mui/material";
 // import OrdersModel from "@/modalsmongoose/orders";
-import { getServerSession } from "next-auth";
-import authorizeOptions from "../api/auth/[...nextauth]";
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
-import orders from "@/modalsmongoose/orders";
+// import { getServerSession } from "next-auth";
+// import authorizeOptions from "../api/auth/[...nextauth]";
+// import { GetServerSideProps, GetServerSidePropsContext } from "next";
+// import orders from "@/modalsmongoose/orders";
 // import Image from "next/image";
-import CommonTable from "@/components/commonlist";
+// import CommonTable from "@/components/commonlist";
 import { toast } from "react-toastify";
 // import { loadStripe } from "@stripe/stripe-js";
 import dynamic from "next/dynamic";
@@ -26,7 +26,8 @@ const Orders: React.FC = (props: unknown) => {
     let [orderList, setOrderList] = useState<string[] | any[]>([]);
     let [loadOrders, setLoadOrders] = React.useState<boolean>(false);
     let [orderId, setOrderId] = useState<number>();
-    let clientSecret = useRef<string>(""); 1
+    // let clientSecret = useRef<string>(""); 
+    // 1
     const [tableData, setTabledata] = useState<{ tableHead: Array<any>, tableBody: Array<any> }>({
         tableHead: [{
             type: 'text',
@@ -101,17 +102,23 @@ const Orders: React.FC = (props: unknown) => {
     //     else toast.error("Unable to delete the orders , please try again");
     // }
     // console.log("Client secret", clientSecret)
-    useEffect(() => {
+    useLayoutEffect(() => {
         // without api using the redux state cartstate...//
         // Object.keys(cartstate).length > 0 ?
         //     setOrderList(Object.keys(cartstate)) : setOrderList(Object.keys(buyedProducts));
         // ....//
-        let id: number = Math.random();
-        setOrderId(id);
+        // let id: number = Math.random();
+        // setOrderId(id);
         setLoadOrders(true);
         fetch(`/api/orders?user_id=${localStorage.getItem("user_id")}`, {
             method: "GET",
         }).then(response => response.json()).then(response => {
+            toast.success(response.orders.orderStatus === "completed" ? `Orders placed successfully` : `Orders are prending , please complete you respective orders payment`, {
+                autoClose: 2000,
+                theme: theme.light ? "light" : "dark",
+                closeButton: true
+            })
+            setOrderId(response.orders.orderStatus);
             const promises = Promise.all(response.orders ? response.orders.products.map(async (product: { id: string; quantity: number }) => {
                 return await convertOrderList(product);
             }) : []);

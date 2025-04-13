@@ -67,7 +67,8 @@ class TShirts extends Component<TShirtProps, TShirtState> {
 
             toast.success("Tshirts", {
                 theme: this.props.theme.light ? "light" : "dark",
-                autoClose: 2000
+                autoClose: 2000,
+                position:"top-center"
             });
         } catch (error) {
             console.error("Error fetching products:", error);

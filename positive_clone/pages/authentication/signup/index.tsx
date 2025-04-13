@@ -19,6 +19,7 @@ import { useRouter } from "next/router";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "@/pages/api/auth/[...nextauth]";
 import Image from "next/image";
+import CloseIcon from "@mui/icons-material/Close"
 interface ISignup {
     name: string;
     email: string;
@@ -670,6 +671,11 @@ const Signup: NextPage = () => {
             show: false,
         }
     });
+    const discardProfile: (e: React.MouseEvent<HTMLSpanElement>) => void = e => {
+        console.log("Event emitted");
+        setImage(null);
+        imageBuffer = ""
+    }
     const { onChange, ...rest } = register("image", {
         required: true
     })
@@ -686,7 +692,6 @@ const Signup: NextPage = () => {
             }, false)
             fileReader.readAsDataURL(e.target.files[0]);
             setImage(e.target.files[0]);
-
         }
         // else {
         //     //  onChange(event) 
@@ -728,7 +733,7 @@ const Signup: NextPage = () => {
                     });
                     reset();
                     setImage(null);
-                    router.replace("/", undefined, { shallow: true });
+                    router.replace("/", undefined, { shallow: false });
                 }
                 else if (res.message === "User already exists") {
                     toast.info("User with the matched credentials already exists , please enter different credentials or login with the same", {
@@ -810,7 +815,7 @@ const Signup: NextPage = () => {
                                                         clearErrors("email");
                                                     }
                                                 },
-                                            })} className="bg-pink-50 border border-pink-300 text-pink-600 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="name@company.com" />
+                                            })} className="bg-pink-50 border border-pink-300 text-pink-600 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"  placeholder="name@company.com" />
                                             {errors.email?.types?.required && <span className="text-pink-600 absolute left-4 top-21 text-xs">Email is required*</span>}
                                             {errors.email?.type === "validatemanual" && <span className="absolute text-xs text-pink-600 top-21 left-4">{"Email should be valid*"}</span>}
                                         </div>
@@ -822,7 +827,13 @@ const Signup: NextPage = () => {
                                                 <label htmlFor="file-upload" className="p-2">
                                                     {
                                                         !image ?
-                                                            <Image className="w-[75px] h-[75px]" alt="Upload the image" src={uploader} width={60} height={60} /> : <img ref={imageref} className="rounded-circle w-[140px] h-[140px]" width={60} height={60} />
+                                                            <Image className="w-[75px] h-[75px]" alt="Upload the image" src={uploader} width={60} height={60} /> :
+                                                            <div className="image-holder relative">
+                                                                <img ref={imageref} className="rounded-circle w-[140px] h-[140px]" width={60} height={60} />
+                                                                <span onClick={discardProfile} className="cursor-pointer absolute top-[0px] right-[5px] border-pink-500">
+                                                                    <CloseIcon color={"action"} sx={{ color: "magenta" }} className="" fontSize="large" />
+                                                                </span>
+                                                            </div>
                                                     }
                                                 </label>
                                                 <input id="file-upload" accept=".jpeg,.jpg,.png" multiple={false} className="profile-uploader d-none" type={"file"} onChange={handleFileChange} {...rest} />

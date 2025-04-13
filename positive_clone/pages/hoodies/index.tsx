@@ -53,7 +53,7 @@ const Hoodies: NextPage<{
                 toast.success("Hoodies", {
                     theme: themeState.light ? "light" : "dark",
                     autoClose: 2000,
-
+                    position: "top-center"
                 });
                 isInitialMount.current = false;
             }

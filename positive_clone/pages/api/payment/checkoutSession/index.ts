@@ -5,7 +5,8 @@ const checkoutSession = async (req: NextApiRequest, res: NextApiResponse) => {
         apiVersion: "2025-02-24.acacia"
     });
     const parsePayload = JSON.parse(req.body);
-    const { amount } = parsePayload;
+    const { amount, useruniqueorderId } = parsePayload;
+    // console.log('unique id', parsePayload.useruniqueorderId)
     const stripePositive = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         // ui_mode:"embedded",
@@ -15,13 +16,16 @@ const checkoutSession = async (req: NextApiRequest, res: NextApiResponse) => {
                 product_data: {
                     name: "Tshirt"
                 },
-                unit_amount: 2000
+                unit_amount: 1000
             },
             quantity: 1
         }],
         mode: "payment",
         success_url: "http://localhost:3000/orders",
-        cancel_url: "http://localhost:3000"
+        cancel_url: "http://localhost:3000",
+        metadata: {
+            userId: parsePayload.useruniqueorderId || ""
+        }
     })
     // const paymentIntent = await stripe.paymentIntents.create({
     //     amount: 1000,

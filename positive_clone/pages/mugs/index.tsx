@@ -96,7 +96,8 @@ class Mugs extends React.Component<any, IMugs> {
         // this.toastExecution = this.context;
         toast.success("Mugs", {
             theme: this.props.theme.dark ? "dark" : "light",
-            autoClose: 2000
+            autoClose: 2000,
+            position:"top-center"
         })
         // const session = await getSession();
         // console.log("Session mugs", session);

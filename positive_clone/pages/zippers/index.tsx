@@ -45,10 +45,10 @@ const Zippers: NextPage<ZippersProps> = ({ zippersSchema }) => {
     const session = useSession();
     const router = useSearchParamsstate();
     const [progress, setProgress] = useState<number>(0);
-    
-    const { totalPages, page } = usePositive({ 
-        totalRecords: Object.keys(zippersSchema).length, 
-        recordsPerpage: 2 
+
+    const { totalPages, page } = usePositive({
+        totalRecords: Object.keys(zippersSchema).length,
+        recordsPerpage: 2
     });
 
     const changePage = useMemo(() => (
@@ -103,9 +103,9 @@ const Zippers: NextPage<ZippersProps> = ({ zippersSchema }) => {
                 <title>CodeSwear - Zippers</title>
                 <meta content="CodeSwear zippers is the best" name="description" />
             </Head>
-            
+
             <LoadingBar color="magenta" height={3} progress={progress} />
-            
+
             <div className={theme.light ? style.lightzipper : style.darkzipper}>
                 <section>
                     <div className="container-fluid p-0">
@@ -115,19 +115,19 @@ const Zippers: NextPage<ZippersProps> = ({ zippersSchema }) => {
                             </div>
                             <div className="col-md-10 p-2">
                                 <div className="py-3">
-                                    <Typography 
-                                        className={theme.light ? "text-dark text-center" : "text-light text-center"} 
-                                        fontWeight={600} 
+                                    <Typography
+                                        className={theme.light ? "text-dark text-center" : "text-light text-center"}
+                                        fontWeight={600}
                                         sx={{ fontSize: { xs: 21, md: 30.5 } }}
                                     >
                                         Explore Our Zippers Collection
                                     </Typography>
-                                    
-                                    <Typography 
-                                        color={theme.light ? "#000" : "#9ca3af"} 
+
+                                    <Typography
+                                        color={theme.light ? "#000" : "#9ca3af"}
                                         className="text-start px-24 py-2 pb-3"
                                         sx={{ fontSize: { xs: 13, md: 14 }, textIndent: { sm: "start" } }}
-                                        lineHeight={1.6} 
+                                        lineHeight={1.6}
                                         fontWeight={600}
                                     >
                                         Welcome to Codeswear.com, your one-stop shop for stylish and unique zippers. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!
@@ -149,7 +149,7 @@ export default Zippers;
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const getServerSideSession = await getServerSession(context.req, context.res, authorizeOptions);
-    
+    console.log("stickers", getServerSideSession);
     if (!getServerSideSession) {
         return {
             redirect: {

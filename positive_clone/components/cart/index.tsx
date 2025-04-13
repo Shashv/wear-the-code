@@ -77,18 +77,21 @@ const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawe
         const stripeRedirectAfterCheckout = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_POSITIVEKEY || "")
         const sessionSecret = await fetch("/api/payment/checkoutSession", {
             method: "POST",
-            body: JSON.stringify({ amount: 1 })
+            body: JSON.stringify({ amount: 1, useruniqueorderId: localStorage.getItem("user_id") })
         });
         const clientSecret = await sessionSecret.json();
-        await stripeRedirectAfterCheckout?.redirectToCheckout({
-            sessionId: clientSecret.client_secret
-        });
         let ordersValue = await fetch("/api/orders", {
             method: "POST",
-            body: JSON.stringify({ buyProduct: buyProduct, userId: localStorage.getItem("user_id") })
+            body: JSON.stringify({ buyProduct: buyProduct, userId: localStorage.getItem("user_id"), email: localStorage.getItem("user_email") })
         });
         let order = await ordersValue.json();
+        // console.log("Valueorder", order);
         sessionId = order;
+        if (order) {
+            await stripeRedirectAfterCheckout?.redirectToCheckout({
+                sessionId: clientSecret.client_secret
+            });
+        }
         return sessionId;
     }
     let productList: string[] = Object.keys(state);
@@ -103,7 +106,7 @@ const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawe
     const payNow = async (e: React.MouseEvent) => {
         await babaji(buyProduct);
         // console.log("sessionId", sessionId);
-        if (sessionId) router.replace("/orders");
+        // if (sessionId) router.replace("/orders");
         // let stripeLoadedResponse = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY || "");
         // stripeLoadedResponse?.redirectToCheckout({ sessionId: sessionId?.sessionId || "" })
     };

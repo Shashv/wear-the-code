@@ -37,7 +37,8 @@ const StickersPage: React.FC<{ stickers: Array<unknown>, stickersLength: number 
                 setPositive(100);
                 toast.success("Stickers", {
                     theme: combinedState.dark ? "dark" : "light",
-                    autoClose: 2000
+                    autoClose: 2000,
+                    position:"top-center"
                 })
                 isInitialMount.current = false
             }
@@ -123,7 +124,7 @@ export default StickersPage;
 // Server-side data fetching and authentication check
 export const getServerSideProps: GetServerSideProps<{ stickers?: Array<unknown | any>, error?: string }> = async (context: GetServerSidePropsContext) => {
     const sessionServer = await getServerSession(context.req, context.res, authorizeOptions);
-
+    
     // Fetch stickers with pagination
     let responseStickers: any = await ProductModel.find({ category: "stickers" })
         .skip(context.query.page ? (Number(context.query.page) - 1) * 10 : (1 - 1) * 10)
@@ -132,10 +133,10 @@ export const getServerSideProps: GetServerSideProps<{ stickers?: Array<unknown |
 
     let filteredResponse = responseStickers.map((sticker: any) => {
         const { _id, ...rest } = sticker;
-        return { 
-            ...rest, 
-            createdAt: new Date(sticker.createdAt).toLocaleString(), 
-            updatedAt: new Date(sticker.updatedAt).toLocaleString() 
+        return {
+            ...rest,
+            createdAt: new Date(sticker.createdAt).toLocaleString(),
+            updatedAt: new Date(sticker.updatedAt).toLocaleString()
         };
     });
 
@@ -156,12 +157,12 @@ export const getServerSideProps: GetServerSideProps<{ stickers?: Array<unknown |
             }
         }
     }
-
-    return {
-        redirect: {
-            permanent: false,
-            destination: "/authentication/login",
-            basePath: false
+    else
+        return {
+            redirect: {
+                permanent: false,
+                destination: "/authentication/login",
+                basePath: false
+            }
         }
-    }
 }

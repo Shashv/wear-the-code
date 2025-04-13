@@ -39,7 +39,8 @@ export default function Home(props: { name: string, scrollTop: number, direction
     let theme = useSelector((state: IState) => state.toggletheme);
     useEffect(() => {
         // console.log("Session status", sessionStatus.data?.user.id);
-        localStorage.setItem("user_id", sessionStatus.data?.user.id || "")
+        localStorage.setItem("user_id", sessionStatus.data?.user.id || "");
+        localStorage.setItem('user_email', sessionStatus.data?.user.email || "");
         Aos.init({ once: false });
         if (localStorage.getItem("toastShown") || sessionStatus.status === "unauthenticated") {
             console.log(localStorage.getItem("toastShown"))
@@ -57,11 +58,11 @@ export default function Home(props: { name: string, scrollTop: number, direction
     return (
         <>
             {/* component based slick slides */}
-            <SlickSlides />
+            {/* <SlickSlides /> */}
             {/* ... */}
             <div className={theme.light ? "wrapper bg-white" : "wrapper bg-dark"}>
                 {/* ...slick slided with custom css */}
-                {/* <div className={style.customcontainer}>
+                <div className={style.customcontainer}>
                     <div className={style.wrapper}>
                         <img className={style.imgfirst} src="/home.jpg" />
                         <img className={style.imgthird} src="/onlinefirst.jpg" />
@@ -69,7 +70,7 @@ export default function Home(props: { name: string, scrollTop: number, direction
                         <img className={style.imgfifth} src="/onlinethird.jpg" />
                         <img className={style.imgsixth} src="/onlinefourth.jpg" />
                     </div>
-                </div> */}
+                </div>
                 {/*... slickes slides .... */}
                 <div className={"collections-container"} style={{ backgroundColor: `${theme.dark ? "#1f2937" : "#fff"}` }}>
                     <CollectionSections theme={theme} />

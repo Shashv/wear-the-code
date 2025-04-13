@@ -26,6 +26,8 @@ const orders = async (req: NextApiRequest, res: NextApiResponse) => {
                 // console.log("Already existing order",babaji);
                 let updateOrder = await OrdersModel.findByIdAndUpdate({ _id: babaji._id }, {
                     userId: parsedBody.userId,
+                    email: parsedBody.email,
+                    orderId: babaji.orderId,
                     products: Object.keys(parsedBody.buyProduct ? parsedBody.buyProduct : {}).map(key => {
                         return {
                             id: parsedBody.buyProduct[key].slug || "",
@@ -36,15 +38,18 @@ const orders = async (req: NextApiRequest, res: NextApiResponse) => {
                     totalAmount: Object.keys(parsedBody.buyProduct ? parsedBody.buyProduct : {}).map(key => parsedBody.buyProduct[key].quantity || 1).reduce((previousValue: number, currentValue: number, index: number) => {
                         return (previousValue + currentValue) * (index + 1);
                     }),
-                    orderStatus: "pending"
+                    orderStatus: "completed"
                 });
                 if (updateOrder) {
                     res.status(200).json({})
                 }
             }
             else {
+                const oid: unknown = Math.floor(Math.random() * Date.now());
                 const createOrder = await OrdersModel.create({
-                    userId: parsedBody.userId,
+                    userId: parsedBody.userId || "",
+                    email: parsedBody.email || "",
+                    orderId: oid || "",
                     products: Object.keys(parsedBody.buyProduct ? parsedBody.buyProduct : {}).map(key => {
                         return {
                             id: parsedBody.buyProduct[key].slug || "",
@@ -55,12 +60,11 @@ const orders = async (req: NextApiRequest, res: NextApiResponse) => {
                     totalAmount: Object.keys(parsedBody.buyProduct ? parsedBody.buyProduct : {}).map(key => parsedBody.buyProduct[key].quantity || 1).reduce((previousValue: number, currentValue: number, index: number) => {
                         return previousValue + currentValue;
                     }),
-                    orderStatus: "compelted"
+                    orderStatus: "pending"
                 });
-
                 if (createOrder) {
-                    console.log("Created order", createOrder);
-                    return res.status(201).json({ message: "Orders placed successfully" });
+                    // console.log("Created order", createOrder);
+                    return res.status(201).json({ message: "Orders placed successfully", orderDetails: { orderId: createOrder.orderId, babajistatus: createOrder.orderStatus } });
                 }
                 else res.status(500).json({ message: "Something went wrong in order placement" })
             }

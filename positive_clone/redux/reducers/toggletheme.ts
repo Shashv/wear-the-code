@@ -5,7 +5,7 @@ interface IStateType {
     dark: boolean;
 }
 let initialState: IStateType = {
-    light: false,
+    light: true,
     dark: false
 }
 let toggletheme: (state: IStateType, actions: { type: string; payload: any }) => IStateType = (state = initialState, actions) => {

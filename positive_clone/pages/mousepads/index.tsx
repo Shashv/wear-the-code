@@ -62,7 +62,8 @@ const MousePads: NextPage<{
                 // Object.keys(mousePadsSchema).length > 0 &&
                 toast.success("Mousepads", {
                     theme: "dark",
-                    autoClose: 2000
+                    autoClose: 2000,
+                    position:"top-center"
                 })
                 setProgress(100);
             }
