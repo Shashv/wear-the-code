@@ -66,6 +66,7 @@ const Zippers: NextPage<ZippersProps> = ({ zippersSchema }) => {
             toast.success("Zippers", {
                 theme: theme.light ? "light" : "dark",
                 autoClose: 2000,
+                position: "top-center"
             });
             initialMount.current = false;
         }

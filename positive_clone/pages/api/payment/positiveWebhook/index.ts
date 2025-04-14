@@ -19,13 +19,18 @@ const webhookListener: (req: NextApiRequest, res: NextApiResponse) => Promise<an
         if (stripeEvent.type === "checkout.session.completed") {
             eventData = stripeEvent.data.object as Stripe.Checkout.Session;
             customEmail = eventData.customer_details?.email;
-            // console.log("Event data order id", eventData?.metadata?.userId);
+            console.log("Event data id", eventData?.id);
             if (eventData?.metadata?.userId) {
                 const findedBabaji = await OrdersModel.findOne({ userId: eventData?.metadata?.userId });
                 // console.log("sjdc findedBabaji", findedBabaji);
-                const babaji = await OrdersModel.findByIdAndUpdate({ _id: findedBabaji?._id }, { orderStatus: "completed" });
+                await OrdersModel.findByIdAndUpdate({ _id: findedBabaji?._id }, { orderStatus: "completed", paymentInfo: eventData });
                 // console.log("babaji", babaji);
             }
+        }
+        else {
+            eventData = stripeEvent.data.object as Stripe.Checkout.Session;
+            const findedBabaji = await OrdersModel.findOne({ userId: eventData?.metadata?.userId });
+            await OrdersModel.findByIdAndUpdate({ _id: findedBabaji?._id }, { orderStatus: "pending", paymentInfo: eventData })
         }
         return res.status(200).send(`Order placed successfully`);
     }

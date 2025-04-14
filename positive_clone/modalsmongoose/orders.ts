@@ -23,7 +23,7 @@ const OrderSchema = new mongoose.Schema<IUser>({
     }],
     address: { type: String, required: true },
     totalAmount: { type: Number, required: true },
-    orderStatus: { type: String, default: "pending", required: true }
+    orderStatus: { type: String, default: "Initiated", required: true }
 }, { timestamps: true });
 let OrdersModel: Model<IUser>;
 if (mongoose.models && mongoose.models.Orders) {

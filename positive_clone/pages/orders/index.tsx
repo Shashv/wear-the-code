@@ -16,6 +16,7 @@ import { Backdrop, CircularProgress } from "@mui/material";
 // import CommonTable from "@/components/commonlist";
 import { toast } from "react-toastify";
 // import { loadStripe } from "@stripe/stripe-js";
+import useSearchParamsstate from "@/hooks/useSearchParams";
 import dynamic from "next/dynamic";
 const Orders: React.FC = (props: unknown) => {
     // const cartstate = useSelector((state: IState) => {
@@ -28,6 +29,7 @@ const Orders: React.FC = (props: unknown) => {
     let [orderId, setOrderId] = useState<number>();
     // let clientSecret = useRef<string>(""); 
     // 1
+    const routerInsatnce = useSearchParamsstate();
     const [tableData, setTabledata] = useState<{ tableHead: Array<any>, tableBody: Array<any> }>({
         tableHead: [{
             type: 'text',
@@ -64,6 +66,7 @@ const Orders: React.FC = (props: unknown) => {
         });
         return formatData;
     }
+    // const orderUrl: string = `/api/orders?user_id=${localStorage.getItem("user_id")}`
     // const finalPayment: (e: React.MouseEvent<HTMLButtonElement>) => Promise<string> = async e => {
     //     // console.log("event clicked", e);
     //     setLoadOrders(true);
@@ -102,7 +105,7 @@ const Orders: React.FC = (props: unknown) => {
     //     else toast.error("Unable to delete the orders , please try again");
     // }
     // console.log("Client secret", clientSecret)
-    useLayoutEffect(() => {
+    useEffect(() => {
         // without api using the redux state cartstate...//
         // Object.keys(cartstate).length > 0 ?
         //     setOrderList(Object.keys(cartstate)) : setOrderList(Object.keys(buyedProducts));
@@ -110,7 +113,7 @@ const Orders: React.FC = (props: unknown) => {
         // let id: number = Math.random();
         // setOrderId(id);
         setLoadOrders(true);
-        fetch(`/api/orders?user_id=${localStorage.getItem("user_id")}`, {
+        fetch(`/api/orders?orderId=${routerInsatnce.query.orderId}`, {
             method: "GET",
         }).then(response => response.json()).then(response => {
             toast.success(response.orders.orderStatus === "completed" ? `Orders placed successfully` : `Orders are prending , please complete you respective orders payment`, {
@@ -146,7 +149,7 @@ const Orders: React.FC = (props: unknown) => {
             <LoadingBar height={3} color="magenta" />
             <div className={theme.light ? style.orderscontainer : style.darkorderscontainer}>
                 <section className="text-gray-600 body-font overflow-hidden">
-                    <div className="container py-28">
+                    <div className="container py-28 min-h-screen">
                         {loadOrders ? <Backdrop open>
                             <Typography variant="h4" className="text-pink-500">LOADING ORDERS!</Typography><CircularProgress color="primary" />
                         </Backdrop> :

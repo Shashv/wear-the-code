@@ -52,6 +52,11 @@ const MousePads: NextPage<{
         }
         else {
             if (router.query.page) {
+                toast.success("Mousepads", {
+                    position: "top-center",
+                    autoClose: 2000,
+                    theme: theme.light ? "light" : "dark"
+                })
                 setProgress(100);
                 return;
             }
@@ -63,7 +68,7 @@ const MousePads: NextPage<{
                 toast.success("Mousepads", {
                     theme: "dark",
                     autoClose: 2000,
-                    position:"top-center"
+                    position: "top-center"
                 })
                 setProgress(100);
             }
@@ -77,7 +82,7 @@ const MousePads: NextPage<{
             </Head>
             <div className={theme.light ? style.padlight : style.paddark}>
                 <LoadingBar color="magenta" height={3} progress={progress} />
-                 <section className="">
+                <section className="">
                     <div className="container-fluid">
                         <div className="row h-100">
                             <div className={`col-md-2 ${style.mobilepadcontainer} p-2`}>

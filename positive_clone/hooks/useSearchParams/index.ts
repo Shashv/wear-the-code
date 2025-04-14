@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import { useRouter } from "next/router";
 import { NextRouter } from "next/router";
 const useSearchParamsstate = () => {

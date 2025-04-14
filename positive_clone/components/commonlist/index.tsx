@@ -5,6 +5,7 @@ import { useSelector, UseSelector } from "react-redux";
 import { ITableData } from "@/modals";
 import { IState } from "@/redux/sore";
 import Image from "next/image";
+import Link from "next/link";
 const CommonTable: React.FC<ITableData<any>> = ({ tablehead, tablebody, theme }) => {
     // const [tabledata, setTabledata] = React.useState<{
     //     tablehead: any[];
@@ -69,6 +70,8 @@ const CommonTable: React.FC<ITableData<any>> = ({ tablehead, tablebody, theme })
                         tablebody.map((bodycell, index) => <TableRow key={index}>
                             {tablehead.map((head, cellindex) => <TableCell color={theme?.light ? "#000" : "#fff"} key={cellindex}>
                                 {head.type === "text" && bodycell[head.title]}
+                                {head.type === "link" && <Link prefetch={false} className="text-pink-500 fw-bold italic hover:text-pink-600" href={`/${head.title}?orderId=${bodycell["orderId"]}`}>
+                                Order Details</Link>}
                                 {head.type === "thumbnail" && <Image width={100} height={100} className="rounded-circle w-[120px] h-[120px] p-2" alt="user_profile" src={`/uploads/${bodycell[head.title]}`} />}
                                 {head.type === "action" && <div className="table-actions">
                                     {head.actionSchema.map((action: { type: string; action: (param?: any) => void }, indexn: number) => {

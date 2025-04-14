@@ -13,27 +13,40 @@ import { IState } from "@/redux/sore";
 // import { Button } from "reactstrap";
 import styles from "./index.module.css";
 import Image from "next/image";
-const OrdersList: NextPage<{ pageName: string, sessionStatus?: { name: string; email: string }, products: any[] }> = ({ pageName, sessionStatus, products }) => {
+const OrdersList: NextPage<{ pageName: string, sessionStatus?: { name: string; email: string }, products: any[] ,orderPositive:Array<any>}> = ({ pageName, sessionStatus, products ,orderPositive}) => {
     // const { name, email } = sessionStatus;
     const session = useSession();
     const router = useRouter();
     var themeState = useSelector((state: IState) => state.toggletheme);
-    // console.log("Orders list on the server component function calling", products);
+    // console.log("Orders list on the server component function calling", orderPositive);
     let [tableData, setTabledata] = useState<{ tableHead: Array<any>, tableBody: Array<any> }>({
         tableHead: [{
             type: "text",
             label: "Name",
-            title: "id"
-        }, {
+            title: "_id"
+        }, 
+        {
             type: "text",
             label: "Quantity",
             title: "quantity"
+        },{
+            type:"text",
+            label:"Order Id",
+            title:"orderId"
+        },{
+            type:"text",
+            label:"Order Status",
+            title:"orderStatus"
+        },{
+            type:"link",
+            label:"Order Details",
+            title:"orders"
         }],
         tableBody: []
     });
     React.useEffect(() => {
         if (session.status === "unauthenticated") router.replace("/authentication/login");
-        setTabledata({ ...tableData, tableBody: products });
+        setTabledata({ ...tableData, tableBody: orderPositive });
     }, [session,products]);
     // React.useEffect(() => {
     //     setTabledata({ ...tableData, tableBody: products });
@@ -77,8 +90,8 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     const sessionStatus = await getServerSession(context.req, context.res, authorizeOptions) as ICustomSession | null;
     const userSession = await getSession({ req: context.req });
     // console.log("user session",userSession?.user.id);
-    let ordersList = await OrdersModel.findOne({ userId: userSession?.user.id || "" });
-    // if (typeof window !== undefined) {
+    let ordersList = await OrdersModel.find({ email: userSession?.user.email || "" });
+    // if (typeof window !== undefined) 
     //    console.log("Window found");
     // }
     // else {
@@ -86,12 +99,12 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     // }
     // console.log("order list", ordersList);
     let products: Array<any> = [];
-    if (ordersList?.products) {
-        products = ordersList?.products;
-    }
-    else {
-        products = [];
-    }
+    // if (ordersList?.products) {
+    //     products = ordersList?.products;
+    // }
+    // else {
+    //     products = [];
+    // }
     if (sessionStatus) {
         return {
             props: {
@@ -100,13 +113,14 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
                     name: sessionStatus.user.name,
                     email: sessionStatus.user.email
                 },
-                products: products.map(product => {
-                    let { _id, id, quantity } = product;
-                    return {
-                        id,
-                        quantity
-                    }
-                })
+                // products: products.map(product => {
+                //     let { _id, id, quantity } = product;
+                //     return {
+                //         id,
+                //         quantity
+                //     }
+                // }),
+                orderPositive:JSON.parse(JSON.stringify(ordersList))
             }
         }
     }

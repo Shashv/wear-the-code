@@ -21,7 +21,7 @@ const checkoutSession = async (req: NextApiRequest, res: NextApiResponse) => {
             quantity: 1
         }],
         mode: "payment",
-        success_url: "http://localhost:3000/orders",
+        success_url: `http://localhost:3000/orders?orderId=${parsePayload.useruniqueorderId}`,
         cancel_url: "http://localhost:3000",
         metadata: {
             userId: parsePayload.useruniqueorderId || ""
