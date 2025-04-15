@@ -24,13 +24,17 @@ const checkoutSession = async (req: NextApiRequest, res: NextApiResponse) => {
         success_url: `http://localhost:3000/orders?orderId=${parsePayload.useruniqueorderId}`,
         cancel_url: "http://localhost:3000",
         metadata: {
-            userId: parsePayload.useruniqueorderId || ""
+            userId: useruniqueorderId || ""
         }
     })
     // const paymentIntent = await stripe.paymentIntents.create({
     //     amount: 1000,
     //     currency: "usd",
+    //     automatic_payment_methods:{
+    //         enabled:true
+    //     }
     // });
+    // console.log("Amountmust be converted to 50 cents",paymentIntent.client_secret)
 
     return res.status(200).json({ message: 'Payment client secret', success: true, client_secret: stripePositive.id })
 }
