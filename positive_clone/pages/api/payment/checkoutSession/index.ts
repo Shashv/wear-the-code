@@ -8,7 +8,7 @@ const checkoutSession = async (req: NextApiRequest, res: NextApiResponse) => {
     const { amount, useruniqueorderId } = parsePayload;
     // console.log('unique id', parsePayload.useruniqueorderId)
     const stripePositive = await stripe.checkout.sessions.create({
-        payment_method_types: ["card"],
+        // payment_method_types: ["card"],
         // ui_mode:"embedded",
         line_items: [{
             price_data: {
