@@ -225,10 +225,10 @@
 // };
 
 // export default ProductClient;
-type Positive = {
-    color: "Pink" | "Blue" | "White";
-    size: "L" | "SM" | "M" | "XXL" | "XL" | string;
-}
+// type Positive = {
+//     color: "Pink" | "Blue" | "White";
+//     size: "L" | "SM" | "M" | "XXL" | "XL" | string;
+// }
 import React, { useEffect, useRef } from "react";
 import "./index.module.css";
 import { useState } from "react";
@@ -252,6 +252,7 @@ import clearCart from "@/redux/actions/clearCart";
 import ProductModel from "@/modalsmongoose/product";
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 import { toast } from "react-toastify";
+import Image from "next/image";
 type IProductType = {
     alone_back: string;
     alone_front: string;
@@ -280,7 +281,7 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
     });
     let router = useSearchParamsstate();
     let [servie, setService] = useState<boolean>(false);
-    const [selectedDisplay, setSelectedDisplay] = useState<string>("image_front.jpg");
+    // const [selectedDisplay, setSelectedDisplay] = useState<string>(selectedProduct.img || "");
     const [loader, setLoader] = useState<boolean>(false);
     const [productVariant, setProductvariant] = useState<any>({});
     let serviceRef = useRef<HTMLButtonElement>(null);
@@ -349,6 +350,10 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
         return () => serviceRef.current?.removeEventListener("click", (e: MouseEvent) => setService(true))
     });
     //end//
+    const productOrientations: (productOrientation: string) => Array<string> = productOrientation => {
+        let list = productOrientation.split(",");
+        return list;
+    }
     const closeModal = () => {
         setService(false);
         setPin({ ...pin, pinError: false, pin: "" });
@@ -356,17 +361,17 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
     function buyNow(e: React.MouseEvent<HTMLButtonElement>) {
         if (Object.keys(productsBought).includes(selectedProduct?.slug || "")) {
             // toastOptions("Product already selected", "info");
-            toast.info("Product already selected",{
-                autoClose:2000,
-                position:"top-center"
+            toast.info("Product already selected", {
+                autoClose: 2000,
+                position: "top-center"
             })
         }
         else {
             dispatch(buyProduct({ name: selectedProduct?.title || "", product: selectedProduct.slug, quantity: selectedProduct?.availableQuantity || 1, price: selectedProduct?.price, variant: selectedProduct?.color || "", size: selectedProduct?.size || "" }))
             // toastOptions("Product added to cart for delivery", "success");
-            toast.success("Product added to cart for delivery",{
-                position:"top-center",
-                autoClose:2000
+            toast.success("Product added to cart for delivery", {
+                position: "top-center",
+                autoClose: 2000
             })
             dispatch(clearCart({}));
         }
@@ -393,9 +398,6 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
             setPin({ ...pin, pin: "", pinError: "", servicePending: false })
         }
     }
-    // const reload = (e: React.MouseEvent<HTMLOptionElement>) => {
-    //     window.location.reload();
-    // }
     const addToCart: () => void = () => {
         let findedKey: string = Object.keys(state).find(key => key === routerDetail.query.slug) || "";
         if (findedKey) {
@@ -417,6 +419,9 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
             });
         }
     }
+    // const reload = (e: React.MouseEvent<HTMLOptionElement>) => {
+    //     window.location.reload();
+    // }
     // const babaJi: (e: React.MouseEvent, timeout: ReturnType<typeof setTimeout>) => void = (e, timeout) => {
     //     clearTimeout(timeout);
     //     setCustomToast({
@@ -426,12 +431,13 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
     // const setOpen8: () => void = () => {
     //     setCustomToast({ ...customtoast, open: false });
     // }
-    const refreshVariants = (newColor: string, newSize: string) => {
-        router.getDetails().replace(productVariant[newColor][newSize]["slug"]);
-    }
     // const selectProduct: (e: React.MouseEvent<HTMLOptionElement>) => void = e => {
 
     // }
+    const refreshVariants = (newColor: string, newSize: string) => {
+        router.getDetails().replace(productVariant[newColor][newSize]["slug"]);
+    }
+
     const ModalContent: JSX.Element = <div className="d-flex flex-column w-100">
         <input className={!pin.servicePending ? "bg-light rounded-4 p-4 rounded-2" : "rounded-4 p-4 rounded-2 backdrop-blur-2xl bg-light"} style={{ border: "2px solid pink", outline: "2px solid pink" }} defaultValue={pin.pin} type="text" placeholder="Enter six digit Service Locality Code" onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             magicFunction(e);
@@ -446,106 +452,115 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
     </div>
     return (
         <>
-            {/* {loader ? <Backdrop open className="flex flex-column justify-center align-center">
-                <LoaderAnimate />
-            </Backdrop> : */}
-                <>
-                    {/* <StyledToast anchorOrigin={{
-                        vertical: "top",
-                        horiontal: "end"
-                    }} variant={customtoast.variant} open={customtoast.open} message={customtoast.message} onClose={babaJi} autoHide={() => setCustomToast({ ...customtoast, open: false })} /> */}
-                    <div className={theme.light ? `${style.productpagelight}` : `${style.productpagedark}`}>
-                        <section className="text-gray-600 body-font overflow-hidden">
-                            <div className="container-fluid">
-                                <div className="row px-5">
-                                    <div className={`col-md-5 col-sm-12 ${style.imageholder}`}>
-                                        <div className="d-flex flex-column align-items-center justify-start gap-3 w-[20%]">
-                                            {/* commented for the time being */}
-                                            {/* <img className={selectedDisplay === product.image_front ? `border border-none ${style.selectedvariant}` : `border border-none ${style.unselectedvariant}`} src={`/shirts/${product.type}/${product.image_front}`} onClick={() => setSelectedDisplay(product.image_front)} />
+
+            <>
+                <div className={theme.light ? `${style.productpagelight} min-h-screen` : `${style.productpagedark} min-h-screen`}>
+                    <section className="text-gray-600 body-font overflow-hidden">
+                        <div className="container-fluid">
+                            <div className="row px-5">
+                                <div className={`col-md-5 col-sm-12 ${style.imageholder}`}>
+                                    <div className="d-flex flex-column align-items-center justify-start gap-3 w-[20%]">
+                                        {/* commented for the time being */}
+                                        {/* <>
+                                            <img className={selectedDisplay === product.image_front ? `border border-none ${style.selectedvariant}` : `border border-none ${style.unselectedvariant}`} src={`/shirts/${product.type}/${product.image_front}`} onClick={() => setSelectedDisplay(product.image_front)} />
                                             <img className={selectedDisplay === product.image_back ? `border border-none ${style.selectedvariant}` : `border border-none ${style.unselectedvariant}`} src={`/shirts/${product.type}/${product.image_back}`} onClick={() => setSelectedDisplay(product.image_back)} />
                                             <img className={selectedDisplay === product.alone_back ? `outline-orange-400 border border-none ${style.selectedvariant}` : `outline-slate-200 border border-none ${style.unselectedvariant}`} src={`/shirts/${product.type}/${product.alone_front}`} onClick={() => setSelectedDisplay(product.alone_back)} />
                                             <img className={selectedDisplay === product.alone_front ? `border border-none ${style.selectedvariant}` : `border border-none ${style.unselectedvariant}`} src={`/shirts/${product.type}/${product.alone_back}`} onClick={() => setSelectedDisplay(product.alone_front)} />
-                                            <img className={selectedDisplay === product.positive ? `border border-none ${style.selectedvariant}` : `border border-none ${style.unselectedvariant}`} src={`/shirts/${product.type}/${product.positive}`} onClick={() => setSelectedDisplay(product.positive)} /> */}
-                                            {/* end */}
+                                            <img className={selectedDisplay === product.positive ? `border border-none ${style.selectedvariant}` : `border border-none ${style.unselectedvariant}`} src={`/shirts/${product.type}/${product.positive}`} onClick={() => setSelectedDisplay(product.positive)} />
+                                        </> */}
+                                        {productOrientations(selectedProduct.productOrientations || "").map((image: string, index: number) => <Image className={selectedProduct.img === image ? style.selectedvariant : style.unselectedvariant} onClick={() => setSelectedProduct((selectedProduct) => ({ ...selectedProduct, img: image }))} src={image} alt="img" width={55} height={55} />)}
+                                        {/* end */}
+                                    </div>
+                                    <div className="main-display w-[90%] h-100">
+                                        <img loading="lazy" alt="egoocommerce" className={`transition-all duration-300 hover:scale-105`} src={selectedProduct?.img || ""} />
+                                    </div>
+                                </div>
+                                <div className="col-md-7 col-sm-12 p-2 ps-5">
+                                    <h2 className={theme.light ? "text-gray-500 tracking-widest" : `tracking-widest ${style.codesweardark}`}>CODESWEAR</h2>
+                                    <h1 className={theme.light ? "text-gray-900 text-3xl title-font font-medium mb-1" :
+                                        "text-light text-3xl title-font"
+                                    }>{selectedProduct.title} ({selectedProduct.size}/{selectedProduct.color})</h1>
+                                    <div className="description-holder my-1">
+                                        <Typography className="product-description" variant="h6" fontWeight={"700"} color={"#9ca3af"}>
+                                            Product Description:
+                                        </Typography>
+                                        <p className={theme.light ? "leading-relaxed " : "text-light"}>
+                                            {selectedProduct?.desc}
+                                        </p>
+                                        <Typography className="product-highlights" variant="h6" fontWeight={"700"} color={"#9ca3af"}>
+                                            Product Highlights
+                                        </Typography>
+                                        <ul className="ps-4 list-disc">
+                                            {selectedProduct.desc?.includes("highlights") && selectedProduct.desc?.split("highlights")[1].split(",").map((listItem: string, index: number) => <li className={theme.light ? `text-slate-600 highlight-positive`:`text-light highlight-posiitve`} key={index}>{listItem}</li>)}
+                                        </ul>
+                                        <Typography className="tags" variant="h6" fontWeight={700} color={"#9ca3af"}>
+                                            Tags
+                                        </Typography>
+                                        <p className={theme.light ? "leading-relaxed text-slate-600" : "text-light"}>
+                                            {selectedProduct?.tags}
+                                        </p>
+                                    </div>
+                                    <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
+                                        <div className="flex-column ">
+                                            <Typography className={theme.light ? `mr-3` : `text-light mr-3`}>Color:{ }</Typography>
+                                            <Grid container columnGap={0.55}>
+                                                {Object.keys(productVariant).map(color => {
+                                                    return <Grid className="cursor-pointer" item key={color}>
+                                                        <ColorLabel key={color} onClick={(e) => {
+                                                            setSelectedProduct(state => ({ ...state, color, size: Object.keys(productVariant[color])[0], slug: productVariant[color][Object.keys(productVariant[color])[0]]["slug"], price: productVariant[color][Object.keys(productVariant[color])[0]]["price"] }))
+                                                            refreshVariants(color, Object.keys(productVariant[color])[0]);
+                                                        }
+                                                        } selected={color === selectedProduct.color} hexcode={color} />
+                                                    </Grid>
+                                                }
+                                                )}
+                                            </Grid>
                                         </div>
-                                        <div className="main-display w-[90%] h-100">
-                                            <img loading="lazy" alt="egoocommerce" className={`transition-all duration-300 hover:scale-105`} src={selectedProduct?.img || ""} />
+                                        <div className="flex ml-6 items-center">
+                                            <span className={theme.light ? "mr-3" : "text-light mr-3"}>Size</span>
+                                            <div className="relative bg-light rounded-2 border-light">
+                                                <select defaultValue={selectedProduct?.size?.toLowerCase() || ""} className="rounded border appearance-none border-pink-300 px-7 py-1" onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                                                    setSelectedProduct({ ...selectedProduct, size: e.currentTarget.value.toUpperCase(), slug: productVariant[selectedProduct?.color || ""][e.currentTarget.value.toUpperCase()].slug, price: productVariant[selectedProduct?.color || ""][e.currentTarget.value.toUpperCase()]["price"] });
+                                                    refreshVariants(selectedProduct?.color || "", e.currentTarget.value.toUpperCase());
+                                                }}>
+                                                    {Object.keys(productVariant[selectedProduct?.color || ""] || {}).map(size => <option selected={size === selectedProduct.size} className="" key={size}>{size}</option>)}
+                                                </select>
+                                                <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
+                                                    <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4" viewBox="0 0 24 24">
+                                                        <path d="M6 9l6 6 6-6"></path>
+                                                    </svg>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-md-7 col-sm-12 p-2 ps-5">
-                                        <h2 className={theme.light ? "text-gray-500 tracking-widest" : `tracking-widest ${style.codesweardark}`}>CODESWEAR</h2>
-                                        <h1 className={theme.light ? "text-gray-900 text-3xl title-font font-medium mb-1" :
-                                            "text-light text-3xl title-font"
-                                        }>{selectedProduct.title} ({selectedProduct.size}/{selectedProduct.color})</h1>
-                                        <div className="description-holder my-1">
-                                            <Typography className="" variant="h6" fontWeight={"700"} color={"#9ca3af"}>
-                                                Product Description:
-                                            </Typography>
-                                            <p className={theme.light ? "leading-relaxed " : "text-light"}>
-                                                {selectedProduct.desc}
-                                            </p>
+                                    <div className="flex items-center gap-10">
+                                        <div className="">
+                                            <span className={theme.light ? "title-font font-medium text-2xl text-gray-900" : "text-light text-2xl font-medium"}>${selectedProduct.price}</span>
                                         </div>
-                                        <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
-                                            <div className="flex-column ">
-                                                <Typography className={theme.light ? `mr-3` : `text-light mr-3`}>Color:{ }</Typography>
-                                                <Grid container columnGap={0.55}>
-                                                    {Object.keys(productVariant).map(color => {
-                                                        return <Grid className="cursor-pointer" item key={color}>
-                                                            <ColorLabel key={color} onClick={(e) => {
-                                                                setSelectedProduct(state => ({ ...state, color, size: Object.keys(productVariant[color])[0], slug: productVariant[color][Object.keys(productVariant[color])[0]]["slug"], price: productVariant[color][Object.keys(productVariant[color])[0]]["price"] }))
-                                                                refreshVariants(color, Object.keys(productVariant[color])[0]);
-                                                            }
-                                                            } selected={color === selectedProduct.color} hexcode={color} />
-                                                        </Grid>
-                                                    }
-                                                    )}
-                                                </Grid>
-                                            </div>
-                                            <div className="flex ml-6 items-center">
-                                                <span className={theme.light ? "mr-3" : "text-light mr-3"}>Size</span>
-                                                <div className="relative bg-light rounded-2 border-light">
-                                                    <select defaultValue={selectedProduct?.size?.toLowerCase() || ""} className="rounded border appearance-none border-pink-300 px-7 py-1" onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                                                        setSelectedProduct({ ...selectedProduct, size: e.currentTarget.value.toUpperCase(), slug: productVariant[selectedProduct?.color || ""][e.currentTarget.value.toUpperCase()].slug, price: productVariant[selectedProduct?.color || ""][e.currentTarget.value.toUpperCase()]["price"] });
-                                                        refreshVariants(selectedProduct?.color || "", e.currentTarget.value.toUpperCase());
-                                                    }}>
-                                                        {Object.keys(productVariant[selectedProduct?.color || ""] || {}).map(size => <option selected={size === selectedProduct.size} className="" key={size}>{size}</option>)}
-                                                    </select>
-                                                    <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
-                                                        <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4" viewBox="0 0 24 24">
-                                                            <path d="M6 9l6 6 6-6"></path>
-                                                        </svg>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center gap-10">
-                                            <div className="">
-                                                <span className={theme.light ? "title-font font-medium text-2xl text-gray-900" : "text-light text-2xl font-medium"}>${selectedProduct.price}</span>
-                                            </div>
-                                            <div className="flex gap-2">
-                                                <button onClick={buyNow} className="flex  text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Buy Now</button>
-                                                <button className="flex  text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded" onClick={() => {
-                                                    addToCart()
-                                                }}>Add to Cart</button>
-                                                <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500">
-                                                    <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
-                                                        <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div className="check-service mt-2">
-                                            <button ref={serviceRef} className="bg-pink-500 text-light border-pink-400 outline-pink-400 px-3 py-2 focus:border-none rounded-1 hover:bg-indigo-500">
-                                                Check Location Service with pin code
+                                        <div className="flex gap-2">
+                                            <button onClick={buyNow} className="flex  text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Buy Now</button>
+                                            <button className="flex  text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded" onClick={() => {
+                                                addToCart()
+                                            }}>Add to Cart</button>
+                                            <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500">
+                                                <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
+                                                    <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+                                                </svg>
                                             </button>
                                         </div>
                                     </div>
+                                    <div className="check-service mt-2">
+                                        <button ref={serviceRef} className="bg-pink-500 text-light border-pink-400 outline-pink-400 px-3 py-2 focus:border-none rounded-1 hover:bg-indigo-500">
+                                            Check Location Service with pin code
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                            <StyledModal confirmProcess={() => null} title="Check Your Desired Location Code" loader={pin.servicePending} open={servie} closeModal={() => closeModal()} content={ModalContent} width={"500px"} height={"250px"} />
-                        </section>
-                    </div>
-                </>
+                        </div>
+                        <StyledModal confirmProcess={() => null} title="Check Your Desired Location Code" loader={pin.servicePending} open={servie} closeModal={() => closeModal()} content={ModalContent} width={"500px"} height={"250px"} />
+                    </section>
+                </div>
+            </>
             {/* } */}
 
         </>
@@ -581,6 +596,7 @@ export const getServerSideProps: GetServerSideProps<{
             }
         }
     } = {};
+    console.log("Available shirts",availableshirts);
     let modifiedResponse = responseproduct.map((product: any, index: number) => ({ ...product, createdAt: new Date(product.createdAt).toLocaleString(), updatedAt: new Date(product.updatedAt).toLocaleString(), _id: index }));
     for (let shirtVaraints of availableshirts) {
         if (shirtVaraints.color in colorslug) {
@@ -599,3 +615,10 @@ export const getServerSideProps: GetServerSideProps<{
         }
     }
 }
+/* {loader ? <Backdrop open className="flex flex-column justify-center align-center">
+                <LoaderAnimate />
+            </Backdrop> : */
+/* <StyledToast anchorOrigin={{
+                    vertical: "top",
+                    horiontal: "end"
+                }} variant={customtoast.variant} open={customtoast.open} message={customtoast.message} onClose={babaJi} autoHide={() => setCustomToast({ ...customtoast, open: false })} /> */

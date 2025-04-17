@@ -30,7 +30,7 @@
 .imageholder {
     transition: 0.5s ease;
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: center;
     gap: 17px;
     padding: 10px;

@@ -30,7 +30,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         else {
             return response.status(405).json({ message: "Method not allowed" });
         }
-        response.end();
+        // response.end();
     }
     catch (er) {
         console.log("Backend error");

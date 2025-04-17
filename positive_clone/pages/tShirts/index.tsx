@@ -104,9 +104,9 @@ class TShirts extends Component<TShirtProps, TShirtState> {
                     Welcome to Codeswear.com, your one-stop shop for stylish and unique tshirts. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!
                 </Typography>
 
-                <Grid container rowGap={2} className="justify-center" columnGap={1.4}>
+                <Grid container rowGap={2.4} className="justify-center" columnGap={1.4}>
                     {Object.entries(products).map(([key, product]) => (
-                        <Grid item xs={5.4} sm={5.9} md={2.7} key={key}>
+                        <Grid item xs={5.4} sm={5.9} md={2.3} key={key}>
                             <Link href={`/product/${product.slug}`}>
                                 <ProductCard 
                                     {...product}
@@ -152,7 +152,7 @@ class TShirts extends Component<TShirtProps, TShirtState> {
                                 <div className={`col-md-2 ${styles.mobilefiltercontainer} p-2`}>
                                     <FilterBar theme={theme} />
                                 </div>
-                                <div className="col-md-10 p-2">
+                                <div className="col-md-10 px-5 p-2">
                                     {this.renderProductGrid()}
                                 </div>
                             </div>

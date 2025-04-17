@@ -17,6 +17,8 @@ export type IShirts = {
     updatedAt?: string | null;
     __v?: number | string;
     availableSizes?: string[];
+    productOrientations?:string;
+    tags?:string
 }
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "GET") {

@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import { useSelector } from "react-redux";
 import { IState } from "@/redux/sore";
 import { FaRupeeSign } from "react-icons/fa";
-import { IProductType } from "@/pages/tShirts";
+// import { IProductType } from "@/pages/tShirts";
 import ColorLabel from "../colorLabels";
 import { FaHeart } from "react-icons/fa";
 // type IBest = {
@@ -21,7 +21,7 @@ import { FaHeart } from "react-icons/fa";
 //     },
 
 // }
-const ProductCard: React.FC<IProductType> = ({ desc, title, sizes, category, slug, availableQuantity, price, colors, type, img, showIcon }) => {
+const ProductCard: React.FC<any> = ({ desc, title, sizes, category, slug, availableQuantity, price, colors, type, img, showIcon }) => {
     let theme = useSelector((state: IState) => state.toggletheme);
     let [hover, setHover] = React.useState<boolean>(false);
     return (
@@ -41,11 +41,11 @@ const ProductCard: React.FC<IProductType> = ({ desc, title, sizes, category, slu
                     </Typography>
                     <div className="d-flex align-items-center justify-between">
                         <div className="color-variants flex align-center gap-1">
-                            {colors?.map((colorValue, index) =>
+                            {/* {colors?.map((colorValue, index) =>
                                 <div key={index}>
                                     <ColorLabel key={index} hexcode={colorValue} />
                                 </div>
-                            )}
+                            )} */}
                         </div>
                         <div className="price-section d-flex align-items-center">
                             <div color={theme.light ? "#000" : "gray"} className="text-decoration-line-through d-flex align-items-center">
@@ -68,7 +68,7 @@ const ProductCard: React.FC<IProductType> = ({ desc, title, sizes, category, slu
                         </div>
                     </div>
                     <div className="available-sizes flex align-center justify-start gap-1 w-100">
-                        {sizes?.map((size, index) => <span className={theme.dark ? style.sizelabel : style.sizelabellight} key={index}>{size}</span>)}
+                        {/* {sizes?.map((size, index) => <span className={theme.dark ? style.sizelabel : style.sizelabellight} key={index}>{size}</span>)} */}
                     </div>
 
                 </div>

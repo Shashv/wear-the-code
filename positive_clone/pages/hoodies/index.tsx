@@ -84,7 +84,7 @@ const Hoodies: NextPage<{
                                     <div className={`col-md-2 ${style.hoodiesmobilefilter} p-2`}>
                                         <FilterBar theme={themeState} />
                                     </div>
-                                    <div className={`col-md-10 ${style.mobilepositive} p-2`}>
+                                    <div className={`col-md-10 ${style.mobilepositive} p-2 px-5`}>
                                         <div className={"py-2"}>
                                             <Typography className={themeState.light ? "text-dark text-center" : "text-light text-center"} fontWeight={600} sx={{ fontSize: { xs: 21, md: 30.5 } }}>
                                                 Explore our hoodies collections!
@@ -92,9 +92,9 @@ const Hoodies: NextPage<{
                                             <Typography color={themeState.light ? "#000" : "#9ca3af"} className={"text-start px-24 py-2 pb-3"} sx={{ fontSize: { xs: 13, md: 14 }, textIndent: { sm: "start" } }} fontWeight={600} lineHeight={1.6}>
                                                 Welcome to Codeswear.com, your one-stop shop for stylish and unique hoodies. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!
                                             </Typography>
-                                            <Grid container rowGap={1.4} columnGap={1.4} justifyContent={"center"}>
+                                            <Grid container rowGap={2.4} columnGap={1.4} justifyContent={"center"}>
                                                 {Object.keys(cart).length === 0 && <Grid item xs={12}><Typography color={"#ec4899"}>Soory products out of available</Typography></Grid>}
-                                                {Object.keys(cart).map((hoodies: string, index: number) => <Grid item xs={5.7} sm={5.9} md={2.7} key={index}>
+                                                {Object.keys(cart).map((hoodies: string, index: number) => <Grid item xs={5.7} sm={5.9} md={2.3} key={index}>
                                                     <Link href={`/product/${cart[hoodies].slug}`}> <ProductCard desc={cart[hoodies].desc} slug={cart[hoodies].slug} title={cart[hoodies].title} img={cart[hoodies].img} colors={cart[hoodies].color} sizes={cart[hoodies].size} /></Link></Grid>)}
                                             </Grid>
                                         </div>

@@ -13,7 +13,9 @@ const addProduct = async (req: NextApiRequest, res: NextApiResponse) => {
                 size: req.body.size,
                 color: req.body.color,
                 price: req.body.price,
-                availableQuantity: req.body.availableQuantity
+                availableQuantity: req.body.availableQuantity,
+                tags: req.body.tags,
+                productOrientations: req.body.productOrientations
             })
             await addProduct.save();
             return res.status(200).json({ message: "Addedproducts" });

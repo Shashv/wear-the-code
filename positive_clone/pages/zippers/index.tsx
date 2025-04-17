@@ -79,10 +79,10 @@ const Zippers: NextPage<ZippersProps> = ({ zippersSchema }) => {
     }, [session.status, router]);
 
     const renderProductGrid = useMemo(() => (
-        <Grid container columnGap={1.4} justifyContent="center" rowGap={1.4}>
+        <Grid container columnGap={1.4} justifyContent="center" rowGap={2.2}>
             {Object.keys(zippersSchema || {}).length > 0 ? (
                 Object.entries(zippersSchema).map(([zipper, product]) => (
-                    <Grid item xs={5.7} sm={5.9} md={2.7} key={zipper}>
+                    <Grid item xs={5.7} sm={5.9} md={2.3} key={zipper}>
                         <Link href={`/product/${product.slug}`}>
                             <ProductCard {...product} />
                         </Link>
@@ -114,7 +114,7 @@ const Zippers: NextPage<ZippersProps> = ({ zippersSchema }) => {
                             <div className={`col-md-2 ${positive.mobilefiltercontainer} p-2`}>
                                 <FilterBar theme={theme} />
                             </div>
-                            <div className="col-md-10 p-2">
+                            <div className="col-md-10 px-5 p-2">
                                 <div className="py-3">
                                     <Typography
                                         className={theme.light ? "text-dark text-center" : "text-light text-center"}

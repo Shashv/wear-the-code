@@ -88,7 +88,7 @@ const MousePads: NextPage<{
                             <div className={`col-md-2 ${style.mobilepadcontainer} p-2`}>
                                 <FilterBar theme={theme} />
                             </div>
-                            <div className="col-md-10 p-2">
+                            <div className="col-md-10 px-5 p-2">
                                 <div className="py-3">
                                     <Typography color={theme.light ? "#000" : "#fff"} className="text-center" fontSize={{ xs: 21, md: 30.5 }}>
                                         Explorre our MousePads at negotiable price and best quality
@@ -96,10 +96,10 @@ const MousePads: NextPage<{
                                     <Typography color={theme.light ? "#000" : "#9ca3af"} className="text-start px-24 py-2 pb-3" sx={{ fontSize: { xs: 13, md: 14 } }} fontWeight={600} lineHeight={1.6}>
                                         Welcome to Codeswear.com, your one-stop shop for stylish and unique mousepads. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!
                                     </Typography>
-                                    <Grid container rowGap={1.4} justifyContent={"center"} columnGap={1.4}>
+                                    <Grid container rowGap={2.4} justifyContent={"center"} columnGap={1.4}>
                                         {
                                             Object.keys(mousePadsSchema || {}).length > 0 ?
-                                                Object.keys(mousePadsSchema).map((mousepad: string, index: number) => <Grid key={index} item xs={5.7} sm={5.8} md={2.7}>
+                                                Object.keys(mousePadsSchema).map((mousepad: string, index: number) => <Grid key={index} item xs={5.7} sm={5.8} md={2.3}>
                                                     <Link href={`/product/${mousePadsSchema[mousepad].slug}`}>
                                                         <ProductCard title={mousePadsSchema[mousepad].title} colors={mousePadsSchema[mousepad].colors} sizes={mousePadsSchema[mousepad].sizes} desc={mousePadsSchema[mousepad].desc} img={mousePadsSchema[mousepad].img} category={mousePadsSchema[mousepad].category} />
                                                     </Link>

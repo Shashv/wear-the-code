@@ -150,6 +150,8 @@ export interface IProductModel extends Document {
     availableQuantity: number,
     createdAt: any;
     updatedAt: any;
+    productOrientations?: string;
+    tags?:string
 }
 export interface ISchema extends Document {
     email: string;
