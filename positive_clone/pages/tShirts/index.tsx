@@ -1,4 +1,4 @@
-interface Product {
+export interface Product {
     title: string;
     desc: string;
     img: string;
@@ -8,6 +8,8 @@ interface Product {
     slug: string;
     category?: string;
     availableQuantity?: number;
+    tags?: string;
+    productOrientations?: string;
 }
 
 interface TShirtProps {
@@ -59,7 +61,7 @@ class TShirts extends Component<TShirtProps, TShirtState> {
         try {
             const response = await fetch("/api/getProducts");
             const { productlist } = await response.json();
-            
+
             this.setState({
                 products: productlist,
                 loading: false
@@ -68,7 +70,7 @@ class TShirts extends Component<TShirtProps, TShirtState> {
             toast.success("Tshirts", {
                 theme: this.props.theme.light ? "light" : "dark",
                 autoClose: 2000,
-                position:"top-center"
+                position: "top-center"
             });
         } catch (error) {
             console.error("Error fetching products:", error);
@@ -86,29 +88,30 @@ class TShirts extends Component<TShirtProps, TShirtState> {
 
         return (
             <div className={"py-2"}>
-                <Typography 
-                    className={theme.light ? "text-dark text-center" : "text-light text-center"} 
-                    fontWeight={600} 
+                <Typography
+                    className={theme.light ? "text-dark text-center" : "text-light text-center"}
+                    fontWeight={600}
                     sx={{ fontSize: { xs: 21, md: 30.5 } }}
                 >
                     Explore Our TShirts Collection
                 </Typography>
 
-                <Typography 
-                    color={theme.light ? "#000" : "#9ca3af"} 
-                    className={"text-start px-24 py-2 pb-3"} 
-                    sx={{ fontSize: { xs: 13, md: 14 }, textIndent: { sm: "start" } }} 
-                    lineHeight={1.6} 
+                <Typography
+                    color={theme.light ? "#000" : "#9ca3af"}
+                    className={"text-start px-24 py-2 pb-3"}
+                    sx={{ fontSize: { xs: 13, md: 14 }, textIndent: { sm: "start" } }}
+                    lineHeight={1.6}
                     fontWeight={600}
                 >
                     Welcome to Codeswear.com, your one-stop shop for stylish and unique tshirts. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!
                 </Typography>
-
                 <Grid container rowGap={2.4} className="justify-center" columnGap={1.4}>
                     {Object.entries(products).map(([key, product]) => (
                         <Grid item xs={5.4} sm={5.9} md={2.3} key={key}>
                             <Link href={`/product/${product.slug}`}>
-                                <ProductCard 
+                                <ProductCard
+                                    imageFront={product.img}
+                                    imageBack={product?.productOrientations?.split(",")[1]}
                                     {...product}
                                     category="Tshirt"
                                     showIcon
@@ -123,7 +126,7 @@ class TShirts extends Component<TShirtProps, TShirtState> {
 
     async componentDidMount() {
         const session = await getSession();
-        
+
         if (session?.user) {
             await this.fetchProducts();
             this.setState({ progress: 100 });
@@ -159,13 +162,13 @@ class TShirts extends Component<TShirtProps, TShirtState> {
                         </div>
                     </section>
 
-                    <Pagination 
+                    <Pagination
                         page={1}
-                        pageList={Object.keys(products).length ? 
-                            paginate(Object.keys(products).length, 2) : 
+                        pageList={Object.keys(products).length ?
+                            paginate(Object.keys(products).length, 2) :
                             [1, 2, 3, 4, 5]
                         }
-                        changePage={this.handlePageChange} 
+                        changePage={this.handlePageChange}
                     />
                 </div>
             </>

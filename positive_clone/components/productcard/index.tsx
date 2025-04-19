@@ -21,16 +21,15 @@ import { FaHeart } from "react-icons/fa";
 //     },
 
 // }
-const ProductCard: React.FC<any> = ({ desc, title, sizes, category, slug, availableQuantity, price, colors, type, img, showIcon }) => {
+const ProductCard: React.FC<any> = ({ desc, title, sizes, category, slug, availableQuantity, price, colors, type, img, imageFront, imageBack, showIcon }) => {
     let theme = useSelector((state: IState) => state.toggletheme);
     let [hover, setHover] = React.useState<boolean>(false);
     return (
         <>
             <Card className={theme.dark ? style.productCard : style.lightcard}>
                 <div className={theme.dark ? (!hover ? `cursor-pointer position-relative ${style.imageholderdark}` : `cursor-pointer position-relative ${style.activeHolderdark}`) : (!hover ? `cursor-pointer position-relative ${style.imageholderlight}` : `cursor-pointer position-relative ${style.activeHolderlight}`)} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-
-                    <img className="absolute top-0 left-0 transition-opacity duration-700 opacity-100 w-100 h-100" src="/codeswearcircle.png" />
-                    <img className="absolute top-0 transition-opacity duration-700 hover:opacity-0 w-[90%] h-100" src={img} />
+                    <img className={`absolute top-0 left-0 transition-opacity duration-700 opacity-100 w-100 h-100 ${style.imageTransparent}`} src={imageBack ? imageBack : "/codeswearcircle.png"} />
+                    <img className={`absolute top-0 transition-opacity duration-700 hover:opacity-0 w-[90%] h-100`} src={imageFront ? imageFront : img} />
                 </div>
                 <div className={style.cardfooter}>
                     <Typography className="" color={theme.light ? "#000" : "#9ca3af"} variant={"subtitle1"}>
@@ -41,11 +40,11 @@ const ProductCard: React.FC<any> = ({ desc, title, sizes, category, slug, availa
                     </Typography>
                     <div className="d-flex align-items-center justify-between">
                         <div className="color-variants flex align-center gap-1">
-                            {/* {colors?.map((colorValue, index) =>
+                            {colors?.map((colorValue: string, index: string) =>
                                 <div key={index}>
                                     <ColorLabel key={index} hexcode={colorValue} />
                                 </div>
-                            )} */}
+                            )}
                         </div>
                         <div className="price-section d-flex align-items-center">
                             <div color={theme.light ? "#000" : "gray"} className="text-decoration-line-through d-flex align-items-center">
@@ -68,7 +67,7 @@ const ProductCard: React.FC<any> = ({ desc, title, sizes, category, slug, availa
                         </div>
                     </div>
                     <div className="available-sizes flex align-center justify-start gap-1 w-100">
-                        {/* {sizes?.map((size, index) => <span className={theme.dark ? style.sizelabel : style.sizelabellight} key={index}>{size}</span>)} */}
+                        {sizes?.map((size: string, index: number) => <span className={theme.dark ? style.sizelabel : style.sizelabellight} key={index}>{size}</span>)}
                     </div>
 
                 </div>

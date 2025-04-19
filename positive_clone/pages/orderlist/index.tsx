@@ -67,7 +67,7 @@ const OrdersList: NextPage<{ pageName: string, sessionStatus?: { name: string; e
     // }
     return (
         <>
-            <div className={themeState.dark ? `container-fluid ${styles.orderlistcontainerdark}`:`container-fluid ${styles.orderlistcontainer}`}>
+            <div className={themeState.dark ? `min-h-screen container-fluid ${styles.orderlistcontainerdark}`:`container-fluid min-h-screen ${styles.orderlistcontainer}`}>
                 <div className="row">
                     <div className="col-12 table-container" style={{ backgroundColor: themeState.dark ? "#000" : "#fff" }}>
                         {Object.keys(userDetails).map(user => user === "profile" ? <Image width={100} height={100} className="rounded-circle w-[100px] h-[100px]" src={`/uploads/${userDetails["profile"]}`} alt="profile_pic" /> : <Typography key={user} variant="h4">

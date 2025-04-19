@@ -289,6 +289,28 @@
     display: inline-block;
 }
 
+.codeswear .loaderdot {
+    color: #e421da;
+    animation: code 1s ease-in-out infinite;
+    font-size: 100px;
+}
+
+@media only screen and (max-width:500px) {
+    .codeswear .loaderletter {
+        color: #e421da;
+        /* color: white; */
+        animation: code 1s ease-in-out infinite;
+        font-size: 42px;
+        display: inline-block;
+    }
+
+    .codeswear .loaderdot {
+        color: #e421da;
+        animation: code 1s ease-in-out infinite;
+        font-size: 50px;
+    }
+}
+
 .codeswear .L {
     animation-delay: 0.1s;
 }
@@ -317,11 +339,7 @@
     animation-delay: 0.7s;
 }
 
-.codeswear .loaderdot {
-    color: #e421da;
-    animation: code 1s ease-in-out infinite;
-    font-size: 100px;
-}
+
 
 .codeswear .first {
     animation-delay: 0.1s;

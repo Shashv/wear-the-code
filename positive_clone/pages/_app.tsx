@@ -79,7 +79,7 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
                                         </div>
                                         // </Backdrop> 
                                         :
-                                        <div className={"route-component"} style={{ height: !path.includes("/auth") ? "600px" : "100vh", overflowY: filterStatus ? "hidden" : "scroll", overflowX: "hidden" }}>
+                                        <div className={"route-component"} style={{ height:"100vh" , overflowY: filterStatus ? "hidden" : "scroll", overflowX: "hidden" }}>
                                             <Component  {...pageparams} />
                                         </div>
                                     }
@@ -95,6 +95,7 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
     )
 }
 export default Layout;
+// !path.includes("/auth") ? "600px" : "100vh"
 //function will run on server side...//
 export const getServerSideProps: GetServerSideProps = async context => {
     const serverSession = await getServerSession(context.req, context.res, authorizeOptions);
