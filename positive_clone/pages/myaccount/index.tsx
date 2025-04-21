@@ -160,7 +160,7 @@ const MyAccount: NextPage<{ accountDetails: AccountDetails, users: User[] }> = (
     const performCrud = useCallback(async () => {
         try {
             const response = await manageAccounts(purpose);
-            console.log("response from the deleted user", response);
+            // console.log("response from the deleted user", response);
             setCrudConfirmation(false);
             setPurpose("");
         } catch (error) {

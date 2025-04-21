@@ -188,7 +188,7 @@ const Checkout: React.FC = () => {
                         {formGroups.map((formGroup, index) => {
                             return <FormGroup key={index} className="py-1"> <Controller control={control} name={formGroup.name} render={(props) => {
                                 const { field } = props;
-                                return <TextField sx={{ backgroundColor: theme.light ? "pink" : "#fff" }} value={field.value} label={formGroup.label} type={formGroup.type} onChange={value => field.onChange(value)} className="custom-input rounded-2" placeholder={formGroup.placeholder} name={formGroup.name} />
+                                return <TextField sx={{ backgroundColor: theme.light ? "pink" : "#fff" }} value={field.value} label={formGroup.label} type={formGroup.type} onChange={value => field.onChange(value)} className="custom-input rounded-2" placeholder={formGroup.placeholder} name={field.name} />
                             }} />
                             </FormGroup>
                         })}

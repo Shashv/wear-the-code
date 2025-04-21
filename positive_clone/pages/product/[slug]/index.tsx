@@ -596,7 +596,7 @@ export const getServerSideProps: GetServerSideProps<{
             }
         }
     } = {};
-    console.log("Available shirts",availableshirts);
+    // console.log("Available shirts",availableshirts);
     let modifiedResponse = responseproduct.map((product: any, index: number) => ({ ...product, createdAt: new Date(product.createdAt).toLocaleString(), updatedAt: new Date(product.updatedAt).toLocaleString(), _id: index }));
     for (let shirtVaraints of availableshirts) {
         if (shirtVaraints.color in colorslug) {

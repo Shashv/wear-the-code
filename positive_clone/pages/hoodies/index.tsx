@@ -21,14 +21,15 @@ import { useSession } from "next-auth/react";
 // import { useRouter } from "next/router";
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import usePositive from "@/hooks/usePositive";
-type IHoodie = { _id: number; title: string; desc: string; img: string; category: string; size: string; color: string; price: number; availableQuantity: number; createdAt: string; updatedAt: string; slug: string };
+type IHoodie = { _id: number; title: string; desc: string; img: string; category: string; size: string; color: string; price: number; availableQuantity: number; createdAt: string; updatedAt: string; slug: string; productOrientations?: string; tags?: string };
 const Hoodies: NextPage<{
     scrollTop: number, hoodies: Array<IHoodie>, loading?: boolean; cart: {
         [key: string]: {
-            _id?: number; title: string; desc: string; img: string; category: string; size: string[]; color: string[]; price: number; availableQuantity: number; createdAt?: string; updatedAt?: string; slug: string
+            _id?: number; title: string; desc: string; img: string; category: string; size: string[]; color: string[]; price: number; availableQuantity: number; createdAt?: string; updatedAt?: string; slug: string; productOrientations?: string; tags?: string;
         }
     }
 }> = ({ scrollTop, hoodies, loading, cart }) => {
+    // console.log('Scroll top',scrollTop,"loading",loading);
     const [loader, setLoader] = useState(true);
     const session = useSession();
     // const router = useRouter();
@@ -95,7 +96,8 @@ const Hoodies: NextPage<{
                                             <Grid container rowGap={2.4} columnGap={1.4} justifyContent={"center"}>
                                                 {Object.keys(cart).length === 0 && <Grid item xs={12}><Typography color={"#ec4899"}>Soory products out of available</Typography></Grid>}
                                                 {Object.keys(cart).map((hoodies: string, index: number) => <Grid item xs={5.7} sm={5.9} md={2.3} key={index}>
-                                                    <Link href={`/product/${cart[hoodies].slug}`}> <ProductCard desc={cart[hoodies].desc} slug={cart[hoodies].slug} title={cart[hoodies].title} img={cart[hoodies].img} colors={cart[hoodies].color} sizes={cart[hoodies].size} /></Link></Grid>)}
+                                                    <Link href={`/product/${cart[hoodies].slug}`}> <ProductCard desc={cart[hoodies].desc} slug={cart[hoodies].slug} title={cart[hoodies].title} img={cart[hoodies].img} imageFront={cart[hoodies].productOrientations?.split(",")[0]}
+                                                        imageBack={cart[hoodies].productOrientations?.split(",")[1]} colors={cart[hoodies].color} sizes={cart[hoodies].size} /></Link></Grid>)}
                                             </Grid>
                                         </div>
                                     </div>
@@ -123,10 +125,11 @@ export const getServerSideProps: GetServerSideProps<{
     let modifiedResponse: Array<IHoodie> = positive.map((positive: any, index: number) => ({ ...positive, createdAt: new Date(positive.createdAt).toLocaleString(), updatedAt: new Date(positive).toLocaleString(), _id: index + 1 }));
     let cart: {
         [key: string]: {
-            _id?: number; title: string; desc: string; img: string; category: string; size: string[]; color: string[]; price: number; availableQuantity: number; createdAt?: string; updatedAt?: string; slug: string
+            _id?: number; title: string; desc: string; img: string; category: string; size: string[]; color: string[]; price: number; availableQuantity: number; createdAt?: string; updatedAt?: string; slug: string; productOrientations?: string; tags?: string;
         }
     } = {};
     modifiedResponse.forEach(hoodie => {
+        // console.log("Hoodies",hoodie)
         if (hoodie.title in cart) {
             if (!cart[hoodie.title].color.includes(hoodie.color) && hoodie.availableQuantity > 0) {
                 cart[hoodie.title].color.push(hoodie.color);
@@ -146,7 +149,9 @@ export const getServerSideProps: GetServerSideProps<{
                     color: [],
                     price: hoodie.price,
                     availableQuantity: hoodie.availableQuantity,
-                    slug: hoodie.slug
+                    slug: hoodie.slug,
+                    productOrientations: hoodie.productOrientations ? hoodie.productOrientations : "",
+                    tags: hoodie.tags ? hoodie.tags : ""
                 };
                 cart[hoodie.title].color = [hoodie.color];
                 cart[hoodie.title].size = [hoodie.size];

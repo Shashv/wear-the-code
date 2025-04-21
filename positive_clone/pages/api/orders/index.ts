@@ -6,7 +6,7 @@ const orders = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const { orderId } = req.query;
         if (req.method === "GET") {
-            console.log("query",req.query);
+            // console.log("query",req.query);
             const orders = await OrdersModel.findOne({ orderId: orderId });
             // console.log("Babaji", orders);
             return res.status(200).json({ orders })

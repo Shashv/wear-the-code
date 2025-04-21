@@ -25,6 +25,7 @@ interface TShirtState {
     loading: boolean;
     progress: number;
     page: number;
+    session: Session | null
 }
 import { NextRouter } from "next/router";
 import React, { Component } from "react";
@@ -39,7 +40,7 @@ import Head from "next/head";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
 import authorizeOptions from "../api/auth/[...nextauth]";
-import { getServerSession } from "next-auth";
+import { getServerSession, Session } from "next-auth";
 import { withRouter } from "next/router";
 import paginate from "@/utils/paginate";
 import LoadingBar from "react-top-loading-bar";
@@ -53,8 +54,11 @@ class TShirts extends Component<TShirtProps, TShirtState> {
             products: {},
             loading: false,
             progress: 40,
-            page: 1
+            page: 1,
+            session: null
         };
+        this.handlePageChange = this.handlePageChange.bind(this);
+        this.fetchProducts = this.fetchProducts.bind(this);
     }
 
     async fetchProducts() {
@@ -126,15 +130,20 @@ class TShirts extends Component<TShirtProps, TShirtState> {
 
     async componentDidMount() {
         const session = await getSession();
-
+        console.log("Session user", session?.user);
         if (session?.user) {
+            this.setState({ session })
             await this.fetchProducts();
             this.setState({ progress: 100 });
         } else {
             this.props.router.replace("/authentication/login");
         }
     }
-
+    async componentDidUpdate(previousProps: Readonly<TShirtProps>, previousState: Readonly<TShirtState>): Promise<void> {
+        if (previousState && previousProps) {
+            console.log("Component did update function", this.state.session);
+        }
+    }
     render() {
         const { progress, products } = this.state;
         const { theme } = this.props;
