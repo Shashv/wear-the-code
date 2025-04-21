@@ -24,7 +24,7 @@ import clearBuyproducts from "@/redux/actions/clearBuyProducts";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { loadStripe } from "@stripe/stripe-js";
-let sessionId: any = ""
+let sessionId: any = "";
 const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawer, reduxAdd, reduxSubtract, reviewCart }) => {
     const dispatch: IDispatch = useDispatch();
     let state = useSelector((state: IState) => state.productManage);
@@ -80,6 +80,8 @@ const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawe
             body: JSON.stringify({ amount: 1, useruniqueorderId: localStorage.getItem("user_id") })
         });
         const clientSecret = await sessionSecret.json();
+        //check if the cart state hasnt been tempered with ..//
+        
         let ordersValue = await fetch("/api/orders", {
             method: "POST",
             body: JSON.stringify({ buyProduct: buyProduct, userId: localStorage.getItem("user_id"), email: localStorage.getItem("user_email") })
