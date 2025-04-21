@@ -468,7 +468,7 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
                                             <img className={selectedDisplay === product.alone_front ? `border border-none ${style.selectedvariant}` : `border border-none ${style.unselectedvariant}`} src={`/shirts/${product.type}/${product.alone_back}`} onClick={() => setSelectedDisplay(product.alone_front)} />
                                             <img className={selectedDisplay === product.positive ? `border border-none ${style.selectedvariant}` : `border border-none ${style.unselectedvariant}`} src={`/shirts/${product.type}/${product.positive}`} onClick={() => setSelectedDisplay(product.positive)} />
                                         </> */}
-                                        {productOrientations(selectedProduct.productOrientations || "").map((image: string, index: number) => <Image className={selectedProduct.img === image ? style.selectedvariant : style.unselectedvariant} onClick={() => setSelectedProduct((selectedProduct) => ({ ...selectedProduct, img: image }))} src={image} alt="img" width={55} height={55} />)}
+                                        {productOrientations(selectedProduct.productOrientations || "").map((image: string, index: number) => <Image key={index} className={selectedProduct.img === image ? style.selectedvariant : style.unselectedvariant} onClick={() => setSelectedProduct((selectedProduct) => ({ ...selectedProduct, img: image }))} src={image} alt="img" width={55} height={55} />)}
                                         {/* end */}
                                     </div>
                                     <div className="main-display w-[90%] h-100">
@@ -506,6 +506,7 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
                                             <Grid container columnGap={0.55}>
                                                 {Object.keys(productVariant).map(color => {
                                                     return <Grid className="cursor-pointer" item key={color}>
+                                                        <div className=""></div>
                                                         <ColorLabel key={color} onClick={(e) => {
                                                             setSelectedProduct(state => ({ ...state, color, size: Object.keys(productVariant[color])[0], slug: productVariant[color][Object.keys(productVariant[color])[0]]["slug"], price: productVariant[color][Object.keys(productVariant[color])[0]]["price"] }))
                                                             refreshVariants(color, Object.keys(productVariant[color])[0]);

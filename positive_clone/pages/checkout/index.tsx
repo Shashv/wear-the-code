@@ -186,10 +186,16 @@ const Checkout: React.FC = () => {
                     {/* when using the controller component */}
                     <Row className="mb-1 g-2">
                         {formGroups.map((formGroup, index) => {
-                            return <FormGroup key={index} className="py-1"> <Controller control={control} name={formGroup.name} render={(props) => {
-                                const { field } = props;
-                                return <TextField sx={{ backgroundColor: theme.light ? "pink" : "#fff" }} value={field.value} label={formGroup.label} type={formGroup.type} onChange={value => field.onChange(value)} className="custom-input rounded-2" placeholder={formGroup.placeholder} name={field.name} />
-                            }} />
+                            return <FormGroup key={index} className="py-1">
+                                <Controller rules={{ required: `${formGroup.name} is required` }} control={control} name={formGroup.name} render={(props) => {
+                                    const { field } = props;
+                                    return <div className="input-container position-relative" key={index}>
+                                        <TextField ref={field.ref} sx={{ backgroundColor: theme.light ? "pink" : "#fff" }} value={field.value} label={formGroup.label} type={formGroup.type} onChange={value => field.onChange(value)} className="custom-input rounded-2" placeholder={formGroup.placeholder} name={field.name} />
+                                            <span className="errors-statement position-absolute text-danger">
+                                                {"Error is required"}
+                                            </span>
+                                    </div>
+                                }} />
                             </FormGroup>
                         })}
                     </Row>
