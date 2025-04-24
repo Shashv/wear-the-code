@@ -189,15 +189,15 @@ const Checkout: React.FC = () => {
                             return <FormGroup key={index} className="py-1">
                                 <Controller rules={{ required: `${formGroup.name} is required` }} control={control} name={formGroup.name} render={(props) => {
                                     const { field } = props;
-                                    return <div className="input-container position-relative" key={index}>
-                                        <TextField ref={field.ref} sx={{ backgroundColor: theme.light ? "pink" : "#fff" }} value={field.value} label={formGroup.label} type={formGroup.type} onChange={value => field.onChange(value)} className="custom-input rounded-2" placeholder={formGroup.placeholder} name={field.name} />
-                                            <span className="errors-statement position-absolute text-danger">
+                                    return <div className="input-container position-relative my-2" key={index}>
+                                        <TextField ref={field.ref} sx={{ backgroundColor: theme.light ? "pink" : "#fff" }} value={field.value} label={formGroup.label} type={formGroup.type} onChange={value => field.onChange(value)} className="custom-input rounded-2 w-100" placeholder={formGroup.placeholder} name={field.name} />
+                                            <span className="errors-statement top-[55px] left-[10px] position-absolute text-danger">
                                                 {"Error is required"}
                                             </span>
                                     </div>
                                 }} />
                             </FormGroup>
-                        })}
+                        })} s
                     </Row>
                     {/* ... */}
                     {/* <Row className="mb-1">
