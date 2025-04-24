@@ -188,12 +188,14 @@ const Checkout: React.FC = () => {
                         {formGroups.map((formGroup, index) => {
                             return <FormGroup key={index} className="py-1">
                                 <Controller rules={{ required: `${formGroup.name} is required` }} control={control} name={formGroup.name} render={(props) => {
-                                    const { field } = props;
+                                    const { field, fieldState: { error } } = props;
                                     return <div className="input-container position-relative my-2" key={index}>
                                         <TextField ref={field.ref} sx={{ backgroundColor: theme.light ? "pink" : "#fff" }} value={field.value} label={formGroup.label} type={formGroup.type} onChange={value => field.onChange(value)} className="custom-input rounded-2 w-100" placeholder={formGroup.placeholder} name={field.name} />
+                                        {error &&
                                             <span className="errors-statement top-[55px] left-[10px] position-absolute text-danger">
-                                                {"Error is required"}
+                                                {`${formGroup.label} is required`}
                                             </span>
+                                        }
                                     </div>
                                 }} />
                             </FormGroup>
