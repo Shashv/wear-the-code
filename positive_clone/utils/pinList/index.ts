@@ -1,2 +1,2 @@
-const pinList: number[] = [147201, 123456, 135003, 110044, 110065];
+const pinList: { pinCode: number, city: string }[] = [{ pinCode: 147201, city: "Bathinda" }, { pinCode: 123456, city: "Random" }, { pinCode: 135003, city: "Mohali" }, { pinCode: 110044, city: "Barnala" }, { pinCode: 110065, city: "Chandigarh" }, { pinCode: 151001, city: "Dhuri" }];
 export default pinList;

@@ -63,20 +63,20 @@ const Checkout: React.FC = () => {
         placeholder: "Enter 10 digit contact number",
         name: "user_contact"
     }, {
-        type: "text",
-        label: "City",
-        placeholder: "Enter city",
-        name: "user_city"
-    }, {
-        type: "number",
-        label: "State Pin",
-        placeholder: "Enter state pin code",
-        name: "user_state_pin"
-    }, {
         type: "number",
         label: "City Pin",
         placeholder: "Enter city pin",
         name: "user_city_pin"
+    }, {
+        type: "text",
+        label: "State ",
+        placeholder: "Enter state pin code",
+        name: "user_state"
+    }, {
+        type: "text",
+        label: "City",
+        placeholder: "Enter city",
+        name: "user_city"
     }];
     // const loadStripeintent = await loadStripe(process.env.STRIPE_PUBLIC_POSITIVE || "");
     return (
@@ -199,7 +199,8 @@ const Checkout: React.FC = () => {
                                     </div>
                                 }} />
                             </FormGroup>
-                        })} s
+                        })}
+                        {/* s */}
                     </Row>
                     {/* ... */}
                     {/* <Row className="mb-1">
