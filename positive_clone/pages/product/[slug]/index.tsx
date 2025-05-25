@@ -401,22 +401,30 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
     const addToCart: () => void = () => {
         let findedKey: string = Object.keys(state).find(key => key === routerDetail.query.slug) || "";
         if (findedKey) {
-            setCustomToast({
-                ...customtoast, open: true, variant: "info", origin: {
-                    vertical: "top",
-                    horizontal: "end"
-                }, message: "Item already added to the cart!"
-            });
+            // setCustomToast({
+            //     ...customtoast, open: true, variant: "info", origin: {
+            //         vertical: "top",
+            //         horizontal: "end"
+            //     }, message: "Item already added to the cart!"
+            // });
+            toast.info("Item already added to cart", {
+                autoClose: 2000,
+                position: "top-center"
+            })
         }
         else {
             console.log("selectedproduct", selectedProduct.slug)
             dispatch(addProduct({ name: selectedProduct?.title || "", product: selectedProduct.slug, size: selectedProduct?.size || "", variant: selectedProduct?.color || "", price: selectedProduct?.price || 0, quantity: 1 }));
-            setCustomToast({
-                ...customtoast, open: true, variant: "success", origin: {
-                    vertical: "top",
-                    horizontal: "end"
-                }, message: "Item added to the cart!"
-            });
+            // setCustomToast({
+            //     ...customtoast, open: true, variant: "success", origin: {
+            //         vertical: "top",
+            //         horizontal: "end"
+            //     }, message: "Item added to the cart!"
+            // });
+            toast.success("Item added to cart", {
+                autoClose: 2000,
+                position: "top-center"
+            })
         }
     }
     // const reload = (e: React.MouseEvent<HTMLOptionElement>) => {
@@ -491,7 +499,7 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
                                             Product Highlights
                                         </Typography>
                                         <ul className="ps-4 list-disc">
-                                            {selectedProduct.desc?.includes("highlights") && selectedProduct.desc?.split("highlights")[1].split(",").map((listItem: string, index: number) => <li className={theme.light ? `text-slate-600 highlight-positive`:`text-light highlight-posiitve`} key={index}>{listItem}</li>)}
+                                            {selectedProduct.desc?.includes("highlights") && selectedProduct.desc?.split("highlights")[1].split(",").map((listItem: string, index: number) => <li className={theme.light ? `text-slate-600 highlight-positive` : `text-light highlight-posiitve`} key={index}>{listItem}</li>)}
                                         </ul>
                                         <Typography className="tags" variant="h6" fontWeight={700} color={"#9ca3af"}>
                                             Tags
