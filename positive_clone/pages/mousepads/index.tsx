@@ -61,10 +61,7 @@ const MousePads: NextPage<{
                 return;
             }
             else {
-                // ....//
-                // console.log("Object schema", mousePadsSchema);
-                // ....///
-                // Object.keys(mousePadsSchema).length > 0 &&
+                
                 toast.success("Mousepads", {
                     theme: "dark",
                     autoClose: 2000,

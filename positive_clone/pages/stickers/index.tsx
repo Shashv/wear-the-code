@@ -4,10 +4,10 @@ import { IState } from "@/redux/sore";
 import ProductModel from "@/modalsmongoose/product";
 import ProductCard from "@/components/productcard";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
-import { useRouter } from "next/router";
+
 import Link from "next/link";
 import { useEffect } from "react";
-import { Backdrop, CircularProgress, Typography } from "@mui/material";
+import { Backdrop, Typography } from "@mui/material";
 import Head from "next/head";
 import LoaderAnimate from "@/components/loader";
 import styles from "../stickers/index.module.css";
@@ -30,7 +30,7 @@ const StickersPage: React.FC<{ stickers: Array<unknown>, stickersLength: number 
     const session = useSession();
     const [positive, setPositive] = useState<number>(40);
     const { totalPages, page, setPage } = usePositive({ recordsPerpage: 2, totalRecords: props.stickers.length });
-    // Initialize loading bar and show success toast on first mount
+   
     useEffect(() => {
         switch (isInitialMount.current) {
             case true: {
@@ -50,7 +50,7 @@ const StickersPage: React.FC<{ stickers: Array<unknown>, stickersLength: number 
     const changePage = (e: React.MouseEvent<HTMLButtonElement>, page: number) => {
         router.setQuery({ page: page.toString() });
     }
-    // Handle authentication and page loading
+    
     useEffect(() => {
         if (session.status === "unauthenticated") {
             toast.error("Oops you are not authenticated");
@@ -121,11 +121,10 @@ const StickersPage: React.FC<{ stickers: Array<unknown>, stickersLength: number 
 
 export default StickersPage;
 
-// Server-side data fetching and authentication check
 export const getServerSideProps: GetServerSideProps<{ stickers?: Array<unknown | any>, error?: string }> = async (context: GetServerSidePropsContext) => {
     const sessionServer = await getServerSession(context.req, context.res, authorizeOptions);
     
-    // Fetch stickers with pagination
+   
     let responseStickers: any = await ProductModel.find({ category: "stickers" })
         .skip(context.query.page ? (Number(context.query.page) - 1) * 10 : (1 - 1) * 10)
         .limit(10)

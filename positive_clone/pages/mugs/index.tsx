@@ -1,5 +1,5 @@
 import React from "react";
-// import { Container, Row, Col } from "reactstrap";
+
 import style from "./index.module.css";
 import { connect, ConnectedProps } from "react-redux";
 import { IState } from "@/redux/sore";
@@ -12,24 +12,13 @@ import { toast } from "react-toastify";
 import Pagination from "@/components/pagination";
 import Link from "next/link";
 import Router from "next/router";
-// import { compose } from "redux";
-// import { withRouter, NextRouter } from "next/router";
-// import { getSession } from "next-auth/react";
+
 import LoadingBar from "react-top-loading-bar";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "../api/auth/[...nextauth]";
 import paginate from "@/utils/paginate";
 import { IMugs } from "@/modals";
-// interface PTheme {
-//     theme: {
-//         light: boolean;
-//         dark: boolean
-//     }
-// }
-// interface iMugs {
-//     mugs?: Array<any>;
-//     mugsSchema?: Array<any>
-// }
+
 const mapStateToProps = (state: IState): unknown => {
     let { toggletheme } = state;
     return {
@@ -37,7 +26,7 @@ const mapStateToProps = (state: IState): unknown => {
     }
 }
 const partialConnector = connect(mapStateToProps);
-// type IProps = ConnectedProps<typeof partialConnector>;
+
 class Mugs extends React.Component<any, IMugs> {
     constructor(props: any) {
         super(props);
@@ -51,7 +40,7 @@ class Mugs extends React.Component<any, IMugs> {
         }
         this.changePage = this.changePage.bind(this);
     }
-    // toastExecution: any;
+    
     render(): JSX.Element {
         return (
             <>
@@ -93,25 +82,20 @@ class Mugs extends React.Component<any, IMugs> {
     }
     async componentDidMount(): Promise<void> {
         this.setState({ pages: paginate(this.props.mugsCount, 5) });
-        // this.toastExecution = this.context;
+        
         toast.success("Mugs", {
             theme: this.props.theme.dark ? "dark" : "light",
             autoClose: 2000,
             position:"top-center"
         })
-        // const session = await getSession();
-        // console.log("Session mugs", session);
+       
         this.setState({ progress: 100 });
     }
     componentWillUnmount(): void {
         console.log("Component will unmount from the dom tree")
     }
-    componentDidUpdate(previousProps: Readonly<{}>, previousState: Readonly<IMugs>): void {
-        // console.log("Previous state page", previousState.page, "Current Page", this.state.page);
-    }
-    componentWillUpdate(nextProps: Readonly<{}>, nextState: Readonly<{}>): void {
-        // console.log("Next props", nextProps, "nextstate", nextState);
-    }
+   
+   
     changePage(e: React.MouseEvent<HTMLButtonElement>, page: number): void {
         this.setState({ page });
         Router.push({
@@ -122,13 +106,11 @@ class Mugs extends React.Component<any, IMugs> {
 }
 
 export default (partialConnector(Mugs));
-// withRouter//
-//below will run on the server side for fetching data on the client side...//
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const session = await getServerSession(context.req, context.res, authorizeOptions);
     let fetchedMugs: Array<any> = await ProductModel.find({ category: "mugs" }).skip(context.query.page ? (Number(context.query.page) - 1) * 10 : (1 - 1) * 10).limit(10).lean();
     const mugsCount: number = await ProductModel.countDocuments({ category: "mugs" });
-    // console.log("Mugs count", mugsCount);
+   
     const modifiedResponse = fetchedMugs.map((mugs: any, index: number) => ({ ...mugs, createdAt: new Date(mugs.createdAt).toLocaleString(), updatedAt: new Date(mugs.updatedAt).toLocaleString(), _id: index + 1 }));
     let mugsSchema: {
         [key: string]: {
@@ -175,10 +157,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
                 destination: "/mugs?page=1",
                 permanent: false
             }
-            // props: {
-            //     mugs: modifiedResponse,
-            //     mugsSchema
-            // }
+            
         }
     }
     else {
@@ -191,4 +170,3 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         }
     }
 }
-// ....//

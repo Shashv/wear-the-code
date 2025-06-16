@@ -1,5 +1,6 @@
 import { UnknownAction } from "redux";
 import { IconType } from "react-icons";
+import { NextRouter } from "next/router";
 import { Document } from "mongoose";
 import { Session } from "next-auth";
 export type IModal = {
@@ -151,7 +152,7 @@ export interface IProductModel extends Document {
     createdAt: any;
     updatedAt: any;
     productOrientations?: string;
-    tags?:string
+    tags?: string
 }
 export interface ISchema extends Document {
     email: string;
@@ -174,4 +175,38 @@ export type IMugs = { name: string; age: number; loader: false; progress: number
 //for dynamic params///
 export interface IType {
     id: string
+}
+export interface Product {
+    title: string;
+    desc: string;
+    img: string;
+    colors: string[];
+    sizes: string[];
+    price: number;
+    slug: string;
+    category?: string;
+    availableQuantity?: number;
+    tags?: string;
+    productOrientations?: string;
+}
+
+export interface TShirtState {
+    products: Record<string, Product>;
+    loading: boolean;
+    progress: number;
+    page: number;
+    session: Session | null
+}
+
+export interface TShirtProps {
+    theme: {
+        light: boolean;
+        dark: boolean;
+    };
+    router: NextRouter;
+}
+export type IForm = {
+    email: string;
+    password: string;
+    checkStatus?: boolean;
 }

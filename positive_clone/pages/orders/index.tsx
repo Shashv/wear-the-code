@@ -1,34 +1,23 @@
-import React, { useEffect, useRef, useState, useLayoutEffect } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./index.module.css";
 import { useSelector } from "react-redux";
 import { IState } from "@/redux/sore";
 import { } from "react-redux";
 import Head from "next/head";
-import { Box, Button, Typography } from "@mui/material";
+import {  Typography } from "@mui/material";
 import LoadingBar from "react-top-loading-bar";
 import { Backdrop, CircularProgress } from "@mui/material";
-// import OrdersModel from "@/modalsmongoose/orders";
-// import { getServerSession } from "next-auth";
-// import authorizeOptions from "../api/auth/[...nextauth]";
-// import { GetServerSideProps, GetServerSidePropsContext } from "next";
-// import orders from "@/modalsmongoose/orders";
-// import Image from "next/image";
-// import CommonTable from "@/components/commonlist";
+
 import { toast } from "react-toastify";
-// import { loadStripe } from "@stripe/stripe-js";
+
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import dynamic from "next/dynamic";
 const Orders: React.FC = (props: unknown) => {
-    // const cartstate = useSelector((state: IState) => {
-    //     return state.productManage;
-    // });
-
-    // const buyedProducts = useSelector((state: IState) => state.buyNow);
+   
     let [orderList, setOrderList] = useState<string[] | any[]>([]);
     let [loadOrders, setLoadOrders] = React.useState<boolean>(false);
     let [orderId, setOrderId] = useState<number>();
-    // let clientSecret = useRef<string>(""); 
-    // 1
+   
     const routerInsatnce = useSearchParamsstate();
     const [tableData, setTabledata] = useState<{ tableHead: Array<any>, tableBody: Array<any> }>({
         tableHead: [{
@@ -52,7 +41,7 @@ const Orders: React.FC = (props: unknown) => {
             method: "GET"
         });
         let parsedProductDetail = await specificProduct.json();
-        // console.log("Parsed peroduct details", parsedProductDetail);
+        
         return { ...parsedProductDetail.specificProduct, availableQuantity: specificOrder.quantity };
     }
     const formatTableData = (rows: Array<any>) => {
@@ -66,52 +55,9 @@ const Orders: React.FC = (props: unknown) => {
         });
         return formatData;
     }
-    // const orderUrl: string = `/api/orders?user_id=${localStorage.getItem("user_id")}`
-    // const finalPayment: (e: React.MouseEvent<HTMLButtonElement>) => Promise<string> = async e => {
-    //     // console.log("event clicked", e);
-    //     setLoadOrders(true);
-    //     let proceedPayment = await fetch("/api/payment/checkoutSession", {
-    //         method: "POST",
-    //         body: JSON.stringify({ amount: 10000, currency: "usd" })
-    //     });
-    //     let isPaymentProcessed = await proceedPayment.json();
-    //     // console.log("Payment positive",isPaymentProcessed);
-    //     if (isPaymentProcessed.success) {
-    //         setLoadOrders(false);
-    //         clientSecret.current = isPaymentProcessed.client_secret;
-    //         toast.success(`Payment successfull ${clientSecret}`, {
-    //             position: "bottom-center",
-    //             autoClose: 2000,
-    //             theme: "colored"
-    //         });
-    //         return isPaymentProcessed.message
-    //     }
-    //     else {
-    //         toast.error("Oops unable to process payment", {
-    //             position: "bottom-center",
-    //             autoClose: 2000,
-    //         })
-    //         return isPaymentProcessed.message
-    //     }
-    // }
-    // const babaji = async () => {
-    //     setLoadOrders(true);
-    //     let deletedOrders = await fetch("/api/orders", {
-    //         method: "DELETE"
-    //     });
-    //     let areOrdersDeleted = await deletedOrders.json();
-    //     setLoadOrders(false);
-    //     if (areOrdersDeleted) toast.info("Orders deleted successfully")
-    //     else toast.error("Unable to delete the orders , please try again");
-    // }
-    // console.log("Client secret", clientSecret)
+   
     useEffect(() => {
-        // without api using the redux state cartstate...//
-        // Object.keys(cartstate).length > 0 ?
-        //     setOrderList(Object.keys(cartstate)) : setOrderList(Object.keys(buyedProducts));
-        // ....//
-        // let id: number = Math.random();
-        // setOrderId(id);
+        
         setLoadOrders(true);
         fetch(`/api/orders?orderId=${routerInsatnce.query.orderId}`, {
             method: "GET",
@@ -125,14 +71,10 @@ const Orders: React.FC = (props: unknown) => {
             const promises = Promise.all(response.orders ? response.orders.products.map(async (product: { id: string; quantity: number }) => {
                 return await convertOrderList(product);
             }) : []);
-            //check promises final//
-            // console.log("Promises final", promises);
-            // ....//
+           
             return promises;
         }).then(finalList => {
-            // check final list console.//
-            // console.log("Final List", finalList);
-            // ....//
+          
             setLoadOrders(false);
             setTabledata({ ...tableData, tableBody: formatTableData(finalList) });
             setOrderList(finalList);
@@ -154,7 +96,7 @@ const Orders: React.FC = (props: unknown) => {
                             <Typography variant="h4" className="text-pink-500">LOADING ORDERS!</Typography><CircularProgress color="primary" />
                         </Backdrop> :
                             <>
-                                {/* babaji */}
+                               
                                 <>
                                     {
                                         orderList.length > 0 &&
@@ -221,39 +163,11 @@ const Orders: React.FC = (props: unknown) => {
                                         }
                                     </div>
                                 </>
-                                {/* using the material ui box */}
-                                {/* <>
-                                    <Box component={"div"} display={"flex"} flexDirection={"column"} gap={2} justifyContent={"start"} alignItems={"start"} color={theme.light ? "#000" : "#fff"}>
-                                        {orderList && orderList.map((order, index) => {
-                                            return <div className="order-item flex align-center gap-2 justify-center">
-                                                <Typography key={index} variant="h4">
-                                                    {order.title}
-                                                </Typography>
-                                                <Image alt="your_order" className="rounded-2" src={order.img} width={50} height={50} />
-                                            </div>
-                                        })}
-                                    </Box>
-                                    {
-                                        Object.keys(cartstate).length > 0 && Object.keys(buyedProducts).length > 0 || orderList.length === 0 && <Typography className="" variant="h2" color={"magenta"}>
-                                            Oops, no orders plcaed , visit out products pages please!
-                                        </Typography>
-                                    }
-                                </> */}
-                                {/*.... material-ui.... */}
+                               
                             </>
                         }
                     </div>
-                    {/* <div className="order-tabular-list">
-                        <CommonTable tablebody={tableData.tableBody ? tableData.tableBody : []} tablehead={tableData.tableHead ? tableData.tableHead : []} theme={theme} />
-                    </div>
-                    <div className="final-payment">
-                        <Button className="" onClick={finalPayment} variant="contained" color={"primary"}>
-                            Final Payment
-                        </Button>
-                        <Button className="delete-orders" onClick={e => babaji()}>
-                            Delete Orders
-                        </Button>
-                    </div> */}
+                   
                 </section>
             </div>
         </>
@@ -263,25 +177,4 @@ Orders.displayName = "Orders"
 export default dynamic(() => Promise.resolve(Orders), {
     ssr: false
 });
-// baba ji this function will always run on the server side..//
-// export const getServerSideProps: GetServerSideProps | ((context: GetServerSidePropsContext) => Promise<any>) = async positive => {
-//     const session = await getServerSession(positive.req, positive.res, authorizeOptions);
-//     // let orders = await OrdersModel.find({});
-//     // console.log("Orders list", orders);
-//     if (session)
-//         return {
-//             props: {
-//                 pageName: "Orders Page",
-//                 // orders
-//             }
-//         }
-//     else {
-//         return {
-//             redirect: {
-//                 basePath: false,
-//                 destination: "/authentication/login",
-//                 permanent: false
-//             }
-//         }
-//     }
-// } 
+

@@ -150,7 +150,7 @@ export default Zippers;
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const getServerSideSession = await getServerSession(context.req, context.res, authorizeOptions);
-    // console.log("stickers", getServerSideSession);
+   
     if (!getServerSideSession) {
         return {
             redirect: {

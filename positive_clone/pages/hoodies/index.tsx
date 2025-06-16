@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import style from "./index.module.css";
 import { useEffect } from "react";
 import { Backdrop, Typography } from "@mui/material";
-// import { useMemo, useCallback } from "react";
+
 import Pagination from "../../components/pagination"
 import { useSelector } from "react-redux";
 import { IState } from "@/redux/sore";
@@ -18,7 +18,7 @@ import { toast } from "react-toastify";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "../api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
-// import { useRouter } from "next/router";
+
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import usePositive from "@/hooks/usePositive";
 type IHoodie = { _id: number; title: string; desc: string; img: string; category: string; size: string; color: string; price: number; availableQuantity: number; createdAt: string; updatedAt: string; slug: string; productOrientations?: string; tags?: string };
@@ -29,10 +29,10 @@ const Hoodies: NextPage<{
         }
     }
 }> = ({ scrollTop, hoodies, loading, cart }) => {
-    // console.log('Scroll top',scrollTop,"loading",loading);
+   
     const [loader, setLoader] = useState(true);
     const session = useSession();
-    // const router = useRouter();
+    
     const router = useSearchParamsstate();
     const themeState = useSelector((state: IState) => state.toggletheme);
     const isInitialMount = useRef<boolean | null>(true);
@@ -63,14 +63,7 @@ const Hoodies: NextPage<{
             }
         }
     }, [session]);
-    // useEffect(() => {
-    //     hoodies && setLoader(false);
-    //     setProgress(100);
-    //     toast.success("Hoodies", {
-    //         theme: "dark",
-    //         autoClose: 2000
-    //     })
-    // }, []);
+   
     return (
         <>
             {loader ? <Backdrop open>
@@ -112,7 +105,7 @@ const Hoodies: NextPage<{
     )
 }
 export default Hoodies;
-// below function always runs on the server side  for the database fetching data.....///
+
 export const getServerSideProps: GetServerSideProps<{
     hoodies?: IHoodie[], loading?: boolean; cart?: {
         [key: string]: {
@@ -129,7 +122,7 @@ export const getServerSideProps: GetServerSideProps<{
         }
     } = {};
     modifiedResponse.forEach(hoodie => {
-        // console.log("Hoodies",hoodie)
+       
         if (hoodie.title in cart) {
             if (!cart[hoodie.title].color.includes(hoodie.color) && hoodie.availableQuantity > 0) {
                 cart[hoodie.title].color.push(hoodie.color);

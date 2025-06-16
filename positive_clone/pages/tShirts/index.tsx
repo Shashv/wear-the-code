@@ -1,32 +1,3 @@
-export interface Product {
-    title: string;
-    desc: string;
-    img: string;
-    colors: string[];
-    sizes: string[];
-    price: number;
-    slug: string;
-    category?: string;
-    availableQuantity?: number;
-    tags?: string;
-    productOrientations?: string;
-}
-
-interface TShirtProps {
-    theme: {
-        light: boolean;
-        dark: boolean;
-    };
-    router: NextRouter;
-}
-
-interface TShirtState {
-    products: Record<string, Product>;
-    loading: boolean;
-    progress: number;
-    page: number;
-    session: Session | null
-}
 import { NextRouter } from "next/router";
 import React, { Component } from "react";
 import Link from "next/link";
@@ -46,7 +17,7 @@ import paginate from "@/utils/paginate";
 import LoadingBar from "react-top-loading-bar";
 import { toast } from "react-toastify";
 import Pagination from "@/components/pagination";
-
+import { TShirtState, TShirtProps } from "@/modals";
 class TShirts extends Component<TShirtProps, TShirtState> {
     constructor(props: TShirtProps) {
         super(props);
@@ -132,9 +103,13 @@ class TShirts extends Component<TShirtProps, TShirtState> {
         const session = await getSession();
         console.log("Session user", session?.user);
         if (session?.user) {
-            this.setState({ session })
+            this.setState({ session });
             await this.fetchProducts();
             this.setState({ progress: 100 });
+            const urlParams = new URLSearchParams();
+            if (!urlParams.get("page")) {
+                urlParams.set("page", String(1));
+            }
         } else {
             this.props.router.replace("/authentication/login");
         }
@@ -174,7 +149,7 @@ class TShirts extends Component<TShirtProps, TShirtState> {
                     <Pagination
                         page={1}
                         pageList={Object.keys(products).length ?
-                            paginate(Object.keys(products).length, 2) :
+                            paginate(Object.keys(products).length, 7) :
                             [1, 2, 3, 4, 5]
                         }
                         changePage={this.handlePageChange}

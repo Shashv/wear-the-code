@@ -76,7 +76,7 @@ const EditForm: React.FC<{ manageAccount: (operationType: string, body: any) => 
                             render={({ field: { ref, onChange, value } }) => (
                                 <TextField
                                     ref={ref}
-                                    onChange={onChange}
+                                    onChange={value => onChange(value)}
                                     value={value}
                                     className="w-100"
                                     type={field.type}
@@ -160,9 +160,11 @@ const MyAccount: NextPage<{ accountDetails: AccountDetails, users: User[] }> = (
     const performCrud = useCallback(async () => {
         try {
             const response = await manageAccounts(purpose);
-            // console.log("response from the deleted user", response);
-            setCrudConfirmation(false);
-            setPurpose("");
+            // console.log("response user", response);
+            if (response.status === 200) {
+                setCrudConfirmation(false);
+                setPurpose("");
+            }
         } catch (error) {
             console.error("Error performing CRUD operation:", error);
         }

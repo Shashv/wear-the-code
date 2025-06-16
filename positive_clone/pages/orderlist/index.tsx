@@ -10,15 +10,15 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { Typography } from "@mui/material";
 import { IState } from "@/redux/sore";
-// import { Button } from "reactstrap";
+
 import styles from "./index.module.css";
 import Image from "next/image";
 const OrdersList: NextPage<{ pageName: string, sessionStatus?: { name: string; email: string }, products: any[] ,orderPositive:Array<any>}> = ({ pageName, sessionStatus, products ,orderPositive}) => {
-    // const { name, email } = sessionStatus;
+    
     const session = useSession();
     const router = useRouter();
     var themeState = useSelector((state: IState) => state.toggletheme);
-    // console.log("Orders list on the server component function calling", orderPositive);
+   
     let [tableData, setTabledata] = useState<{ tableHead: Array<any>, tableBody: Array<any> }>({
         tableHead: [{
             type: "text",
@@ -48,23 +48,13 @@ const OrdersList: NextPage<{ pageName: string, sessionStatus?: { name: string; e
         if (session.status === "unauthenticated") router.replace("/authentication/login");
         setTabledata({ ...tableData, tableBody: orderPositive });
     }, [session,products]);
-    // React.useEffect(() => {
-    //     setTabledata({ ...tableData, tableBody: products });
-    // }, [products]);
+   
     const userDetails = {
         name: session?.data?.user.name,
         email: session?.data?.user.email,
         profile: session?.data?.user.image
     }
-    // const checkSegmentation = (ar: string[], s:co string) => {
-    //     const arrayCharacters = Array.from(s);
-    //     //    console.log("Array characters",arrayCharacters);
-    //     arrayCharacters.forEach(letter => {
-    //         ar.forEach(word => {
-
-    //         })
-    //     })
-    // }
+    
     return (
         <>
             <div className={themeState.dark ? `min-h-screen container-fluid ${styles.orderlistcontainerdark}`:`container-fluid min-h-screen ${styles.orderlistcontainer}`}>
@@ -76,8 +66,7 @@ const OrdersList: NextPage<{ pageName: string, sessionStatus?: { name: string; e
                         </Typography>)}
                         <CommonTable tablebody={tableData.tableBody ? tableData.tableBody : []} tablehead={tableData.tableHead ? tableData.tableHead : []} />
                         <Typography className="text-pink-600" variant="h4"></Typography>
-                        {/* {session.data?.user.email} */}
-                        {/* <Button color="primary" onClick={e => checkSegmentation(["leet", "code"], "leetcode")}>Check</Button> */}
+                      
                     </div>
                 </div>
             </div>
@@ -85,26 +74,15 @@ const OrdersList: NextPage<{ pageName: string, sessionStatus?: { name: string; e
     )
 }
 export default OrdersList;
-// babaji this function will run on the server side...///
+
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const sessionStatus = await getServerSession(context.req, context.res, authorizeOptions) as ICustomSession | null;
     const userSession = await getSession({ req: context.req });
-    // console.log("user session",userSession?.user.id);
+  
     let ordersList = await OrdersModel.find({ email: userSession?.user.email || "" });
-    // if (typeof window !== undefined) 
-    //    console.log("Window found");
-    // }
-    // else {
-    //     ordersList = []
-    // }
-    // console.log("order list", ordersList);
+   
     let products: Array<any> = [];
-    // if (ordersList?.products) {
-    //     products = ordersList?.products;
-    // }
-    // else {
-    //     products = [];
-    // }
+   
     if (sessionStatus) {
         return {
             props: {
@@ -113,13 +91,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
                     name: sessionStatus.user.name,
                     email: sessionStatus.user.email
                 },
-                // products: products.map(product => {
-                //     let { _id, id, quantity } = product;
-                //     return {
-                //         id,
-                //         quantity
-                //     }
-                // }),
+               
                 orderPositive:JSON.parse(JSON.stringify(ordersList))
             }
         }
@@ -134,4 +106,3 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         }
     }
 }
-//server function calling on the  server/...
