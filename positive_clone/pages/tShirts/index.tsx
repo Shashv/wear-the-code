@@ -1,4 +1,3 @@
-import { NextRouter } from "next/router";
 import React, { Component } from "react";
 import Link from "next/link";
 import styles from "./index.module.css";
@@ -11,13 +10,16 @@ import Head from "next/head";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
 import authorizeOptions from "../api/auth/[...nextauth]";
-import { getServerSession, Session } from "next-auth";
+import { getServerSession, } from "next-auth";
 import { withRouter } from "next/router";
 import paginate from "@/utils/paginate";
 import LoadingBar from "react-top-loading-bar";
-import { toast } from "react-toastify";
 import Pagination from "@/components/pagination";
-import { TShirtState, TShirtProps } from "@/modals";
+import { TShirtState, TShirtProps, IShirts, FormatisedList } from "@/modals";
+import ProductModel from "@/modalsmongoose/product";
+
+import babaji from "@/utils/babaji";
+import calculateConfig from "@/utils/constants/pagination/calculateConfigvalues";
 class TShirts extends Component<TShirtProps, TShirtState> {
     constructor(props: TShirtProps) {
         super(props);
@@ -29,37 +31,16 @@ class TShirts extends Component<TShirtProps, TShirtState> {
             session: null
         };
         this.handlePageChange = this.handlePageChange.bind(this);
-        this.fetchProducts = this.fetchProducts.bind(this);
     }
 
-    async fetchProducts() {
-        try {
-            const response = await fetch("/api/getProducts");
-            const { productlist } = await response.json();
-
-            this.setState({
-                products: productlist,
-                loading: false
-            });
-
-            toast.success("Tshirts", {
-                theme: this.props.theme.light ? "light" : "dark",
-                autoClose: 2000,
-                position: "top-center"
-            });
-        } catch (error) {
-            console.error("Error fetching products:", error);
-            toast.error("Failed to load products");
-        }
-    }
 
     handlePageChange = (_: React.MouseEvent<HTMLButtonElement>, page: number) => {
         this.props.router.replace(`/tShirts?page=${page}`);
     };
 
     renderProductGrid() {
-        const { products } = this.state;
-        const { theme } = this.props;
+
+        const { theme, shirts } = this.props;
 
         return (
             <div className={"py-2"}>
@@ -81,7 +62,7 @@ class TShirts extends Component<TShirtProps, TShirtState> {
                     Welcome to Codeswear.com, your one-stop shop for stylish and unique tshirts. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!
                 </Typography>
                 <Grid container rowGap={2.4} className="justify-center" columnGap={1.4}>
-                    {Object.entries(products).map(([key, product]) => (
+                    {Object.entries(shirts).map(([key, product]) => (
                         <Grid item xs={5.4} sm={5.9} md={2.3} key={key}>
                             <Link href={`/product/${product.slug}`}>
                                 <ProductCard
@@ -101,22 +82,13 @@ class TShirts extends Component<TShirtProps, TShirtState> {
 
     async componentDidMount() {
         const session = await getSession();
-        console.log("Session user", session?.user);
-        if (session?.user) {
-            this.setState({ session });
-            await this.fetchProducts();
-            this.setState({ progress: 100 });
-            const urlParams = new URLSearchParams();
-            if (!urlParams.get("page")) {
-                urlParams.set("page", String(1));
-            }
-        } else {
-            this.props.router.replace("/authentication/login");
-        }
+
+        this.setState({ session, progress: 100 });
+
     }
     async componentDidUpdate(previousProps: Readonly<TShirtProps>, previousState: Readonly<TShirtState>): Promise<void> {
         if (previousState && previousProps) {
-            console.log("Component did update function", this.state.session);
+            console.log("Component did update function", this.props.router.query);
         }
     }
     render() {
@@ -165,10 +137,15 @@ const mapStateToProps = (state: IState) => ({
 });
 
 export default withRouter(connect(mapStateToProps)(TShirts));
-
-export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+//server side function calling...//
+export const getServerSideProps: GetServerSideProps<{ session: unknown; shirts: FormatisedList }> = async (context: GetServerSidePropsContext) => {
+   
+    let { query } = context;
     const session = await getServerSession(context.req, context.res, authorizeOptions);
-
+    let babajiConfiguration: FormatisedList = {};
+    const { res } = context;
+    let { skipOffset, limitValue } = calculateConfig(Number(query.page))
+    babajiConfiguration = await babaji("tshirts", skipOffset, limitValue);
     if (!session) {
         return {
             redirect: {
@@ -177,10 +154,22 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
             }
         };
     }
-
-    return {
-        props: {
-            session
+    else {
+        if (!context.query.page)
+            return {
+                redirect: {
+                    destination: '/tShirts?page=1',
+                    permanent: false
+                }
+            };
+        else {
+            return {
+                props: {
+                    session,
+                    shirts: babajiConfiguration
+                }
+            }
         }
-    };
+    }
 };
+// ...//

@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 import style from "./index.module.css";
 import { useEffect } from "react";
 import { Backdrop, Typography } from "@mui/material";
-
 import Pagination from "../../components/pagination"
 import { useSelector } from "react-redux";
 import { IState } from "@/redux/sore";

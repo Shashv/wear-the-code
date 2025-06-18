@@ -21,16 +21,19 @@ import { toast } from "react-toastify";
 import usePositive from "@/hooks/usePositive";
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import Pagination from "@/components/pagination";
+import { FormatisedList, IShirts } from "@/modals";
+import babaji from "@/utils/babaji";
+import calculateConfig from "@/utils/constants/pagination/calculateConfigvalues";
 
-const StickersPage: React.FC<{ stickers: Array<unknown>, stickersLength: number }> = (props: { stickers: Array<any>, stickersLength: number }) => {
+const StickersPage: React.FC<{ stickers: Array<IShirts>, stickersLength: number }> = ({ stickers, stickersLength: numbßer }) => {
     let isInitialMount = useRef<boolean | null>(true);
     const [loader, setLoader] = useState<boolean>(false);
     const router = useSearchParamsstate();
     const combinedState = useSelector((state: IState) => state.toggletheme);
     const session = useSession();
     const [positive, setPositive] = useState<number>(40);
-    const { totalPages, page, setPage } = usePositive({ recordsPerpage: 2, totalRecords: props.stickers.length });
-   
+    const { totalPages, page, setPage } = usePositive({ recordsPerpage: 2, totalRecords: stickers.length });
+
     useEffect(() => {
         switch (isInitialMount.current) {
             case true: {
@@ -38,7 +41,7 @@ const StickersPage: React.FC<{ stickers: Array<unknown>, stickersLength: number 
                 toast.success("Stickers", {
                     theme: combinedState.dark ? "dark" : "light",
                     autoClose: 2000,
-                    position:"top-center"
+                    position: "top-center"
                 })
                 isInitialMount.current = false
             }
@@ -50,7 +53,7 @@ const StickersPage: React.FC<{ stickers: Array<unknown>, stickersLength: number 
     const changePage = (e: React.MouseEvent<HTMLButtonElement>, page: number) => {
         router.setQuery({ page: page.toString() });
     }
-    
+
     useEffect(() => {
         if (session.status === "unauthenticated") {
             toast.error("Oops you are not authenticated");
@@ -90,7 +93,7 @@ const StickersPage: React.FC<{ stickers: Array<unknown>, stickersLength: number 
                                                 Welcome to Codeswear.com, your one-stop shop for stylish and unique stickers. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!
                                             </Typography>
                                             <Grid container rowGap={2.4} className="justify-center" columnGap={1.4}>
-                                                {props.stickers ? props.stickers.map((sticker, index) => <Grid item xs={5.4} sm={5.9} md={2.3} key={`sticker-${index}`}>
+                                                {stickers ? stickers.map((sticker, index) => <Grid item xs={5.4} sm={5.9} md={2.3} key={`sticker-${index}`}>
                                                     <Link href={`/product/${sticker.slug}`}>
                                                         <ProductCard title={sticker.title} desc={sticker.desc} img={sticker.img} category={sticker.category} slug={sticker.slug} />
                                                     </Link>
@@ -121,29 +124,18 @@ const StickersPage: React.FC<{ stickers: Array<unknown>, stickersLength: number 
 
 export default StickersPage;
 
-export const getServerSideProps: GetServerSideProps<{ stickers?: Array<unknown | any>, error?: string }> = async (context: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps<{ stickers?: FormatisedList, error?: string }> = async (context: GetServerSidePropsContext) => {
     const sessionServer = await getServerSession(context.req, context.res, authorizeOptions);
-    
-   
-    let responseStickers: any = await ProductModel.find({ category: "stickers" })
-        .skip(context.query.page ? (Number(context.query.page) - 1) * 10 : (1 - 1) * 10)
-        .limit(10)
-        .lean();
+    let page: number = Number(context.query.page);
 
-    let filteredResponse = responseStickers.map((sticker: any) => {
-        const { _id, ...rest } = sticker;
-        return {
-            ...rest,
-            createdAt: new Date(sticker.createdAt).toLocaleString(),
-            updatedAt: new Date(sticker.updatedAt).toLocaleString()
-        };
-    });
+    let { skipOffset, limitValue } = calculateConfig(page)
 
+    let stickers: FormatisedList = await babaji("stickers", skipOffset, limitValue)
     if (sessionServer) {
         if (context.query.page) {
             return {
                 props: {
-                    stickers: [...filteredResponse],
+                    stickers,
                     stickersLength: 0
                 },
             }

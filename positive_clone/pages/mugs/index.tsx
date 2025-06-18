@@ -1,5 +1,5 @@
 import React from "react";
-
+import { limitValue } from "@/utils/constants/pagination";
 import style from "./index.module.css";
 import { connect, ConnectedProps } from "react-redux";
 import { IState } from "@/redux/sore";
@@ -17,7 +17,9 @@ import LoadingBar from "react-top-loading-bar";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "../api/auth/[...nextauth]";
 import paginate from "@/utils/paginate";
-import { IMugs } from "@/modals";
+import { FormatisedList, IMugs, IShirts } from "@/modals";
+import babaji from "@/utils/babaji";
+import calculateConfig from "@/utils/constants/pagination/calculateConfigvalues";
 
 const mapStateToProps = (state: IState): unknown => {
     let { toggletheme } = state;
@@ -40,7 +42,7 @@ class Mugs extends React.Component<any, IMugs> {
         }
         this.changePage = this.changePage.bind(this);
     }
-    
+
     render(): JSX.Element {
         return (
             <>
@@ -82,20 +84,20 @@ class Mugs extends React.Component<any, IMugs> {
     }
     async componentDidMount(): Promise<void> {
         this.setState({ pages: paginate(this.props.mugsCount, 5) });
-        
+
         toast.success("Mugs", {
             theme: this.props.theme.dark ? "dark" : "light",
             autoClose: 2000,
-            position:"top-center"
+            position: "top-center"
         })
-       
+
         this.setState({ progress: 100 });
     }
     componentWillUnmount(): void {
         console.log("Component will unmount from the dom tree")
     }
-   
-   
+
+
     changePage(e: React.MouseEvent<HTMLButtonElement>, page: number): void {
         this.setState({ page });
         Router.push({
@@ -106,49 +108,23 @@ class Mugs extends React.Component<any, IMugs> {
 }
 
 export default (partialConnector(Mugs));
-export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps<{ mugsSchema: FormatisedList, sesssion?: unknown }> = async (context: GetServerSidePropsContext) => {
     const session = await getServerSession(context.req, context.res, authorizeOptions);
-    let fetchedMugs: Array<any> = await ProductModel.find({ category: "mugs" }).skip(context.query.page ? (Number(context.query.page) - 1) * 10 : (1 - 1) * 10).limit(10).lean();
+    const { page } = context.query;
+    const babajipositive = calculateConfig(Number(page))
+
     const mugsCount: number = await ProductModel.countDocuments({ category: "mugs" });
-   
-    const modifiedResponse = fetchedMugs.map((mugs: any, index: number) => ({ ...mugs, createdAt: new Date(mugs.createdAt).toLocaleString(), updatedAt: new Date(mugs.updatedAt).toLocaleString(), _id: index + 1 }));
-    let mugsSchema: {
-        [key: string]: {
-            _id?: number; title: string; desc: string; img: string; category: string; size: string[]; color: string[]; price: number; availableQuantity: number; createdAt?: string; updatedAt?: string; slug: string
-        }
-    } = {}
-    modifiedResponse.forEach(response => {
-        if (response.title in mugsSchema) {
-            if (!mugsSchema[response.title].color.includes(response.color)) mugsSchema[response.title].color.push(response.color);
-            else if (!mugsSchema[response.title].size.includes(response.Size)) mugsSchema[response.title].size.push(response.size);
-        }
-        else {
-            if (response.availableQuantity > 0) {
-                mugsSchema[response.title] = {
-                    title: response.title,
-                    desc: response.desc,
-                    img: response.img,
-                    category: response.category,
-                    size: [],
-                    color: [],
-                    price: response.price,
-                    availableQuantity: response.availableQuantity,
-                    slug: response.slug
-                };
-                mugsSchema[response.title].color = [response.color];
-                mugsSchema[response.title].size = [response.size];
-            }
-            else {
-                return;
-            }
-        }
-    })
+
+    let mugsSchemaBabaji: FormatisedList = {};
+    mugsSchemaBabaji = await babaji("mugs", babajipositive.skipOffset, babajipositive.limitValue);
+
+
     if (session) {
         const page = context.query.page;
         if (page) return {
             props: {
-                mugs: modifiedResponse,
-                mugsSchema,
+
+                mugsSchema: mugsSchemaBabaji,
                 mugsCount
             }
         }
@@ -157,7 +133,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
                 destination: "/mugs?page=1",
                 permanent: false
             }
-            
+
         }
     }
     else {

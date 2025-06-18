@@ -4,19 +4,18 @@ import "./index.module.css";
 import { useState } from "react";
 import StyledModal from "@/components/styledpopup";
 import { useRouter } from "next/router";
+import { Typography, Grid } from "@mui/material";
 
-import { Typography, Backdrop, CircularProgress, Grid } from "@mui/material";
-import Loader from "@/components/loader";
 import addProduct from "@/redux/actions/addProduct";
 import { useDispatch, useSelector } from "react-redux";
-
 import { IState } from "@/redux/sore";
 import style from "./index.module.css";
-import { IShirts } from "@/pages/api/getProducts";
+
+import { IShirts } from "@/modals";
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import ColorLabel from "@/components/colorLabels";
 import buyProduct from "@/redux/actions/buyproduct";
-import LoaderAnimate from "@/components/loader";
+
 
 import clearCart from "@/redux/actions/clearCart";
 import ProductModel from "@/modalsmongoose/product";
@@ -39,40 +38,42 @@ type IProductType = {
 }
 const ProductClient: NextPage<{ productId?: string, type: string }> = ({ productId, type }) => {
     let [selectedProduct, setSelectedProduct] = useState<IShirts>({
-        title: null,
-        desc: null,
-        img: null,
-        availableQuantity: null,
+        title: "",
+        desc: "",
+        img: "",
+        availableQuantity: 0,
         price: 0,
-        category: null,
-        size: null,
-        color: null,
-        slug: null
+        category: "",
+        size: "",
+        color: "",
+        slug: "",
+        productOrientations: "",
+        tags: ""
     });
     let router = useSearchParamsstate();
     let [servie, setService] = useState<boolean>(false);
-   
+
     const [loader, setLoader] = useState<boolean>(false);
     const [productVariant, setProductvariant] = useState<any>({});
     let serviceRef = useRef<HTMLButtonElement>(null);
     let routerDetail = useRouter();
     let dispatch = useDispatch();
- 
+
     let productsBought = useSelector((state: IState) => state.buyNow);
-   
+
     let [pin, setPin] = useState<{ pinError: boolean | any; pin: any; servicePending: boolean }>({ pinError: "", pin: null, servicePending: false });
-  
+
     let slug: string | string[] | any = "";
     let sizes: string[] = [];
     let state = useSelector((state: IState) => state.productManage);
-    const fetchProduct = async (productName: string): Promise<{ product: IProductType[], productVariant: { [key: string]: { [key: string]: { slug: string } } } }> => {
+    const fetchProduct = async (productName: string): Promise<{ product: IShirts[], productVariant: { [key: string]: { [key: string]: { slug: string } } } }> => {
         let shirt = await fetch(`/api/shirts?type=${productName}`, {
             method: "GET",
         });
         let parsedshirt = await shirt.json();
         return parsedshirt;
     }
-   
+
     useEffect(() => {
         setLoader(true);
         fetchProduct(type).then(shirt => {
@@ -102,7 +103,7 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
         });
         return () => serviceRef.current?.removeEventListener("click", (e: MouseEvent) => setService(true))
     });
-   
+
     const productOrientations: (productOrientation: string) => Array<string> = productOrientation => {
         let list = productOrientation.split(",");
         return list;
@@ -121,7 +122,7 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
         }
         else {
             dispatch(buyProduct({ name: selectedProduct?.title || "", product: selectedProduct.slug, quantity: selectedProduct?.availableQuantity || 1, price: selectedProduct?.price, variant: selectedProduct?.color || "", size: selectedProduct?.size || "" }))
-           
+
             toast.success("Product added to cart for delivery", {
                 position: "top-center",
                 autoClose: 2000
@@ -154,23 +155,23 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
     const addToCart: () => void = () => {
         let findedKey: string = Object.keys(state).find(key => key === routerDetail.query.slug) || "";
         if (findedKey) {
-          
+
             toast.info("Item already added to cart", {
                 autoClose: 2000,
                 position: "top-center"
             })
         }
         else {
-           
+
             dispatch(addProduct({ name: selectedProduct?.title || "", product: selectedProduct.slug, size: selectedProduct?.size || "", variant: selectedProduct?.color || "", price: selectedProduct?.price || 0, quantity: 1 }));
-          
+
             toast.success("Item added to cart", {
                 autoClose: 2000,
                 position: "top-center"
             })
         }
     }
-   
+
     const refreshVariants = (newColor: string, newSize: string) => {
         router.getDetails().replace(productVariant[newColor][newSize]["slug"]);
     }
@@ -196,9 +197,9 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
                             <div className="row px-5">
                                 <div className={`col-md-5 col-sm-12 ${style.imageholder}`}>
                                     <div className="d-flex flex-column align-items-center justify-start gap-3 w-[20%]">
-                                       
+
                                         {productOrientations(selectedProduct.productOrientations || "").map((image: string, index: number) => <Image key={index} className={selectedProduct.img === image ? style.selectedvariant : style.unselectedvariant} onClick={() => setSelectedProduct((selectedProduct) => ({ ...selectedProduct, img: image }))} src={image} alt="img" width={55} height={55} />)}
-                                       
+
                                     </div>
                                     <div className="main-display w-[90%] h-100">
                                         <img loading="lazy" alt="egoocommerce" className={`transition-all duration-300 hover:scale-105`} src={selectedProduct?.img || ""} />
@@ -319,7 +320,7 @@ export const getServerSideProps: GetServerSideProps<{
             }
         }
     } = {};
-    
+
     let modifiedResponse = responseproduct.map((product: any, index: number) => ({ ...product, createdAt: new Date(product.createdAt).toLocaleString(), updatedAt: new Date(product.updatedAt).toLocaleString(), _id: index }));
     for (let shirtVaraints of availableshirts) {
         if (shirtVaraints.color in colorslug) {

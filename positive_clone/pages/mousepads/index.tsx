@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { IState } from "@/redux/sore";
 import { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
-import ProductModel from "@/modalsmongoose/product";
+// import ProductModel from "@/modalsmongoose/product";
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 import FilterBar from "@/components/filtergroup";
 import style from "./index.module.css";
@@ -18,22 +18,26 @@ import { getServerSession } from "next-auth";
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import authorizeOptions from "../api/auth/[...nextauth]";
 import Pagination from "@/components/pagination";
+import { FormatisedList, iShirts, IShirts } from "@/modals";
+import babaji from "@/utils/babaji";
+import calculateConfig from "@/utils/constants/pagination/calculateConfigvalues";
 const MousePads: NextPage<{
     mousePadsSchema: {
-        [key: string]: {
-            title: string;
-            desc: string;
-            price: number;
-            img: string;
-            slug: string;
-            colors: string[];
-            sizes: string[];
-            udpatedAt?: string;
-            createdAt?: string;
-            _id?: any;
-            availableQuantity: number;
-            category: string;
-        }
+        // [key: string]: {
+        //     title: string;
+        //     desc: string;
+        //     price: number;
+        //     img: string;
+        //     slug: string;
+        //     colors: string[];
+        //     sizes: string[];
+        //     udpatedAt?: string;
+        //     createdAt?: string;
+        //     _id?: any;
+        //     availableQuantity: number;
+        //     category: string;
+        // }
+        [key: string]: iShirts
     }
 }> = (props) => {
     let { mousePadsSchema } = props;
@@ -45,7 +49,7 @@ const MousePads: NextPage<{
     const changePage = (e: React.MouseEvent<HTMLButtonElement>, page: number) => {
         router.setQuery({ page: page.toString() });
     }
-    const initialMount = React.useRef(true);
+    // const initialMount = React.useRef(true);
     useEffect(() => {
         if (session.status === "unauthenticated") {
             router.getDetails().push("/authentication/login");
@@ -61,7 +65,7 @@ const MousePads: NextPage<{
                 return;
             }
             else {
-                
+
                 toast.success("Mousepads", {
                     theme: "dark",
                     autoClose: 2000,
@@ -122,50 +126,14 @@ const MousePads: NextPage<{
 export default MousePads;
 //function will call on the server side ...//
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
-    const mousepads = await ProductModel.find({ category: "mousepads" }).lean();
+    
+    let {page} = context.query;
+    const babajipositive = calculateConfig(Number(page));
     const session = await getServerSession(context.req, context.res, authorizeOptions);
-    const mousePadsSchema: {
-        [key: string]: {
-            title: string;
-            desc: string;
-            price: number;
-            img: string;
-            slug: string;
-            colors: string[];
-            sizes: string[];
-            udpatedAt?: string;
-            createdAt?: string;
-            _id?: any;
-            availableQuantity: number;
-            category: string;
-        }
-    } = {};
-    for (let pad of mousepads) {
-        if (pad.title in mousePadsSchema) {
-            if (!mousePadsSchema[pad.title].colors.includes(pad.color) && pad.availableQuantity > 0) {
-                mousePadsSchema[pad.title].colors.push(pad.color);
-            }
-            else if (!mousePadsSchema[pad.title].sizes.includes(pad.size) && pad.availableQuantity > 0) {
-                mousePadsSchema[pad.title].sizes.push(pad.size);
-            }
-        }
-        else {
-            if (pad.availableQuantity > 0)
-                mousePadsSchema[pad.title] = {
-                    title: pad.title,
-                    colors: [pad.color],
-                    sizes: [pad.size],
-                    slug: pad.slug,
-                    desc: pad.desc,
-                    img: pad.img,
-                    price: pad.price,
-                    availableQuantity: pad.availableQuantity,
-                    category: pad.category,
-                    createdAt: new Date(pad.createdAt).toLocaleString(),
-                    udpatedAt: new Date(pad.updatedAt).toLocaleString(),
-                }
-        }
-    }
+    
+    let mousePadsSchema: FormatisedList = {};
+    mousePadsSchema = await babaji("mousepads",babajipositive.skipOffset,babajipositive.limitValue);
+   
     if (session) {
         const page = context.query.page;
         if (page) {

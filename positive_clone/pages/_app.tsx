@@ -5,31 +5,23 @@ import { Provider } from "react-redux";
 import Footer from "@/components/footer";
 import { NextRouter, useRouter } from "next/router";
 import "./styles.css";
-// import { IPositive } from "@/modals";
-import store, { IDispatch, IState } from "@/redux/sore";
-// import { useDispatch, useSelector } from "react-redux";
-// import addProduct from "@/redux/actions/addProduct";
-// import removeProduct from "@/redux/actions/removeProduct";
+import store from "@/redux/sore";
 import { useEffect, useRef } from "react";
 import StyledBar from "@/components/customBar";
 import { ToastContainer } from "react-toastify";
 import { SessionProvider } from 'next-auth/react';
-// import { headers } from "next/headers";
-// import { usePathname } from "next/navigation";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import type { AppProps } from "next/app";
-// import jsonwebtoken from "jsonwebtoken";
 import 'react-toastify/dist/ReactToastify.css';
 import { LoadingBarContainer } from "react-top-loading-bar";
 import { GetServerSideProps, NextPage } from "next";
 import AosInitialize from "@/utils/aos";
 import 'aos/dist/aos.css';
 import Router from "next/router";
-// import aos from "aos";
-// import { Backdrop } from "@mui/material";
 import LoaderAnimate from "@/components/loader";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "./api/auth/[...nextauth]";
+
 const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
     const routerDetail: NextRouter = useRouter();
     let ref = useRef<HTMLDivElement>(null);
@@ -40,13 +32,15 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
     const toggleFilter = (status: boolean) => {
         setFilterStatus(!status);
     }
+    
     useEffect(() => {
-        // aos.init();
+
         Router.events.on("routeChangeStart", e => {
             setLoader(true);
         });
         Router.events.on("routeChangeComplete", e => setLoader(false));
     }, [routerDetail]);
+
     return (
         <GoogleOAuthProvider clientId="803758111092-tusltrjau3p58fdue2k96a6rkm0nasik.apps.googleusercontent.com">
             <div ref={ref} className="parent">
@@ -71,15 +65,15 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
                                     <StyledBar scrollTop={0} />
                                 }
                                 <ContextWrapper.Provider value={toggleFilter}>
-                                    {/* sx={{ backgroundColor: "#eb4798" }} */}
+
                                     {loader ?
-                                        // <Backdrop open >
+
                                         <div className="flex bg-pink-300 backdrop-blur-lg justify-center align-center h-[100vh]">
                                             <LoaderAnimate />
                                         </div>
-                                        // </Backdrop> 
+
                                         :
-                                        <div className={"route-component"} style={{ height:"100vh" , overflowY: filterStatus ? "hidden" : "scroll", overflowX: "hidden" }}>
+                                        <div className={"route-component"} style={{ height: "100vh", overflowY: filterStatus ? "hidden" : "scroll", overflowX: "hidden" }}>
                                             <Component  {...pageparams} />
                                         </div>
                                     }
@@ -95,11 +89,10 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
     )
 }
 export default Layout;
-// !path.includes("/auth") ? "600px" : "100vh"
-//function will run on server side...//
+
 export const getServerSideProps: GetServerSideProps = async context => {
     const serverSession = await getServerSession(context.req, context.res, authorizeOptions);
-    // console.log("ServerSession", serverSession);
+
     if (serverSession) {
         return {
             props: {

@@ -1,12 +1,28 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import mysql from "mysql2/promise";
+// import mysql from "mysql2/promise";
 import connectDatabase from "@/configuration";
 import ProductModel from "@/modalsmongoose/product";
+import { IShirts } from "@/modals";
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     try {
         let type = request.query.type;
         if (request.method === "GET") {
-            let responseproduct = await ProductModel.find({ slug: type }).lean();
+            let responseproduct = (await ProductModel.find({ slug: type }).lean()).map(product => {
+                let { title, slug, desc, img, category, size, color, price, availableQuantity, productOrientations, tags } = product;
+                return {
+                    title,
+                    slug,
+                    img,
+                    desc,
+                    category,
+                    size,
+                    color,
+                    price, availableQuantity,
+                    productOrientations,
+                    tags
+                }
+            }) as IShirts[];
+            // console.log("Response babaji", responseproduct)
             const availableshirts: any[] = await ProductModel.find({ title: responseproduct[0].title, category: responseproduct[0].category }).lean();
             const colorslug: {
                 [key: string]: {
@@ -30,7 +46,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         else {
             return response.status(405).json({ message: "Method not allowed" });
         }
-        // response.end();
+
     }
     catch (er) {
         console.log("Backend error");

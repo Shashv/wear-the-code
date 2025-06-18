@@ -2,30 +2,10 @@ import next from "next/server";
 import connectDatabase from "@/configuration";
 import { NextApiRequest, NextApiResponse } from "next";
 import ProductModel from "@/modalsmongoose/product";
-export type IShirts = {
-    id?: any;
-    title?: string | null;
-    slug?: string | null;
-    desc?: string | null;
-    img?: string | null;
-    category?: string | null;
-    size?: string | null;
-    color?: string | null;
-    price?: number;
-    availableQuantity?: number | null;
-    createdAt?: string | null;
-    updatedAt?: string | null;
-    __v?: number | string;
-    availableSizes?: string[];
-    productOrientations?:string;
-    tags?:string
-}
+import { iShirts, IShirts } from "@/modals";
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "GET") {
-        interface iShirts extends Omit<IShirts, "size" | "color"> {
-            sizes: string[];
-            colors: string[]
-        }
+
         let tshirts: {
             [key: string]: iShirts;
         } = {};

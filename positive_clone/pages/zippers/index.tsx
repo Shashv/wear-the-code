@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useMemo } from "react";
 import style from "./index.module.css";
-import ProductModel from "@/modalsmongoose/product";
+import calculateConfig from "@/utils/constants/pagination/calculateConfigvalues";
 import { Grid } from "@mui/material";
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 import positive from './index.module.css';
@@ -19,6 +19,8 @@ import Pagination from "@/components/pagination";
 import usePositive from "@/hooks/usePositive";
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import { toast } from "react-toastify";
+import { FormatisedList, IShirts } from "@/modals";
+import babaji from "@/utils/babaji";
 
 interface ZipperSchema {
     title: string;
@@ -148,9 +150,10 @@ const Zippers: NextPage<ZippersProps> = ({ zippersSchema }) => {
 
 export default Zippers;
 
-export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps<{ zippersSchema: FormatisedList, session?: unknown }> = async (context: GetServerSidePropsContext) => {
     const getServerSideSession = await getServerSession(context.req, context.res, authorizeOptions);
-   
+    const { query } = context;
+    let { skipOffset, limitValue } = calculateConfig(Number(query.page))
     if (!getServerSideSession) {
         return {
             redirect: {
@@ -171,33 +174,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         };
     }
 
-    const fetchedProducts = await ProductModel.find({ category: "zippers" });
-    const zippersSchema: Record<string, ZipperSchema> = {};
-
-    fetchedProducts.forEach(zipper => {
-        if (zipper.availableQuantity <= 0) return;
-
-        if (zipper.title in zippersSchema) {
-            if (!zippersSchema[zipper.title].colors.includes(zipper.color)) {
-                zippersSchema[zipper.title].colors.push(zipper.color);
-            }
-            if (!zippersSchema[zipper.title].sizes.includes(zipper.size)) {
-                zippersSchema[zipper.title].sizes.push(zipper.size);
-            }
-        } else {
-            zippersSchema[zipper.title] = {
-                title: zipper.title,
-                img: zipper.img,
-                desc: zipper.desc,
-                colors: [zipper.color],
-                sizes: [zipper.size],
-                slug: zipper.slug,
-                availableQuantity: zipper.availableQuantity,
-                category: zipper.category,
-                price: zipper.price
-            };
-        }
-    });
+    const zippersSchema: FormatisedList = await babaji("zippers", skipOffset, limitValue) || {};
 
     return {
         props: { zippersSchema }

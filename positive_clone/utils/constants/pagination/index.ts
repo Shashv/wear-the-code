@@ -1,0 +1,1 @@
+export let limitValue:number = 10;
