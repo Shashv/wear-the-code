@@ -1,7 +1,6 @@
 import React from "react";
-import { limitValue } from "@/utils/constants/pagination";
 import style from "./index.module.css";
-import { connect, ConnectedProps } from "react-redux";
+import { connect,  } from "react-redux";
 import { IState } from "@/redux/sore";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import ProductModel from "@/modalsmongoose/product";
@@ -17,7 +16,7 @@ import LoadingBar from "react-top-loading-bar";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "../api/auth/[...nextauth]";
 import paginate from "@/utils/paginate";
-import { FormatisedList, IMugs, IShirts } from "@/modals";
+import { FormatisedList, IMugs,  } from "@/modals";
 import babaji from "@/utils/babaji";
 import calculateConfig from "@/utils/constants/pagination/calculateConfigvalues";
 

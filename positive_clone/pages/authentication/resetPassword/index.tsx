@@ -8,6 +8,7 @@ import LoaderAnimate from "@/components/loader";
 import { useSearchParams } from "next/navigation";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "@/pages/api/auth/[...nextauth]";
+
 const ResetPassword: NextPage = () => {
     const { control, handleSubmit } = useForm();
     const [loader, setLoader] = useState<boolean>(false);

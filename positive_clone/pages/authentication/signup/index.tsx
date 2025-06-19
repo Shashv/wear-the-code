@@ -1,11 +1,7 @@
 import React, { useRef, useState } from "react";
-
 import { ToastContainer, toast } from "react-toastify";
-import { Backdrop, CircularProgress } from "@mui/material";
+import { Backdrop,} from "@mui/material";
 import uploader from "../../../components/assets/upload.png";
-
-import './index.css';
-
 import 'react-toastify/dist/ReactToastify.css';
 import { GetServerSideProps, NextPage } from "next";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -16,14 +12,8 @@ import { getServerSession } from "next-auth";
 import authorizeOptions from "@/pages/api/auth/[...nextauth]";
 import Image from "next/image";
 import CloseIcon from "@mui/icons-material/Close"
-interface ISignup {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    checkStatus?: boolean;
-    image?: File;
-}
+import { ISignup } from "@/modals";
+import './index.css';
 let passwordValue: string = "";
 let confirmPassword: string = "";
 let imageBuffer: any = "";

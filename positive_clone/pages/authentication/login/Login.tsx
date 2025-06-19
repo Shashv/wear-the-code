@@ -1,11 +1,7 @@
 import React, {  useEffect } from "react";
-
 import {  toast } from "react-toastify";
 import { Backdrop, } from "@mui/material";
-
 import 'react-toastify/dist/ReactToastify.css';
-import './index.css';
-
 import { NextPage } from "next";
 
 import { IForm } from "@/modals";
@@ -14,8 +10,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
 import LoaderAnimate from "@/components/loader";
-
-
+import './index.css';
 
 const Login: NextPage = () => {
     

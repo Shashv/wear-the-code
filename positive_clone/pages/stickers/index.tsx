@@ -24,15 +24,16 @@ import Pagination from "@/components/pagination";
 import { FormatisedList, IShirts } from "@/modals";
 import babaji from "@/utils/babaji";
 import calculateConfig from "@/utils/constants/pagination/calculateConfigvalues";
+import ProductGrid from "@/utils/constants/renderProductgrid";
 
-const StickersPage: React.FC<{ stickers: Array<IShirts>, stickersLength: number }> = ({ stickers, stickersLength: numbßer }) => {
+const StickersPage: React.FC<{ stickers: FormatisedList, stickersLength: number }> = ({ stickers, stickersLength: numbßer }) => {
     let isInitialMount = useRef<boolean | null>(true);
     const [loader, setLoader] = useState<boolean>(false);
     const router = useSearchParamsstate();
     const combinedState = useSelector((state: IState) => state.toggletheme);
     const session = useSession();
     const [positive, setPositive] = useState<number>(40);
-    const { totalPages, page, setPage } = usePositive({ recordsPerpage: 2, totalRecords: stickers.length });
+    const { totalPages, page, setPage } = usePositive({ recordsPerpage: 2, totalRecords: Object.keys(stickers).length });
 
     useEffect(() => {
         switch (isInitialMount.current) {
@@ -92,18 +93,8 @@ const StickersPage: React.FC<{ stickers: Array<IShirts>, stickersLength: number 
                                             <Typography color={combinedState.light ? "#000" : "#9ca3af"} className={"text-start px-24 py-2 pb-3"} sx={{ fontSize: { sm: 15, md: 14 }, textIndent: { sm: "start" } }} lineHeight={1.6} fontWeight={600}>
                                                 Welcome to Codeswear.com, your one-stop shop for stylish and unique stickers. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!
                                             </Typography>
-                                            <Grid container rowGap={2.4} className="justify-center" columnGap={1.4}>
-                                                {stickers ? stickers.map((sticker, index) => <Grid item xs={5.4} sm={5.9} md={2.3} key={`sticker-${index}`}>
-                                                    <Link href={`/product/${sticker.slug}`}>
-                                                        <ProductCard title={sticker.title} desc={sticker.desc} img={sticker.img} category={sticker.category} slug={sticker.slug} />
-                                                    </Link>
-                                                </Grid>)
-                                                    : <div className="col-12">
-                                                        <Typography className="error-text" variant="h4">
-                                                            OOPS , Something went wrong !
-                                                        </Typography>
-                                                    </div>}
-                                            </Grid>
+                                            <ProductGrid zippersSchema={stickers} />
+
                                         </div>
                                     </div>
                                 </div>
@@ -157,3 +148,16 @@ export const getServerSideProps: GetServerSideProps<{ stickers?: FormatisedList,
             }
         }
 }
+
+{/* <Grid container rowGap={2.4} className="justify-center" columnGap={1.4}>
+                                                {stickers ? stickers.map((sticker, index) => <Grid item xs={5.4} sm={5.9} md={2.3} key={`sticker-${index}`}>
+                                                    <Link href={`/product/${sticker.slug}`}>
+                                                        <ProductCard title={sticker.title} desc={sticker.desc} img={sticker.img} category={sticker.category} slug={sticker.slug} />
+                                                    </Link>
+                                                </Grid>)
+                                                    : <div className="col-12">
+                                                        <Typography className="error-text" variant="h4">
+                                                            OOPS , Something went wrong !
+                                                        </Typography>
+                                                    </div>}
+                                            </Grid> */}

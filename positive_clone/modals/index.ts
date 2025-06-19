@@ -204,7 +204,7 @@ export interface TShirtProps {
         dark: boolean;
     };
     router: NextRouter;
-    shirts: Record<string, Product>;
+    shirts: FormatisedList
 }
 export type IForm = {
     email: string;
@@ -231,3 +231,30 @@ export interface iShirts extends Omit<IShirts, "size" | "color"> {
 export type FormatisedList = {
     [key: string]: iShirts
 }
+export interface ISignup {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    checkStatus?: boolean;
+    image?: File;
+}
+export interface User {
+    username: string;
+    email: string;
+    password: string;
+    image: string;
+}
+
+export interface AccountDetails {
+    name: string;
+    email: string;
+    image: string;
+}
+
+export interface FormField {
+    type: string;
+    name: string;
+    placeholder: string;
+}
+export type IHoodie = { _id: number; title: string; desc: string; img: string; category: string; size: string; color: string; price: number; availableQuantity: number; createdAt: string; updatedAt: string; slug: string; productOrientations?: string; tags?: string };

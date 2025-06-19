@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { IState } from "@/redux/sore";
 import { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
-// import ProductModel from "@/modalsmongoose/product";
+
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 import FilterBar from "@/components/filtergroup";
 import style from "./index.module.css";
@@ -49,7 +49,7 @@ const MousePads: NextPage<{
     const changePage = (e: React.MouseEvent<HTMLButtonElement>, page: number) => {
         router.setQuery({ page: page.toString() });
     }
-    // const initialMount = React.useRef(true);
+    
     useEffect(() => {
         if (session.status === "unauthenticated") {
             router.getDetails().push("/authentication/login");
@@ -125,15 +125,16 @@ const MousePads: NextPage<{
 }
 export default MousePads;
 //function will call on the server side ...//
+// import ProductModel from "@/modalsmongoose/product";
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
-    
-    let {page} = context.query;
+
+    let { page } = context.query;
     const babajipositive = calculateConfig(Number(page));
     const session = await getServerSession(context.req, context.res, authorizeOptions);
-    
+
     let mousePadsSchema: FormatisedList = {};
-    mousePadsSchema = await babaji("mousepads",babajipositive.skipOffset,babajipositive.limitValue);
-   
+    mousePadsSchema = await babaji("mousepads", babajipositive.skipOffset, babajipositive.limitValue);
+
     if (session) {
         const page = context.query.page;
         if (page) {

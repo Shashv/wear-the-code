@@ -20,6 +20,7 @@ import ProductModel from "@/modalsmongoose/product";
 
 import babaji from "@/utils/babaji";
 import calculateConfig from "@/utils/constants/pagination/calculateConfigvalues";
+import ProductGrid from "@/utils/constants/renderProductgrid";
 class TShirts extends Component<TShirtProps, TShirtState> {
     constructor(props: TShirtProps) {
         super(props);
@@ -61,21 +62,8 @@ class TShirts extends Component<TShirtProps, TShirtState> {
                 >
                     Welcome to Codeswear.com, your one-stop shop for stylish and unique tshirts. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!
                 </Typography>
-                <Grid container rowGap={2.4} className="justify-center" columnGap={1.4}>
-                    {Object.entries(shirts).map(([key, product]) => (
-                        <Grid item xs={5.4} sm={5.9} md={2.3} key={key}>
-                            <Link href={`/product/${product.slug}`}>
-                                <ProductCard
-                                    imageFront={product.img}
-                                    imageBack={product?.productOrientations?.split(",")[1]}
-                                    {...product}
-                                    category="Tshirt"
-                                    showIcon
-                                />
-                            </Link>
-                        </Grid>
-                    ))}
-                </Grid>
+                <ProductGrid zippersSchema={shirts} />
+
             </div>
         );
     }
@@ -139,7 +127,7 @@ const mapStateToProps = (state: IState) => ({
 export default withRouter(connect(mapStateToProps)(TShirts));
 //server side function calling...//
 export const getServerSideProps: GetServerSideProps<{ session: unknown; shirts: FormatisedList }> = async (context: GetServerSidePropsContext) => {
-   
+
     let { query } = context;
     const session = await getServerSession(context.req, context.res, authorizeOptions);
     let babajiConfiguration: FormatisedList = {};
@@ -172,4 +160,20 @@ export const getServerSideProps: GetServerSideProps<{ session: unknown; shirts: 
         }
     }
 };
+/* <Grid container rowGap={2.4} className="justify-center" columnGap={1.4}>
+                   {Object.entries(shirts).map(([key, product]) => (
+                       <Grid item xs={5.4} sm={5.9} md={2.3} key={key}>
+                           <Link href={`/product/${product.slug}`}>
+                               <ProductCard
+                                   imageFront={product.img}
+                                   imageBack={product?.productOrientations?.split(",")[1]}
+                                   {...product}
+                                   category="Tshirt"
+                                   showIcon
+                               />
+                           </Link>
+                       </Grid>
+                   ))}
+               </Grid> */
+
 // ...//

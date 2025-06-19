@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { Box, Button, FormGroup, TextField, Typography } from "@mui/material";
-// import styles from "./index.module.css";
-import { Form, Label } from "reactstrap";
+
+import { Form, } from "reactstrap";
 import { IRegisterOptions } from '../../modals/index';
 import { FieldValues, useForm, Controller } from "react-hook-form";
 import { Container, Col, Row } from "reactstrap";
-// import Cart from "../../components/cart";
+
 import style from "./index.module.css";
 import CustomDrawer from "../../components/cart";
 import { useDispatch } from "react-redux";
@@ -19,15 +19,14 @@ import { getServerSession } from "next-auth";
 import { useRouter } from "next/router";
 import authorizeOptions from "../api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
-// import { Elements } from "@stripe/react-stripe-js";
-// import { loadStripe } from "@stripe/stripe-js";
+
 const Checkout: React.FC = () => {
-    let { register, handleSubmit, formState: { errors, isSubmitSuccessful }, reset, setError, clearErrors, control } = useForm<IRegisterOptions>();
+    let { handleSubmit, control } = useForm<IRegisterOptions>();
     var session = useSession();
     let dispatch = useDispatch();
     const theme = useSelector((state: IState) => state.toggletheme);
     let details = (data: FieldValues | IRegisterOptions) => {
-       
+
         if (data) {
             toast.success("Details saved successfully", {
                 theme: theme.light ? "light" : "dark",
@@ -78,7 +77,7 @@ const Checkout: React.FC = () => {
         placeholder: "Enter city",
         name: "user_city"
     }];
-   
+
     return (
         <>
             <Box component={"div"} className={theme.light ? `bg-light ${style.background}` : `bg-dark ${style.background}`} sx={{
@@ -96,7 +95,7 @@ const Checkout: React.FC = () => {
                         <span className="fw-bold">1. </span>
                         Delievery Details
                     </Typography>
-                   
+
                     <Row className="mb-1 g-2">
                         {formGroups.map((formGroup, index) => {
                             return <FormGroup key={index} className="py-1">
@@ -113,9 +112,9 @@ const Checkout: React.FC = () => {
                                 }} />
                             </FormGroup>
                         })}
-                       
+
                     </Row>
-                   
+
                     <div className="row mb-1">
                         <Col xs={6}>
                             <Button className="bg-pink-400 hover:bg-pink-500" type="submit" variant={"contained"} color="secondary">
@@ -135,13 +134,14 @@ const Checkout: React.FC = () => {
                         </Col>
                     </Row>
                 </Container>
-               
+
             </Box>
         </>
     )
 }
 export default Checkout;
 // server side running function..//
+// import Cart from "../../components/cart";
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const getServersidesession = await getServerSession(context.req, context.res, authorizeOptions);
     if (getServersidesession) {
@@ -161,4 +161,5 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         }
     }
 }
+// import styles from "./index.module.css";
 // ...// 

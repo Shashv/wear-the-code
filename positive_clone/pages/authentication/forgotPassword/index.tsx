@@ -4,7 +4,6 @@ import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import "./index.css";
 import 'react-toastify/dist/ReactToastify.css';
 import Head from "next/head";
 import { } from "react-hook-form";
@@ -12,6 +11,8 @@ import { Backdrop, CircularProgress } from "@mui/material";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "@/pages/api/auth/[...nextauth]";
+import "./index.css";
+
 interface IForgotPassword {
     value: string;
     error: boolean;

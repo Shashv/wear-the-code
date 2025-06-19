@@ -16,25 +16,8 @@ import StyledModal from "@/components/styledpopup";
 import { Controller, FieldValues, useForm } from "react-hook-form";
 import { Button } from "reactstrap";
 import Image from "next/image";
+import { User, AccountDetails, FormField } from "../../modals/index"
 
-interface User {
-    username: string;
-    email: string;
-    password: string;
-    image: string;
-}
-
-interface AccountDetails {
-    name: string;
-    email: string;
-    image: string;
-}
-
-interface FormField {
-    type: string;
-    name: string;
-    placeholder: string;
-}
 
 const formFields: FormField[] = [
     {

@@ -17,21 +17,21 @@ import { toast } from "react-toastify";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "../api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
-
+import { IHoodie } from "@/modals";
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import usePositive from "@/hooks/usePositive";
-type IHoodie = { _id: number; title: string; desc: string; img: string; category: string; size: string; color: string; price: number; availableQuantity: number; createdAt: string; updatedAt: string; slug: string; productOrientations?: string; tags?: string };
+
 const Hoodies: NextPage<{
     scrollTop: number, hoodies: Array<IHoodie>, loading?: boolean; cart: {
         [key: string]: {
             _id?: number; title: string; desc: string; img: string; category: string; size: string[]; color: string[]; price: number; availableQuantity: number; createdAt?: string; updatedAt?: string; slug: string; productOrientations?: string; tags?: string;
         }
     }
-}> = ({ scrollTop, hoodies, loading, cart }) => {
+}> = ({ hoodies, cart }) => {
    
     const [loader, setLoader] = useState(true);
     const session = useSession();
-    
+
     const router = useSearchParamsstate();
     const themeState = useSelector((state: IState) => state.toggletheme);
     const isInitialMount = useRef<boolean | null>(true);

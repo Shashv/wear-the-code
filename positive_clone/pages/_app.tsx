@@ -34,7 +34,6 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
     }
     
     useEffect(() => {
-
         Router.events.on("routeChangeStart", e => {
             setLoader(true);
         });
@@ -110,6 +109,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
         }
     }
 }
+
 // function willbe used the query params...//
 // export const getInitialProps = async (context: any) => {
 //     const session = getSession(context);

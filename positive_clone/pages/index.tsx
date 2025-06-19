@@ -1,12 +1,6 @@
-// import Image from "next/image";
-// import { Box, Typography } from "@mui/material";
-// import { useState } from "react";
-// import { useRouter } from "next/navigation";
-import style from "./index.module.css";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
-// import Button from "@mui/material/Button";
 import { useSelector } from "react-redux";
-// import Loader from "@/components/loader";
+import style from "./index.module.css";
 import CollectionSections from "@/sections/collections";
 import { IState } from "@/redux/sore";
 import ThemeSection from "@/sections/themes";
@@ -15,35 +9,25 @@ import BestSelling from "@/sections/bestsale";
 import { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
-// import { headers } from "next/headers";
 import { Session } from "next-auth";
 import authorizeOptions from "./api/auth/[...nextauth]";
 import Aos from 'aos';
 import "aos/dist/aos.css"
 import { toast } from "react-toastify";
-import SlickSlides from "@/components/slickSlides";
 import { ICustomSession } from "@/modals";
-// interface IParas {
-//     props: {
-//         name: string
-//     }
-// }
-export default function Home(props: { name: string, scrollTop: number, direction: string, session?: Session, image?: string } | any) {
-    // const rouerDetail = useRouter();
+
+export default function Home(props: { name: string, scrollTop: number, direction: string, session?: Session, image?: string }) {
+
     const sessionStatus = useSession();
-    // scroll events babaji//
-    // let scrollDIrection: string = "";
-    // let [scrollDirection, setScrollDirection] = useState<string>("");
-    // const session = useSession();
-    // ....//
+
     let theme = useSelector((state: IState) => state.toggletheme);
     useEffect(() => {
-        // console.log("Session status", sessionStatus.data?.user.id);
+
         localStorage.setItem("user_id", sessionStatus.data?.user.id || "");
         localStorage.setItem('user_email', sessionStatus.data?.user.email || "");
         Aos.init({ once: false });
         if (localStorage.getItem("toastShown") || sessionStatus.status === "unauthenticated") {
-            console.log(localStorage.getItem("toastShown"))
+
         }
         else {
             localStorage.setItem("toastShown", "positive");
@@ -57,9 +41,6 @@ export default function Home(props: { name: string, scrollTop: number, direction
     }, []);
     return (
         <>
-            {/* component based slick slides */}
-            {/* <SlickSlides /> */}
-            {/* ... */}
             <div className={theme.light ? "wrapper bg-white" : "wrapper bg-dark"}>
                 {/* ...slick slided with custom css */}
                 <div className={style.customcontainer}>
@@ -89,13 +70,38 @@ export default function Home(props: { name: string, scrollTop: number, direction
     );
 }
 // server side function calling...//
+{/* component based slick slides */ }
+{/* <SlickSlides /> */ }
+{/* ... */ }
+// console.log(localStorage.getItem("toastShown"))
+// interface IParas {
+//     props: {
+//         name: string
+//     }
+// }
+// scroll events babaji//
+// let scrollDIrection: string = "";
+// let [scrollDirection, setScrollDirection] = useState<string>("");
+// const session = useSession();
+// ....//
+// const rouerDetail = useRouter();
+// import Image from "next/image";
+// import { Box, Typography } from "@mui/material";
+// import { useState } from "react";
+// import { useRouter } from "next/navigation";
+// import Button from "@mui/material/Button";
+// import Loader from "@/components/loader";
+// import { headers } from "next/headers";
+// import SlickSlides from "@/components/slickSlides";
+// console.log("Session status", sessionStatus.data?.user.id);
+// console.log("session positive", session);
+// session: session,
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const session = await getServerSession(context.req, context.res, authorizeOptions) as ICustomSession;
-    // console.log("session positive", session);
+
     if (session) {
         return {
             props: {
-                // session: session,
                 name: session.user.name,
                 email: session.user.email,
                 image: session.user?.image || ""
@@ -112,5 +118,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         }
     }
 }
+//propstype to indexpage//
+// | any
 // .....//
 

@@ -21,6 +21,7 @@ import useSearchParamsstate from "@/hooks/useSearchParams";
 import { toast } from "react-toastify";
 import { FormatisedList, IShirts } from "@/modals";
 import babaji from "@/utils/babaji";
+import ProductGrid from "@/utils/constants/renderProductgrid";
 
 interface ZipperSchema {
     title: string;
@@ -38,7 +39,7 @@ interface ZipperSchema {
 }
 
 interface ZippersProps {
-    zippersSchema: Record<string, ZipperSchema>
+    zippersSchema: FormatisedList
 }
 
 const Zippers: NextPage<ZippersProps> = ({ zippersSchema }) => {
@@ -81,23 +82,7 @@ const Zippers: NextPage<ZippersProps> = ({ zippersSchema }) => {
     }, [session.status, router]);
 
     const renderProductGrid = useMemo(() => (
-        <Grid container columnGap={1.4} justifyContent="center" rowGap={2.2}>
-            {Object.keys(zippersSchema || {}).length > 0 ? (
-                Object.entries(zippersSchema).map(([zipper, product]) => (
-                    <Grid item xs={5.7} sm={5.9} md={2.3} key={zipper}>
-                        <Link href={`/product/${product.slug}`}>
-                            <ProductCard {...product} />
-                        </Link>
-                    </Grid>
-                ))
-            ) : (
-                <Grid item xs={12} className="justify-center flex">
-                    <Typography variant="h4" color="magenta">
-                        Sorry, product out of stock
-                    </Typography>
-                </Grid>
-            )}
-        </Grid>
+        <ProductGrid zippersSchema={zippersSchema} />
     ), [zippersSchema]);
 
     return (
