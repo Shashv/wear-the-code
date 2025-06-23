@@ -11,7 +11,7 @@ import { Checkbox } from "@mui/material";
 import { useContext } from "react";
 // import { Backdrop } from "@mui/material";
 import ContextWrapper from "@/utils/hooks/ContextWrapper";
-const FilterBar: React.FC<{ theme: ITheme }> = ({ theme }) => {
+const FilterBar: React.FC<{ theme: ITheme, setShowMobilefilter?: unknown }> = ({ theme }) => {
     let filterStrands: Array<string> = (["Anime", "Characters", "Coding", "Combo"]);
     const [showMobilefilter, setShowMobilefilter] = useState<boolean>(false);
     const controlFilter = useContext(ContextWrapper);

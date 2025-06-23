@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./index.module.css";
-import { connect,  } from "react-redux";
+import { connect, } from "react-redux";
 import { IState } from "@/redux/sore";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import ProductModel from "@/modalsmongoose/product";
@@ -16,7 +16,7 @@ import LoadingBar from "react-top-loading-bar";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "../api/auth/[...nextauth]";
 import paginate from "@/utils/paginate";
-import { FormatisedList, IMugs,  } from "@/modals";
+import { FormatisedList, IMugs, } from "@/modals";
 import babaji from "@/utils/babaji";
 import calculateConfig from "@/utils/constants/pagination/calculateConfigvalues";
 
@@ -115,8 +115,8 @@ export const getServerSideProps: GetServerSideProps<{ mugsSchema: FormatisedList
     const mugsCount: number = await ProductModel.countDocuments({ category: "mugs" });
 
     let mugsSchemaBabaji: FormatisedList = {};
-    mugsSchemaBabaji = await babaji("mugs", babajipositive.skipOffset, babajipositive.limitValue);
-
+    mugsSchemaBabaji = (await babaji("mugs", babajipositive.skipOffset, babajipositive.limitValue)).configuration || {};
+    let mugsBabaji = (await babaji("mugs", babajipositive.skipOffset, babajipositive.limitValue)).configurationCount
 
     if (session) {
         const page = context.query.page;
@@ -124,7 +124,7 @@ export const getServerSideProps: GetServerSideProps<{ mugsSchema: FormatisedList
             props: {
 
                 mugsSchema: mugsSchemaBabaji,
-                mugsCount
+                mugsCount: mugsBabaji
             }
         }
         else return {

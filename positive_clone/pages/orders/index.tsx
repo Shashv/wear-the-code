@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { IState } from "@/redux/sore";
 import { } from "react-redux";
 import Head from "next/head";
-import {  Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import LoadingBar from "react-top-loading-bar";
 import { Backdrop, CircularProgress } from "@mui/material";
 
@@ -13,11 +13,11 @@ import { toast } from "react-toastify";
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import dynamic from "next/dynamic";
 const Orders: React.FC = (props: unknown) => {
-   
+
     let [orderList, setOrderList] = useState<string[] | any[]>([]);
     let [loadOrders, setLoadOrders] = React.useState<boolean>(false);
     let [orderId, setOrderId] = useState<number>();
-   
+
     const routerInsatnce = useSearchParamsstate();
     const [tableData, setTabledata] = useState<{ tableHead: Array<any>, tableBody: Array<any> }>({
         tableHead: [{
@@ -41,7 +41,7 @@ const Orders: React.FC = (props: unknown) => {
             method: "GET"
         });
         let parsedProductDetail = await specificProduct.json();
-        
+
         return { ...parsedProductDetail.specificProduct, availableQuantity: specificOrder.quantity };
     }
     const formatTableData = (rows: Array<any>) => {
@@ -55,9 +55,9 @@ const Orders: React.FC = (props: unknown) => {
         });
         return formatData;
     }
-   
+
     useEffect(() => {
-        
+
         setLoadOrders(true);
         fetch(`/api/orders?orderId=${routerInsatnce.query.orderId}`, {
             method: "GET",
@@ -71,10 +71,10 @@ const Orders: React.FC = (props: unknown) => {
             const promises = Promise.all(response.orders ? response.orders.products.map(async (product: { id: string; quantity: number }) => {
                 return await convertOrderList(product);
             }) : []);
-           
+
             return promises;
         }).then(finalList => {
-          
+
             setLoadOrders(false);
             setTabledata({ ...tableData, tableBody: formatTableData(finalList) });
             setOrderList(finalList);
@@ -96,7 +96,7 @@ const Orders: React.FC = (props: unknown) => {
                             <Typography variant="h4" className="text-pink-500">LOADING ORDERS!</Typography><CircularProgress color="primary" />
                         </Backdrop> :
                             <>
-                               
+
                                 <>
                                     {
                                         orderList.length > 0 &&
@@ -163,11 +163,11 @@ const Orders: React.FC = (props: unknown) => {
                                         }
                                     </div>
                                 </>
-                               
+
                             </>
                         }
                     </div>
-                   
+
                 </section>
             </div>
         </>

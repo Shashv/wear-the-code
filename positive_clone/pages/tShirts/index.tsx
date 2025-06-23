@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import Link from "next/link";
+// import Link from "next/link";
 import styles from "./index.module.css";
 import { Typography, Grid } from "@mui/material";
 import { connect } from "react-redux";
 import { IState } from "@/redux/sore";
 import FilterBar from "@/components/filtergroup";
-import ProductCard from "@/components/productcard";
+// import ProductCard from "@/components/productcard";
 import Head from "next/head";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
@@ -15,8 +15,8 @@ import { withRouter } from "next/router";
 import paginate from "@/utils/paginate";
 import LoadingBar from "react-top-loading-bar";
 import Pagination from "@/components/pagination";
-import { TShirtState, TShirtProps, IShirts, FormatisedList } from "@/modals";
-import ProductModel from "@/modalsmongoose/product";
+import { TShirtState, TShirtProps,  FormatisedList } from "@/modals";
+// import ProductModel from "@/modalsmongoose/product";
 
 import babaji from "@/utils/babaji";
 import calculateConfig from "@/utils/constants/pagination/calculateConfigvalues";
@@ -29,7 +29,8 @@ class TShirts extends Component<TShirtProps, TShirtState> {
             loading: false,
             progress: 40,
             page: 1,
-            session: null
+            session: null,
+            isMobileFilterpositive: false
         };
         this.handlePageChange = this.handlePageChange.bind(this);
     }
@@ -95,9 +96,9 @@ class TShirts extends Component<TShirtProps, TShirtState> {
                 <div className={theme.light ? styles.positivelight : styles.positivedark}>
                     <section>
                         <div className="container-fluid p-0">
-                            <div className="row h-100">
-                                <div className={`col-md-2 ${styles.mobilefiltercontainer} p-2`}>
-                                    <FilterBar theme={theme} />
+                            <div className={this.state.isMobileFilterpositive ? `row h-100 ` : "row h-100"}>
+                                <div className={`col-md-2 ${styles.mobilefiltercontainer} p-0`}>
+                                    <FilterBar theme={theme}  />
                                 </div>
                                 <div className="col-md-10 px-5 p-2">
                                     {this.renderProductGrid()}
@@ -126,14 +127,11 @@ const mapStateToProps = (state: IState) => ({
 
 export default withRouter(connect(mapStateToProps)(TShirts));
 //server side function calling...//
-export const getServerSideProps: GetServerSideProps<{ session: unknown; shirts: FormatisedList }> = async (context: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps<{ session: unknown; shirts: FormatisedList, shirtsCount?: number }> = async (context: GetServerSidePropsContext) => {
 
     let { query } = context;
     const session = await getServerSession(context.req, context.res, authorizeOptions);
-    let babajiConfiguration: FormatisedList = {};
-    const { res } = context;
-    let { skipOffset, limitValue } = calculateConfig(Number(query.page))
-    babajiConfiguration = await babaji("tshirts", skipOffset, limitValue);
+
     if (!session) {
         return {
             redirect: {
@@ -143,7 +141,7 @@ export const getServerSideProps: GetServerSideProps<{ session: unknown; shirts: 
         };
     }
     else {
-        if (!context.query.page)
+        if (!context.query.page || isNaN(Number(query.page)) || Number(query.page) < 1)
             return {
                 redirect: {
                     destination: '/tShirts?page=1',
@@ -151,10 +149,17 @@ export const getServerSideProps: GetServerSideProps<{ session: unknown; shirts: 
                 }
             };
         else {
+            let babajiConfiguration: FormatisedList = {};
+            // const { res } = context;
+            let { skipOffset, limitValue } = calculateConfig(Number(query.page));
+            // console.log("Skipoffset", skipOffset, "Limit value", limitValue)
+            babajiConfiguration = (await babaji("tshirts", skipOffset, limitValue)).configuration || {};
+            let shirtCount = (await babaji("tshirts", skipOffset, limitValue)).configurationCount || 10;
             return {
                 props: {
                     session,
-                    shirts: babajiConfiguration
+                    shirts: babajiConfiguration,
+                    shirtCount
                 }
             }
         }

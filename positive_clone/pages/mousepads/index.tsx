@@ -133,14 +133,15 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     const session = await getServerSession(context.req, context.res, authorizeOptions);
 
     let mousePadsSchema: FormatisedList = {};
-    mousePadsSchema = await babaji("mousepads", babajipositive.skipOffset, babajipositive.limitValue);
-
+    mousePadsSchema = (await babaji("mousepads", babajipositive.skipOffset, babajipositive.limitValue)).configuration || {};
+    let musgCount = (await babaji("mousepads",babajipositive.skipOffset,babajipositive.limitValue)).configurationCount;
     if (session) {
         const page = context.query.page;
         if (page) {
             return {
                 props: {
-                    mousePadsSchema
+                    mousePadsSchema,
+                    musgCount
                 }
             }
         }

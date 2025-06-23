@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import style from "./index.module.css";
 import { useEffect } from "react";
 import { Backdrop, Typography } from "@mui/material";
@@ -28,7 +28,7 @@ const Hoodies: NextPage<{
         }
     }
 }> = ({ hoodies, cart }) => {
-   
+
     const [loader, setLoader] = useState(true);
     const session = useSession();
 
@@ -37,11 +37,16 @@ const Hoodies: NextPage<{
     const isInitialMount = useRef<boolean | null>(true);
     const { page, totalPages } = usePositive({ totalRecords: Object.keys(cart).length, recordsPerpage: 2 })
     const [progress, setProgress] = useState<number>(0);
-    const changePage = (e: React.MouseEvent<HTMLButtonElement>, page: number) => {
+    const [backdropActive, setBackdropactive] = useState<boolean>(false);
+    ; const changePage = (e: React.MouseEvent<HTMLButtonElement>, page: number) => {
         router.setQuery({
             page: page.toString()
         })
     }
+    const callBackfunction = useCallback(() => {
+        console.log("Backdrop state", backdropActive)
+        setBackdropactive(backdrop => !backdrop);
+    }, []);
     useEffect(() => {
         if (session.status === "unauthenticated") router.getDetails().replace("/authentication/login");
         if (hoodies) {
@@ -62,7 +67,7 @@ const Hoodies: NextPage<{
             }
         }
     }, [session]);
-   
+
     return (
         <>
             {loader ? <Backdrop open>
@@ -73,9 +78,9 @@ const Hoodies: NextPage<{
                     <div className={themeState.dark ? style.hoodiescontainerdark : style.hoodiescontainerlight} >
                         <section className="text-gray-600 body-font">
                             <div className="container-fluid p-0">
-                                <div className="row h-100">
+                                <div className={`row h-100 ${backdropActive ? 'bg-primary' : ''}`}>
                                     <div className={`col-md-2 ${style.hoodiesmobilefilter} p-2`}>
-                                        <FilterBar theme={themeState} />
+                                        <FilterBar theme={themeState} setShowMobilefilter={callBackfunction} />
                                     </div>
                                     <div className={`col-md-10 ${style.mobilepositive} p-2 px-5`}>
                                         <div className={"py-2"}>
@@ -121,7 +126,7 @@ export const getServerSideProps: GetServerSideProps<{
         }
     } = {};
     modifiedResponse.forEach(hoodie => {
-       
+
         if (hoodie.title in cart) {
             if (!cart[hoodie.title].color.includes(hoodie.color) && hoodie.availableQuantity > 0) {
                 cart[hoodie.title].color.push(hoodie.color);

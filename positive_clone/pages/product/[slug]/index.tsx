@@ -18,7 +18,7 @@ import buyProduct from "@/redux/actions/buyproduct";
 
 import clearCart from "@/redux/actions/clearCart";
 import ProductModel from "@/modalsmongoose/product";
-import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import { toast } from "react-toastify";
 import Image from "next/image";
 type IProductType = {
@@ -338,3 +338,4 @@ export const getServerSideProps: GetServerSideProps<{
         }
     }
 }
+// GetServerSidePropsContext, 

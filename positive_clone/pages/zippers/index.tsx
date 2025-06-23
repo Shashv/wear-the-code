@@ -135,7 +135,7 @@ const Zippers: NextPage<ZippersProps> = ({ zippersSchema }) => {
 
 export default Zippers;
 
-export const getServerSideProps: GetServerSideProps<{ zippersSchema: FormatisedList, session?: unknown }> = async (context: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps<{ zippersSchema: FormatisedList, session?: unknown, zippersBabaji: number }> = async (context: GetServerSidePropsContext) => {
     const getServerSideSession = await getServerSession(context.req, context.res, authorizeOptions);
     const { query } = context;
     let { skipOffset, limitValue } = calculateConfig(Number(query.page))
@@ -159,9 +159,9 @@ export const getServerSideProps: GetServerSideProps<{ zippersSchema: FormatisedL
         };
     }
 
-    const zippersSchema: FormatisedList = await babaji("zippers", skipOffset, limitValue) || {};
-
+    const zippersSchema: FormatisedList = (await babaji("zippers", skipOffset, limitValue)).configuration || {};
+    const zippersCount = (await babaji("zippers", skipOffset, limitValue)).configurationCount;
     return {
-        props: { zippersSchema }
+        props: { zippersSchema, zippersBabaji: zippersCount }
     };
 };

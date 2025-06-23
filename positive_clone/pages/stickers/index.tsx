@@ -121,13 +121,14 @@ export const getServerSideProps: GetServerSideProps<{ stickers?: FormatisedList,
 
     let { skipOffset, limitValue } = calculateConfig(page)
 
-    let stickers: FormatisedList = await babaji("stickers", skipOffset, limitValue)
+    let stickers: FormatisedList = (await babaji("stickers", skipOffset, limitValue)).configuration || {};
+    let stickersCount = (await babaji("stickers",skipOffset,limitValue)).configurationCount;
     if (sessionServer) {
         if (context.query.page) {
             return {
                 props: {
                     stickers,
-                    stickersLength: 0
+                    stickersLength: stickersCount
                 },
             }
         } else {

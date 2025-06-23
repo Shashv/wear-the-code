@@ -195,7 +195,8 @@ export interface TShirtState {
     loading: boolean;
     progress: number;
     page: number;
-    session: Session | null
+    session: Session | null;
+    isMobileFilterpositive:boolean;
 }
 
 export interface TShirtProps {
