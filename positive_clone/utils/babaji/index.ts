@@ -11,9 +11,10 @@ function getModel(type?: string): Model<unknown | any> {
     }
 }
 let babajiConfiguration: FormatisedList = {}
-let babaji: (category: string, skipOffset: number, limitValue: number) => Promise<{ configuration?: FormatisedList, configurationCount?: number, allRecords?: Array<any> }> = async (category, skipOffset, limitValue, tyoe?: string, findAll = null) => {
+let babaji: (category: string, skipOffset: number, limitValue: number, page?: number, tyoe?: string) => Promise<{ configuration?: FormatisedList, configurationCount?: number, allRecords?: Array<any> }> = async (category, skipOffset, limitValue, page, tyoe, findAll = null) => {
     if (!findAll && !tyoe) {
-        const shirtList = (await ProductModel.find({ category }).skip(skipOffset).limit(limitValue).lean()).map(shirt => {
+        // .skip(skipOffset).limit(limitValue)
+        const shirtList = (await ProductModel.find({ category }).lean()).map(shirt => {
             let { title, color, desc, tags, productOrientations, img, category, availableQuantity, size, slug, price } = shirt;
             return {
                 title,
@@ -48,7 +49,12 @@ let babaji: (category: string, skipOffset: number, limitValue: number) => Promis
                 }
             }
         }
-        return { configuration: babajiConfiguration, configurationCount: babajiConfigurationCount };
+        let list: FormatisedList = {};
+        Object.keys(babajiConfiguration).slice(skipOffset, Number(page || 1) * limitValue).forEach(e => {
+            list[e] = babajiConfiguration[e];
+        });
+        // babajiConfiguration
+        return { configuration: list, configurationCount: babajiConfigurationCount };
     }
     else {
 

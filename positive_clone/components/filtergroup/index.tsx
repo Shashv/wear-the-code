@@ -43,6 +43,7 @@ const FilterBar: React.FC<{ theme: ITheme, setShowMobilefilter?: unknown }> = ({
                     </button>
                 </div>
             </Box>
+            {showMobilefilter && <div className={style.draweroverlay}></div>}
             <div className={showMobilefilter ? style.showfiltercontent : style.hidefiltercontent}>
                 <div className={theme.light ? style.mobilefilterlight : style.mobilefilterdark}>
                     {

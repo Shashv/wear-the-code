@@ -19,6 +19,7 @@ import paginate from "@/utils/paginate";
 import { FormatisedList, IMugs, } from "@/modals";
 import babaji from "@/utils/babaji";
 import calculateConfig from "@/utils/constants/pagination/calculateConfigvalues";
+import ProductLabel from "@/components/productLabel";
 
 const mapStateToProps = (state: IState): unknown => {
     let { toggletheme } = state;
@@ -55,12 +56,13 @@ class Mugs extends React.Component<any, IMugs> {
                                 </div>
                                 <div className="col-md-10 px-5 p-2">
                                     <div className="list-container py-2">
-                                        <Typography className={this.props.theme.light ? "text-dark text-center" : "text-light text-center"} fontWeight={600} sx={{ fontSize: { xs: 21, md: 30.5 } }}>
-                                            Explore Our Mugs Collection
+                                        <ProductLabel labelHead="Explore Our Mugs Collection" description="Welcome to Codeswear.com, your one-stop shop for stylish and unique mugs. Buy mugs at the best price in India. We offer a wide range of tshirts for all interests, including coding mugs, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!" />
+                                        {/* <Typography className={this.props.theme.light ? "text-dark text-center" : "text-light text-center"} fontWeight={600} sx={{ fontSize: { xs: 21, md: 30.5 } }}>
+
                                         </Typography>
                                         <Typography color={this.props.theme.light ? "#000" : "#9ca3af"} className={"text-start px-24 py-2 pb-3"} sx={{ fontSize: { sm: 15, md: 14 }, textIndent: { sm: "start" } }} lineHeight={1.6} fontWeight={600}>
-                                            Welcome to Codeswear.com, your one-stop shop for stylish and unique mugs. Buy mugs at the best price in India. We offer a wide range of tshirts for all interests, including coding mugs, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!
-                                        </Typography>
+
+                                        </Typography> */}
                                         <Grid container columnGap={1.4} rowGap={2.4} justifyContent={"center"}>
                                             {Object.keys(this.props.mugsSchema).length > 0 ? Object.keys(this.props.mugsSchema).map((mugs: string, index: number) =>
                                                 <Grid key={index} item xs={5.7} sm={5.9} md={2.3}>

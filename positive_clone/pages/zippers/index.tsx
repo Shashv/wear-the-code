@@ -160,7 +160,7 @@ export const getServerSideProps: GetServerSideProps<{ zippersSchema: FormatisedL
     }
 
     const zippersSchema: FormatisedList = (await babaji("zippers", skipOffset, limitValue)).configuration || {};
-    const zippersCount = (await babaji("zippers", skipOffset, limitValue)).configurationCount;
+    const zippersCount = (await babaji("zippers", skipOffset, limitValue)).configurationCount || 10;
     return {
         props: { zippersSchema, zippersBabaji: zippersCount }
     };

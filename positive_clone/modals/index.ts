@@ -196,7 +196,7 @@ export interface TShirtState {
     progress: number;
     page: number;
     session: Session | null;
-    isMobileFilterpositive:boolean;
+    isMobileFilterpositive: boolean;
 }
 
 export interface TShirtProps {
@@ -259,3 +259,7 @@ export interface FormField {
     placeholder: string;
 }
 export type IHoodie = { _id: number; title: string; desc: string; img: string; category: string; size: string; color: string; price: number; availableQuantity: number; createdAt: string; updatedAt: string; slug: string; productOrientations?: string; tags?: string };
+export type iLabelProps = {
+    labelHead: string;
+    description: string;
+}

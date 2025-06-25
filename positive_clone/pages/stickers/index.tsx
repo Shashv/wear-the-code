@@ -1,11 +1,11 @@
 import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { IState } from "@/redux/sore";
-import ProductModel from "@/modalsmongoose/product";
-import ProductCard from "@/components/productcard";
+// import ProductModel from "@/modalsmongoose/product";
+// import ProductCard from "@/components/productcard";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
-import Link from "next/link";
+// import Link from "next/link";
 import { useEffect } from "react";
 import { Backdrop, Typography } from "@mui/material";
 import Head from "next/head";
@@ -21,7 +21,9 @@ import { toast } from "react-toastify";
 import usePositive from "@/hooks/usePositive";
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import Pagination from "@/components/pagination";
-import { FormatisedList, IShirts } from "@/modals";
+import { FormatisedList,  } from "@/modals";
+// IShirts
+import ProductLabel from "@/components/productLabel";
 import babaji from "@/utils/babaji";
 import calculateConfig from "@/utils/constants/pagination/calculateConfigvalues";
 import ProductGrid from "@/utils/constants/renderProductgrid";
@@ -87,12 +89,13 @@ const StickersPage: React.FC<{ stickers: FormatisedList, stickersLength: number 
                                     </div>
                                     <div className="col-md-10 px-5 p-2">
                                         <div className="py-2">
-                                            <Typography className={combinedState.light ? "text-dark text-center" : "text-light text-center"} fontWeight={600} sx={{ fontSize: { xs: 21, md: 30.5 } }}>
-                                                Explore Our Stickers Collection
+                                            <ProductLabel labelHead="Explore Our Stickers Collection" description="Welcome to Codeswear.com, your one-stop shop for stylish and unique stickers. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!"/>
+                                            {/* <Typography className={combinedState.light ? "text-dark text-center" : "text-light text-center"} fontWeight={600} sx={{ fontSize: { xs: 21, md: 30.5 } }}>
+                                                
                                             </Typography>
                                             <Typography color={combinedState.light ? "#000" : "#9ca3af"} className={"text-start px-24 py-2 pb-3"} sx={{ fontSize: { sm: 15, md: 14 }, textIndent: { sm: "start" } }} lineHeight={1.6} fontWeight={600}>
-                                                Welcome to Codeswear.com, your one-stop shop for stylish and unique stickers. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!
-                                            </Typography>
+                                                
+                                            </Typography> */}
                                             <ProductGrid zippersSchema={stickers} />
 
                                         </div>

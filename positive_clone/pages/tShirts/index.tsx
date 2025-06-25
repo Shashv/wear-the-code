@@ -15,12 +15,13 @@ import { withRouter } from "next/router";
 import paginate from "@/utils/paginate";
 import LoadingBar from "react-top-loading-bar";
 import Pagination from "@/components/pagination";
-import { TShirtState, TShirtProps,  FormatisedList } from "@/modals";
+import { TShirtState, TShirtProps, FormatisedList } from "@/modals";
 // import ProductModel from "@/modalsmongoose/product";
 
 import babaji from "@/utils/babaji";
 import calculateConfig from "@/utils/constants/pagination/calculateConfigvalues";
 import ProductGrid from "@/utils/constants/renderProductgrid";
+import ProductLabel from "@/components/productLabel";
 class TShirts extends Component<TShirtProps, TShirtState> {
     constructor(props: TShirtProps) {
         super(props);
@@ -46,23 +47,8 @@ class TShirts extends Component<TShirtProps, TShirtState> {
 
         return (
             <div className={"py-2"}>
-                <Typography
-                    className={theme.light ? "text-dark text-center" : "text-light text-center"}
-                    fontWeight={600}
-                    sx={{ fontSize: { xs: 21, md: 30.5 } }}
-                >
-                    Explore Our TShirts Collection
-                </Typography>
-
-                <Typography
-                    color={theme.light ? "#000" : "#9ca3af"}
-                    className={"text-start px-24 py-2 pb-3"}
-                    sx={{ fontSize: { xs: 13, md: 14 }, textIndent: { sm: "start" } }}
-                    lineHeight={1.6}
-                    fontWeight={600}
-                >
-                    Welcome to Codeswear.com, your one-stop shop for stylish and unique tshirts. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!
-                </Typography>
+                <ProductLabel labelHead="Explore Our TShirts Collection" description="
+                Welcome to Codeswear.com, your one-stop shop for stylish and unique tshirts. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!"/>
                 <ProductGrid zippersSchema={shirts} />
 
             </div>
@@ -98,7 +84,7 @@ class TShirts extends Component<TShirtProps, TShirtState> {
                         <div className="container-fluid p-0">
                             <div className={this.state.isMobileFilterpositive ? `row h-100 ` : "row h-100"}>
                                 <div className={`col-md-2 ${styles.mobilefiltercontainer} p-0`}>
-                                    <FilterBar theme={theme}  />
+                                    <FilterBar theme={theme} />
                                 </div>
                                 <div className="col-md-10 px-5 p-2">
                                     {this.renderProductGrid()}
