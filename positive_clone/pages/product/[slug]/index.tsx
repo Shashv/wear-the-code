@@ -286,6 +286,7 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
                                     </div>
                                 </div>
                             </div>
+                            <div className="row px-5"></div>
                         </div>
                         <StyledModal confirmProcess={() => null} title="Check Your Desired Location Code" loader={pin.servicePending} open={servie} closeModal={() => closeModal()} content={ModalContent} width={"500px"} height={"250px"} />
                     </section>

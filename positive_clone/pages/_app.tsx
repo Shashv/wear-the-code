@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React, { useCallback } from "react";
 import Head from "next/head";
 import ContextWrapper from "@/utils/hooks/ContextWrapper";
 import { Provider } from "react-redux";
@@ -15,13 +16,16 @@ import type { AppProps } from "next/app";
 import 'react-toastify/dist/ReactToastify.css';
 import { LoadingBarContainer } from "react-top-loading-bar";
 import { GetServerSideProps, NextPage } from "next";
-import AosInitialize from "@/utils/aos";
-import 'aos/dist/aos.css';
+import dynamic from "next/dynamic";
+// import AosInitialize from "@/utils/aos";
+
 import Router from "next/router";
 import LoaderAnimate from "@/components/loader";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "./api/auth/[...nextauth]";
-
+import Aos from "aos";
+import 'aos/dist/aos.css';
+const AosInitialize = dynamic(() => import("../utils/aos/index"), { ssr: false })
 const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
     const routerDetail: NextRouter = useRouter();
     let ref = useRef<HTMLDivElement>(null);
@@ -29,17 +33,19 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
     let path: string = routerDetail.asPath.split("?")[0];
     let [filterStatus, setFilterStatus] = React.useState<boolean>(false);
     const { session, ...pageparams } = pageProps;
-    const toggleFilter = (status: boolean) => {
+    const toggleFilter = useCallback((status: boolean) => {
         setFilterStatus(!status);
-    }
-    
+    }, []);
+
     useEffect(() => {
         Router.events.on("routeChangeStart", e => {
             setLoader(true);
         });
         Router.events.on("routeChangeComplete", e => setLoader(false));
     }, [routerDetail]);
-
+    useEffect(() => { Aos.init() }, []);
+    // window.addEventListener("load", Aos.refresh)
+    // console.log("Bababji")
     return (
         <GoogleOAuthProvider clientId="803758111092-tusltrjau3p58fdue2k96a6rkm0nasik.apps.googleusercontent.com">
             <div ref={ref} className="parent">
@@ -58,29 +64,29 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
                 </Head>
                 <Provider store={store}>
                     <SessionProvider session={session}>
-                        <AosInitialize>
-                            <LoadingBarContainer>
-                                {!path.includes("/auth") &&
-                                    <StyledBar scrollTop={0} />
+                        {/* <AosInitialize /> */}
+                        <LoadingBarContainer>
+                            {!path.includes("/auth") &&
+                                <StyledBar scrollTop={0} />
+                            }
+                            <ContextWrapper.Provider value={toggleFilter}>
+
+                                {loader ?
+
+                                    <div className="flex bg-pink-300 backdrop-blur-lg justify-center align-center h-[100vh]">
+                                        <LoaderAnimate />
+                                    </div>
+
+                                    :
+                                    <div className={"route-component"} style={{ height: "100vh", overflowY: filterStatus ? "hidden" : "scroll", overflowX: "hidden" }}>
+                                        <Component  {...pageparams} />
+                                    </div>
                                 }
-                                <ContextWrapper.Provider value={toggleFilter}>
-
-                                    {loader ?
-
-                                        <div className="flex bg-pink-300 backdrop-blur-lg justify-center align-center h-[100vh]">
-                                            <LoaderAnimate />
-                                        </div>
-
-                                        :
-                                        <div className={"route-component"} style={{ height: "100vh", overflowY: filterStatus ? "hidden" : "scroll", overflowX: "hidden" }}>
-                                            <Component  {...pageparams} />
-                                        </div>
-                                    }
-                                </ContextWrapper.Provider>
-                                {!path.includes("/auth") && <Footer />}
-                                <ToastContainer />
-                            </LoadingBarContainer>
-                        </AosInitialize>
+                            </ContextWrapper.Provider>
+                            {!path.includes("/auth") && <Footer />}
+                            <ToastContainer />
+                        </LoadingBarContainer>
+                        {/* </AosInitialize> */}
                     </SessionProvider>
                 </Provider>
             </div>
@@ -110,7 +116,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
     }
 }
 
-// function willbe used the query params...//
+// function willbe used the query params...//7890-=-=`  
 // export const getInitialProps = async (context: any) => {
 //     const session = getSession(context);
 //     return {

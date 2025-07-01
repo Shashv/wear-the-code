@@ -39,10 +39,11 @@ interface ZipperSchema {
 }
 
 interface ZippersProps {
-    zippersSchema: FormatisedList
+    zippersSchema: FormatisedList;
+    zippersBabaji: number;
 }
 
-const Zippers: NextPage<ZippersProps> = ({ zippersSchema }) => {
+const Zippers: NextPage<ZippersProps> = ({ zippersSchema, zippersBabaji }) => {
     const theme = useSelector((state: IState) => state.toggletheme);
     const initialMount = useRef<boolean | null>(true);
     const session = useSession();
@@ -50,8 +51,8 @@ const Zippers: NextPage<ZippersProps> = ({ zippersSchema }) => {
     const [progress, setProgress] = useState<number>(0);
 
     const { totalPages, page } = usePositive({
-        totalRecords: Object.keys(zippersSchema).length,
-        recordsPerpage: 2
+        totalRecords: zippersBabaji,
+        recordsPerpage: 10
     });
 
     const changePage = useMemo(() => (
@@ -159,7 +160,7 @@ export const getServerSideProps: GetServerSideProps<{ zippersSchema: FormatisedL
         };
     }
 
-    const zippersSchema: FormatisedList = (await babaji("zippers", skipOffset, limitValue)).configuration || {};
+    const zippersSchema: FormatisedList = (await babaji("zippers", skipOffset, limitValue, Number(query.page || 1))).configuration || {};
     const zippersCount = (await babaji("zippers", skipOffset, limitValue)).configurationCount || 10;
     return {
         props: { zippersSchema, zippersBabaji: zippersCount }

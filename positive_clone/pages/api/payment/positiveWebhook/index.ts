@@ -15,11 +15,12 @@ const webhookListener: (req: NextApiRequest, res: NextApiResponse) => Promise<an
     try {
         stripeEvent = stripeInstance.webhooks.constructEvent(positiveRequest, stripeSignature, process.env.STRIPE_WEBHOOK_SECRET ? process.env.STRIPE_WEBHOOK_SECRET : "")
         let eventData
-        let customEmail
+        let customEmail;
+        console.log("Stripe event", stripeEvent);
         if (stripeEvent.type === "checkout.session.completed") {
             eventData = stripeEvent.data.object as Stripe.Checkout.Session;
             customEmail = eventData.customer_details?.email;
-            console.log("Event data id", eventData?.id);
+            // console.log("Event data id", eventData?.id);
             if (eventData?.metadata?.userId) {
                 const findedBabaji = await OrdersModel.findOne({ userId: eventData?.metadata?.userId });
                 // console.log("sjdc findedBabaji", findedBabaji);
@@ -35,6 +36,7 @@ const webhookListener: (req: NextApiRequest, res: NextApiResponse) => Promise<an
         return res.status(200).send(`Order placed successfully`);
     }
     catch (er) {
+        console.log("Error while babaji", er);
         return res.status(500).json({ message: "Opps something went wrong" })
     }
 

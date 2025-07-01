@@ -11,8 +11,8 @@ import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { Session } from "next-auth";
 import authorizeOptions from "./api/auth/[...nextauth]";
-import Aos from 'aos';
-import "aos/dist/aos.css"
+// import Aos from 'aos';
+// import "aos/dist/aos.css"
 import { toast } from "react-toastify";
 import { ICustomSession } from "@/modals";
 
@@ -22,10 +22,10 @@ export default function Home(props: { name: string, scrollTop: number, direction
 
     let theme = useSelector((state: IState) => state.toggletheme);
     useEffect(() => {
-
+       
         localStorage.setItem("user_id", sessionStatus.data?.user.id || "");
         localStorage.setItem('user_email', sessionStatus.data?.user.email || "");
-        Aos.init({ once: false });
+        // Aos.init({ once: false });
         if (localStorage.getItem("toastShown") || sessionStatus.status === "unauthenticated") {
 
         }
@@ -53,13 +53,13 @@ export default function Home(props: { name: string, scrollTop: number, direction
                     </div>
                 </div>
                 {/*... slickes slides .... */}
-                <div className={"collections-container"} style={{ backgroundColor: `${theme.dark ? "#1f2937" : "#fff"}` }}>
+                <div className={"collections-container"} data-aos="fade-in" style={{ backgroundColor: `${theme.dark ? "#1f2937" : "#fff"}` }}>
                     <CollectionSections theme={theme} />
                 </div>
                 <div style={{ backgroundColor: `${theme.dark ? "#1f2937" : "#fff"}` }}>
                     <ThemeSection theme={theme} />
                 </div>
-                <div style={{ backgroundColor: theme.dark ? "#1f2937" : "" }} className={theme.dark ? "best-selling px-5" : "best-selling-light bg-white px-5"}>
+                <div  style={{ backgroundColor: theme.dark ? "#1f2937" : "" }} className={theme.dark ? "best-selling px-5" : "best-selling-light bg-white px-5"}>
                     <BestSelling />
                 </div>
                 <div style={{ backgroundColor: theme.dark ? "#1f2937" : "#fff" }}>

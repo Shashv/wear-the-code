@@ -21,7 +21,7 @@ import { toast } from "react-toastify";
 import usePositive from "@/hooks/usePositive";
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import Pagination from "@/components/pagination";
-import { FormatisedList,  } from "@/modals";
+import { FormatisedList, } from "@/modals";
 // IShirts
 import ProductLabel from "@/components/productLabel";
 import babaji from "@/utils/babaji";
@@ -89,7 +89,7 @@ const StickersPage: React.FC<{ stickers: FormatisedList, stickersLength: number 
                                     </div>
                                     <div className="col-md-10 px-5 p-2">
                                         <div className="py-2">
-                                            <ProductLabel labelHead="Explore Our Stickers Collection" description="Welcome to Codeswear.com, your one-stop shop for stylish and unique stickers. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!"/>
+                                            <ProductLabel labelHead="Explore Our Stickers Collection" description="Welcome to Codeswear.com, your one-stop shop for stylish and unique stickers. Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!" />
                                             {/* <Typography className={combinedState.light ? "text-dark text-center" : "text-light text-center"} fontWeight={600} sx={{ fontSize: { xs: 21, md: 30.5 } }}>
                                                 
                                             </Typography>
@@ -125,7 +125,7 @@ export const getServerSideProps: GetServerSideProps<{ stickers?: FormatisedList,
     let { skipOffset, limitValue } = calculateConfig(page)
 
     let stickers: FormatisedList = (await babaji("stickers", skipOffset, limitValue)).configuration || {};
-    let stickersCount = (await babaji("stickers",skipOffset,limitValue)).configurationCount;
+    let stickersCount = (await babaji("stickers", skipOffset, limitValue)).configurationCount;
     if (sessionServer) {
         if (context.query.page) {
             return {

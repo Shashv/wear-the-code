@@ -139,7 +139,7 @@ export const getServerSideProps: GetServerSideProps<{ session: unknown; shirts: 
             // const { res } = context;
             let { skipOffset, limitValue } = calculateConfig(Number(query.page));
             // console.log("Skipoffset", skipOffset, "Limit value", limitValue)
-            babajiConfiguration = (await babaji("tshirts", skipOffset, limitValue)).configuration || {};
+            babajiConfiguration = (await babaji("tshirts", skipOffset, limitValue, Number(query.page))).configuration || {};
             let shirtCount = (await babaji("tshirts", skipOffset, limitValue)).configurationCount || 10;
             return {
                 props: {

@@ -7,20 +7,18 @@ import style from "./index.module.css";
 // import { useInView } from "react-intersection-observer";
 // import { useContext } from "react";
 // import { ContextObject } from "@/utils/context";
-import Aos from "aos";
-import { useEffect } from "react";
-import "aos/dist/aos.css"
+// import Aos from "aos";
+// import { useEffect } from "react";
+// import "aos/dist/aos.css"
 const CollectionCard: React.FC<ICollectionCard> = ({ collectionName, thumbnail }) => {
     // ...use component bases aos..//
     // let value = useContext(ContextObject);
-    useEffect(() => {
-        Aos.init({
-            once:false
-        });
-    });
+    // useEffect(() => {
+    //     Aos.init();
+    // });
     return (
         <>
-            <div className={`border card border-none rounded-2 shadow-sm position-relative`}>
+            <div className={`border card border-none rounded-2 shadow-sm position-relative ${style.collectioncard}`}>
                 <div className="card-img-top w-100 h-100 flex justify-center">
                     <img className={`h-100 w-100 ${style.cardimage}`} src={thumbnail} />
                 </div>

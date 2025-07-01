@@ -1,21 +1,26 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import OrdersModel from "@/modalsmongoose/orders";
 import connectDatabase from "@/configuration";
+import { ObjectId } from "mongodb"
 // all the consoles will be required later...//
 const orders = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const { orderId } = req.query;
         if (req.method === "GET") {
-            // console.log("query",req.query);
+
             const orders = await OrdersModel.findOne({ orderId: orderId });
-            // console.log("Babaji", orders);
+
             return res.status(200).json({ orders })
         }
         else if (req.method === "DELETE") {
-            let deleteAllOrders = await OrdersModel.deleteMany({});
+
+            let _id = req.query["_id"]?.toString();
+            // console.log("query value", req.query._id);
+            let deleteAllOrders = await OrdersModel.deleteOne({ _id: new ObjectId(_id) });
+            // console.log("Babaji", orders);
             if (deleteAllOrders) return res.status(200).json({ message: "Deleted all records" });
         }
-        // this will be used later...//
+        // this will be used later...//ß
         // return res.status(404).send("Method not allowed");
         // ...////
         else if (req.method === "POST") {
