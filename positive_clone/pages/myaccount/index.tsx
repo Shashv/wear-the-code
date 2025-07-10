@@ -179,6 +179,8 @@ const MyAccount: NextPage<{ accountDetails: AccountDetails, users: User[] }> = (
                     <div style={{ backgroundColor: "pink" }} className="accoubnt-details-fields position-sticky top-0">
                         <Typography variant="h5" color="salmon">Account Holder - {name}</Typography>
                         <Typography variant="h5" color="skyblue">Account Holder Email - {email}</Typography>
+                    </div>
+                    <div className="">
                         <Image
                             className="rounded-full"
                             width={100}
@@ -188,6 +190,7 @@ const MyAccount: NextPage<{ accountDetails: AccountDetails, users: User[] }> = (
                             priority
                         />
                     </div>
+
                     <div>
                         <div className="users-list">
                             <Typography className="user-label" variant="h5" color="lightblue">

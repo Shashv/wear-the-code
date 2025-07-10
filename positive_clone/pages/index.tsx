@@ -53,7 +53,7 @@ export default function Home(props: { name: string, scrollTop: number, direction
                     </div>
                 </div>
                 {/*... slickes slides .... */}
-                <div className={"collections-container"} data-aos="fade-in" style={{ backgroundColor: `${theme.dark ? "#1f2937" : "#fff"}` }}>
+                <div className={"collections-container"}  style={{ backgroundColor: `${theme.dark ? "#1f2937" : "#fff"}` }}>
                     <CollectionSections theme={theme} />
                 </div>
                 <div style={{ backgroundColor: `${theme.dark ? "#1f2937" : "#fff"}` }}>
@@ -73,6 +73,7 @@ export default function Home(props: { name: string, scrollTop: number, direction
 {/* component based slick slides */ }
 {/* <SlickSlides /> */ }
 {/* ... */ }
+// data-aos="fade-in"
 // console.log(localStorage.getItem("toastShown"))
 // interface IParas {
 //     props: {

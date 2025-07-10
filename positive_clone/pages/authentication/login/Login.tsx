@@ -1,5 +1,5 @@
-import React, {  useEffect } from "react";
-import {  toast } from "react-toastify";
+import React, { useEffect } from "react";
+import { toast } from "react-toastify";
 import { Backdrop, } from "@mui/material";
 import 'react-toastify/dist/ReactToastify.css';
 import { NextPage } from "next";
@@ -13,7 +13,7 @@ import LoaderAnimate from "@/components/loader";
 import './index.css';
 
 const Login: NextPage = () => {
-    
+
     const [loader, setLoader] = React.useState<boolean>(false);
     const { register, handleSubmit, formState: { errors }, clearErrors, reset, setError } = useForm<IForm>({
         defaultValues: {
@@ -30,12 +30,12 @@ const Login: NextPage = () => {
             router.replace("/")
         }
     }, [session]);
-    
+
     const details = async (data: FieldValues) => {
         setLoader(true);
-       
+
         let response = await signIn("credentials", { ...data, redirect: false });
-      
+
         if (response) {
             if (response.error) {
 
@@ -70,8 +70,8 @@ const Login: NextPage = () => {
             router.replace("/");
         }
     }
-  
-    
+
+
     const [password, setPassword] = React.useState<boolean>(false);
     const registerEmail = register("email", {
         required: true, onChange(event) {
@@ -108,7 +108,7 @@ const Login: NextPage = () => {
             }
         },
     });
-    
+
     const rememberCheck = register("checkStatus", {
         required: true, onChange(event) {
 
@@ -116,7 +116,9 @@ const Login: NextPage = () => {
     });
     return (
         <>
-            {loader ? <Backdrop open ><LoaderAnimate /></Backdrop> :
+            {loader ? <Backdrop open >
+                <LoaderAnimate />
+            </Backdrop> :
                 <section className={"bg-pink-400"}>
                     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                         <p className="flex items-center text-3xl font-semibold text-pink-700">
@@ -129,7 +131,7 @@ const Login: NextPage = () => {
                                 <h1 className="lg:text-3xl sm:text-xl md:text-2xl">
                                     Sign in to your account
                                 </h1>
-                                <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(details)}>
+                                <form className="space-y-4 md:space-y-6" autoComplete="off" onSubmit={handleSubmit(details)}>
                                     <div className="form-group position-relative">
                                         <label htmlFor="email" className="block mb-2 text-sm font-medium text-pink-500">Your email</label>
                                         <input type="email" id="email" {...registerEmail} className="border border-pink-300 text-pink-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="name@company.com" />
@@ -170,5 +172,4 @@ const Login: NextPage = () => {
     )
 }
 export default Login;
-
-  
+Login.displayName = "LoginPage";

@@ -64,7 +64,7 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
                 </Head>
                 <Provider store={store}>
                     <SessionProvider session={session}>
-                        {/* <AosInitialize /> */}
+                        <AosInitialize />
                         <LoadingBarContainer>
                             {!path.includes("/auth") &&
                                 <StyledBar scrollTop={0} />
@@ -72,11 +72,9 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
                             <ContextWrapper.Provider value={toggleFilter}>
 
                                 {loader ?
-
                                     <div className="flex bg-pink-300 backdrop-blur-lg justify-center align-center h-[100vh]">
                                         <LoaderAnimate />
                                     </div>
-
                                     :
                                     <div className={"route-component"} style={{ height: "100vh", overflowY: filterStatus ? "hidden" : "scroll", overflowX: "hidden" }}>
                                         <Component  {...pageparams} />

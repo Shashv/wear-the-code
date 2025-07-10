@@ -27,7 +27,7 @@ const handleDeleteRequest = async (req: NextRequest, positive: { params: IType }
         const body = await req.json();
         // console.log("Body")
         const deleteRecord = await UserModel.findOneAndDelete({ email: id });
-        // console.log("Deleted record", deleteRecord);
+        console.log("Deleted record", deleteRecord);
         if (deleteRecord) return NextResponse.json({ message: "Positive" }, { status: 200 });
     }
     catch (er) {

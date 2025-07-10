@@ -16,6 +16,13 @@ const config: Config = {
       },
     },
   },
+  safelist: [
+    'aos-init',
+    'aos-animate',
+    'fade-up',
+    'fade-down',
+    'zoom-in',
+  ],
   plugins: [],
 };
 export default config;
