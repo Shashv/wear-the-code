@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import { Backdrop,} from "@mui/material";
+import { Backdrop, } from "@mui/material";
 import uploader from "../../../components/assets/upload.png";
 import 'react-toastify/dist/ReactToastify.css';
 import { GetServerSideProps, NextPage } from "next";
@@ -53,7 +53,20 @@ const Signup: NextPage = () => {
     }
     const { onChange, ...rest } = register("image", {
         required: true
-    })
+    });
+    const formFields = [{
+        type: "name",
+        label: "Name"
+    }, {
+        type: "emai",
+        label: "Email"
+    }, {
+        type: "passowrd",
+        label: "Passowrd"
+    }, {
+        type: "confirmPassword",
+        label: "Confirm Password"
+    }];
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const fileReader = new FileReader();
@@ -68,7 +81,7 @@ const Signup: NextPage = () => {
             fileReader.readAsDataURL(e.target.files[0]);
             setImage(e.target.files[0]);
         }
-       
+
     }
     const details = (data: FieldValues) => {
         setLoader(true);
@@ -77,12 +90,12 @@ const Signup: NextPage = () => {
             const formData = new FormData();
             Object.keys(data).forEach(key => {
                 formData.append(`${key}`, data[`${key}`]);
-                
+
             });
-            
+
             fetch("/api/signup", {
                 method: "POST",
-                
+
                 body: formData
             }).then(res => res.json()).then(res => {
                 setLoader(false);
@@ -109,7 +122,7 @@ const Signup: NextPage = () => {
                     });
                 }
             });
-          
+
         }
     }
     return (
@@ -132,9 +145,10 @@ const Signup: NextPage = () => {
                                     </h1>
                                     <form className="space-y-4 md:space-y-7" autoComplete="off" onSubmit={handleSubmit(details)}>
                                         <input type="hidden" value={"prayer"} />
+
                                         <div className="position-relative">
-                                            <label htmlFor="email" className="block mb-2 text-sm font-medium text-pink-500">Your Name</label>
-                                            <input maxLength={40} type="text" id="name" {...register("name", {
+                                            <label htmlFor="name" className="block mb-2 text-sm font-medium text-pink-500">Your Name</label>
+                                            <input autoComplete="off" maxLength={40} type="text" id="name" {...register("name", {
                                                 required: true, maxLength: 40, onChange(event) {
                                                     if (event.target.value === "") {
                                                         setError("name", { type: "required", message: "Name is required*" });
@@ -146,9 +160,10 @@ const Signup: NextPage = () => {
                                             })} className="bg-pink-50 border border-pink-300 text-pink-600 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Name" />
                                             {errors.name && <span className="text-xs text-pink-600 absolute top-21 left-4">{"Name is required*"}</span>}
                                         </div>
+
                                         <div className="position-relative">
                                             <label htmlFor="email" className="block mb-2 text-sm font-medium text-pink-500">Your email</label>
-                                            <input type="email" id="email" {...register("email", {
+                                            <input autoComplete="off" type="email" id="email" {...register("email", {
                                                 required: true, maxLength: 40, onChange(event) {
                                                     let emailregexp = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
                                                     if (emailregexp.test(event.target.value) === false && event.target.value !== "") {
@@ -158,10 +173,11 @@ const Signup: NextPage = () => {
                                                         clearErrors("email");
                                                     }
                                                 },
-                                            })} className="bg-pink-50 border border-pink-300 text-pink-600 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"  placeholder="name@company.com" />
+                                            })} className="bg-pink-50 border border-pink-300 text-pink-600 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="name@company.com" />
                                             {errors.email?.types?.required && <span className="text-pink-600 absolute left-4 top-21 text-xs">Email is required*</span>}
                                             {errors.email?.type === "validatemanual" && <span className="absolute text-xs text-pink-600 top-21 left-4">{"Email should be valid*"}</span>}
                                         </div>
+
                                         <div className="position-relative">
                                             <label className="block mb-2 text-sm font-medium text-pink-500">
                                                 Set your profile pic
@@ -172,7 +188,7 @@ const Signup: NextPage = () => {
                                                         !image ?
                                                             <Image className="w-[75px] h-[75px]" alt="Upload the image" src={uploader} width={60} height={60} /> :
                                                             <div className="image-holder relative">
-                                                                <img ref={imageref} className="rounded-circle w-[140px] h-[140px]" width={60} height={60} />
+                                                                <img ref={imageref} className="rounded-circle w-[140px] h-[140px]" id="file-upload" width={60} height={60} />
                                                                 <span onClick={discardProfile} className="cursor-pointer absolute top-[0px] right-[5px] border-pink-500">
                                                                     <CloseIcon color={"action"} sx={{ color: "magenta" }} className="" fontSize="large" />
                                                                 </span>
@@ -184,6 +200,7 @@ const Signup: NextPage = () => {
                                             {errors.image && <span className="absolute text-xs text-pink-600 top-[100px] left-4">
                                                 {"Image is required*"}</span>}
                                         </div>
+
                                         <div className="position-relative">
                                             <label htmlFor="password" className="block mb-2 text-sm font-medium text-pink-500">Password</label>
                                             {password.generalpassword.show && <FaEye className={"absolute top-[60%] right-2 cursor-pointer"} onClick={e => setPassword({ ...password, generalpassword: { ...password.generalpassword, show: !password.generalpassword.show } })} />}
@@ -209,6 +226,7 @@ const Signup: NextPage = () => {
                                             {errors.password?.types?.required && <span className="text-pink-600 absolute left-4 top-21 text-xs">{"Password is required"}*</span>}
                                             {errors.password?.type === "invalidepassword" && <span className="absolute top-21 left-4 text-pink-600 text-xs">{errors.password.message}</span>}
                                         </div>
+
                                         <div className="position-relative">
                                             <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-pink-500">Confirm password</label>
                                             {password.confirmPassword.show && <FaEye className="absolute top-[60%] right-2 cursor-pointer" onClick={e => setPassword({ ...password, confirmPassword: { ...password.confirmPassword, show: !password.confirmPassword.show } })} />}
@@ -239,6 +257,7 @@ const Signup: NextPage = () => {
                                             {errors.confirmPassword?.types?.required && <span className="text-pink-600 absolute left-4 top-21 text-xs">{"Confirm Password is required"}*</span>}
                                             {errors.confirmPassword?.type === "mismatch" && <span className="text-pink-600 absolute left-4 top-21 text-xs">{"Confirm Password must match password*"}</span>}
                                         </div>
+
                                         <div className="flex items-start position-relative">
                                             <div className="flex items-center h-5">
                                                 <input id="terms" aria-describedby="terms" style={{ accentColor: "pink" }} type="checkbox" {...register("checkStatus", {
@@ -252,6 +271,7 @@ const Signup: NextPage = () => {
                                                 <label htmlFor="terms" className="font-light text-pink-500 dark:text-pink-300">I accept the <a className="font-medium text-primary-600 hover:underline dark:text-primary-500">Terms and Conditions</a></label>
                                             </div>
                                         </div>
+
                                         <button type="submit" className="w-full text-white bg-pink-400 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Create an account</button>
                                         <p className="text-sm font-light text-pink-500 dark:text-pink-400">
                                             Already have an account? <a href="/authentication/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
