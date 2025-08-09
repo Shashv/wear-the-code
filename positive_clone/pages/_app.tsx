@@ -18,7 +18,6 @@ import { LoadingBarContainer } from "react-top-loading-bar";
 import { GetServerSideProps, NextPage } from "next";
 import dynamic from "next/dynamic";
 // import AosInitialize from "@/utils/aos";
-
 import Router from "next/router";
 import LoaderAnimate from "@/components/loader";
 import { getServerSession } from "next-auth";

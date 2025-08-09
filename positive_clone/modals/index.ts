@@ -3,6 +3,7 @@ import { IconType } from "react-icons";
 import { NextRouter } from "next/router";
 import { Document } from "mongoose";
 import { Session } from "next-auth";
+import { FieldValues, UseFormRegister } from "react-hook-form";
 export type IModal = {
     open: boolean;
     content?: JSX.Element | React.FC | any;
@@ -258,8 +259,13 @@ export interface FormField {
     name: string;
     placeholder: string;
 }
+
 export type IHoodie = { _id: number; title: string; desc: string; img: string; category: string; size: string; color: string; price: number; availableQuantity: number; createdAt: string; updatedAt: string; slug: string; productOrientations?: string; tags?: string };
+
 export type iLabelProps = {
     labelHead: string;
     description: string;
+}
+export type IFormField<T extends FieldValues> = {
+    register: UseFormRegister<T>
 }

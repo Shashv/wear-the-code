@@ -23,20 +23,20 @@ import { FormatisedList, IShirts } from "@/modals";
 import babaji from "@/utils/babaji";
 import ProductGrid from "@/utils/constants/renderProductgrid";
 
-interface ZipperSchema {
-    title: string;
-    id?: number;
-    desc: string;
-    createdAt?: string;
-    updatedAt?: string;
-    img: string;
-    category: string;
-    colors: string[];
-    sizes: string[];
-    price: number;
-    availableQuantity: number;
-    slug: string
-}
+// interface ZipperSchema {
+//     title: string;
+//     id?: number;
+//     desc: string;
+//     createdAt?: string;
+//     updatedAt?: string;
+//     img: string;
+//     category: string;
+//     colors: string[];
+//     sizes: string[];
+//     price: number;
+//     availableQuantity: number;
+//     slug: string
+// }
 
 interface ZippersProps {
     zippersSchema: FormatisedList;
