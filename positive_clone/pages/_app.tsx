@@ -31,7 +31,9 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
     const [loader, setLoader] = React.useState<boolean>(false);
     let path: string = routerDetail.asPath.split("?")[0];
     let [filterStatus, setFilterStatus] = React.useState<boolean>(false);
+    
     const { session, ...pageparams } = pageProps;
+
     const toggleFilter = useCallback((status: boolean) => {
         setFilterStatus(!status);
     }, []);
