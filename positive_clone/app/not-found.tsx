@@ -7,8 +7,8 @@ const NotFound: React.FC | NextPage = () => {
         <>
             <Dialog open>
                 <DialogContent>
-                    <Typography className="" color={"red"} variant={"h3"}>
-                        Oops Page not found 404 !
+                    <Typography className="text-center" color={"red"} variant={"h3"}>
+                        Oops Page not found 404!
                     </Typography>
                 </DialogContent>
                 <DialogActions className="d-flex justify-content-center">
