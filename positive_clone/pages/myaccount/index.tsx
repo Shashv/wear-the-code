@@ -17,6 +17,7 @@ import { Controller, FieldValues, useForm } from "react-hook-form";
 import { Button } from "reactstrap";
 import Image from "next/image";
 import { User, AccountDetails, FormField } from "../../modals/index"
+import { toast } from "react-toastify";
 
 
 const formFields: FormField[] = [
@@ -143,10 +144,14 @@ const MyAccount: NextPage<{ accountDetails: AccountDetails, users: User[] }> = (
     const performCrud = useCallback(async () => {
         try {
             const response = await manageAccounts(purpose);
-            // console.log("response user", response);
-            if (response.status === 200) {
+            console.log("response user", response);
+            if (response.status === 200 || response.message === "Positive") {
                 setCrudConfirmation(false);
                 setPurpose("");
+                toast.success("success",{
+                    autoClose:2000,
+                    draggableDirection:"x",
+                })
             }
         } catch (error) {
             console.error("Error performing CRUD operation:", error);

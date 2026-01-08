@@ -1,43 +1,51 @@
 import UserModel from "@/modalsmongoose/user";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import positive from "bcryptjs";
-import mongoose from "mongoose";
+import bycrypt from "bcryptjs";
+// import mongoose from "mongoose";
+import { connectMongoose } from "@/utils/connectMongoose";
 // authorize options////
+// console.log("Babaji",process.env.NEXTAUTH_SECRET)
 const authOptions: NextAuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     providers: [
         CredentialsProvider({
             name: "credentials",
             credentials: {
-                username: { type: "text", placeholder: "Enter Username" },
+                // username: { type: "text", placeholder: "Enter Username" },
                 email: { type: "email", placeholder: "Enter Email" },
-                checkStatus: { type: "checkbox", placeholder: "Remember Choice" },
+                // checkStatus: { type: "checkbox", placeholder: "Remember Choice" },
                 password: { type: "password", placeholder: "Enter password" }
             },
-            async authorize(credentials, req) {
+            async authorize(credentials) {
                 try {
-                    await mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
-                    let findedUser = await UserModel.findOne({ email: credentials?.email });
-                    const babaji = await positive.compare(credentials?.password || "", findedUser?.password || "");
-                    if (findedUser && babaji)
+                    // await mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
+                    const valid_credentials = credentials?.email.trim() && credentials.password.trim();
+                    if (!valid_credentials) throw new Error("Missing Credentials");
+                    await connectMongoose();
+                    let findedUser = await UserModel.findOne({ email: credentials?.email || "" });
+                    if (!findedUser) throw new Error("unable to find the user");
+                    const validPassword = await bycrypt.compare(credentials?.password || "", findedUser?.password || "");
+                    if (!validPassword) throw new Error("Invalid or Incorrect Password")
+                    if (findedUser && validPassword) {
                         return {
                             id: findedUser["id"],
                             name: findedUser["username"],
                             email: findedUser["email"],
                             image: findedUser.image
                         }
-                    else if (findedUser && !babaji) {
-                        throw new Error("Invalid or Incorrect Password");
                     }
-                    else if (!findedUser) {
-                        throw new Error("unable to find the user");
-                        // return {
-                        //     id: "not_available",
-                        //     name: "babaji",
-                        //     email: "email"
-                        // }
-                    }
+                    // else if (findedUser && !validPassword) {
+                    //     throw new Error("Invalid or Incorrect Password");
+                    // }
+                    // else if (!findedUser) {
+                    //     throw new Error("unable to find the user");
+                    //     // return {
+                    //     //     id: "not_available",
+                    //     //     name: "babaji",
+                    //     //     email: "email"
+                    //     // }
+                    // }
                     else return null;
                 }
                 catch (er: any) {
@@ -55,7 +63,6 @@ const authOptions: NextAuthOptions = {
     ],
     session: {
         strategy: "jwt",
-        // max age testing..//
         maxAge: 60 * 60
     },
     callbacks: {

@@ -17,7 +17,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { LoadingBarContainer } from "react-top-loading-bar";
 import { GetServerSideProps, NextPage } from "next";
 import dynamic from "next/dynamic";
-// import AosInitialize from "@/utils/aos";
 import Router from "next/router";
 import LoaderAnimate from "@/components/loader";
 import { getServerSession } from "next-auth";
@@ -45,8 +44,6 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
         Router.events.on("routeChangeComplete", e => setLoader(false));
     }, [routerDetail]);
     useEffect(() => { Aos.init() }, []);
-    // window.addEventListener("load", Aos.refresh)
-    // console.log("Bababji")
     return (
         <GoogleOAuthProvider clientId="803758111092-tusltrjau3p58fdue2k96a6rkm0nasik.apps.googleusercontent.com">
             <div ref={ref} className="parent">
@@ -85,7 +82,6 @@ const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
                             {!path.includes("/auth") && <Footer />}
                             <ToastContainer />
                         </LoadingBarContainer>
-                        {/* </AosInitialize> */}
                     </SessionProvider>
                 </Provider>
             </div>
