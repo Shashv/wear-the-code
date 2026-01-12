@@ -222,7 +222,8 @@ const MyAccount: NextPage<{ accountDetails: AccountDetails, users: User[] }> = (
         </div>
     );
 };
-StyledModal.displayName = "StyledModal"
+StyledModal.displayName = "StyledModal";
+
 export default MyAccount;
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {

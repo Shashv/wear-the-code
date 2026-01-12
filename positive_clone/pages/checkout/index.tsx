@@ -21,10 +21,12 @@ import authorizeOptions from "../api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
 
 const Checkout: React.FC = () => {
+
     let { handleSubmit, control } = useForm<IRegisterOptions>();
     var session = useSession();
     let dispatch = useDispatch();
     const theme = useSelector((state: IState) => state.toggletheme);
+
     let details = (data: FieldValues | IRegisterOptions) => {
 
         if (data) {
@@ -36,11 +38,13 @@ const Checkout: React.FC = () => {
         }
     }
     const routerDetails = useRouter();
+
     useEffect(() => {
         if (session.status === "unauthenticated") {
             routerDetails.replace("/authentication/login")
         }
     }, [session]);
+
     const formGroups: Array<{ label: string; type: string; placeholder: string; name: any }> = [{
         label: 'Name',
         type: "text",
@@ -141,7 +145,7 @@ const Checkout: React.FC = () => {
 }
 export default Checkout;
 // server side running function..//
-// import Cart from "../../components/cart";
+
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const getServersidesession = await getServerSession(context.req, context.res, authorizeOptions);
     if (getServersidesession) {
@@ -161,5 +165,3 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         }
     }
 }
-// import styles from "./index.module.css";
-// ...// 

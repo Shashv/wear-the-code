@@ -68,7 +68,7 @@ const OrdersList: NextPage<{ pageName: string, sessionStatus?: { name: string; e
     
     React.useEffect(() => {
         if (session.status === "unauthenticated") router.replace("/authentication/login");
-        // setTabledata({ ...tableData, tableBody: orderPositive });
+        
     }, [session, products]);
 
     const userDetails = {
@@ -89,7 +89,7 @@ const OrdersList: NextPage<{ pageName: string, sessionStatus?: { name: string; e
             }
             return responseSchema
         }).then(res => {
-            // console.log('Response from api', res);
+            
             setCrud(crud => ({ ...crud, isDone: true, confirm: false, isloading: false }));
 
             if (res.status === 200) {

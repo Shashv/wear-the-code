@@ -95,7 +95,7 @@ export type ICartState = {
     [key: string]: ICartProduct
 }
 export type ILayout = {
-    children: React.ReactNode
+    children: React.ReactNode,
 }
 export interface IRegisterOptions {
     name: string;
@@ -268,4 +268,10 @@ export type iLabelProps = {
 }
 export type IFormField<T extends FieldValues> = {
     register: UseFormRegister<T>
+}
+export interface IForgotPassword {
+    value: string;
+    error: boolean;
+    syntaxError: boolean;
+    loader: boolean;
 }

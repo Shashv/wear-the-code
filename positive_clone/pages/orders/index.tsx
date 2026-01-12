@@ -19,6 +19,7 @@ const Orders: React.FC = (props: unknown) => {
     let [orderId, setOrderId] = useState<number>();
 
     const routerInsatnce = useSearchParamsstate();
+
     const [tableData, setTabledata] = useState<{ tableHead: Array<any>, tableBody: Array<any> }>({
         tableHead: [{
             type: 'text',
@@ -35,6 +36,7 @@ const Orders: React.FC = (props: unknown) => {
         }],
         tableBody: []
     });
+    
     let theme: { light: boolean; dark: boolean } = useSelector((state: IState) => state.toggletheme);
     const convertOrderList = async (specificOrder: { id: string; quantity: number }) => {
         let specificProduct = await fetch(`/api/orderProducts/${specificOrder.id}`, {

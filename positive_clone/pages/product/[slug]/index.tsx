@@ -4,38 +4,22 @@ import { useState } from "react";
 import StyledModal from "@/components/styledpopup";
 import { useRouter } from "next/router";
 import { Typography, Grid } from "@mui/material";
-
 import addProduct from "@/redux/actions/addProduct";
 import { useDispatch, useSelector } from "react-redux";
 import { IState } from "@/redux/sore";
 import style from "./index.module.css";
-
 import { IShirts } from "@/modals";
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import ColorLabel from "@/components/colorLabels";
 import buyProduct from "@/redux/actions/buyproduct";
-
-
 import clearCart from "@/redux/actions/clearCart";
 import ProductModel from "@/modalsmongoose/product";
 import { GetServerSideProps, NextPage } from "next";
 import { toast } from "react-toastify";
 import Image from "next/image";
-type IProductType = {
-    alone_back: string;
-    alone_front: string;
-    image_front: string;
-    packed: string;
-    image_back: string;
-    id: number;
-    available_shades: string;
-    description: string;
-    name: string;
-    positive: string;
-    type: string;
-    variant: string;
-}
+
 const ProductClient: NextPage<{ productId?: string, type: string }> = ({ productId, type }) => {
+
     let [selectedProduct, setSelectedProduct] = useState<IShirts>({
         title: "",
         desc: "",
@@ -49,13 +33,19 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
         productOrientations: "",
         tags: ""
     });
+
     let router = useSearchParamsstate();
+
     let [servie, setService] = useState<boolean>(false);
 
     const [loader, setLoader] = useState<boolean>(false);
+    
     const [productVariant, setProductvariant] = useState<any>({});
+
     let serviceRef = useRef<HTMLButtonElement>(null);
+
     let routerDetail = useRouter();
+
     let dispatch = useDispatch();
 
     let productsBought = useSelector((state: IState) => state.buyNow);
@@ -63,8 +53,11 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
     let [pin, setPin] = useState<{ pinError: boolean | any; pin: any; servicePending: boolean }>({ pinError: "", pin: null, servicePending: false });
 
     let slug: string | string[] | any = "";
+
     let sizes: string[] = [];
+
     let state = useSelector((state: IState) => state.productManage);
+
     const fetchProduct = async (productName: string): Promise<{ product: IShirts[], productVariant: { [key: string]: { [key: string]: { slug: string } } } }> => {
         let shirt = await fetch(`/api/shirts?type=${productName}`, {
             method: "GET",
@@ -83,6 +76,7 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
             console.log(er);
         });
     }, []);
+
     useEffect(() => {
         slug = routerDetail?.query?.slug || "";
         if (serviceRef.current) {
@@ -339,4 +333,19 @@ export const getServerSideProps: GetServerSideProps<{
         }
     }
 }
+// export from modals or this side..//
 // GetServerSidePropsContext, 
+// type IProductType = {
+//     alone_back: string;
+//     alone_front: string;
+//     image_front: string;
+//     packed: string;
+//     image_back: string;
+//     id: number;
+//     available_shades: string;
+//     description: string;
+//     name: string;
+//     positive: string;
+//     type: string;
+//     variant: string;
+// }

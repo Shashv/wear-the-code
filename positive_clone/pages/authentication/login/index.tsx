@@ -1,7 +1,5 @@
 import React from "react";
 import Login from "./Login"
-
-
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";

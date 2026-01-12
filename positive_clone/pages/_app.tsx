@@ -23,7 +23,9 @@ import { getServerSession } from "next-auth";
 import authorizeOptions from "./api/auth/[...nextauth]";
 import Aos from "aos";
 import 'aos/dist/aos.css';
-const AosInitialize = dynamic(() => import("../utils/aos/index"), { ssr: false })
+
+const AosInitialize = dynamic(() => import("../utils/aos/index"), { ssr: false });
+
 const Layout: NextPage<AppProps> = ({ Component, pageProps }) => {
     const routerDetail: NextRouter = useRouter();
     let ref = useRef<HTMLDivElement>(null);

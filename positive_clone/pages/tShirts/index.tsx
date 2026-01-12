@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 // import Link from "next/link";
 import styles from "./index.module.css";
-import { Typography, Grid } from "@mui/material";
+// import { Typography, Grid } from "@mui/material";
 import { connect } from "react-redux";
 import { IState } from "@/redux/sore";
 import FilterBar from "@/components/filtergroup";
@@ -23,6 +23,7 @@ import calculateConfig from "@/utils/constants/pagination/calculateConfigvalues"
 import ProductGrid from "@/utils/constants/renderProductgrid";
 import ProductLabel from "@/components/productLabel";
 class TShirts extends Component<TShirtProps, TShirtState> {
+
     constructor(props: TShirtProps) {
         super(props);
         this.state = {
@@ -43,7 +44,9 @@ class TShirts extends Component<TShirtProps, TShirtState> {
 
     renderProductGrid() {
 
-        const { theme, shirts } = this.props;
+        const {
+            // theme, 
+            shirts } = this.props;
 
         return (
             <div className={"py-2"}>

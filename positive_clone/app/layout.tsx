@@ -15,10 +15,12 @@ const Layout: React.FC<ILayout> = ({ children }) => {
     )
 }
 export default Layout;
+
 export const metadata: Metadata = {
     title: "Codeswear",
     description: "Wear the Code"
 }
+
 export const viewport: Viewport = {
     colorScheme: "light dark",
     themeColor: "blue"

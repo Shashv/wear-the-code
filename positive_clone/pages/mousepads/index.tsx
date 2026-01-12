@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { IState } from "@/redux/sore";
 import { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
-
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 import FilterBar from "@/components/filtergroup";
 import style from "./index.module.css";
@@ -21,31 +20,40 @@ import Pagination from "@/components/pagination";
 import { FormatisedList, iShirts, IShirts } from "@/modals";
 import babaji from "@/utils/babaji";
 import calculateConfig from "@/utils/constants/pagination/calculateConfigvalues";
+
 const MousePads: NextPage<{
+    //chooose of your type either bind everything in one key frame or anyother object..///
     mousePadsSchema: {
-        // [key: string]: {
-        //     title: string;
-        //     desc: string;
-        //     price: number;
-        //     img: string;
-        //     slug: string;
-        //     colors: string[];
-        //     sizes: string[];
-        //     udpatedAt?: string;
-        //     createdAt?: string;
-        //     _id?: any;
-        //     availableQuantity: number;
-        //     category: string;
-        // }
-        [key: string]: iShirts
+        [key: string]: {
+            title: string;
+            desc: string;
+            price: number;
+            img: string;
+            slug: string;
+            colors: string[];
+            sizes: string[];
+            udpatedAt?: string;
+            createdAt?: string;
+            _id?: any;
+            availableQuantity: number;
+            category: string;
+        } | iShirts,
+        // [key: string]: iShirts
     }
 }> = (props) => {
+    
     let { mousePadsSchema } = props;
+
     const theme = useSelector((state: IState) => state.toggletheme);
+
     const [progress, setProgress] = useState<number>(0);
+
     const session = useSession();
+
     const { totalPages, page } = usePositive({ totalRecords: Object.keys(mousePadsSchema).length, recordsPerpage: 2 });
+
     const router = useSearchParamsstate();
+
     const changePage = (e: React.MouseEvent<HTMLButtonElement>, page: number) => {
         router.setQuery({ page: page.toString() });
     }
@@ -75,6 +83,7 @@ const MousePads: NextPage<{
             }
         }
     }, [session]);
+
     return (
         <>
             <Head>
@@ -125,7 +134,7 @@ const MousePads: NextPage<{
 }
 export default MousePads;
 //function will call on the server side ...//
-// import ProductModel from "@/modalsmongoose/product";
+
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
 
     let { page } = context.query;

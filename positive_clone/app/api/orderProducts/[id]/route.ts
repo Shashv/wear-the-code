@@ -4,9 +4,9 @@ import ProductModel from "@/modalsmongoose/product";
 import { IType } from "@/modals";
 const processGetRequest = async (req: NextRequest, params: { params: IType }) => {
     try {
-        // console.log("params.id",params);
+        console.log("params.id",params);
         let specificProduct = await ProductModel.findOne({ slug: params.params.id });
-        // console.log("specific product", specificProduct);
+        console.log("specific product", specificProduct);
         if (specificProduct)
             return NextResponse.json({ specificProduct }, { status: 200 });
         else return NextResponse.json({ message: "Unable to find the product" }, { status: 200 })

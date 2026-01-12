@@ -23,3 +23,5 @@ const NotFound: React.FC | NextPage = () => {
     )
 }
 export default NotFound;
+NotFound.displayName = 'Not Found Page Babaji';
+//Added display name for NotFoundBabaji..//

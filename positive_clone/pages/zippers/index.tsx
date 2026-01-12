@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useMemo } from "react";
 import style from "./index.module.css";
 import calculateConfig from "@/utils/constants/pagination/calculateConfigvalues";
-import { Grid } from "@mui/material";
+// import { Grid } from "@mui/material";
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 import positive from './index.module.css';
 import { useSelector } from "react-redux";
@@ -10,8 +10,8 @@ import FilterBar from "@/components/filtergroup";
 import { Typography } from '@mui/material';
 import Head from "next/head";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
-import ProductCard from "@/components/productcard";
+// import Link from "next/link";
+// import ProductCard from "@/components/productcard";
 import LoadingBar from "react-top-loading-bar";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "../api/auth/[...nextauth]";
@@ -19,7 +19,10 @@ import Pagination from "@/components/pagination";
 import usePositive from "@/hooks/usePositive";
 import useSearchParamsstate from "@/hooks/useSearchParams";
 import { toast } from "react-toastify";
-import { FormatisedList, IShirts } from "@/modals";
+import {
+    FormatisedList,
+    //  IShirts 
+} from "@/modals";
 import babaji from "@/utils/babaji";
 import ProductGrid from "@/utils/constants/renderProductgrid";
 
@@ -149,7 +152,6 @@ export const getServerSideProps: GetServerSideProps<{ zippersSchema: FormatisedL
             }
         };
     }
-
     const page = context.query.page;
     if (!page) {
         return {

@@ -11,7 +11,8 @@ interface IUser extends Document {
 }
 // uncomment the  below link to use connection string connection with mongodb without using the callback...//
 //added order id, payment info to the mongodb table//..
-mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect("mongodb+srv://traineewebframez:0xrgceVRyQWHMzBJ@cluster0.wgwyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
+
 const OrderSchema = new mongoose.Schema<IUser>({
     userId: { type: String, required: true },
     email: { type: String, required: true },

@@ -11,15 +11,11 @@ import { Backdrop, CircularProgress } from "@mui/material";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "@/pages/api/auth/[...nextauth]";
+import { IForgotPassword } from "@/modals";
 import "./index.css";
 
-interface IForgotPassword {
-    value: string;
-    error: boolean;
-    syntaxError: boolean;
-    loader: boolean;
-}
 const ForgotPassword: React.FC = () => {
+
     let [forgotPassword, setForgotPassword] = useState<IForgotPassword>({
         value: "",
         error: false,
@@ -27,6 +23,7 @@ const ForgotPassword: React.FC = () => {
         loader: false
     });
     let router = useRouter();
+
     const submitEmailForPasswordReset: (e: React.FormEvent) => void = (e) => {
         e.preventDefault();
         if (!forgotPassword.error && !forgotPassword.syntaxError && forgotPassword.value !== "") {
@@ -52,6 +49,7 @@ const ForgotPassword: React.FC = () => {
                 forgotPassword.value === "" && setForgotPassword({ ...forgotPassword, error: true, syntaxError: false, loader: false });
         }
     };
+
     const handleConfirmEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void = (e) => {
         if (e.currentTarget.value !== "") {
 
@@ -66,6 +64,7 @@ const ForgotPassword: React.FC = () => {
             setForgotPassword({ ...forgotPassword, value: e.currentTarget.value, error: true, syntaxError: false })
         }
     }
+
     return (
         <>
             {

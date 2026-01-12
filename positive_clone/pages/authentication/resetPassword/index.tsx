@@ -21,15 +21,15 @@ const ResetPassword: NextPage = () => {
         positive: "Enter confirm password"
     }];
     const params = useSearchParams();
+    
     const submitForm = async (data: FieldValues) => {
         setLoader((loaderState) => !loaderState);
-        // let reset_password = data.reset_password;
         let response = await fetch("/api/updatePassword", {
             method: "POST",
             body: JSON.stringify({ email: params?.get("email") || "", password: data.password, confirmPassword: data.confirmPassword })
         });
         let parsedResponse = await response.json();
-        // console.log("babaji", parsedResponse);
+        
         if (parsedResponse) {
             setLoader((loaderState) => !loaderState);
             toast.warning(parsedResponse.message, {

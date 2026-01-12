@@ -46,32 +46,36 @@ const Signup: NextPage = () => {
             show: false,
         }
     });
+
     const discardProfile: (e: React.MouseEvent<HTMLSpanElement>) => void = e => {
         console.log("Event emitted");
         setImage(null);
         imageBuffer = ""
     }
+
     const { onChange, ...rest } = register("image", {
         required: true
     });
-    const formFields = [{
-        type: "name",
-        label: "Name"
-    }, {
-        type: "emai",
-        label: "Email"
-    }, {
-        type: "passowrd",
-        label: "Passowrd"
-    }, {
-        type: "confirmPassword",
-        label: "Confirm Password"
-    }];
+
+    // const formFields = [{
+    //     type: "name",
+    //     label: "Name"
+    // }, {
+    //     type: "emai",
+    //     label: "Email"
+    // }, {
+    //     type: "passowrd",
+    //     label: "Passowrd"
+    // }, {
+    //     type: "confirmPassword",
+    //     label: "Confirm Password"
+    // }];
+    
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const fileReader = new FileReader();
             fileReader.addEventListener("load", e => {
-                if (imageref.current) {
+                if (imageref.current && image) {
                     let result = fileReader.result?.toString().replace(/^data:image\/\w+;base64,/, "") || "";
                     let buffer = Buffer.from(result, "base64")
                     imageref.current.src = fileReader.result?.toString() || "";
@@ -188,7 +192,7 @@ const Signup: NextPage = () => {
                                                         !image ?
                                                             <Image className="w-[75px] h-[75px]" alt="Upload the image" src={uploader} width={60} height={60} /> :
                                                             <div className="image-holder relative">
-                                                                <img ref={imageref} className="rounded-circle w-[140px] h-[140px]" id="file-upload" width={60} height={60} />
+                                                                <img ref={imageref} className="rounded-circle w-[140px] h-[140px]" id="file-upload"  />
                                                                 <span onClick={discardProfile} className="cursor-pointer absolute top-[0px] right-[5px] border-pink-500">
                                                                     <CloseIcon color={"action"} sx={{ color: "magenta" }} className="" fontSize="large" />
                                                                 </span>
