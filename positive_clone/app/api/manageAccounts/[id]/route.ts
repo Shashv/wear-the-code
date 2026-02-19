@@ -12,10 +12,12 @@ export const PUT = connectAPProuterdb(handlePutrequest);
 
 const handleDeleteRequest = async (req: NextRequest, positive: { params: IType }) => {
     const { params: { id } } = positive;
-    req.method === "DELETE"
+    const isDeleteMethod = req.method === "DELETE";
+    if (!isDeleteMethod) return NextResponse.json({ message: "Invalid Method" });
     try {
         const deleteRecord = await UserModel.findOneAndDelete({ email: id });
-        console.log("Deleted record", deleteRecord);
+        const babajiUsersProtect = await UserModel.find({});
+        console.log("Deleted record", deleteRecord, babajiUsersProtect);
         if (deleteRecord) return NextResponse.json({ message: "Positive" }, { status: 200 });
     }
     catch (er) {

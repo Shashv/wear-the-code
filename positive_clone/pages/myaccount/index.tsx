@@ -144,8 +144,9 @@ const MyAccount: NextPage<{ accountDetails: AccountDetails, users: User[] }> = (
     const performCrud = useCallback(async () => {
         try {
             const response = await manageAccounts(purpose);
-            console.log("response user", response);
+            
             if (response.status === 200 || response.message === "Positive") {
+                console.log("response user babaji", response);
                 setCrudConfirmation(false);
                 setPurpose("");
                 toast.success("success",{

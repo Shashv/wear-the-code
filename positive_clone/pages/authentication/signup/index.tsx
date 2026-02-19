@@ -190,7 +190,7 @@ const Signup: NextPage = () => {
                                                 <label htmlFor="file-upload" className="p-2">
                                                     {
                                                         !image ?
-                                                            <Image className="w-[75px] h-[75px]" alt="Upload the image" src={uploader} width={60} height={60} /> :
+                                                            <Image className="w-[65px] h-[65px]" alt="Upload the image" src={uploader} width={60} height={60} /> :
                                                             <div className="image-holder relative">
                                                                 <img ref={imageref} className="rounded-circle w-[140px] h-[140px]" id="file-upload"  />
                                                                 <span onClick={discardProfile} className="cursor-pointer absolute top-[0px] right-[5px] border-pink-500">
