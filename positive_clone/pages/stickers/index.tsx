@@ -164,4 +164,4 @@ export const getServerSideProps: GetServerSideProps<{ stickers?: FormatisedList,
                                                             OOPS , Something went wrong !
                                                         </Typography>
                                                     </div>}
-                                            </Grid> */}
+</Grid> */}
