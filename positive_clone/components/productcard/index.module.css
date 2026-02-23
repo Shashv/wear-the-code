@@ -1,9 +1,9 @@
 .imageholder {
     display: block;
 }
-/* .imageTransparent {
-
-} */
+.imageTransparent {
+  display: block;
+}
 .colordot {
     width: 19px;
     height: 19px;

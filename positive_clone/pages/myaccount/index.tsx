@@ -18,6 +18,7 @@ import { Button } from "reactstrap";
 import Image from "next/image";
 import { User, AccountDetails, FormField } from "../../modals/index"
 import { toast } from "react-toastify";
+import Pagination from "@/components/pagination";
 
 
 const formFields: FormField[] = [
@@ -144,14 +145,14 @@ const MyAccount: NextPage<{ accountDetails: AccountDetails, users: User[] }> = (
     const performCrud = useCallback(async () => {
         try {
             const response = await manageAccounts(purpose);
-            
+
             if (response.status === 200 || response.message === "Positive") {
                 console.log("response user babaji", response);
                 setCrudConfirmation(false);
                 setPurpose("");
-                toast.success("success",{
-                    autoClose:2000,
-                    draggableDirection:"x",
+                toast.success("success", {
+                    autoClose: 2000,
+                    draggableDirection: "x",
                 })
             }
         } catch (error) {
@@ -178,47 +179,42 @@ const MyAccount: NextPage<{ accountDetails: AccountDetails, users: User[] }> = (
         }
     }, [status, router]);
 
+    function changePage(e: React.MouseEvent, page: number) {
+
+    }
     return (
         <div className={`container-fluid h-[100vh] ${themeState.dark ? styles.darkaccount : styles.lightaccount}`}>
-            <div className="row">
-                <div className="col-12">
-                    <div style={{ backgroundColor: "pink" }} className="accoubnt-details-fields position-sticky top-0">
-                        <Typography variant="h5" color="salmon">Account Holder - {name}</Typography>
-                        <Typography variant="h5" color="skyblue">Account Holder Email - {email}</Typography>
-                    </div>
-                    <div className="">
-                        <Image
-                            className="rounded-full"
-                            width={100}
-                            height={100}
-                            alt="User Profile"
-                            src={`/uploads/${image}`}
-                            priority
-                        />
-                    </div>
-
-                    <div>
-                        <div className="users-list">
-                            <Typography className="user-label" variant="h5" color="lightblue">
-                                Users List
-                            </Typography>
-                        </div>
-                        <CommonTable tablebody={users} tablehead={tableColumns} />
-                    </div>
-                </div>
-                <div className="col-12">
-                    <StyledModal
-                        width={purpose === "Edit" ? 500 : undefined}
-                        height={purpose === "Edit" ? 500 : undefined}
-                        showIcon
-                        purpose={purpose}
-                        title={`${purpose} Users ?`}
-                        open={crudConfirmation}
-                        content={ModalContent}
-                        confirmProcess={performCrud}
-                        closeModal={() => setCrudConfirmation(false)}
+            <div className="row h-100 overflow-scroll">
+                <div style={{ backgroundColor: "pink" }} className="accoubnt-details-fields position-sticky top-0 col-12">
+                    <Typography variant="h5" color="salmon">Account Holder - {name}</Typography>
+                    <Typography variant="h5" color="skyblue">Account Holder Email - {email}</Typography>
+                    <Image
+                        className="rounded-full"
+                        width={100}
+                        height={100}
+                        alt="User Profile"
+                        src={`/uploads/${image}`}
+                        priority
                     />
                 </div>
+                <div className="col-12">
+                    <Typography className="user-label" variant="h5" color="lightblue">
+                        Users List
+                    </Typography>
+                    <CommonTable tablebody={users} tablehead={tableColumns} theme={themeState} />
+                    <Pagination page={1} changePage={changePage} pageList={[1, 2, 3, 4, 5, 6, 7, 8]} />
+                </div>
+                <StyledModal
+                    width={purpose === "Edit" ? 500 : undefined}
+                    height={purpose === "Edit" ? 500 : undefined}
+                    showIcon
+                    purpose={purpose}
+                    title={`${purpose} Users ?`}
+                    open={crudConfirmation}
+                    content={ModalContent}
+                    confirmProcess={performCrud}
+                    closeModal={() => setCrudConfirmation(false)}
+                />
             </div>
         </div>
     );

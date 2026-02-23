@@ -5,22 +5,9 @@ import Typography from "@mui/material/Typography";
 import { useSelector } from "react-redux";
 import { IState } from "@/redux/sore";
 import { FaRupeeSign } from "react-icons/fa";
-// import { IProductType } from "@/pages/tShirts";
 import ColorLabel from "../colorLabels";
 import { FaHeart } from "react-icons/fa";
-// type IBest = {
-//     thumnail: string;
-//     image: string;
-//     label: string;
-//     category: string;
-//     price: number | any;
-//     priceoriginal: number;
-//     variations?: {
-//         color: string[];
-//         size: string[];
-//     },
 
-// }
 const ProductCard: React.FC<any> = ({ desc, title, sizes, category, slug, availableQuantity, price, colors, type, img, imageFront, imageBack, showIcon }) => {
     let theme = useSelector((state: IState) => state.toggletheme);
     let [hover, setHover] = React.useState<boolean>(false);
@@ -79,3 +66,19 @@ const ProductCard: React.FC<any> = ({ desc, title, sizes, category, slug, availa
     )
 }
 export default ProductCard;
+
+//comments from code
+// type IBest = {
+//     thumnail: string;
+//     image: string;
+//     label: string;
+//     category: string;
+//     price: number | any;
+//     priceoriginal: number;
+//     variations?: {
+//         color: string[];
+//         size: string[];
+//     },
+
+// }
+// import { IProductType } from "@/pages/tShirts";

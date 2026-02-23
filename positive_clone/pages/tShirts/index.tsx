@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-// import Link from "next/link";
 import styles from "./index.module.css";
-// import { Typography, Grid } from "@mui/material";
 import { connect } from "react-redux";
 import { IState } from "@/redux/sore";
 import FilterBar from "@/components/filtergroup";
-// import ProductCard from "@/components/productcard";
+import ProductCard from "@/components/productcard";
 import Head from "next/head";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
@@ -16,8 +14,7 @@ import paginate from "@/utils/paginate";
 import LoadingBar from "react-top-loading-bar";
 import Pagination from "@/components/pagination";
 import { TShirtState, TShirtProps, FormatisedList } from "@/modals";
-// import ProductModel from "@/modalsmongoose/product";
-
+import ProductModel from "@/modalsmongoose/product";
 import babaji from "@/utils/babaji";
 import calculateConfig from "@/utils/constants/pagination/calculateConfigvalues";
 import ProductGrid from "@/utils/constants/renderProductgrid";
@@ -45,7 +42,6 @@ class TShirts extends Component<TShirtProps, TShirtState> {
     renderProductGrid() {
 
         const {
-            // theme, 
             shirts } = this.props;
 
         return (
@@ -60,15 +56,20 @@ class TShirts extends Component<TShirtProps, TShirtState> {
 
     async componentDidMount() {
         const session = await getSession();
-
         this.setState({ session, progress: 100 });
-
     }
+    
     async componentDidUpdate(previousProps: Readonly<TShirtProps>, previousState: Readonly<TShirtState>): Promise<void> {
         if (previousState && previousProps) {
             console.log("Component did update function", this.props.router.query);
         }
     }
+
+    shouldComponentUpdate(nextProps: TShirtProps, nextState: TShirtState): boolean {
+        console.log("Next state", nextState, 'Next props', nextProps);
+        return true;
+    }
+
     render() {
         const { progress, products } = this.state;
         const { theme } = this.props;
@@ -115,12 +116,10 @@ const mapStateToProps = (state: IState) => ({
 });
 
 export default withRouter(connect(mapStateToProps)(TShirts));
-//server side function calling...//
-export const getServerSideProps: GetServerSideProps<{ session: unknown; shirts: FormatisedList, shirtsCount?: number }> = async (context: GetServerSidePropsContext) => {
 
+export const getServerSideProps: GetServerSideProps<{ session: unknown; shirts: FormatisedList, shirtsCount?: number }> = async (context: GetServerSidePropsContext) => {
     let { query } = context;
     const session = await getServerSession(context.req, context.res, authorizeOptions);
-
     if (!session) {
         return {
             redirect: {
@@ -139,9 +138,9 @@ export const getServerSideProps: GetServerSideProps<{ session: unknown; shirts: 
             };
         else {
             let babajiConfiguration: FormatisedList = {};
-            // const { res } = context;
+
             let { skipOffset, limitValue } = calculateConfig(Number(query.page));
-            // console.log("Skipoffset", skipOffset, "Limit value", limitValue)
+
             babajiConfiguration = (await babaji("tshirts", skipOffset, limitValue, Number(query.page))).configuration || {};
             let shirtCount = (await babaji("tshirts", skipOffset, limitValue)).configurationCount || 10;
             return {
@@ -154,20 +153,3 @@ export const getServerSideProps: GetServerSideProps<{ session: unknown; shirts: 
         }
     }
 };
-/* <Grid container rowGap={2.4} className="justify-center" columnGap={1.4}>
-                   {Object.entries(shirts).map(([key, product]) => (
-                       <Grid item xs={5.4} sm={5.9} md={2.3} key={key}>
-                           <Link href={`/product/${product.slug}`}>
-                               <ProductCard
-                                   imageFront={product.img}
-                                   imageBack={product?.productOrientations?.split(",")[1]}
-                                   {...product}
-                                   category="Tshirt"
-                                   showIcon
-                               />
-                           </Link>
-                       </Grid>
-                   ))}
-               </Grid> */
-
-// ...//

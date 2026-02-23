@@ -132,7 +132,7 @@ export interface ITheme {
 export interface ITableData<DataType> {
     tablehead: Array<DataType>;
     tablebody: Array<DataType>;
-    theme?: {
+    theme: {
         light: boolean;
         dark: boolean
     }
@@ -274,4 +274,9 @@ export interface IForgotPassword {
     error: boolean;
     syntaxError: boolean;
     loader: boolean;
+}
+export type IBabajiPagination = {
+    page: number;
+    changePage: (event: React.MouseEvent<HTMLButtonElement>, page: number) => void;
+    pageList: Array<number>
 }

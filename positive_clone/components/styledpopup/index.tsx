@@ -5,27 +5,10 @@ import Slide from "@mui/material/Fade";
 import { Delete, Edit } from "@mui/icons-material";
 import Icon from "@mui/material";
 import Grow from "@mui/material/Grow";
-// import { useRef, useEffect } from "react";
 import style from "./index.module.css";
 import { IoIosCloseCircle } from "react-icons/io";
 import Loader from "../loader";
-///...using modal from reactstrap////
-// import { Modal } from "reactstrap";
 const StyledModal: React.FC<IModal> = ({ open, title, content, width, height, purpose, confirmProcess, closeModal, loader, showIcon }) => {
-    // .....
-    // let logOutRef = useRef<HTMLButtonElement>(null);
-    // const GrowTransition = forwardRef((props: any, ref: any) => {
-    //     return <Grow {...props} ref={ref} />
-    // })
-    //using the ref//
-    // useEffect(() => {
-    //     logOutRef.current?.addEventListener("click", (e) => confirmProcess(e));
-    //     return () => {
-    //         logOutRef.current?.removeEventListener("click", (e) => confirmProcess(e));
-    //     }
-    // });
-    //  ref={logOutRef}
-    //....
     return (
         <>
             <Dialog PaperProps={{
@@ -62,3 +45,22 @@ const StyledModal: React.FC<IModal> = ({ open, title, content, width, height, pu
     )
 }
 export default StyledModal;
+
+//comments from code for usage later
+///...using modal from reactstrap////
+// import { useRef, useEffect } from "react";
+// import { Modal } from "reactstrap";
+// .....
+// let logOutRef = useRef<HTMLButtonElement>(null);
+// const GrowTransition = forwardRef((props: any, ref: any) => {
+//     return <Grow {...props} ref={ref} />
+// })
+//using the ref//
+// useEffect(() => {
+//     logOutRef.current?.addEventListener("click", (e) => confirmProcess(e));
+//     return () => {
+//         logOutRef.current?.removeEventListener("click", (e) => confirmProcess(e));
+//     }
+// });
+//  ref={logOutRef}
+//....
