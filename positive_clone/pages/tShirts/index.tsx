@@ -58,7 +58,7 @@ class TShirts extends Component<TShirtProps, TShirtState> {
         const session = await getSession();
         this.setState({ session, progress: 100 });
     }
-    
+
     async componentDidUpdate(previousProps: Readonly<TShirtProps>, previousState: Readonly<TShirtState>): Promise<void> {
         if (previousState && previousProps) {
             console.log("Component did update function", this.props.router.query);

@@ -74,7 +74,7 @@ const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawe
         // setToastC(false);
         // console.log("Baba ji calling function",buyProduct);
         // // console.log("Client secret", clientSecret);
-        const stripeRedirectAfterCheckout = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_POSITIVEKEY || "")
+        const stripeRedirectAfterCheckout = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_POSITIVEKEY_BABAJI || "")
         const sessionSecret = await fetch("/api/payment/checkoutSession", {
             method: "POST",
             body: JSON.stringify({ amount: 1, useruniqueorderId: localStorage.getItem("user_id") })

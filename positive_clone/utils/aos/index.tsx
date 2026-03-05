@@ -19,7 +19,7 @@ import "aos/dist/aos.css";
 //     return <>{children}</>;
 // }
 const AosInitialize = () => {
-    console.log("Babaji will")
+    // console.log("Babaji will")
     useEffect(() => {
         Aos.init({
             once:false

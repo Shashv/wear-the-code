@@ -5,7 +5,8 @@ import { useEffect } from "react";
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 import { getServerSession } from "next-auth";
 import authorizeOptions from "../api/auth/[...nextauth]";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
+import useSearchParamsstate from "@/hooks/useSearchParams";
 import { useSession } from "next-auth/react";
 import { TextField, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
@@ -85,7 +86,8 @@ EditForm.displayName = 'EditForm';
 
 const MyAccount: NextPage<{ accountDetails: AccountDetails, users: User[] }> = ({ accountDetails: { name, email, image }, users }) => {
     const { status } = useSession();
-    const router = useRouter();
+    // const router = useRouter();
+    const router = useSearchParamsstate();
     const [crudConfirmation, setCrudConfirmation] = useState<boolean>(false);
     const [purpose, setPurpose] = useState<string>("");
     const [accountEmail, setAccountEmail] = useState<string>("");
@@ -177,10 +179,13 @@ const MyAccount: NextPage<{ accountDetails: AccountDetails, users: User[] }> = (
         if (status === "unauthenticated") {
             router.replace("/authentication/login");
         }
+        else {
+            console.log("Router", router.query);
+        }
     }, [status, router]);
 
     function changePage(e: React.MouseEvent, page: number) {
-
+        router.setQuery({ page: page.toString() });
     }
     return (
         <div className={`container-fluid h-[100vh] ${themeState.dark ? styles.darkaccount : styles.lightaccount}`}>
@@ -225,7 +230,6 @@ export default MyAccount;
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
     const session = await getServerSession(context.req, context.res, authorizeOptions) as ICustomSession | null;
-
     if (!session) {
         return {
             redirect: {
@@ -234,9 +238,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
             }
         };
     }
-
     const users = await UserModel.find({});
-
     return {
         props: {
             accountDetails: {
