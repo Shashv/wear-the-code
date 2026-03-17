@@ -98,7 +98,7 @@ class TShirts extends Component<TShirtProps, TShirtState> {
                     </section>
 
                     <Pagination
-                        page={1}
+                        page={Number(this.props.router.query.page) || 1}
                         pageList={Object.keys(products).length ?
                             paginate(Object.keys(products).length, 7) :
                             [1, 2, 3, 4, 5]

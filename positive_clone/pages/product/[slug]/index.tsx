@@ -39,7 +39,7 @@ const ProductClient: NextPage<{ productId?: string, type: string }> = ({ product
     let [servie, setService] = useState<boolean>(false);
 
     const [loader, setLoader] = useState<boolean>(false);
-    
+
     const [productVariant, setProductvariant] = useState<any>({});
 
     let serviceRef = useRef<HTMLButtonElement>(null);

@@ -1,11 +1,9 @@
 import React, { useEffect } from "react";
 import { Box, Button, FormGroup, TextField, Typography } from "@mui/material";
-
 import { Form, } from "reactstrap";
 import { IRegisterOptions } from '../../modals/index';
 import { FieldValues, useForm, Controller } from "react-hook-form";
 import { Container, Col, Row } from "reactstrap";
-
 import style from "./index.module.css";
 import CustomDrawer from "../../components/cart";
 import { useDispatch } from "react-redux";

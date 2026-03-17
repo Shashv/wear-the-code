@@ -134,7 +134,7 @@ const OrdersList: NextPage<{ pageName: string, sessionStatus?: { name: string; e
                                     {user === "email" ? session.data?.user.email : user === "name" ? session.data?.user.name : null}
                                     { }
                                 </Typography>)}
-                                <CommonTable tablebody={tableData.tableBody ? tableData.tableBody : []} tablehead={tableData.tableHead ? tableData.tableHead : []} />
+                                <CommonTable theme={themeState} tablebody={tableData.tableBody ? tableData.tableBody : []} tablehead={tableData.tableHead ? tableData.tableHead : []} />
                                 <Typography className="text-pink-600" variant="h4"></Typography>
                                 <StyledModal open={crud.confirm} title="Are you sure you want to delete the order" purpose="Delete" confirmProcess={() => toggleModal("confirm", orderId)} closeModal={() => toggleModal("close")} />
                             </>

@@ -109,6 +109,7 @@ class Mugs extends React.Component<any, IMugs> {
 }
 
 export default (partialConnector(Mugs));
+
 export const getServerSideProps: GetServerSideProps<{ mugsSchema: FormatisedList, sesssion?: unknown }> = async (context: GetServerSidePropsContext) => {
     const session = await getServerSession(context.req, context.res, authorizeOptions);
     const { page } = context.query;

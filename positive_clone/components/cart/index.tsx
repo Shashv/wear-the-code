@@ -25,6 +25,7 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { loadStripe } from "@stripe/stripe-js";
 let sessionId: any = "";
+let noItems = "No Items ! Please add items to the cart first";
 const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawer, reduxAdd, reduxSubtract, reviewCart }) => {
     const dispatch: IDispatch = useDispatch();
     let state = useSelector((state: IState) => state.productManage);
@@ -81,7 +82,7 @@ const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawe
         });
         const clientSecret = await sessionSecret.json();
         //check if the cart state hasnt been tempered with ..//
-        
+
         let ordersValue = await fetch("/api/orders", {
             method: "POST",
             body: JSON.stringify({ buyProduct: buyProduct, userId: localStorage.getItem("user_id"), email: localStorage.getItem("user_email") })
@@ -334,7 +335,7 @@ const CustomDrawer: React.FC<IDrawer> = ({ open, width, height, list, closeDrawe
                                         {
                                             Object.keys(state).length === 0 && Object.keys(buyProduct).length === 0 &&
                                             <Typography className="" variant="h5" color={"red"} sx={{ textShadow: "0px 0px 5px 2px red" }}>
-                                                No Items ! Please add items to the cart first
+                                                {noItems || "No Items ! Please add items to the cart first "}
                                             </Typography>
                                         }
                                     </div>

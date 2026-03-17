@@ -111,7 +111,7 @@ const Signup: NextPage = () => {
                     });
                     reset();
                     setImage(null);
-                    router.replace("/", undefined, { shallow: false });
+                    router.replace("/login", undefined, { shallow: false });
                 }
                 else if (res.message === "User already exists") {
                     toast.info("User with the matched credentials already exists , please enter different credentials or login with the same", {
